@@ -34,10 +34,16 @@ test.describe("Groups UI with Emulator", () => {
 			timeout: 10000,
 		});
 	};
+	const logTypes: string[] = [];
 	test.beforeEach(async ({ page }) => {
+		while (logTypes.length > 0) {
+			logTypes.pop();
+		}
+
 		// Capture browser logs
 		page.on("console", (msg) => {
 			console.log(`BROWSER [${msg.type()}]: ${msg.text()}`);
+			logTypes.push(msg.type());
 		});
 
 		// Clear all test data before each test
@@ -68,6 +74,8 @@ test.describe("Groups UI with Emulator", () => {
 		await expect(
 			page.getByRole("heading", { name: "Create New Group (Dev Only)" }),
 		).toBeVisible();
+
+		expect(logTypes).not.toContain("error");
 	});
 
 	test("successfully joins group via URL", async ({ page }) => {
@@ -95,6 +103,8 @@ test.describe("Groups UI with Emulator", () => {
 		// Verify it was correctly updated in Firestore (multi-user check)
 		const group = await getGroupByCode(joinCode);
 		expect(group?.memberIds).toContain(user.uid);
+
+		expect(logTypes).not.toContain("error");
 	});
 
 	test("shows error for invalid join code", async ({ page }) => {
@@ -129,5 +139,7 @@ test.describe("Groups UI with Emulator", () => {
 		// 4. Test back button
 		await page.getByRole("button", { name: "← Back" }).click();
 		await expect(page.getByText("Your Groups")).toBeVisible();
+
+		expect(logTypes).not.toContain("error");
 	});
 });

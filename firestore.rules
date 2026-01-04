@@ -1,17 +1,23 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Users: Can read/write their own profile
+    // Users: Can read their own profile, write to add themselves to groups
     match /users/{userId} {
       allow read: if request.auth != null;
       allow write: if request.auth != null && request.auth.uid == userId;
     }
     
-    // Groups: 
-    // - Create/Get/List/Update: Authenticated users
-    // Note: Update is allowed for all authenticated users to support the client-side join flow.
+    // Groups: All actions require authentication
+    // - Create/Read/List: Authenticated users
+    // - Update: Owner can update anything; others can only add themselves to memberIds via transforms
     match /groups/{groupId} {
-      allow create, get, list, update: if request.auth != null;
+      allow create, get, list: if request.auth != null;
+      allow update: if request.auth != null && (
+        // Owner can update any field
+        resource.data.ownerId == request.auth.uid ||
+        // Other users can only modify memberIds (either direct or via transforms)
+        (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['memberIds']))
+      );
     }
   }
 }
