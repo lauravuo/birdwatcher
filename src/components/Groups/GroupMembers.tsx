@@ -4,7 +4,7 @@ import type { Group, UserProfile } from "../../types";
 
 interface GroupMembersProps {
 	group: Group;
-	onBack: () => void;
+	onBack?: () => void;
 }
 
 export function GroupMembers({ group, onBack }: GroupMembersProps) {
@@ -43,9 +43,11 @@ export function GroupMembers({ group, onBack }: GroupMembersProps) {
 	return (
 		<div className="group-members-container">
 			<div className="group-header">
-				<button type="button" onClick={onBack} className="back-button">
-					← Back
-				</button>
+				{onBack && (
+					<button type="button" onClick={onBack} className="back-button">
+						← Back
+					</button>
+				)}
 				<h2>{group.name}</h2>
 				<small className="join-code">Join Code: {group.joinCode}</small>
 			</div>
