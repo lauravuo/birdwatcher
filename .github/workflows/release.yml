@@ -35,7 +35,22 @@ jobs:
           semantic_version: 24
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Deploy to Firebase
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Deploy Firestore Rules
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BIRD_WATCHER }}' > "$HOME/gcp_key.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$HOME/gcp_key.json"
+          firebase deploy --only firestore:rules --project birdwatcher-ac749
+
+      - name: Cleanup Credentials
+        if: always()
+        run: rm -f "$HOME/gcp_key.json"
+
+          
+      - name: Deploy Hosting
         if: steps.semantic.outputs.new_release_published == 'true'
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
