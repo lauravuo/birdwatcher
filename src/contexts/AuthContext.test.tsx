@@ -44,7 +44,7 @@ describe("AuthContext", () => {
 	it("renders children when loading is done (no user)", async () => {
 		// Mock onAuthStateChanged to return null immediately
 		vi.mocked(onAuthStateChanged).mockImplementation((_auth, callback) => {
-			(callback as any)(null);
+			(callback as (user: User | null) => void)(null);
 			return () => {};
 		});
 
@@ -62,7 +62,7 @@ describe("AuthContext", () => {
 	it("sets user when onAuthStateChanged triggers with user", async () => {
 		const mockUser = { displayName: "Test User" } as User;
 		vi.mocked(onAuthStateChanged).mockImplementation((_auth, callback) => {
-			(callback as any)(mockUser);
+			(callback as (user: User | null) => void)(mockUser);
 			return () => {};
 		});
 
@@ -79,7 +79,7 @@ describe("AuthContext", () => {
 
 	it.skip("calls signInWithPopup on login", async () => {
 		vi.mocked(onAuthStateChanged).mockImplementation((_auth, callback) => {
-			(callback as any)(null);
+			(callback as (user: User | null) => void)(null);
 			return () => {};
 		});
 
@@ -98,7 +98,7 @@ describe("AuthContext", () => {
 	it.skip("calls signOut on logout", async () => {
 		const mockUser = { displayName: "User" } as User;
 		vi.mocked(onAuthStateChanged).mockImplementation((_auth, callback) => {
-			(callback as any)(mockUser);
+			(callback as (user: User | null) => void)(mockUser);
 			return () => {};
 		});
 
