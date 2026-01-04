@@ -19,45 +19,30 @@ export const createGroup = async (
 ): Promise<string> => {
 	const normalizedCode = joinCode.toLowerCase().trim();
 
-	// Note: We use runTransaction to ensure uniqueness safety if high concurrency,
-	// though for a small app a simple getDocs check before set is often enough.
-	// We'll stick to transaction for robustness.
-	// Limitation: Firestore client SDK transactions require online connectivity.
+	// 1. Check uniqueness BEFORE transaction (Queries not allowed in client transactions)
+	const q = query(
+		collection(db, "groups"),
+		where("joinCode", "==", normalizedCode),
+	);
+	const snapshot = await getDocs(q);
+	if (!snapshot.empty) {
+		throw new Error("Join code already taken");
+	}
+
+	// 2. Create Group Ref
+	const groupRef = doc(collection(db, "groups"));
+	const groupId = groupRef.id;
+
+	const newGroup: Group = {
+		id: groupId,
+		name,
+		joinCode: normalizedCode,
+		ownerId: user.uid,
+		memberIds: [user.uid],
+		createdAt: Date.now(),
+	};
 
 	return await runTransaction(db, async (transaction) => {
-		// 1. Check uniqueness (Query inside transaction requires careful handling in client SDKs,
-		// often best to pre-query or use a separate index doc.
-		// For Client SDK, we can't easily Query in a transaction if the result set is variable.
-		// We will do a robust check: "First writer wins".
-		// Actually, for a robust uniqueness constraint in Firestore Client SDK without a dedicated index collection:
-		// We can just query first. If race condition happens, one will fail or we tolerate it.
-		// Let's do a pre-check query.
-
-		const q = query(
-			collection(db, "groups"),
-			where("joinCode", "==", normalizedCode),
-		);
-		const snapshot = await getDocs(q);
-		if (!snapshot.empty) {
-			throw new Error("Join code already taken");
-		}
-		// NOTE: A true race condition could still occur here between the get and the set.
-		// To be 100% atomic, we'd need a separate "taken_codes/{code}" document.
-		// For this MVP, this "Check then Act" is acceptable.
-
-		// 2. Create Group Ref
-		const groupRef = doc(collection(db, "groups"));
-		const groupId = groupRef.id;
-
-		const newGroup: Group = {
-			id: groupId,
-			name,
-			joinCode: normalizedCode,
-			ownerId: user.uid,
-			memberIds: [user.uid],
-			createdAt: Date.now(),
-		};
-
 		transaction.set(groupRef, newGroup);
 
 		// 3. Update User Profile
@@ -133,5 +118,8 @@ export const getUserGroups = async (userId: string): Promise<Group[]> => {
 		where("memberIds", "array-contains", userId),
 	);
 	const snapshot = await getDocs(q);
-	return snapshot.docs.map((d) => d.data() as Group);
+	return snapshot.docs.map((d) => ({
+		id: d.id,
+		...(d.data() as Omit<Group, "id">),
+	})) as Group[];
 };

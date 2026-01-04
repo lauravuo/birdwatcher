@@ -58,14 +58,22 @@ Open [http://localhost:5173](http://localhost:5173).
 - Click **"Sign in with Google"**.
 - NOTE: If running on `localhost`, ensure `localhost` is in **Authorized Domains** (Authentication > Settings > Authorized domains).
 
-### Debug Bypass (Dev Mode Only)
-To test the "Logged In" state (Dashboard) without real keys or Google Auth:
-1. Open your browser's **Developer Tools** (F12) > **Console**.
-2. Run this command:
-   ```js
-   localStorage.setItem("birdwatcher_debug_user", "true");
+### Testing with Firebase Emulator
+For E2E tests and local development without real Google Auth:
+
+1. Start the Firebase Emulator:
+   ```bash
+   npm run emulator:start
    ```
-3. Refresh the page. You should see the Dashboard.
+
+2. Run your app with emulator mode:
+   ```bash
+   VITE_USE_EMULATOR=true npm run dev
+   ```
+
+3. The app will automatically connect to the Auth Emulator (port 9099) and Firestore Emulator (port 8080).
+
+4. You can create test users programmatically or via the Emulator UI at http://localhost:4000.
 
 ## 7. Setup CI/CD Service Account
 To enable GitHub Actions to deploy to Firebase (Hosting & Rules):

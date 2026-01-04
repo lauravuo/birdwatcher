@@ -1,19 +1,62 @@
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider, getAuth } from "firebase/auth";
+import {
+	GoogleAuthProvider,
+	getAuth,
+	signInWithEmailAndPassword,
+} from "firebase/auth";
 
-const firebaseConfig = {
-	apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "mock_key",
-	authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "mock_domain",
-	projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "mock_project_id",
-	storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "mock_bucket",
-	messagingSenderId:
-		import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "mock_sender_id",
-	appId: import.meta.env.VITE_FIREBASE_APP_ID || "mock_app_id",
+const getEnvVar = (key: string, defaultValue = ""): string => {
+	// 1. Try Vite's import.meta.env
+	// @ts-ignore
+	if (typeof import.meta !== "undefined" && import.meta.env?.[key]) {
+		// @ts-ignore
+		return import.meta.env[key];
+	}
+	// 2. Try Node's process.env (for tests)
+	// @ts-ignore
+	if (typeof process !== "undefined" && process.env?.[key]) {
+		// @ts-ignore
+		return process.env[key] as string;
+	}
+	return defaultValue;
 };
 
-import { getFirestore } from "firebase/firestore";
+const firebaseConfig = {
+	apiKey: getEnvVar("VITE_FIREBASE_API_KEY", "mock_key"),
+	authDomain: getEnvVar("VITE_FIREBASE_AUTH_DOMAIN", "mock_domain"),
+	projectId: getEnvVar("VITE_FIREBASE_PROJECT_ID", "mock_project_id"),
+	storageBucket: getEnvVar("VITE_FIREBASE_STORAGE_BUCKET", "mock_bucket"),
+	messagingSenderId: getEnvVar(
+		"VITE_FIREBASE_MESSAGING_SENDER_ID",
+		"mock_sender_id",
+	),
+	appId: getEnvVar("VITE_FIREBASE_APP_ID", "mock_app_id"),
+};
+
+import { connectAuthEmulator } from "firebase/auth";
+import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
+
+// Connect to emulators if in test mode
+if (getEnvVar("VITE_USE_EMULATOR") === "true") {
+	connectAuthEmulator(auth, "http://localhost:9099", {
+		disableWarnings: true,
+	});
+	connectFirestoreEmulator(db, "localhost", 8080);
+	console.log(`🔧 Connected to Firebase Emulators at localhost (Project: ${firebaseConfig.projectId})`);
+
+	// Expose for E2E testing
+	if (typeof window !== "undefined") {
+		// @ts-ignore
+		window.auth = auth;
+		// @ts-ignore
+		window.db = db;
+		// @ts-ignore
+		window.signInWithEmail = signInWithEmailAndPassword;
+	}
+}
+

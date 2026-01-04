@@ -1,6 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { createGroup, getUserGroups, joinGroup } from "../../lib/firestore";
+import { db } from "../../lib/firebase";
+import { createGroup, joinGroup } from "../../lib/firestore";
 import type { Group } from "../../types";
 
 export function GroupList() {
@@ -16,22 +18,40 @@ export function GroupList() {
 	// Join Form
 	const [joinCode, setJoinCode] = useState("");
 
-	const loadGroups = useCallback(async () => {
-		if (!currentUser) return;
-		try {
-			const userGroups = await getUserGroups(currentUser.uid);
-			setGroups(userGroups);
-		} catch (err) {
-			console.error("Failed to load groups:", err);
-			setError("Failed to load groups.");
-		} finally {
-			setLoading(false);
-		}
-	}, [currentUser]);
-
 	useEffect(() => {
-		loadGroups();
-	}, [loadGroups]);
+		if (!currentUser) {
+			setGroups([]);
+			setLoading(false);
+			return;
+		}
+
+		console.log(`Setting up onSnapshot for user ${currentUser.uid}`);
+		const q = query(
+			collection(db, "groups"),
+			where("memberIds", "array-contains", currentUser.uid),
+		);
+
+		const unsubscribe = onSnapshot(
+			q,
+			(snapshot) => {
+				const userGroups = snapshot.docs.map((d) => ({
+					id: d.id,
+					...(d.data() as Omit<Group, "id">),
+				})) as Group[];
+				setGroups(userGroups);
+				setLoading(false);
+			},
+			(err) => {
+				console.error("onSnapshot error:", err);
+				setError("Failed to load groups.");
+				setLoading(false);
+			},
+		);
+
+		return () => {
+			unsubscribe();
+		};
+	}, [currentUser]);
 
 	// Auto-join from URL param
 	useEffect(() => {
@@ -41,28 +61,24 @@ export function GroupList() {
 		const codeToJoin = params.get("group");
 
 		if (codeToJoin) {
-			console.log(`Auto-joining group: ${codeToJoin}`);
 			joinGroup(codeToJoin, {
 				uid: currentUser.uid,
 				displayName: currentUser.displayName,
 				email: currentUser.email,
 			})
-				.then(async () => {
-					console.log("Auto-join successful");
-					// Clear the param from URL to prevent re-join on refresh (optional but nice)
+				.then(() => {
+					// Clear the param from URL
 					window.history.replaceState({}, "", window.location.pathname);
-					await loadGroups();
 				})
 				.catch((err) => {
 					console.error("Auto-join failed:", err);
 					setError(
-						`Failed to auto-join group '${codeToJoin}': ${
-							err instanceof Error ? err.message : "Unknown error"
+						`Failed to auto-join group '${codeToJoin}': ${err instanceof Error ? err.message : "Unknown error"
 						}`,
 					);
 				});
 		}
-	}, [currentUser, loadGroups]);
+	}, [currentUser]);
 
 	const handleCreate = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -76,8 +92,8 @@ export function GroupList() {
 			});
 			setNewName("");
 			setNewCode("");
-			await loadGroups();
 		} catch (err) {
+			console.error("handleCreate: Failed to create group:", err);
 			const message =
 				err instanceof Error ? err.message : "Failed to create group";
 			setError(message);
@@ -95,7 +111,6 @@ export function GroupList() {
 				email: currentUser.email,
 			});
 			setJoinCode("");
-			await loadGroups();
 		} catch (err) {
 			const message =
 				err instanceof Error ? err.message : "Failed to join group";
