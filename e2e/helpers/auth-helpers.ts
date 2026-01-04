@@ -20,10 +20,20 @@ export async function createTestUser(
 			email,
 			password,
 		);
-		// Set displayName if provided
-		if (displayName) {
-			await updateProfile(userCredential.user, { displayName });
-		}
+		// Set displayName and photoURL (using initials as avatar)
+		const name = displayName || email.split("@")[0];
+		const initials = name
+			.split(" ")
+			.map((word) => word[0])
+			.join("")
+			.toUpperCase();
+		const photoURL = `https://api.dicebear.com/7.x/initials/svg?seed=${initials}`;
+
+		await updateProfile(userCredential.user, {
+			displayName: displayName || name,
+			photoURL,
+		});
+
 		return userCredential.user;
 	} catch (error) {
 		// User might already exist, try signing in
