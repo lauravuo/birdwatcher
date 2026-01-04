@@ -24,26 +24,25 @@ E2E tests use real Firebase Auth and Firestore via the emulator.
 # Terminal 1: Start emulator
 npm run emulator:start
 
-# Terminal 2: Run E2E tests with demo Firebase config
-# (No real credentials needed - emulator uses demo values)
-VITE_USE_EMULATOR=true npm run test:e2e
+# Terminal 2: Run E2E tests with emulator environmental setup automatically
+npm run test:e2e:emulator
 
-# Or run specific test
+# Or run specific test file
+# (requires manual environment setup if not using npm run test:e2e:emulator)
 VITE_USE_EMULATOR=true npm run test:e2e -- e2e/groups.spec.ts
 ```
 
-> **Note**: E2E tests use demo Firebase credentials when `VITE_USE_EMULATOR=true`. Your real `.env` file is not used.
+> **Note**: `npm run test:e2e:emulator` uses `dotenv-cli` to load `.env.test` and `firebase emulators:exec` for safe lifecycle management.
 
-**Option 2: All-in-One Script**
+**Option 2: All-in-One Command**
 ```bash
-./scripts/test-all.sh
+npm run test:all
 ```
 
-This script:
-1. Runs unit tests
-2. Starts emulator in background
-3. Runs E2E tests
-4. Cleans up emulator
+This command:
+1. Runs unit tests (`npm test -- --run`)
+2. Cleans up existing emulator ports
+3. Starts emulators, runs E2E tests, and shuts them down automatically.
 
 ### Emulator UI
 When the emulator is running, access the UI at:

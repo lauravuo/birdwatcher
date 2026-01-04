@@ -4,14 +4,23 @@ import type { Page } from "@playwright/test";
  * Perform a programmatic sign-in in the browser context
  * Requires window.auth to be exposed (see src/lib/firebase.ts)
  */
-export async function signInInBrowser(page: Page, email: string, password: string) {
-    await page.evaluate(async ({ email, password }) => {
-        // @ts-ignore
-        if (!window.auth || !window.signInWithEmail) {
-            throw new Error("window.auth or window.signInWithEmail not found. Is VITE_USE_EMULATOR=true set?");
-        }
+export async function signInInBrowser(
+	page: Page,
+	email: string,
+	password: string,
+) {
+	await page.evaluate(
+		async ({ email, password }) => {
+			// @ts-expect-error
+			if (!window.auth || !window.signInWithEmail) {
+				throw new Error(
+					"window.auth or window.signInWithEmail not found. Is VITE_USE_EMULATOR=true set?",
+				);
+			}
 
-        // @ts-ignore
-        await window.signInWithEmail(window.auth, email, password);
-    }, { email, password });
+			// @ts-expect-error
+			await window.signInWithEmail(window.auth, email, password);
+		},
+		{ email, password },
+	);
 }

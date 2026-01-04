@@ -68,7 +68,7 @@ For E2E tests and local development without real Google Auth:
 
 2. Run your app with emulator mode:
    ```bash
-   VITE_USE_EMULATOR=true npm run dev
+   npm run test:e2e:emulator
    ```
 
 3. The app will automatically connect to the Auth Emulator (port 9099) and Firestore Emulator (port 8080).

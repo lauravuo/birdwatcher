@@ -7,15 +7,15 @@ import {
 
 const getEnvVar = (key: string, defaultValue = ""): string => {
 	// 1. Try Vite's import.meta.env
-	// @ts-ignore
+	// @ts-expect-error
 	if (typeof import.meta !== "undefined" && import.meta.env?.[key]) {
-		// @ts-ignore
+		// @ts-expect-error
 		return import.meta.env[key];
 	}
 	// 2. Try Node's process.env (for tests)
-	// @ts-ignore
+	// @ts-expect-error
 	if (typeof process !== "undefined" && process.env?.[key]) {
-		// @ts-ignore
+		// @ts-expect-error
 		return process.env[key] as string;
 	}
 	return defaultValue;
@@ -47,16 +47,17 @@ if (getEnvVar("VITE_USE_EMULATOR") === "true") {
 		disableWarnings: true,
 	});
 	connectFirestoreEmulator(db, "localhost", 8080);
-	console.log(`🔧 Connected to Firebase Emulators at localhost (Project: ${firebaseConfig.projectId})`);
+	console.log(
+		`🔧 Connected to Firebase Emulators at localhost (Project: ${firebaseConfig.projectId})`,
+	);
 
 	// Expose for E2E testing
 	if (typeof window !== "undefined") {
-		// @ts-ignore
+		// @ts-expect-error
 		window.auth = auth;
-		// @ts-ignore
+		// @ts-expect-error
 		window.db = db;
-		// @ts-ignore
+		// @ts-expect-error
 		window.signInWithEmail = signInWithEmailAndPassword;
 	}
 }
-

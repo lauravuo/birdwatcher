@@ -25,7 +25,6 @@ export function GroupList() {
 			return;
 		}
 
-		console.log(`Setting up onSnapshot for user ${currentUser.uid}`);
 		const q = query(
 			collection(db, "groups"),
 			where("memberIds", "array-contains", currentUser.uid),
@@ -73,7 +72,8 @@ export function GroupList() {
 				.catch((err) => {
 					console.error("Auto-join failed:", err);
 					setError(
-						`Failed to auto-join group '${codeToJoin}': ${err instanceof Error ? err.message : "Unknown error"
+						`Failed to auto-join group '${codeToJoin}': ${
+							err instanceof Error ? err.message : "Unknown error"
 						}`,
 					);
 				});
@@ -93,7 +93,6 @@ export function GroupList() {
 			setNewName("");
 			setNewCode("");
 		} catch (err) {
-			console.error("handleCreate: Failed to create group:", err);
 			const message =
 				err instanceof Error ? err.message : "Failed to create group";
 			setError(message);
