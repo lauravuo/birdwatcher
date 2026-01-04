@@ -33,6 +33,37 @@ export function GroupList() {
 		loadGroups();
 	}, [loadGroups]);
 
+	// Auto-join from URL param
+	useEffect(() => {
+		if (!currentUser) return;
+
+		const params = new URLSearchParams(window.location.search);
+		const codeToJoin = params.get("group");
+
+		if (codeToJoin) {
+			console.log(`Auto-joining group: ${codeToJoin}`);
+			joinGroup(codeToJoin, {
+				uid: currentUser.uid,
+				displayName: currentUser.displayName,
+				email: currentUser.email,
+			})
+				.then(async () => {
+					console.log("Auto-join successful");
+					// Clear the param from URL to prevent re-join on refresh (optional but nice)
+					window.history.replaceState({}, "", window.location.pathname);
+					await loadGroups();
+				})
+				.catch((err) => {
+					console.error("Auto-join failed:", err);
+					setError(
+						`Failed to auto-join group '${codeToJoin}': ${
+							err instanceof Error ? err.message : "Unknown error"
+						}`,
+					);
+				});
+		}
+	}, [currentUser, loadGroups]);
+
 	const handleCreate = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!currentUser) return;
@@ -93,55 +124,58 @@ export function GroupList() {
 
 			<hr />
 
-			<div className="group-actions">
-				<div className="create-group">
-					<h3>Create New Group</h3>
-					<form onSubmit={handleCreate}>
-						<div>
-							<label>
-								Group Name:
-								<input
-									type="text"
-									value={newName}
-									onChange={(e) => setNewName(e.target.value)}
-									required
-								/>
-							</label>
-						</div>
-						<div>
-							<label>
-								Unique Join Code:
-								<input
-									type="text"
-									value={newCode}
-									onChange={(e) => setNewCode(e.target.value)}
-									placeholder="e.g. bird-lovers-2024"
-									pattern="[a-z0-9\-]+"
-									title="Lowercase letters, numbers, and hyphens only."
-									required
-								/>
-							</label>
-						</div>
-						<button type="submit">Create Group</button>
-					</form>
-				</div>
+			{/* Only show Create/Join forms in Development Mode */}
+			{import.meta.env.DEV && (
+				<div className="group-actions">
+					<div className="create-group">
+						<h3>Create New Group (Dev Only)</h3>
+						<form onSubmit={handleCreate}>
+							<div>
+								<label>
+									Group Name:
+									<input
+										type="text"
+										value={newName}
+										onChange={(e) => setNewName(e.target.value)}
+										required
+									/>
+								</label>
+							</div>
+							<div>
+								<label>
+									Unique Join Code:
+									<input
+										type="text"
+										value={newCode}
+										onChange={(e) => setNewCode(e.target.value)}
+										placeholder="e.g. bird-lovers-2024"
+										pattern="[a-z0-9\-]+"
+										title="Lowercase letters, numbers, and hyphens only."
+										required
+									/>
+								</label>
+							</div>
+							<button type="submit">Create Group</button>
+						</form>
+					</div>
 
-				<div className="join-group">
-					<h3>Join Existing Group</h3>
-					<form onSubmit={handleJoin}>
-						<label>
-							Enter Join Code:
-							<input
-								type="text"
-								value={joinCode}
-								onChange={(e) => setJoinCode(e.target.value)}
-								required
-							/>
-						</label>
-						<button type="submit">Join</button>
-					</form>
+					<div className="join-group">
+						<h3>Join Existing Group (Dev Only)</h3>
+						<form onSubmit={handleJoin}>
+							<label>
+								Enter Join Code:
+								<input
+									type="text"
+									value={joinCode}
+									onChange={(e) => setJoinCode(e.target.value)}
+									required
+								/>
+							</label>
+							<button type="submit">Join</button>
+						</form>
+					</div>
 				</div>
-			</div>
+			)}
 		</div>
 	);
 }
