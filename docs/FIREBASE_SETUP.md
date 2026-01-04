@@ -66,3 +66,27 @@ To test the "Logged In" state (Dashboard) without real keys or Google Auth:
    localStorage.setItem("birdwatcher_debug_user", "true");
    ```
 3. Refresh the page. You should see the Dashboard.
+
+## 7. Setup CI/CD Service Account
+To enable GitHub Actions to deploy to Firebase (Hosting & Rules):
+
+1.  **Generate Private Key**:
+    - Go to **Project Settings** > **Service accounts**.
+    - Click **Generate new private key**.
+    - Save the JSON file (do not commit this!).
+
+2.  **Configure GitHub Secret**:
+    - Go to your GitHub Repo > **Settings** > **Secrets and variables** > **Actions**.
+    - Create a **New repository secret**.
+    - Name: `FIREBASE_SERVICE_ACCOUNT_BIRD_WATCHER`.
+    - Value: Paste the entire content of the JSON file.
+
+3.  **Grant Permissions (Crucial)**:
+    - The service account needs permissions to enable/use Firebase services via the CLI.
+    - Go to [Google Cloud IAM Admin](https://console.cloud.google.com/iam-admin/iam).
+    - Find the service account (matches the email in your JSON key).
+    - Edit permissions and ensure it has:
+        - **Firebase Hosting Admin** (To deploy the site)
+        - **Firebase Rules Admin** (To deploy security rules)
+        - **Service Usage Consumer** (Required for enabling APIs via CLI).
+            - *Note: Without this, you may get `HTTP 403` errors on `firestore.googleapis.com`.*
