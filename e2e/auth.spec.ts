@@ -27,9 +27,7 @@ test.describe("Authentication", () => {
 		await page.goto("/");
 
 		// Verify Dashboard is present
-		await expect(
-			page.getByText("Welcome! Dashboard coming soon..."),
-		).toBeVisible();
+		await expect(page.getByText("Your Groups")).toBeVisible();
 
 		// Verify Logout button is present
 		await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();

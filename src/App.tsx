@@ -1,4 +1,4 @@
-import "./App.css";
+import { GroupList } from "./components/Groups/GroupList";
 import { Login } from "./components/Login";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
@@ -22,7 +22,7 @@ function AuthenticatedApp() {
 			</header>
 			<main>
 				<div className="card">
-					<p>Welcome! Dashboard coming soon...</p>
+					<GroupList />
 				</div>
 			</main>
 		</div>

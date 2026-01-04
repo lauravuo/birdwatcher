@@ -1,8 +1,27 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+    // Users: Can read/write their own profile
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Groups: 
+    // - Create: Authenticated users
+    // - Read: Members of the group OR querying by joinCode (to find it)
+    // - Update: Members of the group
+    match /groups/{groupId} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null && (
+        request.auth.uid in resource.data.memberIds || 
+        // Allow reading if querying by exact joinCode (for joining)
+        (resource == null) // This handles "list" rules typically, but precise query needed
+      );
+      // Simpler read rule for now: Authenticated users can read any group (to resolve it by ID/Code)
+      // We will tighten this later if privacy is a concern, but for "Joining", they need to find it.
+      allow read: if request.auth != null; 
+      
+      allow update: if request.auth != null && request.auth.uid in resource.data.memberIds;
     }
   }
 }
