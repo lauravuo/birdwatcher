@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { createTestUser } from "./helpers/auth-helpers";
 
 test.describe("Authentication", () => {
 	test("unauthenticated user sees login page", async ({ page }) => {
@@ -16,17 +17,21 @@ test.describe("Authentication", () => {
 		await expect(page.getByText("Dashboard")).not.toBeVisible();
 	});
 
-	test("authenticated user sees dashboard (via debug bypass)", async ({
+	test("authenticated user sees dashboard (via Auth Emulator)", async ({
 		page,
 	}) => {
-		// Set debug flag in localStorage before navigation
-		await page.addInitScript(() => {
-			localStorage.setItem("birdwatcher_debug_user", "true");
-		});
+		const email = "test@birdwatcher.test";
+		const password = "testpassword123";
 
+		// 1. Create user in emulator (Node context)
+		await createTestUser(email, password);
+
+		// 2. Navigate and sign in (Browser context)
 		await page.goto("/");
+		const { signInInBrowser } = await import("./helpers/browser-auth");
+		await signInInBrowser(page, email, password);
 
-		// Verify Dashboard is present
+		// 3. Verify Dashboard is present
 		await expect(page.getByText("Your Groups")).toBeVisible();
 
 		// Verify Logout button is present

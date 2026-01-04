@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'oracle'
+          java-version: '21'
       - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
@@ -28,8 +32,8 @@ jobs:
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
-      - name: Run Playwright tests
-        run: npm run test:e2e
+      - name: Run E2E tests with Emulator
+        run: npm run test:e2e:emulator
       - uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}
         with:

@@ -33,19 +33,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		// DEV ONLY: Check for debug user flag
-		if (import.meta.env.DEV) {
-			const debugUser = localStorage.getItem("birdwatcher_debug_user");
-			if (debugUser) {
-				setCurrentUser({
-					displayName: "Debug User",
-					email: "debug@test.com",
-				} as User);
-				setLoading(false);
-				return;
-			}
-		}
-
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			setCurrentUser(user);
 			setLoading(false);

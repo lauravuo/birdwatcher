@@ -7,14 +7,10 @@ service cloud.firestore {
     }
     
     // Groups: 
-    // - Create: Authenticated users
-    // - Read: Members of the group OR querying by joinCode (to find it)
-    // - Update: Members of the group
+    // - Create/Get/List/Update: Authenticated users
+    // Note: Update is allowed for all authenticated users to support the client-side join flow.
     match /groups/{groupId} {
-      allow create: if request.auth != null;
-      allow read: if request.auth != null;  
-      
-      allow update: if request.auth != null && request.auth.uid in resource.data.memberIds;
+      allow create, get, list, update: if request.auth != null;
     }
   }
 }

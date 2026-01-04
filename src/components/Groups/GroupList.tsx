@@ -1,6 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { createGroup, getUserGroups, joinGroup } from "../../lib/firestore";
+import { db } from "../../lib/firebase";
+import { createGroup, joinGroup } from "../../lib/firestore";
 import type { Group } from "../../types";
 
 export function GroupList() {
@@ -16,22 +18,67 @@ export function GroupList() {
 	// Join Form
 	const [joinCode, setJoinCode] = useState("");
 
-	const loadGroups = useCallback(async () => {
-		if (!currentUser) return;
-		try {
-			const userGroups = await getUserGroups(currentUser.uid);
-			setGroups(userGroups);
-		} catch (err) {
-			console.error("Failed to load groups:", err);
-			setError("Failed to load groups.");
-		} finally {
+	useEffect(() => {
+		if (!currentUser) {
+			setGroups([]);
 			setLoading(false);
+			return;
 		}
+
+		const q = query(
+			collection(db, "groups"),
+			where("memberIds", "array-contains", currentUser.uid),
+		);
+
+		const unsubscribe = onSnapshot(
+			q,
+			(snapshot) => {
+				const userGroups = snapshot.docs.map((d) => ({
+					id: d.id,
+					...(d.data() as Omit<Group, "id">),
+				})) as Group[];
+				setGroups(userGroups);
+				setLoading(false);
+			},
+			(err) => {
+				console.error("onSnapshot error:", err);
+				setError("Failed to load groups.");
+				setLoading(false);
+			},
+		);
+
+		return () => {
+			unsubscribe();
+		};
 	}, [currentUser]);
 
+	// Auto-join from URL param
 	useEffect(() => {
-		loadGroups();
-	}, [loadGroups]);
+		if (!currentUser) return;
+
+		const params = new URLSearchParams(window.location.search);
+		const codeToJoin = params.get("group");
+
+		if (codeToJoin) {
+			joinGroup(codeToJoin, {
+				uid: currentUser.uid,
+				displayName: currentUser.displayName,
+				email: currentUser.email,
+			})
+				.then(() => {
+					// Clear the param from URL
+					window.history.replaceState({}, "", window.location.pathname);
+				})
+				.catch((err) => {
+					console.error("Auto-join failed:", err);
+					setError(
+						`Failed to auto-join group '${codeToJoin}': ${
+							err instanceof Error ? err.message : "Unknown error"
+						}`,
+					);
+				});
+		}
+	}, [currentUser]);
 
 	const handleCreate = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -45,7 +92,6 @@ export function GroupList() {
 			});
 			setNewName("");
 			setNewCode("");
-			await loadGroups();
 		} catch (err) {
 			const message =
 				err instanceof Error ? err.message : "Failed to create group";
@@ -64,7 +110,6 @@ export function GroupList() {
 				email: currentUser.email,
 			});
 			setJoinCode("");
-			await loadGroups();
 		} catch (err) {
 			const message =
 				err instanceof Error ? err.message : "Failed to join group";
@@ -93,55 +138,58 @@ export function GroupList() {
 
 			<hr />
 
-			<div className="group-actions">
-				<div className="create-group">
-					<h3>Create New Group</h3>
-					<form onSubmit={handleCreate}>
-						<div>
-							<label>
-								Group Name:
-								<input
-									type="text"
-									value={newName}
-									onChange={(e) => setNewName(e.target.value)}
-									required
-								/>
-							</label>
-						</div>
-						<div>
-							<label>
-								Unique Join Code:
-								<input
-									type="text"
-									value={newCode}
-									onChange={(e) => setNewCode(e.target.value)}
-									placeholder="e.g. bird-lovers-2024"
-									pattern="[a-z0-9\-]+"
-									title="Lowercase letters, numbers, and hyphens only."
-									required
-								/>
-							</label>
-						</div>
-						<button type="submit">Create Group</button>
-					</form>
-				</div>
+			{/* Only show Create/Join forms in Development Mode */}
+			{import.meta.env.DEV && (
+				<div className="group-actions">
+					<div className="create-group">
+						<h3>Create New Group (Dev Only)</h3>
+						<form onSubmit={handleCreate}>
+							<div>
+								<label>
+									Group Name:
+									<input
+										type="text"
+										value={newName}
+										onChange={(e) => setNewName(e.target.value)}
+										required
+									/>
+								</label>
+							</div>
+							<div>
+								<label>
+									Unique Join Code:
+									<input
+										type="text"
+										value={newCode}
+										onChange={(e) => setNewCode(e.target.value)}
+										placeholder="e.g. bird-lovers-2024"
+										pattern="[a-z0-9\-]+"
+										title="Lowercase letters, numbers, and hyphens only."
+										required
+									/>
+								</label>
+							</div>
+							<button type="submit">Create Group</button>
+						</form>
+					</div>
 
-				<div className="join-group">
-					<h3>Join Existing Group</h3>
-					<form onSubmit={handleJoin}>
-						<label>
-							Enter Join Code:
-							<input
-								type="text"
-								value={joinCode}
-								onChange={(e) => setJoinCode(e.target.value)}
-								required
-							/>
-						</label>
-						<button type="submit">Join</button>
-					</form>
+					<div className="join-group">
+						<h3>Join Existing Group (Dev Only)</h3>
+						<form onSubmit={handleJoin}>
+							<label>
+								Enter Join Code:
+								<input
+									type="text"
+									value={joinCode}
+									onChange={(e) => setJoinCode(e.target.value)}
+									required
+								/>
+							</label>
+							<button type="submit">Join</button>
+						</form>
+					</div>
 				</div>
-			</div>
+			)}
 		</div>
 	);
 }
