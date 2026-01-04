@@ -1,5 +1,6 @@
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { GroupList } from "./components/Groups/GroupList";
 import { GroupMembers } from "./components/Groups/GroupMembers";
 import { Login } from "./components/Login";
@@ -9,6 +10,7 @@ import type { Group } from "./types";
 
 function AuthenticatedApp() {
 	const { currentUser, logout } = useAuth();
+	const { t } = useTranslation();
 	const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
 	const [groups, setGroups] = useState<Group[]>([]);
 
@@ -63,7 +65,7 @@ function AuthenticatedApp() {
 		<div className="app-container">
 			<header>
 				<div className="header-content">
-					<h1>Birdwatcher</h1>
+					<h1>{t("app.title")}</h1>
 					<div className="user-info">
 						{currentUser.photoURL && (
 							<img
@@ -74,7 +76,7 @@ function AuthenticatedApp() {
 						)}
 						<span>{currentUser.displayName}</span>
 						<button type="button" onClick={logout} className="logout-button">
-							Logout
+							{t("app.logout")}
 						</button>
 					</div>
 				</div>

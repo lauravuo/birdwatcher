@@ -1,0 +1,43 @@
+{
+	"app": {
+		"title": "Birdwatcher",
+		"logout": "Logout"
+	},
+	"login": {
+		"title": "Birdwatcher",
+		"subtitle": "Please sign in to continue.",
+		"signInGoogle": "Sign in with Google"
+	},
+	"groups": {
+		"title": "Your Groups",
+		"noGroups": "You haven't joined any groups yet.",
+		"joinCode": "Join Code",
+		"members": "Members",
+		"owner": "Owner"
+	},
+	"groupList": {
+		"loadingGroups": "Loading groups...",
+		"failedToLoadGroups": "Failed to load groups.",
+		"createGroupTitle": "Create New Group (Dev Only)",
+		"joinGroupTitle": "Join Existing Group (Dev Only)",
+		"groupNameLabel": "Group Name",
+		"joinCodeLabel": "Unique Join Code",
+		"joinCodePlaceholder": "e.g. bird-lovers-2024",
+		"joinCodePattern": "Lowercase letters, numbers, and hyphens only.",
+		"createButton": "Create Group",
+		"joinCodeInputLabel": "Enter Join Code",
+		"joinButton": "Join",
+		"failedToCreateGroup": "Failed to create group",
+		"failedToJoinGroup": "Failed to join group",
+		"failedToAutoJoinGroup": "Failed to auto-join group"
+	},
+	"groupMembers": {
+		"loadingMembers": "Loading members...",
+		"failedToLoadMembers": "Failed to load group members.",
+		"backButton": "← Back",
+		"membersCount": "Members"
+	},
+	"errors": {
+		"unknown": "Unknown error"
+	}
+}

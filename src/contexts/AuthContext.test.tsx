@@ -84,7 +84,7 @@ describe("AuthContext", () => {
 		});
 	});
 
-	it.skip("calls signInWithPopup on login", async () => {
+	it("calls signInWithPopup on login", async () => {
 		vi.mocked(onAuthStateChanged).mockImplementation((_auth, callback) => {
 			(callback as (user: User | null) => void)(null);
 			return () => {};
@@ -97,12 +97,13 @@ describe("AuthContext", () => {
 		);
 
 		await waitFor(() => expect(screen.getByText("Login")).toBeInTheDocument());
-		screen.getByText("Login").click();
+		const loginButton = screen.getByText("Login") as HTMLButtonElement;
+		loginButton.click();
 
 		expect(signInWithPopup).toHaveBeenCalled();
 	});
 
-	it.skip("calls signOut on logout", async () => {
+	it("calls signOut on logout", async () => {
 		const mockUser = { displayName: "User" } as User;
 		vi.mocked(onAuthStateChanged).mockImplementation((_auth, callback) => {
 			(callback as (user: User | null) => void)(mockUser);
@@ -116,7 +117,8 @@ describe("AuthContext", () => {
 		);
 
 		await waitFor(() => expect(screen.getByText("Logout")).toBeInTheDocument());
-		screen.getByText("Logout").click();
+		const logoutButton = screen.getByText("Logout") as HTMLButtonElement;
+		logoutButton.click();
 
 		expect(signOut).toHaveBeenCalled();
 	});

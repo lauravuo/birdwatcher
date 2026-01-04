@@ -1,5 +1,6 @@
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../lib/firebase";
 import { createGroup, joinGroup } from "../../lib/firestore";
@@ -11,6 +12,7 @@ export function GroupList({
 	onSelectGroup: (group: Group) => void;
 }) {
 	const { currentUser } = useAuth();
+	const { t } = useTranslation();
 	const [groups, setGroups] = useState<Group[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -46,7 +48,7 @@ export function GroupList({
 			},
 			(err) => {
 				console.error("onSnapshot error:", err);
-				setError("Failed to load groups.");
+				setError(t("groupList.failedToLoadGroups"));
 				setLoading(false);
 			},
 		);
@@ -54,7 +56,7 @@ export function GroupList({
 		return () => {
 			unsubscribe();
 		};
-	}, [currentUser]);
+	}, [currentUser, t]);
 
 	// Auto-join from URL param
 	useEffect(() => {
@@ -77,13 +79,13 @@ export function GroupList({
 				.catch((err) => {
 					console.error("Auto-join failed:", err);
 					setError(
-						`Failed to auto-join group '${codeToJoin}': ${
-							err instanceof Error ? err.message : "Unknown error"
+						`${t("groupList.failedToAutoJoinGroup")} '${codeToJoin}': ${
+							err instanceof Error ? err.message : t("errors.unknown")
 						}`,
 					);
 				});
 		}
-	}, [currentUser]);
+	}, [currentUser, t]);
 
 	const handleCreate = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -100,7 +102,7 @@ export function GroupList({
 			setNewCode("");
 		} catch (err) {
 			const message =
-				err instanceof Error ? err.message : "Failed to create group";
+				err instanceof Error ? err.message : t("groupList.failedToCreateGroup");
 			setError(message);
 		}
 	};
@@ -119,20 +121,20 @@ export function GroupList({
 			setJoinCode("");
 		} catch (err) {
 			const message =
-				err instanceof Error ? err.message : "Failed to join group";
+				err instanceof Error ? err.message : t("groupList.failedToJoinGroup");
 			setError(message);
 		}
 	};
 
-	if (loading) return <div>Loading groups...</div>;
+	if (loading) return <div>{t("groupList.loadingGroups")}</div>;
 
 	return (
 		<div className="group-list-container">
-			<h2>Your Groups</h2>
+			<h2>{t("groups.title")}</h2>
 			{error && <div style={{ color: "red" }}>{error}</div>}
 
 			{groups.length === 0 ? (
-				<p>You haven't joined any groups yet.</p>
+				<p>{t("groups.noGroups")}</p>
 			) : (
 				<ul className="group-list">
 					{groups.map((group) => (
@@ -155,11 +157,11 @@ export function GroupList({
 			{import.meta.env.DEV && (
 				<div className="group-actions">
 					<div className="create-group">
-						<h3>Create New Group (Dev Only)</h3>
+						<h3>{t("groupList.createGroupTitle")}</h3>
 						<form onSubmit={handleCreate}>
 							<div>
 								<label>
-									Group Name:
+									{t("groupList.groupNameLabel")}:
 									<input
 										type="text"
 										value={newName}
@@ -170,27 +172,27 @@ export function GroupList({
 							</div>
 							<div>
 								<label>
-									Unique Join Code:
+									{t("groupList.joinCodeLabel")}:
 									<input
 										type="text"
 										value={newCode}
 										onChange={(e) => setNewCode(e.target.value)}
-										placeholder="e.g. bird-lovers-2024"
+										placeholder={t("groupList.joinCodePlaceholder")}
 										pattern="[a-z0-9\-]+"
-										title="Lowercase letters, numbers, and hyphens only."
+										title={t("groupList.joinCodePattern")}
 										required
 									/>
 								</label>
 							</div>
-							<button type="submit">Create Group</button>
+							<button type="submit">{t("groupList.createButton")}</button>
 						</form>
 					</div>
 
 					<div className="join-group">
-						<h3>Join Existing Group (Dev Only)</h3>
+						<h3>{t("groupList.joinGroupTitle")}</h3>
 						<form onSubmit={handleJoin}>
 							<label>
-								Enter Join Code:
+								{t("groupList.joinCodeInputLabel")}:
 								<input
 									type="text"
 									value={joinCode}
@@ -198,7 +200,7 @@ export function GroupList({
 									required
 								/>
 							</label>
-							<button type="submit">Join</button>
+							<button type="submit">{t("groupList.joinButton")}</button>
 						</form>
 					</div>
 				</div>
