@@ -19,20 +19,20 @@ npm test src/lib/firestore.test.ts
 ### E2E Tests (Playwright with Firebase Emulator)
 E2E tests use real Firebase Auth and Firestore via the emulator.
 
-**Option 1: Separate Terminals (Recommended)**
+**Recommended Command (All-in-One)**
+```bash
+npm run test:e2e:emulator
+```
+This command uses `dotenv-cli` to load `.env.test` and `firebase emulators:exec` for safe lifecycle management (starts emulators, runs tests, stops emulators).
+
+**Manual Control (Better for Debugging)**
 ```bash
 # Terminal 1: Start emulator
 npm run emulator:start
 
-# Terminal 2: Run E2E tests with emulator environmental setup automatically
-npm run test:e2e:emulator
-
-# Or run specific test file
-# (requires manual environment setup if not using npm run test:e2e:emulator)
-VITE_USE_EMULATOR=true npm run test:e2e -- e2e/groups.spec.ts
+# Terminal 2: Run E2E tests
+VITE_USE_EMULATOR=true npm run test:e2e
 ```
-
-> **Note**: `npm run test:e2e:emulator` uses `dotenv-cli` to load `.env.test` and `firebase emulators:exec` for safe lifecycle management.
 
 **Option 2: All-in-One Command**
 ```bash
@@ -65,6 +65,25 @@ Runs on merge to `main`:
 2. Semantic versioning
 3. Deploy to Firebase Hosting
 4. Deploy Firestore Rules
+
+## Testing Strategy & Gaps
+
+### Why Unit Tests?
+Unit tests (`vitest`) are designed for **logic isolation**. We use them to test:
+- Helper functions (e.g., join code normalization).
+- Component rendering states.
+- Mocked service interactions.
+
+### Why Unit Tests didn't catch rules issues?
+During the `firebase-tools` update, certain E2E tests failed because:
+1. **Mocking**: Unit tests mock `firebase/firestore`. They assume the library works as expected and don't interact with real rules.
+2. **Environment**: They run in Node, skipping the browser-specific logic and emulator connectivity.
+
+### The Role of E2E Tests
+We rely on **Playwright + Emulators** for:
+- **Security Rules Validation**: Ensuring only authorized users can read/write data.
+- **Integration**: Ensuring the frontend correctly interacts with the real Firebase SDK and backend services.
+- **Cross-Browser**: Verifying behavior in Chromium/WebKit.
 
 ## Troubleshooting
 

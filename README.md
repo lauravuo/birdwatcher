@@ -25,5 +25,6 @@ A mobile-first web application for birdwatchers to track and share their sightin
 
 1.  Clone the repository.
 2.  Install dependencies: `npm install`
-3.  Start dev server: `npm run dev`
-4.  Run tests: `npm run test` or `npm run test:e2e`
+3.  Set up environment variables in `.env` (see `.env.example`).
+4.  Read the **[Testing Guide](docs/TESTING.md)** for detailed local development and testing instructions.
+5.  Start dev server: `npm run dev`
