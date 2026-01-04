@@ -6,7 +6,7 @@ test.describe("Authentication", () => {
 		// Set language to English for tests (before any navigation)
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");
-			window.location.reload = () => { };
+			window.location.reload = () => {};
 		});
 	});
 
