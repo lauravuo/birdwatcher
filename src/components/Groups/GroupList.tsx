@@ -5,7 +5,11 @@ import { db } from "../../lib/firebase";
 import { createGroup, joinGroup } from "../../lib/firestore";
 import type { Group } from "../../types";
 
-export function GroupList() {
+export function GroupList({
+	onSelectGroup,
+}: {
+	onSelectGroup: (group: Group) => void;
+}) {
 	const { currentUser } = useAuth();
 	const [groups, setGroups] = useState<Group[]>([]);
 	const [loading, setLoading] = useState(true);
@@ -64,6 +68,7 @@ export function GroupList() {
 				uid: currentUser.uid,
 				displayName: currentUser.displayName,
 				email: currentUser.email,
+				photoURL: currentUser.photoURL,
 			})
 				.then(() => {
 					// Clear the param from URL
@@ -89,6 +94,7 @@ export function GroupList() {
 				uid: currentUser.uid,
 				displayName: currentUser.displayName,
 				email: currentUser.email,
+				photoURL: currentUser.photoURL,
 			});
 			setNewName("");
 			setNewCode("");
@@ -108,6 +114,7 @@ export function GroupList() {
 				uid: currentUser.uid,
 				displayName: currentUser.displayName,
 				email: currentUser.email,
+				photoURL: currentUser.photoURL,
 			});
 			setJoinCode("");
 		} catch (err) {
@@ -130,7 +137,13 @@ export function GroupList() {
 				<ul className="group-list">
 					{groups.map((group) => (
 						<li key={group.id} className="group-item">
-							<strong>{group.name}</strong> <small>({group.joinCode})</small>
+							<button
+								type="button"
+								className="group-button"
+								onClick={() => onSelectGroup(group)}
+							>
+								<strong>{group.name}</strong> <small>({group.joinCode})</small>
+							</button>
 						</li>
 					))}
 				</ul>

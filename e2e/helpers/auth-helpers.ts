@@ -2,6 +2,7 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	signOut,
+	updateProfile,
 } from "firebase/auth";
 import { auth } from "../../src/lib/firebase";
 
@@ -11,7 +12,7 @@ import { auth } from "../../src/lib/firebase";
 export async function createTestUser(
 	email: string,
 	password: string,
-	_displayName?: string,
+	displayName?: string,
 ) {
 	try {
 		const userCredential = await createUserWithEmailAndPassword(
@@ -19,7 +20,10 @@ export async function createTestUser(
 			email,
 			password,
 		);
-		// Note: displayName would need to be set via updateProfile if needed
+		// Set displayName if provided
+		if (displayName) {
+			await updateProfile(userCredential.user, { displayName });
+		}
 		return userCredential.user;
 	} catch (error) {
 		// User might already exist, try signing in

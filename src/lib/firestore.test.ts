@@ -37,6 +37,7 @@ describe("Firestore Service", () => {
 		uid: "user-123",
 		displayName: "Tester",
 		email: "test@test.com",
+		photoURL: "http://example.com/photo.jpg",
 	};
 
 	describe("createGroup", () => {
@@ -144,6 +145,35 @@ describe("Firestore Service", () => {
 			expect(groups).toHaveLength(2);
 			expect(groups[0].name).toBe("Group 1");
 			expect(groups[1].name).toBe("Group 2");
+		});
+	});
+
+	describe("getGroupMembers", () => {
+		it("fetches profiles for multiple members", async () => {
+			const mockUsers = [
+				{ id: "u1", displayName: "User 1", photoURL: "p1" },
+				{ id: "u2", displayName: "User 2", photoURL: "p2" },
+			];
+			const mockSnapshot = {
+				docs: mockUsers.map((u) => ({
+					data: () => u,
+				})),
+			};
+			// @ts-expect-error: Mocking complex objects
+			vi.mocked(getDocs).mockResolvedValue(mockSnapshot);
+
+			const { getGroupMembers } = await import("./firestore");
+			const members = await getGroupMembers(["u1", "u2"]);
+
+			expect(members).toHaveLength(2);
+			expect(members[0].displayName).toBe("User 1");
+			expect(members[1].displayName).toBe("User 2");
+		});
+
+		it("returns empty array if no IDs provided", async () => {
+			const { getGroupMembers } = await import("./firestore");
+			const members = await getGroupMembers([]);
+			expect(members).toEqual([]);
 		});
 	});
 });

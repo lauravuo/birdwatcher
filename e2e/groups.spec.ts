@@ -1,8 +1,39 @@
-import { expect, test } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
+import { signInInBrowser, signOutInBrowser } from "./helpers/browser-auth";
 import { clearAllTestData, getGroupByCode } from "./helpers/firestore-helpers";
 
 test.describe("Groups UI with Emulator", () => {
+	const createGroup = async (
+		page: Page,
+		groupName: string,
+		joinCode: string,
+	) => {
+		const ownerEmail = "owner@birdwatcher.test";
+		const ownerPassword = "password123";
+
+		// 1. Create and Sign in as Owner to create the group via UI
+		await createTestUser(ownerEmail, ownerPassword, "GroupOwner");
+		const { signInInBrowser, signOutInBrowser } = await import(
+			"./helpers/browser-auth"
+		);
+
+		await signOutInBrowser(page);
+		await signInInBrowser(page, ownerEmail, ownerPassword);
+
+		// Ensure we are signed in as owner
+		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
+
+		// 2. Create the group via UI
+		await page.getByLabel("Group Name:").fill(groupName);
+		await page.getByLabel("Unique Join Code:").fill(joinCode);
+		await page.getByRole("button", { name: "Create Group" }).click();
+
+		// Verify owner sees the new group
+		await expect(page.getByText(groupName)).toBeVisible({
+			timeout: 10000,
+		});
+	};
 	test.beforeEach(async ({ page }) => {
 		// Capture browser logs
 		page.on("console", (msg) => {
@@ -14,7 +45,7 @@ test.describe("Groups UI with Emulator", () => {
 
 		// 1. Create test user in emulator (Node context)
 		const credentials = getTestUserCredentials();
-		await createTestUser(credentials.email, credentials.password);
+		await createTestUser(credentials.email, credentials.password, "Tester");
 
 		// 2. Navigate and sign in (Browser context)
 		await page.goto("/");
@@ -40,31 +71,8 @@ test.describe("Groups UI with Emulator", () => {
 	});
 
 	test("successfully joins group via URL", async ({ page }) => {
-		const ownerEmail = "owner@birdwatcher.test";
-		const ownerPassword = "password123";
 		const joinCode = "test-birds-2024";
-
-		// 1. Create and Sign in as Owner to create the group via UI
-		await createTestUser(ownerEmail, ownerPassword);
-		const { signInInBrowser, signOutInBrowser } = await import(
-			"./helpers/browser-auth"
-		);
-
-		await signOutInBrowser(page);
-		await signInInBrowser(page, ownerEmail, ownerPassword);
-
-		// Ensure we are signed in as owner
-		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
-
-		// 2. Create the group via UI
-		await page.getByLabel("Group Name:").fill("Test Birds Group");
-		await page.getByLabel("Unique Join Code:").fill(joinCode);
-		await page.getByRole("button", { name: "Create Group" }).click();
-
-		// Verify owner sees the new group
-		await expect(page.getByText("Test Birds Group")).toBeVisible({
-			timeout: 10000,
-		});
+		await createGroup(page, "Test Birds Group", joinCode);
 
 		// 3. Sign out owner and sign back in as the primary test user
 		await signOutInBrowser(page);
@@ -98,5 +106,28 @@ test.describe("Groups UI with Emulator", () => {
 		// Should show error message
 		const errorMessage = page.getByText(/Failed to auto-join group/);
 		await expect(errorMessage).toBeVisible({ timeout: 10000 });
+	});
+
+	test("shows member list when a group is selected", async ({ page }) => {
+		const joinCode = "test-birds-group-click";
+		const groupName = "Test Birds Group Click";
+		await createGroup(page, groupName, joinCode);
+
+		// 2. Click the group in the list
+		const groupItem = page.getByRole("button", { name: new RegExp(groupName) });
+		await expect(groupItem).toBeVisible();
+		await groupItem.click();
+
+		// 3. Verify member list is shown
+		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
+		await expect(page.getByText(/Members \(1\)/)).toBeVisible();
+
+		// Verify owner is in the list
+		await expect(page.locator(".member-name")).toContainText("GroupOwner");
+		await expect(page.locator(".owner-badge")).toContainText("Owner");
+
+		// 4. Test back button
+		await page.getByRole("button", { name: "← Back" }).click();
+		await expect(page.getByText("Your Groups")).toBeVisible();
 	});
 });
