@@ -33,16 +33,19 @@
 5. Click **Enable**.
 
 ## 4. Configure Local Environment
-1. Open the `.env` file in the project root.
-2. Fill in the values from the console (from Step 1):
+1. Copy the example environment file:
+   ```bash
+   cp .env.example .env
+   ```
+2. Open the `.env` file and fill in the values from the console (from Step 1):
 
 ```env
-VITE_FIREBASE_API_KEY=AIzaSy...
-VITE_FIREBASE_AUTH_DOMAIN=birdwatcher-ac749.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=birdwatcher-ac749
-VITE_FIREBASE_STORAGE_BUCKET=birdwatcher-ac749.appspot.com
-VITE_FIREBASE_MESSAGING_SENDER_ID=...
-VITE_FIREBASE_APP_ID=1:...
+VITE_FIREBASE_API_KEY="AIzaSy..."
+VITE_FIREBASE_AUTH_DOMAIN="birdwatcher-ac749.firebaseapp.com"
+VITE_FIREBASE_PROJECT_ID="birdwatcher-ac749"
+VITE_FIREBASE_STORAGE_BUCKET="birdwatcher-ac749.firebasestorage.app"
+VITE_FIREBASE_MESSAGING_SENDER_ID="..."
+VITE_FIREBASE_APP_ID="1:..."
 ```
 
 ## 5. Run the App
@@ -59,21 +62,22 @@ Open [http://localhost:5173](http://localhost:5173).
 - NOTE: If running on `localhost`, ensure `localhost` is in **Authorized Domains** (Authentication > Settings > Authorized domains).
 
 ### Testing with Firebase Emulator
-For E2E tests and local development without real Google Auth:
+For E2E tests and local development without real Google Auth.
 
-1. Start the Firebase Emulator:
-   ```bash
-   npm run emulator:start
-   ```
+> [!IMPORTANT]
+> **Java 21 Requirement**: The Firebase Emulator Suite requires **Java 21** to be installed and configured as the default on your system.
 
-2. Run your app with emulator mode:
-   ```bash
-   npm run test:e2e:emulator
-   ```
+#### One-Command testing
+```bash
+npm run test:e2e:emulator
+```
+This automatically starts the emulators (Port 9099 for Auth, 8080 for Firestore), runs the tests, and shuts them down when finished.
 
-3. The app will automatically connect to the Auth Emulator (port 9099) and Firestore Emulator (port 8080).
-
-4. You can create test users programmatically or via the Emulator UI at http://localhost:4000.
+#### Manual Control (for Development)
+If you want the emulator to stay running while you work:
+1. **Start Emulator**: `npm run emulator:start`
+2. **Access UI**: http://localhost:4000
+3. **Run App**: Ensure `VITE_USE_EMULATOR=true` is in your `.env`.
 
 ## 7. Setup CI/CD Service Account
 To enable GitHub Actions to deploy to Firebase (Hosting & Rules):

@@ -19,30 +19,19 @@ npm test src/lib/firestore.test.ts
 ### E2E Tests (Playwright with Firebase Emulator)
 E2E tests use real Firebase Auth and Firestore via the emulator.
 
-**Recommended Command (All-in-One)**
 ```bash
+# Run all E2E tests in a clean emulator environment
 npm run test:e2e:emulator
 ```
-This command uses `dotenv-cli` to load `.env.test` and `firebase emulators:exec` for safe lifecycle management (starts emulators, runs tests, stops emulators).
 
-**Manual Control (Better for Debugging)**
-```bash
-# Terminal 1: Start emulator
-npm run emulator:start
+Matches your project's `dev` environment automatically. This command:
+1. Loads `.env.test` variables.
+2. Starts the Firebase emulators (Auth, Firestore).
+3. Runs the Playwright tests.
+4. Safely shuts down the emulators when finished.
 
-# Terminal 2: Run E2E tests
-VITE_USE_EMULATOR=true npm run test:e2e
-```
-
-**Option 2: All-in-One Command**
-```bash
-npm run test:all
-```
-
-This command:
-1. Runs unit tests (`npm test -- --run`)
-2. Cleans up existing emulator ports
-3. Starts emulators, runs E2E tests, and shuts them down automatically.
+> [!TIP]
+> To run the entire suite (Lint + Unit + E2E), use: `npm run test:all`
 
 ### Emulator UI
 When the emulator is running, access the UI at:
