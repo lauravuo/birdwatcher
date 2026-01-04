@@ -24,3 +24,15 @@ export async function signInInBrowser(
 		{ email, password },
 	);
 }
+
+/**
+ * Perform a programmatic sign-out in the browser context
+ */
+export async function signOutInBrowser(page: Page) {
+	await page.evaluate(async () => {
+		// @ts-expect-error
+		if (!window.auth) return;
+		// @ts-expect-error
+		await window.auth.signOut();
+	});
+}

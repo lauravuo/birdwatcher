@@ -6,10 +6,7 @@ import {
 } from "firebase/auth";
 
 const getEnvVar = (key: string, defaultValue = ""): string => {
-	// 1. Try Vite's import.meta.env
-	// @ts-expect-error
 	if (typeof import.meta !== "undefined" && import.meta.env?.[key]) {
-		// @ts-expect-error
 		return import.meta.env[key];
 	}
 	// 2. Try Node's process.env (for tests)
