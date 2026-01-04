@@ -142,4 +142,99 @@ test.describe("Groups UI with Emulator", () => {
 
 		expect(logTypes).not.toContain("error");
 	});
+
+	test("shows single group by default without back button", async ({
+		page,
+	}) => {
+		const joinCode = "single-group-member";
+		const groupName = "Single Group Member";
+		const ownerEmail = "owner-member@birdwatcher.test";
+		const ownerPassword = "password123";
+		const memberEmail = "member-only@birdwatcher.test";
+		const memberPassword = "password456";
+
+		// 1. Owner creates a group
+		await createTestUser(ownerEmail, ownerPassword, "GroupOwner");
+		const { signInInBrowser, signOutInBrowser } = await import(
+			"./helpers/browser-auth"
+		);
+
+		await signOutInBrowser(page);
+		await signInInBrowser(page, ownerEmail, ownerPassword);
+
+		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
+
+		await page.getByLabel("Group Name:").fill(groupName);
+		await page.getByLabel("Unique Join Code:").fill(joinCode);
+		await page.getByRole("button", { name: "Create Group" }).click();
+
+		await expect(page.getByText(groupName)).toBeVisible({ timeout: 10000 });
+
+		// 2. Sign out owner and create a non-owner member
+		await signOutInBrowser(page);
+		await createTestUser(memberEmail, memberPassword);
+		await signInInBrowser(page, memberEmail, memberPassword);
+
+		// 3. Member joins the group
+		await page.goto(`/?group=${joinCode}`);
+
+		// Wait for auto-join
+		await expect(page).not.toHaveURL(/group=/, { timeout: 10000 });
+
+		// 4. Member should see the group view directly (not the list)
+		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
+		await expect(page.getByText(/Members \(2\)/)).toBeVisible();
+
+		// 5. Verify no back button and no "Your Groups" list
+		await expect(
+			page.getByRole("button", { name: "← Back" }),
+		).not.toBeVisible();
+		await expect(page.getByText("Your Groups")).not.toBeVisible();
+
+		expect(logTypes).not.toContain("error");
+	});
+
+	test("owner with single group sees back button and group list", async ({
+		page,
+	}) => {
+		const joinCode = "single-group-owner";
+		const groupName = "Single Group Owner";
+
+		// 1. Owner creates a group
+		const ownerEmail = "owner-single@birdwatcher.test";
+		const ownerPassword = "password789";
+
+		await createTestUser(ownerEmail, ownerPassword, "OwnerUser");
+		const { signInInBrowser, signOutInBrowser } = await import(
+			"./helpers/browser-auth"
+		);
+
+		await signOutInBrowser(page);
+		await signInInBrowser(page, ownerEmail, ownerPassword);
+
+		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
+
+		await page.getByLabel("Group Name:").fill(groupName);
+		await page.getByLabel("Unique Join Code:").fill(joinCode);
+		await page.getByRole("button", { name: "Create Group" }).click();
+
+		await expect(page.getByText(groupName)).toBeVisible({ timeout: 10000 });
+
+		// 2. Owner should see group list (not auto-selected)
+		await expect(page.getByText("Your Groups")).toBeVisible();
+		await expect(page.getByText(groupName)).toBeVisible();
+
+		// 3. Click group to view members
+		const groupItem = page.getByRole("button", { name: new RegExp(groupName) });
+		await groupItem.click();
+
+		// 4. Verify back button is shown for owner
+		await expect(page.getByRole("button", { name: "← Back" })).toBeVisible();
+
+		// 5. Click back and verify group list reappears
+		await page.getByRole("button", { name: "← Back" }).click();
+		await expect(page.getByText("Your Groups")).toBeVisible();
+
+		expect(logTypes).not.toContain("error");
+	});
 });
