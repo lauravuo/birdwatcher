@@ -4,6 +4,7 @@ import {
 	signOut,
 	type User,
 } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import {
 	createContext,
 	type ReactNode,
@@ -11,7 +12,7 @@ import {
 	useEffect,
 	useState,
 } from "react";
-import { auth, googleProvider } from "../lib/firebase";
+import { auth, db, googleProvider } from "../lib/firebase";
 
 interface AuthContextType {
 	currentUser: User | null;
@@ -33,7 +34,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (user) => {
+		const unsubscribe = onAuthStateChanged(auth, async (user) => {
+			if (user) {
+				// Ensure user profile is synced with Firestore
+				try {
+					await setDoc(
+						doc(db, "users", user.uid),
+						{
+							id: user.uid,
+							displayName: user.displayName || "Anonymous",
+							email: user.email || "",
+							photoURL: user.photoURL || null,
+						},
+						{ merge: true },
+					);
+				} catch (err) {
+					console.error("Failed to sync user profile:", err);
+				}
+			}
 			setCurrentUser(user);
 			setLoading(false);
 		});
