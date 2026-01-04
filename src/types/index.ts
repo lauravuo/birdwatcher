@@ -2,6 +2,7 @@ export interface UserProfile {
 	id: string;
 	displayName: string;
 	email: string;
+	photoURL: string | null;
 	groupIds: string[];
 }
 

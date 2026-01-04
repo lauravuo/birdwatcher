@@ -7,7 +7,7 @@ import {
 	runTransaction,
 	where,
 } from "firebase/firestore";
-import type { Group } from "../types";
+import type { Group, UserProfile } from "../types";
 import { db } from "./firebase";
 
 // --- Group Service ---
@@ -15,7 +15,12 @@ import { db } from "./firebase";
 export const createGroup = async (
 	name: string,
 	joinCode: string,
-	user: { uid: string; displayName: string | null; email: string | null },
+	user: {
+		uid: string;
+		displayName: string | null;
+		email: string | null;
+		photoURL: string | null;
+	},
 ): Promise<string> => {
 	const normalizedCode = joinCode.toLowerCase().trim();
 
@@ -53,6 +58,7 @@ export const createGroup = async (
 				id: user.uid,
 				displayName: user.displayName || "Anonymous",
 				email: user.email || "",
+				photoURL: user.photoURL || null,
 				groupIds: arrayUnion(groupId),
 			},
 			{ merge: true },
@@ -64,7 +70,12 @@ export const createGroup = async (
 
 export const joinGroup = async (
 	joinCode: string,
-	user: { uid: string; displayName: string | null; email: string | null },
+	user: {
+		uid: string;
+		displayName: string | null;
+		email: string | null;
+		photoURL: string | null;
+	},
 ): Promise<string> => {
 	const normalizedCode = joinCode.toLowerCase().trim();
 
@@ -103,6 +114,7 @@ export const joinGroup = async (
 				id: user.uid,
 				displayName: user.displayName || "Anonymous",
 				email: user.email || "",
+				photoURL: user.photoURL || null,
 				groupIds: arrayUnion(groupId),
 			},
 			{ merge: true },
@@ -122,4 +134,14 @@ export const getUserGroups = async (userId: string): Promise<Group[]> => {
 		id: d.id,
 		...(d.data() as Omit<Group, "id">),
 	})) as Group[];
+};
+
+export const getGroupMembers = async (
+	memberIds: string[],
+): Promise<UserProfile[]> => {
+	if (memberIds.length === 0) return [];
+
+	const q = query(collection(db, "users"), where("id", "in", memberIds));
+	const snapshot = await getDocs(q);
+	return snapshot.docs.map((d) => d.data() as UserProfile);
 };

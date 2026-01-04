@@ -1,42 +1,162 @@
-#root {
-	max-width: 1280px;
-	margin: 0 auto;
-	padding: 2rem;
-	text-align: center;
+/* Layout */
+.app-container {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
-.logo {
-	height: 6em;
-	padding: 1.5em;
-	will-change: filter;
-	transition: filter 300ms;
-}
-.logo:hover {
-	filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-	filter: drop-shadow(0 0 2em #61dafbaa);
+header {
+	background: #333;
+	color: white;
+	padding: 1rem 2rem;
+	display: flex;
+	justify-content: center;
 }
 
-@keyframes logo-spin {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
+.header-content {
+	width: 100%;
+	max-width: 800px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-	a:nth-of-type(2) .logo {
-		animation: logo-spin infinite 20s linear;
-	}
+h1 {
+	margin: 0;
+	font-size: 1.5rem;
+}
+
+.user-info {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.user-avatar-small {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	object-fit: cover;
 }
 
 .card {
-	padding: 2em;
+	max-width: 800px;
+	margin: 2rem auto;
+	padding: 2rem;
+	background: #1e1e1e;
+	border-radius: 12px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.read-the-docs {
+/* Group Members */
+.group-header {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.5rem;
+	margin-bottom: 2rem;
+	border-bottom: 1px solid #444;
+	padding-bottom: 1rem;
+}
+
+.back-button {
+	background: none;
+	border: none;
+	color: #646cff;
+	padding: 0;
+	font-size: 0.9rem;
+	margin-bottom: 0.5rem;
+}
+
+.back-button:hover {
+	text-decoration: underline;
+	border-color: transparent;
+}
+
+.join-code {
 	color: #888;
+	font-family: monospace;
+}
+
+.members-list {
+	list-style: none;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 1rem;
+}
+
+.member-item {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 1rem;
+	background: #2a2a2a;
+	border-radius: 8px;
+}
+
+.member-avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	overflow: hidden;
+	background: #444;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	color: white;
+}
+
+.member-avatar img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.member-info {
+	display: flex;
+	flex-direction: column;
+}
+
+.owner-badge {
+	font-size: 0.7rem;
+	background: #646cff;
+	color: white;
+	padding: 0.1rem 0.4rem;
+	border-radius: 4px;
+	width: fit-content;
+	margin-top: 0.2rem;
+}
+
+/* Group List */
+.group-list {
+	list-style: none;
+	padding: 0;
+}
+
+.group-item {
+	margin-bottom: 0.5rem;
+}
+
+.group-button {
+	width: 100%;
+	text-align: left;
+	padding: 1rem;
+	background: #2a2a2a;
+	border: 1px solid transparent;
+	border-radius: 8px;
+	color: inherit;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	cursor: pointer;
+	transition:
+		background 0.2s,
+		border-color 0.2s;
+}
+
+.group-button:hover {
+	background: #333;
+	border-color: #646cff;
 }
