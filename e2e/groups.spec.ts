@@ -40,6 +40,12 @@ test.describe("Groups UI with Emulator", () => {
 			logTypes.pop();
 		}
 
+		// Set language to English for tests (before any navigation)
+		await page.addInitScript(() => {
+			localStorage.setItem("language", "en");
+			window.location.reload = () => { };
+		});
+
 		// Capture browser logs
 		page.on("console", (msg) => {
 			console.log(`BROWSER [${msg.type()}]: ${msg.text()}`);

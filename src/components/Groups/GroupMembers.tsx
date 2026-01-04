@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { getGroupMembers } from "../../lib/firestore";
 import type { Group, UserProfile } from "../../types";
 
@@ -8,6 +9,7 @@ interface GroupMembersProps {
 }
 
 export function GroupMembers({ group, onBack }: GroupMembersProps) {
+	const { t } = useTranslation();
 	const [members, setMembers] = useState<UserProfile[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -25,7 +27,7 @@ export function GroupMembers({ group, onBack }: GroupMembersProps) {
 			} catch (err) {
 				if (isMounted) {
 					console.error("Failed to fetch members:", err);
-					setError("Failed to load group members.");
+					setError(t("groupMembers.failedToLoadMembers"));
 					setLoading(false);
 				}
 			}
@@ -36,26 +38,30 @@ export function GroupMembers({ group, onBack }: GroupMembersProps) {
 		return () => {
 			isMounted = false;
 		};
-	}, [group.memberIds]);
+	}, [group.memberIds, t]);
 
-	if (loading) return <div>Loading members...</div>;
+	if (loading) return <div>{t("groupMembers.loadingMembers")}</div>;
 
 	return (
 		<div className="group-members-container">
 			<div className="group-header">
 				{onBack && (
 					<button type="button" onClick={onBack} className="back-button">
-						← Back
+						{t("groupMembers.backButton")}
 					</button>
 				)}
 				<h2>{group.name}</h2>
-				<small className="join-code">Join Code: {group.joinCode}</small>
+				<small className="join-code">
+					{t("groups.joinCode")}: {group.joinCode}
+				</small>
 			</div>
 
 			{error && <div className="error-message">{error}</div>}
 
 			<div className="members-section">
-				<h3>Members ({members.length})</h3>
+				<h3>
+					{t("groupMembers.membersCount")} ({members.length})
+				</h3>
 				<ul className="members-list">
 					{members.map((member) => (
 						<li key={member.id} className="member-item">
@@ -71,7 +77,7 @@ export function GroupMembers({ group, onBack }: GroupMembersProps) {
 							<div className="member-info">
 								<span className="member-name">{member.displayName}</span>
 								{member.id === group.ownerId && (
-									<span className="owner-badge">Owner</span>
+									<span className="owner-badge">{t("groups.owner")}</span>
 								)}
 							</div>
 						</li>

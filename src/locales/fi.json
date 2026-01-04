@@ -1,0 +1,43 @@
+{
+	"app": {
+		"title": "Birdwatcher",
+		"logout": "Kirjaudu ulos"
+	},
+	"login": {
+		"title": "Birdwatcher",
+		"subtitle": "Kirjaudu sisään jatkaaksesi.",
+		"signInGoogle": "Kirjaudu Google-tilillä"
+	},
+	"groups": {
+		"title": "Omat ryhmät",
+		"noGroups": "Et ole liittynyt mihinkään ryhmiin vielä.",
+		"joinCode": "Liittymiskoodi",
+		"members": "Jäsenet",
+		"owner": "Omistaja"
+	},
+	"groupList": {
+		"loadingGroups": "Ladataan ryhmiä...",
+		"failedToLoadGroups": "Ryhmien lataaminen epäonnistui.",
+		"createGroupTitle": "Luo uusi ryhmä (vain kehitystyössä)",
+		"joinGroupTitle": "Liity olemassa olevaan ryhmään (vain kehitystyössä)",
+		"groupNameLabel": "Ryhmän nimi",
+		"joinCodeLabel": "Ainutlaatuinen liittymiskoodi",
+		"joinCodePlaceholder": "esim. lintu-ystävät-2024",
+		"joinCodePattern": "Vain pienet kirjaimet, numerot ja väliviivat.",
+		"createButton": "Luo ryhmä",
+		"joinCodeInputLabel": "Syötä liittymiskoodi",
+		"joinButton": "Liity",
+		"failedToCreateGroup": "Ryhmän luominen epäonnistui",
+		"failedToJoinGroup": "Ryhmään liittyminen epäonnistui",
+		"failedToAutoJoinGroup": "Automaattinen ryhmään liittyminen epäonnistui"
+	},
+	"groupMembers": {
+		"loadingMembers": "Ladataan jäseniä...",
+		"failedToLoadMembers": "Ryhmän jäsenten lataaminen epäonnistui.",
+		"backButton": "← Takaisin",
+		"membersCount": "Jäsenet"
+	},
+	"errors": {
+		"unknown": "Tuntematon virhe"
+	}
+}

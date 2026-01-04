@@ -2,6 +2,14 @@ import { expect, test } from "@playwright/test";
 import { createTestUser } from "./helpers/auth-helpers";
 
 test.describe("Authentication", () => {
+	test.beforeEach(async ({ page }) => {
+		// Set language to English for tests (before any navigation)
+		await page.addInitScript(() => {
+			localStorage.setItem("language", "en");
+			window.location.reload = () => { };
+		});
+	});
+
 	test("unauthenticated user sees login page", async ({ page }) => {
 		await page.goto("/");
 

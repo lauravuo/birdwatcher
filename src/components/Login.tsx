@@ -1,14 +1,16 @@
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
 
 export function Login() {
 	const { login } = useAuth();
+	const { t } = useTranslation();
 
 	return (
 		<div className="login-container">
-			<h1>Birdwatcher</h1>
-			<p>Please sign in to continue.</p>
+			<h1>{t("login.title")}</h1>
+			<p>{t("login.subtitle")}</p>
 			<button type="button" onClick={login}>
-				Sign in with Google
+				{t("login.signInGoogle")}
 			</button>
 		</div>
 	);
