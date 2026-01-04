@@ -72,7 +72,8 @@ export function GroupList() {
 				.catch((err) => {
 					console.error("Auto-join failed:", err);
 					setError(
-						`Failed to auto-join group '${codeToJoin}': ${err instanceof Error ? err.message : "Unknown error"
+						`Failed to auto-join group '${codeToJoin}': ${
+							err instanceof Error ? err.message : "Unknown error"
 						}`,
 					);
 				});
