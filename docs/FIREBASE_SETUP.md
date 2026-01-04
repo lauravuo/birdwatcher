@@ -24,7 +24,15 @@
 
 [Official Google Docs: Enable Google Sign-In](https://firebase.google.com/docs/auth/web/google-signin#before_you_begin)
 
-## 3. Configure Local Environment
+## 3. Enable Cloud Firestore
+1. Go to **Build** > **Firestore Database**.
+2. Click **Create database**.
+3. **Location**: Select a region close to your users (e.g., `europe-west3` or `us-central1`).
+4. **Security Rules**: Start in **App Check** or **Production Mode**.
+   - Note: We have specific `firestore.rules` in this repo that will be deployed later.
+5. Click **Enable**.
+
+## 4. Configure Local Environment
 1. Open the `.env` file in the project root.
 2. Fill in the values from the console (from Step 1):
 
@@ -37,13 +45,13 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=...
 VITE_FIREBASE_APP_ID=1:...
 ```
 
-## 4. Run the App
+## 5. Run the App
 ```bash
 npm run dev
 ```
 Open [http://localhost:5173](http://localhost:5173).
 
-## 5. Testing Authentication
+## 6. Testing Authentication
 
 ### Real Google Login
 - Ensure you have the `.env` values set.
