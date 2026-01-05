@@ -1,1334 +1,1001 @@
 [
   {
-    "id": "alli",
-    "name": "Alli"
+    "id": "alli"
   },
   {
-    "id": "allihaahka",
-    "name": "Allihaahka"
+    "id": "allihaahka"
   },
   {
-    "id": "alppirautiainen",
-    "name": "Alppirautiainen"
+    "id": "alppirautiainen"
   },
   {
-    "id": "amerikanhaapana",
-    "name": "Amerikanhaapana"
+    "id": "amerikanhaapana"
   },
   {
-    "id": "amerikantavi",
-    "name": "Amerikantavi"
+    "id": "amerikantavi"
   },
   {
-    "id": "ampuhaukka",
-    "name": "Ampuhaukka"
+    "id": "ampuhaukka"
   },
   {
-    "id": "aroharmaalokki",
-    "name": "Aroharmaalokki"
+    "id": "aroharmaalokki"
   },
   {
-    "id": "arokotka",
-    "name": "Arokotka"
+    "id": "arokotka"
   },
   {
-    "id": "arosuohaukka",
-    "name": "Arosuohaukka"
+    "id": "arosuohaukka"
   },
   {
-    "id": "avosetti",
-    "name": "Avosetti"
+    "id": "avosetti"
   },
   {
-    "id": "eskimohanhi",
-    "name": "Eskimohanhi"
+    "id": "eskimohanhi"
   },
   {
-    "id": "etelanharmaalokki",
-    "name": "Etelänharmaalokki"
+    "id": "etelanharmaalokki"
   },
   {
-    "id": "etelankiisla",
-    "name": "Etelänkiisla"
+    "id": "etelankiisla"
   },
   {
-    "id": "etelansatakieli",
-    "name": "Etelänsatakieli"
+    "id": "etelansatakieli"
   },
   {
-    "id": "fasaani",
-    "name": "Fasaani"
+    "id": "fasaani"
   },
   {
-    "id": "haahka",
-    "name": "Haahka"
+    "id": "haahka"
   },
   {
-    "id": "haapana",
-    "name": "Haapana"
+    "id": "haapana"
   },
   {
-    "id": "haarahaukka",
-    "name": "Haarahaukka"
+    "id": "haarahaukka"
   },
   {
-    "id": "haarapaasky",
-    "name": "Haarapääsky"
+    "id": "haarapaasky"
   },
   {
-    "id": "harakka",
-    "name": "Harakka"
+    "id": "harakka"
   },
   {
-    "id": "harjalintu",
-    "name": "Harjalintu"
+    "id": "harjalintu"
   },
   {
-    "id": "harkalintu",
-    "name": "Härkälintu"
+    "id": "harkalintu"
   },
   {
-    "id": "harmaahaikara",
-    "name": "Harmaahaikara"
+    "id": "harmaahaikara"
   },
   {
-    "id": "harmaalokki",
-    "name": "Harmaalokki"
+    "id": "harmaalokki"
   },
   {
-    "id": "harmaapaatikka",
-    "name": "Harmaapäätikka"
+    "id": "harmaapaatikka"
   },
   {
-    "id": "harmaasieppo",
-    "name": "Harmaasieppo"
+    "id": "harmaasieppo"
   },
   {
-    "id": "harmaasirkku",
-    "name": "Harmaasirkku"
+    "id": "harmaasirkku"
   },
   {
-    "id": "harmaasorsa",
-    "name": "Harmaasorsa"
+    "id": "harmaasorsa"
   },
   {
-    "id": "heinakurppa",
-    "name": "Heinäkurppa"
+    "id": "heinakurppa"
   },
   {
-    "id": "heinatavi",
-    "name": "Heinätavi"
+    "id": "heinatavi"
   },
   {
-    "id": "helmipollo",
-    "name": "Helmipöllö"
+    "id": "helmipollo"
   },
   {
-    "id": "hemppo",
-    "name": "Hemppo"
+    "id": "hemppo"
   },
   {
-    "id": "hernekerttu",
-    "name": "Hernekerttu"
+    "id": "hernekerttu"
   },
   {
-    "id": "hiirihaukka",
-    "name": "Hiirihaukka"
+    "id": "hiirihaukka"
   },
   {
-    "id": "hiiripollo",
-    "name": "Hiiripöllö"
+    "id": "hiiripollo"
   },
   {
-    "id": "hippiainen",
-    "name": "Hippiäinen"
+    "id": "hippiainen"
   },
   {
-    "id": "hippiaisuunilintu",
-    "name": "Hippiäisuunilintu"
+    "id": "hippiaisuunilintu"
   },
   {
-    "id": "homotiainen",
-    "name": "Hömötiainen"
+    "id": "homotiainen"
   },
   {
-    "id": "huuhkaja",
-    "name": "Huuhkaja"
+    "id": "huuhkaja"
   },
   {
-    "id": "idanmehilaishaukka",
-    "name": "Idänmehiläishaukka"
+    "id": "idanmehilaishaukka"
   },
   {
-    "id": "idanpikkusieppo",
-    "name": "Idänpikkusieppo"
+    "id": "idanpikkusieppo"
   },
   {
-    "id": "idanuunilintu",
-    "name": "Idänuunilintu"
+    "id": "idanuunilintu"
   },
   {
-    "id": "isohaarahaukka",
-    "name": "Isohaarahaukka"
+    "id": "isohaarahaukka"
   },
   {
-    "id": "isokapylintu",
-    "name": "Isokäpylintu"
+    "id": "isokapylintu"
   },
   {
-    "id": "isokoskelo",
-    "name": "Isokoskelo"
+    "id": "isokoskelo"
   },
   {
-    "id": "isolepinkainen",
-    "name": "Isolepinkäinen"
+    "id": "isolepinkainen"
   },
   {
-    "id": "isolokki",
-    "name": "Isolokki"
+    "id": "isolokki"
   },
   {
-    "id": "isosirri",
-    "name": "Isosirri"
+    "id": "isosirri"
   },
   {
-    "id": "jaakuikka",
-    "name": "Jääkuikka"
+    "id": "jaakuikka"
   },
   {
-    "id": "jaalokki",
-    "name": "Jäälokki"
+    "id": "jaalokki"
   },
   {
-    "id": "jalohaikara",
-    "name": "Jalohaikara"
+    "id": "jalohaikara"
   },
   {
-    "id": "jankakurppa",
-    "name": "Jänkäkurppa"
+    "id": "jankakurppa"
   },
   {
-    "id": "jankasirriainen",
-    "name": "Jänkäsirriäinen"
+    "id": "jankasirriainen"
   },
   {
-    "id": "jarripeippo",
-    "name": "Järripeippo"
+    "id": "jarripeippo"
   },
   {
-    "id": "jouhisorsa",
-    "name": "Jouhisorsa"
+    "id": "jouhisorsa"
   },
   {
-    "id": "kaakkuri",
-    "name": "Kaakkuri"
+    "id": "kaakkuri"
   },
   {
-    "id": "kaenpiika",
-    "name": "Käenpiika"
+    "id": "kaenpiika"
   },
   {
-    "id": "kaitanokkalokki",
-    "name": "Kaitanokkalokki"
+    "id": "kaitanokkalokki"
   },
   {
-    "id": "kaki",
-    "name": "Käki"
+    "id": "kaki"
   },
   {
-    "id": "kalalokki",
-    "name": "Kalalokki"
+    "id": "kalalokki"
   },
   {
-    "id": "kalatiira",
-    "name": "Kalatiira"
+    "id": "kalatiira"
   },
   {
-    "id": "kalliopaasky",
-    "name": "Kalliopääsky"
+    "id": "kalliopaasky"
   },
   {
-    "id": "kanadanhanhi",
-    "name": "Kanadanhanhi"
+    "id": "kanadanhanhi"
   },
   {
-    "id": "kanahaukka",
-    "name": "Kanahaukka"
+    "id": "kanahaukka"
   },
   {
-    "id": "kangaskiuru",
-    "name": "Kangaskiuru"
+    "id": "kangaskiuru"
   },
   {
-    "id": "kapustarinta",
-    "name": "Kapustarinta"
+    "id": "kapustarinta"
   },
   {
-    "id": "kapytikka",
-    "name": "Käpytikka"
+    "id": "kapytikka"
   },
   {
-    "id": "karikukko",
-    "name": "Karikukko"
+    "id": "karikukko"
   },
   {
-    "id": "karimetso",
-    "name": "Karimetso"
+    "id": "karimetso"
   },
   {
-    "id": "kattohaikara",
-    "name": "Kattohaikara"
+    "id": "kattohaikara"
   },
   {
-    "id": "kaulushaikara",
-    "name": "Kaulushaikara"
+    "id": "kaulushaikara"
   },
   {
-    "id": "kehraaja",
-    "name": "Kehrääjä"
+    "id": "kehraaja"
   },
   {
-    "id": "keltahemppo",
-    "name": "Keltahemppo"
+    "id": "keltahemppo"
   },
   {
-    "id": "keltajalkaviklo",
-    "name": "Keltajalkaviklo"
+    "id": "keltajalkaviklo"
   },
   {
-    "id": "keltasirkku",
-    "name": "Keltasirkku"
+    "id": "keltasirkku"
   },
   {
-    "id": "keltavastarakki",
-    "name": "Keltavästäräkki"
+    "id": "keltavastarakki"
   },
   {
-    "id": "kerakurmitsa",
-    "name": "Keräkurmitsa"
+    "id": "kerakurmitsa"
   },
   {
-    "id": "kesykyyhkypulu",
-    "name": "Kesykyyhky (pulu)"
+    "id": "kesykyyhkypulu"
   },
   {
-    "id": "kettusirkku",
-    "name": "Kettusirkku"
+    "id": "kettusirkku"
   },
   {
-    "id": "kiiruna",
-    "name": "Kiiruna"
+    "id": "kiiruna"
   },
   {
-    "id": "kiljuhanhi",
-    "name": "Kiljuhanhi"
+    "id": "kiljuhanhi"
   },
   {
-    "id": "kiljukotka",
-    "name": "Kiljukotka"
+    "id": "kiljukotka"
   },
   {
-    "id": "kirjokerttu",
-    "name": "Kirjokerttu"
+    "id": "kirjokerttu"
   },
   {
-    "id": "kirjosieppo",
-    "name": "Kirjosieppo"
+    "id": "kirjosieppo"
   },
   {
-    "id": "kirjosiipikapylintu",
-    "name": "Kirjosiipikäpylintu"
+    "id": "kirjosiipikapylintu"
   },
   {
-    "id": "kiuru",
-    "name": "Kiuru"
+    "id": "kiuru"
   },
   {
-    "id": "kivitasku",
-    "name": "Kivitasku"
+    "id": "kivitasku"
   },
   {
-    "id": "korppi",
-    "name": "Korppi"
+    "id": "korppi"
   },
   {
-    "id": "koskikara",
-    "name": "Koskikara"
+    "id": "koskikara"
   },
   {
-    "id": "kottarainen",
-    "name": "Kottarainen"
+    "id": "kottarainen"
   },
   {
-    "id": "kuhankeittaja",
-    "name": "Kuhankeittäjä"
+    "id": "kuhankeittaja"
   },
   {
-    "id": "kuikka",
-    "name": "Kuikka"
+    "id": "kuikka"
   },
   {
-    "id": "kulorastas",
-    "name": "Kulorastas"
+    "id": "kulorastas"
   },
   {
-    "id": "kultarinta",
-    "name": "Kultarinta"
+    "id": "kultarinta"
   },
   {
-    "id": "kultasirkku",
-    "name": "Kultasirkku"
+    "id": "kultasirkku"
   },
   {
-    "id": "kuningaskalastaja",
-    "name": "Kuningaskalastaja"
+    "id": "kuningaskalastaja"
   },
   {
-    "id": "kuovi",
-    "name": "Kuovi"
+    "id": "kuovi"
   },
   {
-    "id": "kuovisirri",
-    "name": "Kuovisirri"
+    "id": "kuovisirri"
   },
   {
-    "id": "kurki",
-    "name": "Kurki"
+    "id": "kurki"
   },
   {
-    "id": "kurnuliejukana",
-    "name": "Kurnuliejukana"
+    "id": "kurnuliejukana"
   },
   {
-    "id": "kuukkeli",
-    "name": "Kuukkeli"
+    "id": "kuukkeli"
   },
   {
-    "id": "kuusitiainen",
-    "name": "Kuusitiainen"
+    "id": "kuusitiainen"
   },
   {
-    "id": "kyhmyhaahka",
-    "name": "Kyhmyhaahka"
+    "id": "kyhmyhaahka"
   },
   {
-    "id": "kyhmyjoutsen",
-    "name": "Kyhmyjoutsen"
+    "id": "kyhmyjoutsen"
   },
   {
-    "id": "kylapollonen",
-    "name": "Kyläpöllönen"
+    "id": "kylapollonen"
   },
   {
-    "id": "lampiviklo",
-    "name": "Lampiviklo"
+    "id": "lampiviklo"
   },
   {
-    "id": "lapasorsa",
-    "name": "Lapasorsa"
+    "id": "lapasorsa"
   },
   {
-    "id": "lapasotka",
-    "name": "Lapasotka"
+    "id": "lapasotka"
   },
   {
-    "id": "lapinkirvinen",
-    "name": "Lapinkirvinen"
+    "id": "lapinkirvinen"
   },
   {
-    "id": "lapinpollo",
-    "name": "Lapinpöllö"
+    "id": "lapinpollo"
   },
   {
-    "id": "lapinsirkku",
-    "name": "Lapinsirkku"
+    "id": "lapinsirkku"
   },
   {
-    "id": "lapinsirri",
-    "name": "Lapinsirri"
+    "id": "lapinsirri"
   },
   {
-    "id": "lapintiainen",
-    "name": "Lapintiainen"
+    "id": "lapintiainen"
   },
   {
-    "id": "lapintiira",
-    "name": "Lapintiira"
+    "id": "lapintiira"
   },
   {
-    "id": "laulujoutsen",
-    "name": "Laulujoutsen"
+    "id": "laulujoutsen"
   },
   {
-    "id": "laulurastas",
-    "name": "Laulurastas"
+    "id": "laulurastas"
   },
   {
-    "id": "lehmahaikara",
-    "name": "Lehmähaikara"
+    "id": "lehmahaikara"
   },
   {
-    "id": "lehtokerttu",
-    "name": "Lehtokerttu"
+    "id": "lehtokerttu"
   },
   {
-    "id": "lehtokurppa",
-    "name": "Lehtokurppa"
+    "id": "lehtokurppa"
   },
   {
-    "id": "lehtopollo",
-    "name": "Lehtopöllö"
+    "id": "lehtopollo"
   },
   {
-    "id": "leppalintu",
-    "name": "Leppälintu"
+    "id": "leppalintu"
   },
   {
-    "id": "leveapyrstokihu",
-    "name": "Leveäpyrstökihu"
+    "id": "leveapyrstokihu"
   },
   {
-    "id": "liejukana",
-    "name": "Liejukana"
+    "id": "liejukana"
   },
   {
-    "id": "liro",
-    "name": "Liro"
+    "id": "liro"
   },
   {
-    "id": "luhtahuitti",
-    "name": "Luhtahuitti"
+    "id": "luhtahuitti"
   },
   {
-    "id": "luhtakana",
-    "name": "Luhtakana"
+    "id": "luhtakana"
   },
   {
-    "id": "luhtakerttunen",
-    "name": "Luhtakerttunen"
+    "id": "luhtakerttunen"
   },
   {
-    "id": "lunni",
-    "name": "Lunni"
+    "id": "lunni"
   },
   {
-    "id": "luotokirvinen",
-    "name": "Luotokirvinen"
+    "id": "luotokirvinen"
   },
   {
-    "id": "lyhytnokkahanhi",
-    "name": "Lyhytnokkahanhi"
+    "id": "lyhytnokkahanhi"
   },
   {
-    "id": "lyhytvarvaskiuru",
-    "name": "Lyhytvarvaskiuru"
+    "id": "lyhytvarvaskiuru"
   },
   {
-    "id": "maakotka",
-    "name": "Maakotka"
+    "id": "maakotka"
   },
   {
-    "id": "mandariinisorsa",
-    "name": "Mandariinisorsa"
+    "id": "mandariinisorsa"
   },
   {
-    "id": "mantysirkku",
-    "name": "Mäntysirkku"
+    "id": "mantysirkku"
   },
   {
-    "id": "mehilaishaukka",
-    "name": "Mehiläishaukka"
+    "id": "mehilaishaukka"
   },
   {
-    "id": "mehilaissyoja",
-    "name": "Mehiläissyöjä"
+    "id": "mehilaissyoja"
   },
   {
-    "id": "merihanhi",
-    "name": "Merihanhi"
+    "id": "merihanhi"
   },
   {
-    "id": "meriharakka",
-    "name": "Meriharakka"
+    "id": "meriharakka"
   },
   {
-    "id": "merikeiju",
-    "name": "Merikeiju"
+    "id": "merikeiju"
   },
   {
-    "id": "merikihu",
-    "name": "Merikihu"
+    "id": "merikihu"
   },
   {
-    "id": "merikotka",
-    "name": "Merikotka"
+    "id": "merikotka"
   },
   {
-    "id": "merilokki",
-    "name": "Merilokki"
+    "id": "merilokki"
   },
   {
-    "id": "merimetso",
-    "name": "Merimetso"
+    "id": "merimetso"
   },
   {
-    "id": "merisirri",
-    "name": "Merisirri"
+    "id": "merisirri"
   },
   {
-    "id": "metsahanhi",
-    "name": "Metsähanhi"
+    "id": "metsahanhi"
   },
   {
-    "id": "metsakirvinen",
-    "name": "Metsäkirvinen"
+    "id": "metsakirvinen"
   },
   {
-    "id": "metsaviklo",
-    "name": "Metsäviklo"
+    "id": "metsaviklo"
   },
   {
-    "id": "metso",
-    "name": "Metso"
+    "id": "metso"
   },
   {
-    "id": "mustahaikara",
-    "name": "Mustahaikara"
+    "id": "mustahaikara"
   },
   {
-    "id": "mustajalkatylli",
-    "name": "Mustajalkatylli"
+    "id": "mustajalkatylli"
   },
   {
-    "id": "mustakaularastas",
-    "name": "Mustakaularastas"
+    "id": "mustakaularastas"
   },
   {
-    "id": "mustakaulauikku",
-    "name": "Mustakaulauikku"
+    "id": "mustakaulauikku"
   },
   {
-    "id": "mustakurkkukerttu",
-    "name": "Mustakurkkukerttu"
+    "id": "mustakurkkukerttu"
   },
   {
-    "id": "mustakurkkuuikku",
-    "name": "Mustakurkku-uikku"
+    "id": "mustakurkkuuikku"
   },
   {
-    "id": "mustaleppalintu",
-    "name": "Mustaleppälintu"
+    "id": "mustaleppalintu"
   },
   {
-    "id": "mustalintu",
-    "name": "Mustalintu"
+    "id": "mustalintu"
   },
   {
-    "id": "mustaotsalepinkainen",
-    "name": "Mustaotsalepinkäinen"
+    "id": "mustaotsalepinkainen"
   },
   {
-    "id": "mustapaakerttu",
-    "name": "Mustapääkerttu"
+    "id": "mustapaakerttu"
   },
   {
-    "id": "mustapaatasku",
-    "name": "Mustapäätasku"
+    "id": "mustapaatasku"
   },
   {
-    "id": "mustapyrstokuiri",
-    "name": "Mustapyrstökuiri"
+    "id": "mustapyrstokuiri"
   },
   {
-    "id": "mustarastas",
-    "name": "Mustarastas"
+    "id": "mustarastas"
   },
   {
-    "id": "mustatiira",
-    "name": "Mustatiira"
+    "id": "mustatiira"
   },
   {
-    "id": "mustavaris",
-    "name": "Mustavaris"
+    "id": "mustavaris"
   },
   {
-    "id": "mustaviklo",
-    "name": "Mustaviklo"
+    "id": "mustaviklo"
   },
   {
-    "id": "muuttohaukka",
-    "name": "Muuttohaukka"
+    "id": "muuttohaukka"
   },
   {
-    "id": "myrskykeiju",
-    "name": "Myrskykeiju"
+    "id": "myrskykeiju"
   },
   {
-    "id": "myrskylintu",
-    "name": "Myrskylintu"
+    "id": "myrskylintu"
   },
   {
-    "id": "naakka",
-    "name": "Naakka"
+    "id": "naakka"
   },
   {
-    "id": "narhi",
-    "name": "Närhi"
+    "id": "narhi"
   },
   {
-    "id": "naurulokki",
-    "name": "Naurulokki"
+    "id": "naurulokki"
   },
   {
-    "id": "niittykirvinen",
-    "name": "Niittykirvinen"
+    "id": "niittykirvinen"
   },
   {
-    "id": "niittysuohaukka",
-    "name": "Niittysuohaukka"
+    "id": "niittysuohaukka"
   },
   {
-    "id": "nokikana",
-    "name": "Nokikana"
+    "id": "nokikana"
   },
   {
-    "id": "nokisorsa",
-    "name": "Nokisorsa"
+    "id": "nokisorsa"
   },
   {
-    "id": "nokitasku",
-    "name": "Nokitasku"
+    "id": "nokitasku"
   },
   {
-    "id": "nokkavarpunen",
-    "name": "Nokkavarpunen"
+    "id": "nokkavarpunen"
   },
   {
-    "id": "nuolihaukka",
-    "name": "Nuolihaukka"
+    "id": "nuolihaukka"
   },
   {
-    "id": "pahkinahakki",
-    "name": "Pähkinähakki"
+    "id": "pahkinahakki"
   },
   {
-    "id": "pahkinanakkeli",
-    "name": "Pähkinänakkeli"
+    "id": "pahkinanakkeli"
   },
   {
-    "id": "pajulintu",
-    "name": "Pajulintu"
+    "id": "pajulintu"
   },
   {
-    "id": "pajusirkku",
-    "name": "Pajusirkku"
+    "id": "pajusirkku"
   },
   {
-    "id": "palokarki",
-    "name": "Palokärki"
+    "id": "palokarki"
   },
   {
-    "id": "palsasirri",
-    "name": "Palsasirri"
+    "id": "palsasirri"
   },
   {
-    "id": "peippo",
-    "name": "Peippo"
+    "id": "peippo"
   },
   {
-    "id": "peltopyy",
-    "name": "Peltopyy"
+    "id": "peltopyy"
   },
   {
-    "id": "peltosirkku",
-    "name": "Peltosirkku"
+    "id": "peltosirkku"
   },
   {
-    "id": "pensaskerttu",
-    "name": "Pensaskerttu"
+    "id": "pensaskerttu"
   },
   {
-    "id": "pensassirkkalintu",
-    "name": "Pensassirkkalintu"
+    "id": "pensassirkkalintu"
   },
   {
-    "id": "pensastasku",
-    "name": "Pensastasku"
+    "id": "pensastasku"
   },
   {
-    "id": "pensasvarpunen",
-    "name": "Pensasvarpunen"
+    "id": "pensasvarpunen"
   },
   {
-    "id": "peukaloinen",
-    "name": "Peukaloinen"
+    "id": "peukaloinen"
   },
   {
-    "id": "piekana",
-    "name": "Piekana"
+    "id": "piekana"
   },
   {
-    "id": "pikkuhuitti",
-    "name": "Pikkuhuitti"
+    "id": "pikkuhuitti"
   },
   {
-    "id": "pikkujoutsen",
-    "name": "Pikkujoutsen"
+    "id": "pikkujoutsen"
   },
   {
-    "id": "pikkukajava",
-    "name": "Pikkukajava"
+    "id": "pikkukajava"
   },
   {
-    "id": "pikkukanadanhanhi",
-    "name": "Pikkukanadanhanhi"
+    "id": "pikkukanadanhanhi"
   },
   {
-    "id": "pikkukapylintu",
-    "name": "Pikkukäpylintu"
+    "id": "pikkukapylintu"
   },
   {
-    "id": "pikkukiljukotka",
-    "name": "Pikkukiljukotka"
+    "id": "pikkukiljukotka"
   },
   {
-    "id": "pikkukorppikotka",
-    "name": "Pikkukorppikotka"
+    "id": "pikkukorppikotka"
   },
   {
-    "id": "pikkukuovi",
-    "name": "Pikkukuovi"
+    "id": "pikkukuovi"
   },
   {
-    "id": "pikkulepinkainen",
-    "name": "Pikkulepinkäinen"
+    "id": "pikkulepinkainen"
   },
   {
-    "id": "pikkulokki",
-    "name": "Pikkulokki"
+    "id": "pikkulokki"
   },
   {
-    "id": "pikkusieppo",
-    "name": "Pikkusieppo"
+    "id": "pikkusieppo"
   },
   {
-    "id": "pikkusirkku",
-    "name": "Pikkusirkku"
+    "id": "pikkusirkku"
   },
   {
-    "id": "pikkusirri",
-    "name": "Pikkusirri"
+    "id": "pikkusirri"
   },
   {
-    "id": "pikkutiira",
-    "name": "Pikkutiira"
+    "id": "pikkutiira"
   },
   {
-    "id": "pikkutikka",
-    "name": "Pikkutikka"
+    "id": "pikkutikka"
   },
   {
-    "id": "pikkutuulihaukka",
-    "name": "Pikkutuulihaukka"
+    "id": "pikkutuulihaukka"
   },
   {
-    "id": "pikkutylli",
-    "name": "Pikkutylli"
+    "id": "pikkutylli"
   },
   {
-    "id": "pikkuuikku",
-    "name": "Pikku-uikku"
+    "id": "pikkuuikku"
   },
   {
-    "id": "pikkuvarpunen",
-    "name": "Pikkuvarpunen"
+    "id": "pikkuvarpunen"
   },
   {
-    "id": "pilkkasiipi",
-    "name": "Pilkkasiipi"
+    "id": "pilkkasiipi"
   },
   {
-    "id": "pohjansirkku",
-    "name": "Pohjansirkku"
+    "id": "pohjansirkku"
   },
   {
-    "id": "pohjantikka",
-    "name": "Pohjantikka"
+    "id": "pohjantikka"
   },
   {
-    "id": "pronssiiibis",
-    "name": "Pronssi-iibis"
+    "id": "pronssiiibis"
   },
   {
-    "id": "pulmunen",
-    "name": "Pulmunen"
+    "id": "pulmunen"
   },
   {
-    "id": "pulmussirri",
-    "name": "Pulmussirri"
+    "id": "pulmussirri"
   },
   {
-    "id": "punajalkahaukka",
-    "name": "Punajalkahaukka"
+    "id": "punajalkahaukka"
   },
   {
-    "id": "punajalkaviklo",
-    "name": "Punajalkaviklo"
+    "id": "punajalkaviklo"
   },
   {
-    "id": "punakaulahanhi",
-    "name": "Punakaulahanhi"
+    "id": "punakaulahanhi"
   },
   {
-    "id": "punakuiri",
-    "name": "Punakuiri"
+    "id": "punakuiri"
   },
   {
-    "id": "punakylkirastas",
-    "name": "Punakylkirastas"
+    "id": "punakylkirastas"
   },
   {
-    "id": "punapaanarsku",
-    "name": "Punapäänarsku"
+    "id": "punapaanarsku"
   },
   {
-    "id": "punarinta",
-    "name": "Punarinta"
+    "id": "punarinta"
   },
   {
-    "id": "punasotka",
-    "name": "Punasotka"
+    "id": "punasotka"
   },
   {
-    "id": "punatulkku",
-    "name": "Punatulkku"
+    "id": "punatulkku"
   },
   {
-    "id": "punavarpunen",
-    "name": "Punavarpunen"
+    "id": "punavarpunen"
   },
   {
-    "id": "pussitiainen",
-    "name": "Pussitiainen"
+    "id": "pussitiainen"
   },
   {
-    "id": "puukiipija",
-    "name": "Puukiipijä"
+    "id": "puukiipija"
   },
   {
-    "id": "pyrstotiainen",
-    "name": "Pyrstötiainen"
+    "id": "pyrstotiainen"
   },
   {
-    "id": "pyy",
-    "name": "Pyy"
+    "id": "pyy"
   },
   {
-    "id": "rakattirastas",
-    "name": "Räkättirastas"
+    "id": "rakattirastas"
   },
   {
-    "id": "rantakurvi",
-    "name": "Rantakurvi"
+    "id": "rantakurvi"
   },
   {
-    "id": "rantasipi",
-    "name": "Rantasipi"
+    "id": "rantasipi"
   },
   {
-    "id": "rastaskerttunen",
-    "name": "Rastaskerttunen"
+    "id": "rastaskerttunen"
   },
   {
-    "id": "rautiainen",
-    "name": "Rautiainen"
+    "id": "rautiainen"
   },
   {
-    "id": "rayska",
-    "name": "Räyskä"
+    "id": "rayska"
   },
   {
-    "id": "raystaspaasky",
-    "name": "Räystäspääsky"
+    "id": "raystaspaasky"
   },
   {
-    "id": "riekko",
-    "name": "Riekko"
+    "id": "riekko"
   },
   {
-    "id": "riskila",
-    "name": "Riskilä"
+    "id": "riskila"
   },
   {
-    "id": "ristisorsa",
-    "name": "Ristisorsa"
+    "id": "ristisorsa"
   },
   {
-    "id": "riuttatiira",
-    "name": "Riuttatiira"
+    "id": "riuttatiira"
   },
   {
-    "id": "ruisraakka",
-    "name": "Ruisrääkkä"
+    "id": "ruisraakka"
   },
   {
-    "id": "ruokki",
-    "name": "Ruokki"
+    "id": "ruokki"
   },
   {
-    "id": "ruokokerttunen",
-    "name": "Ruokokerttunen"
+    "id": "ruokokerttunen"
   },
   {
-    "id": "ruokosirkkalintu",
-    "name": "Ruokosirkkalintu"
+    "id": "ruokosirkkalintu"
   },
   {
-    "id": "ruostesorsa",
-    "name": "Ruostesorsa"
+    "id": "ruostesorsa"
   },
   {
-    "id": "ruskosotka",
-    "name": "Ruskosotka"
+    "id": "ruskosotka"
   },
   {
-    "id": "ruskosuohaukka",
-    "name": "Ruskosuohaukka"
+    "id": "ruskosuohaukka"
   },
   {
-    "id": "rusorintakerttu",
-    "name": "Rusorintakerttu"
+    "id": "rusorintakerttu"
   },
   {
-    "id": "rytikerttunen",
-    "name": "Rytikerttunen"
+    "id": "rytikerttunen"
   },
   {
-    "id": "saaksi",
-    "name": "Sääksi"
+    "id": "saaksi"
   },
   {
-    "id": "samettipaakerttu",
-    "name": "Samettipääkerttu"
+    "id": "samettipaakerttu"
   },
   {
-    "id": "sarvipollo",
-    "name": "Sarvipöllö"
+    "id": "sarvipollo"
   },
   {
-    "id": "satakieli",
-    "name": "Satakieli"
+    "id": "satakieli"
   },
   {
-    "id": "selkalokki",
-    "name": "Selkälokki"
+    "id": "selkalokki"
   },
   {
-    "id": "sepelhanhi",
-    "name": "Sepelhanhi"
+    "id": "sepelhanhi"
   },
   {
-    "id": "sepelkyyhky",
-    "name": "Sepelkyyhky"
+    "id": "sepelkyyhky"
   },
   {
-    "id": "sepelrastas",
-    "name": "Sepelrastas"
+    "id": "sepelrastas"
   },
   {
-    "id": "sepelsieppo",
-    "name": "Sepelsieppo"
+    "id": "sepelsieppo"
   },
   {
-    "id": "silkkihaikara",
-    "name": "Silkkihaikara"
+    "id": "silkkihaikara"
   },
   {
-    "id": "silkkiuikku",
-    "name": "Silkkiuikku"
+    "id": "silkkiuikku"
   },
   {
-    "id": "sinipyrsto",
-    "name": "Sinipyrstö"
+    "id": "sinipyrsto"
   },
   {
-    "id": "sinirastas",
-    "name": "Sinirastas"
+    "id": "sinirastas"
   },
   {
-    "id": "sinirinta",
-    "name": "Sinirinta"
+    "id": "sinirinta"
   },
   {
-    "id": "sinisorsa",
-    "name": "Sinisorsa"
+    "id": "sinisorsa"
   },
   {
-    "id": "sinisuohaukka",
-    "name": "Sinisuohaukka"
+    "id": "sinisuohaukka"
   },
   {
-    "id": "sinitiainen",
-    "name": "Sinitiainen"
+    "id": "sinitiainen"
   },
   {
-    "id": "sirittaja",
-    "name": "Sirittäjä"
+    "id": "sirittaja"
   },
   {
-    "id": "sitruunahemppo",
-    "name": "Sitruunahemppo"
+    "id": "sitruunahemppo"
   },
   {
-    "id": "sitruunavastarakki",
-    "name": "Sitruunavästäräkki"
+    "id": "sitruunavastarakki"
   },
   {
-    "id": "suokukko",
-    "name": "Suokukko"
+    "id": "suokukko"
   },
   {
-    "id": "suopollo",
-    "name": "Suopöllö"
+    "id": "suopollo"
   },
   {
-    "id": "suosirri",
-    "name": "Suosirri"
+    "id": "suosirri"
   },
   {
-    "id": "taigauunilintu",
-    "name": "Taigauunilintu"
+    "id": "taigauunilintu"
   },
   {
-    "id": "taivaanvuohi",
-    "name": "Taivaanvuohi"
+    "id": "taivaanvuohi"
   },
   {
-    "id": "talitiainen",
-    "name": "Talitiainen"
+    "id": "talitiainen"
   },
   {
-    "id": "tammitikka",
-    "name": "Tammitikka"
+    "id": "tammitikka"
   },
   {
-    "id": "tavi",
-    "name": "Tavi"
+    "id": "tavi"
   },
   {
-    "id": "taviokuurna",
-    "name": "Taviokuurna"
+    "id": "taviokuurna"
   },
   {
-    "id": "teeri",
-    "name": "Teeri"
+    "id": "teeri"
   },
   {
-    "id": "telkka",
-    "name": "Telkkä"
+    "id": "telkka"
   },
   {
-    "id": "tervapaasky",
-    "name": "Tervapääsky"
+    "id": "tervapaasky"
   },
   {
-    "id": "tiibetinhanhi",
-    "name": "Tiibetinhanhi"
+    "id": "tiibetinhanhi"
   },
   {
-    "id": "tiiralokki",
-    "name": "Tiiralokki"
+    "id": "tiiralokki"
   },
   {
-    "id": "tikli",
-    "name": "Tikli"
+    "id": "tikli"
   },
   {
-    "id": "tilhi",
-    "name": "Tilhi"
+    "id": "tilhi"
   },
   {
-    "id": "tiltaltti",
-    "name": "Tiltaltti"
+    "id": "tiltaltti"
   },
   {
-    "id": "tormapaasky",
-    "name": "Törmäpääsky"
+    "id": "tormapaasky"
   },
   {
-    "id": "tornipollo",
-    "name": "Tornipöllö"
+    "id": "tornipollo"
   },
   {
-    "id": "toyhtohyyppa",
-    "name": "Töyhtöhyyppä"
+    "id": "toyhtohyyppa"
   },
   {
-    "id": "toyhtokiuru",
-    "name": "Töyhtökiuru"
+    "id": "toyhtokiuru"
   },
   {
-    "id": "toyhtotiainen",
-    "name": "Töyhtötiainen"
+    "id": "toyhtotiainen"
   },
   {
-    "id": "tukkakoskelo",
-    "name": "Tukkakoskelo"
+    "id": "tukkakoskelo"
   },
   {
-    "id": "tukkasotka",
-    "name": "Tukkasotka"
+    "id": "tukkasotka"
   },
   {
-    "id": "tulipaahippiainen",
-    "name": "Tulipäähippiäinen"
+    "id": "tulipaahippiainen"
   },
   {
-    "id": "tundrahanhi",
-    "name": "Tundrahanhi"
+    "id": "tundrahanhi"
   },
   {
-    "id": "tundrakurmitsa",
-    "name": "Tundrakurmitsa"
+    "id": "tundrakurmitsa"
   },
   {
-    "id": "tundrakurppelo",
-    "name": "Tundrakurppelo"
+    "id": "tundrakurppelo"
   },
   {
-    "id": "tundraurpiainen",
-    "name": "Tundraurpiainen"
+    "id": "tundraurpiainen"
   },
   {
-    "id": "tunturihaukka",
-    "name": "Tunturihaukka"
+    "id": "tunturihaukka"
   },
   {
-    "id": "tunturikihu",
-    "name": "Tunturikihu"
+    "id": "tunturikihu"
   },
   {
-    "id": "tunturikiuru",
-    "name": "Tunturikiuru"
+    "id": "tunturikiuru"
   },
   {
-    "id": "tunturipollo",
-    "name": "Tunturipöllö"
+    "id": "tunturipollo"
   },
   {
-    "id": "turkinkyyhky",
-    "name": "Turkinkyyhky"
+    "id": "turkinkyyhky"
   },
   {
-    "id": "turturikyyhky",
-    "name": "Turturikyyhky"
+    "id": "turturikyyhky"
   },
   {
-    "id": "tuulihaukka",
-    "name": "Tuulihaukka"
+    "id": "tuulihaukka"
   },
   {
-    "id": "tylli",
-    "name": "Tylli"
+    "id": "tylli"
   },
   {
-    "id": "uivelo",
-    "name": "Uivelo"
+    "id": "uivelo"
   },
   {
-    "id": "urpiainen",
-    "name": "Urpiainen"
+    "id": "urpiainen"
   },
   {
-    "id": "uuttukyyhky",
-    "name": "Uuttukyyhky"
+    "id": "uuttukyyhky"
   },
   {
-    "id": "valkoposkihanhi",
-    "name": "Valkoposkihanhi"
+    "id": "valkoposkihanhi"
   },
   {
-    "id": "valkoselkatikka",
-    "name": "Valkoselkätikka"
+    "id": "valkoselkatikka"
   },
   {
-    "id": "valkosiipitiira",
-    "name": "Valkosiipitiira"
+    "id": "valkosiipitiira"
   },
   {
-    "id": "valkoviklo",
-    "name": "Valkoviklo"
+    "id": "valkoviklo"
   },
   {
-    "id": "varis",
-    "name": "Varis"
+    "id": "varis"
   },
   {
-    "id": "varpunen",
-    "name": "Varpunen"
+    "id": "varpunen"
   },
   {
-    "id": "varpushaukka",
-    "name": "Varpushaukka"
+    "id": "varpushaukka"
   },
   {
-    "id": "varpuspollo",
-    "name": "Varpuspöllö"
+    "id": "varpuspollo"
   },
   {
-    "id": "vastarakki",
-    "name": "Västäräkki"
+    "id": "vastarakki"
   },
   {
-    "id": "vesipaasky",
-    "name": "Vesipääsky"
+    "id": "vesipaasky"
   },
   {
-    "id": "viherpeippo",
-    "name": "Viherpeippo"
+    "id": "viherpeippo"
   },
   {
-    "id": "vihertikka",
-    "name": "Vihertikka"
+    "id": "vihertikka"
   },
   {
-    "id": "vihervarpunen",
-    "name": "Vihervarpunen"
+    "id": "vihervarpunen"
   },
   {
-    "id": "viiksitimali",
-    "name": "Viiksitimali"
+    "id": "viiksitimali"
   },
   {
-    "id": "viiriainen",
-    "name": "Viiriäinen"
+    "id": "viiriainen"
   },
   {
-    "id": "viirupollo",
-    "name": "Viirupöllö"
+    "id": "viirupollo"
   },
   {
-    "id": "viitakerttunen",
-    "name": "Viitakerttunen"
+    "id": "viitakerttunen"
   },
   {
-    "id": "viitasirkkalintu",
-    "name": "Viitasirkkalintu"
+    "id": "viitasirkkalintu"
   },
   {
-    "id": "viitatiainen",
-    "name": "Viitatiainen"
+    "id": "viitatiainen"
   },
   {
-    "id": "virtavastarakki",
-    "name": "Virtavästäräkki"
+    "id": "virtavastarakki"
   },
   {
-    "id": "vuorihemppo",
-    "name": "Vuorihemppo"
+    "id": "vuorihemppo"
   },
   {
-    "id": "vuoriuunilintu",
-    "name": "Vuoriuunilintu"
+    "id": "vuoriuunilintu"
   }
 ]
