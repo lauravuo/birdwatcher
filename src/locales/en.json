@@ -374,5 +374,18 @@
 		"virtavastarakki": "Virtavästäräkki",
 		"vuorihemppo": "Vuorihemppo",
 		"vuoriuunilintu": "Vuoriuunilintu"
+	},
+	"addSighting": {
+		"bird": "Bird",
+		"filterBird": "Type to filter birds...",
+		"selectBird": "Select a bird",
+		"date": "Date",
+		"type": "Observation type",
+		"visual": "Visual",
+		"audial": "Audial",
+		"both": "Both",
+		"notes": "Notes",
+		"notesPlaceholder": "Additional notes (optional)",
+		"submit": "Add Sighting"
 	}
 }

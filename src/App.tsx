@@ -1,6 +1,7 @@
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import AddSightingButton from "./components/AddSightingButton";
 import { GroupList } from "./components/Groups/GroupList";
 import { GroupMembers } from "./components/Groups/GroupMembers";
 import { Login } from "./components/Login";
@@ -94,6 +95,7 @@ function AuthenticatedApp() {
 						<GroupList onSelectGroup={setSelectedGroup} />
 					)}
 				</div>
+				<AddSightingButton />
 			</main>
 		</div>
 	);

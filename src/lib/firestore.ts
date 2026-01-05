@@ -1,4 +1,5 @@
 import {
+	addDoc,
 	arrayUnion,
 	collection,
 	doc,
@@ -8,6 +9,7 @@ import {
 	where,
 } from "firebase/firestore";
 import type { Group, UserProfile } from "../types";
+import type { Sighting } from "../types/sighting";
 import { db } from "./firebase";
 
 // --- Group Service ---
@@ -145,3 +147,13 @@ export const getGroupMembers = async (
 	const snapshot = await getDocs(q);
 	return snapshot.docs.map((d) => d.data() as UserProfile);
 };
+
+export async function addSighting(
+	sighting: Omit<Sighting, "id" | "createdAt">,
+) {
+	const docRef = await addDoc(collection(db, "sightings"), {
+		...sighting,
+		createdAt: Date.now(),
+	});
+	return docRef.id;
+}
