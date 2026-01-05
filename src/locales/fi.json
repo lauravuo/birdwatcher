@@ -1,10 +1,10 @@
 {
 	"app": {
-		"title": "Birdwatcher",
+		"title": "Lintuvahti",
 		"logout": "Kirjaudu ulos"
 	},
 	"login": {
-		"title": "Birdwatcher",
+		"title": "Lintuvahti",
 		"subtitle": "Kirjaudu sisään jatkaaksesi.",
 		"signInGoogle": "Kirjaudu Google-tilillä"
 	},
