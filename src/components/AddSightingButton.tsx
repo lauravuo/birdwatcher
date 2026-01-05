@@ -15,7 +15,7 @@ export default function AddSightingButton() {
 			<button
 				type="button"
 				onClick={() => setOpen(true)}
-				style={{ position: "fixed", bottom: 24, right: 24, zIndex: 1000 }}
+				className="add-sighting-button"
 				aria-label="Add sighting"
 			>
 				+
@@ -42,12 +42,7 @@ export default function AddSightingButton() {
 				>
 					<div
 						role="document"
-						style={{
-							background: "#fff",
-							padding: 24,
-							borderRadius: 8,
-							minWidth: 320,
-						}}
+						className="add-sighting-dialog"
 						onClick={(e) => e.stopPropagation()}
 						onKeyDown={(e) => {
 							if (e.key === "Escape") setOpen(false);

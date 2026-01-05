@@ -8,6 +8,7 @@ import { Login } from "./components/Login";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { db } from "./lib/firebase";
 import type { Group } from "./types";
+import "./App.css";
 
 function AuthenticatedApp() {
 	const { currentUser, logout } = useAuth();

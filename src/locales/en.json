@@ -37,6 +37,13 @@
 		"backButton": "← Back",
 		"membersCount": "Members"
 	},
+	"groupSightings": {
+		"title": "Sightings",
+		"loading": "Loading sightings...",
+		"failedToLoad": "Failed to load sightings.",
+		"noSightings": "No sightings yet. Be the first to add one!",
+		"unknownUser": "Unknown user"
+	},
 	"errors": {
 		"unknown": "Unknown error"
 	},
@@ -380,12 +387,29 @@
 		"filterBird": "Type to filter birds...",
 		"selectBird": "Select a bird",
 		"date": "Date",
+		"time": "Time",
 		"type": "Observation type",
 		"visual": "Visual",
 		"audial": "Audial",
 		"both": "Both",
+		"location": "Location",
+		"getCurrentLocation": "Get Current Location",
+		"gettingLocation": "Getting location...",
+		"clearLocation": "Clear",
+		"latitude": "Latitude",
+		"longitude": "Longitude",
+		"locationName": "Location name",
+		"locationNamePlaceholder": "e.g., Central Park, Helsinki",
+		"optional": "optional",
+		"locationNotSupported": "Geolocation is not supported by your browser",
+		"locationError": "Error getting location",
+		"locationPermissionDenied": "Location permission denied. Please enable location access in your browser settings.",
+		"locationUnavailable": "Location information is unavailable",
+		"locationTimeout": "Location request timed out",
 		"notes": "Notes",
 		"notesPlaceholder": "Additional notes (optional)",
-		"submit": "Add Sighting"
+		"submit": "Add Sighting",
+		"submitting": "Submitting...",
+		"submitError": "Failed to add sighting. Please try again."
 	}
 }

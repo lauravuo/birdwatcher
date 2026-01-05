@@ -37,6 +37,13 @@
 		"backButton": "← Takaisin",
 		"membersCount": "Jäsenet"
 	},
+	"groupSightings": {
+		"title": "Havainnot",
+		"loading": "Ladataan havaintoja...",
+		"failedToLoad": "Havaintojen lataaminen epäonnistui.",
+		"noSightings": "Ei vielä havaintoja. Ole ensimmäinen, joka lisää havainnon!",
+		"unknownUser": "Tuntematon käyttäjä"
+	},
 	"errors": {
 		"unknown": "Tuntematon virhe"
 	},
@@ -380,12 +387,29 @@
 		"filterBird": "Kirjoita lajin nimi...",
 		"selectBird": "Valitse laji",
 		"date": "Päivämäärä",
+		"time": "Aika",
 		"type": "Havaintotyyppi",
 		"visual": "Näköhavainto",
 		"audial": "Äänhavainto",
 		"both": "Molemmat",
+		"location": "Sijainti",
+		"getCurrentLocation": "Hae nykyinen sijainti",
+		"gettingLocation": "Haetaan sijaintia...",
+		"clearLocation": "Tyhjennä",
+		"latitude": "Leveysaste",
+		"longitude": "Pituusaste",
+		"locationName": "Sijainnin nimi",
+		"locationNamePlaceholder": "esim. Keskuspuisto, Helsinki",
+		"optional": "valinnainen",
+		"locationNotSupported": "Selaimesi ei tue sijaintitietoja",
+		"locationError": "Virhe haettaessa sijaintia",
+		"locationPermissionDenied": "Sijaintilupa evätty. Ota sijaintitiedot käyttöön selaimen asetuksista.",
+		"locationUnavailable": "Sijaintitiedot eivät ole saatavilla",
+		"locationTimeout": "Sijaintipyyntö ylittyi",
 		"notes": "Lisätiedot",
 		"notesPlaceholder": "Vapaaehtoiset lisätiedot",
-		"submit": "Lisää havainto"
+		"submit": "Lisää havainto",
+		"submitting": "Lisätään...",
+		"submitError": "Havainnon lisääminen epäonnistui. Yritä uudelleen."
 	}
 }

@@ -19,5 +19,17 @@ service cloud.firestore {
         (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['memberIds']))
       );
     }
+    
+    // Sightings: Authenticated users can create and read sightings
+    match /sightings/{sightingId} {
+      // Users can create sightings with their own userId
+      allow create: if request.auth != null && 
+                     request.resource.data.userId == request.auth.uid;
+      // Users can read all sightings (for group viewing)
+      allow read: if request.auth != null;
+      // Users can update/delete their own sightings
+      allow update, delete: if request.auth != null && 
+                             resource.data.userId == request.auth.uid;
+    }
   }
 }

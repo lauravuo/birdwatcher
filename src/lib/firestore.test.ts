@@ -11,6 +11,7 @@ vi.mock("firebase/firestore", async () => {
 		query: vi.fn(),
 		where: vi.fn(),
 		getDocs: vi.fn(),
+		addDoc: vi.fn(),
 		runTransaction: vi.fn(async (_db, updateFunction) => {
 			const mockTransaction = {
 				get: vi.fn(),
@@ -174,6 +175,170 @@ describe("Firestore Service", () => {
 			const { getGroupMembers } = await import("./firestore");
 			const members = await getGroupMembers([]);
 			expect(members).toEqual([]);
+		});
+	});
+
+	describe("addSighting", () => {
+		it("creates a sighting with all fields", async () => {
+			const { addDoc, collection } = await import("firebase/firestore");
+			const mockDocRef = { id: "sighting-123" };
+			const mockCollection = { id: "sightings" };
+			// @ts-expect-error: Mocking
+			vi.mocked(collection).mockReturnValue(mockCollection);
+			// @ts-expect-error: Mocking
+			vi.mocked(addDoc).mockResolvedValue(mockDocRef);
+
+			const { addSighting } = await import("./firestore");
+			const sightingId = await addSighting({
+				userId: "user-123",
+				birdId: "varis",
+				date: "2024-01-15",
+				time: "10:30",
+				type: "visual",
+				latitude: 60.1699,
+				longitude: 24.9384,
+				locationName: "Helsinki",
+				notes: "Test sighting",
+			});
+
+			expect(sightingId).toBe("sighting-123");
+			expect(addDoc).toHaveBeenCalledWith(
+				mockCollection,
+				expect.objectContaining({
+					userId: "user-123",
+					birdId: "varis",
+					date: "2024-01-15",
+					time: "10:30",
+					type: "visual",
+					latitude: 60.1699,
+					longitude: 24.9384,
+					locationName: "Helsinki",
+					notes: "Test sighting",
+					createdAt: expect.any(Number),
+				}),
+			);
+		});
+
+		it("filters out undefined values", async () => {
+			const { addDoc, collection } = await import("firebase/firestore");
+			const mockDocRef = { id: "sighting-456" };
+			const mockCollection = { id: "sightings" };
+			// @ts-expect-error: Mocking
+			vi.mocked(collection).mockReturnValue(mockCollection);
+			// @ts-expect-error: Mocking
+			vi.mocked(addDoc).mockResolvedValue(mockDocRef);
+
+			const { addSighting } = await import("./firestore");
+			await addSighting({
+				userId: "user-123",
+				birdId: "varis",
+				date: "2024-01-15",
+				type: "audial",
+				time: undefined,
+				latitude: undefined,
+				longitude: undefined,
+				locationName: undefined,
+				notes: undefined,
+			});
+
+			expect(addDoc).toHaveBeenCalledWith(
+				mockCollection,
+				expect.objectContaining({
+					userId: "user-123",
+					birdId: "varis",
+					date: "2024-01-15",
+					type: "audial",
+					createdAt: expect.any(Number),
+				}),
+			);
+
+			// Verify undefined fields are not included
+			const callArgs = vi.mocked(addDoc).mock.calls[0][1] as Record<
+				string,
+				unknown
+			>;
+			expect(callArgs).not.toHaveProperty("time");
+			expect(callArgs).not.toHaveProperty("latitude");
+			expect(callArgs).not.toHaveProperty("longitude");
+			expect(callArgs).not.toHaveProperty("locationName");
+			expect(callArgs).not.toHaveProperty("notes");
+		});
+	});
+
+	describe("getGroupSightings", () => {
+		it("fetches sightings for group members", async () => {
+			const mockSightings = [
+				{
+					id: "s1",
+					userId: "user-1",
+					birdId: "varis",
+					date: "2024-01-15",
+					type: "visual",
+					createdAt: 1705320000000,
+				},
+				{
+					id: "s2",
+					userId: "user-2",
+					birdId: "varpunen",
+					date: "2024-01-16",
+					type: "audial",
+					createdAt: 1705406400000,
+				},
+			];
+
+			const mockSnapshot = {
+				docs: mockSightings.map((s) => ({
+					id: s.id,
+					data: () => ({
+						userId: s.userId,
+						birdId: s.birdId,
+						date: s.date,
+						type: s.type,
+						createdAt: s.createdAt,
+					}),
+				})),
+			};
+
+			// @ts-expect-error: Mocking
+			vi.mocked(getDocs).mockResolvedValue(mockSnapshot);
+
+			const { getGroupSightings } = await import("./firestore");
+			const sightings = await getGroupSightings(["user-1", "user-2"]);
+
+			expect(sightings).toHaveLength(2);
+			expect(sightings[0].id).toBe("s2"); // Most recent first
+			expect(sightings[1].id).toBe("s1");
+		});
+
+		it("batches queries when more than 10 members", async () => {
+			const memberIds = Array.from({ length: 25 }, (_, i) => `user-${i}`);
+			const mockSnapshot = { docs: [] };
+
+			// @ts-expect-error: Mocking
+			vi.mocked(getDocs).mockResolvedValue(mockSnapshot);
+
+			const { getGroupSightings } = await import("./firestore");
+			await getGroupSightings(memberIds);
+
+			// Should be called 3 times (10 + 10 + 5)
+			expect(getDocs).toHaveBeenCalledTimes(3);
+		});
+
+		it("returns empty array if no member IDs", async () => {
+			const { getGroupSightings } = await import("./firestore");
+			const sightings = await getGroupSightings([]);
+			expect(sightings).toEqual([]);
+			expect(getDocs).not.toHaveBeenCalled();
+		});
+
+		it("handles errors gracefully", async () => {
+			const error = new Error("Firestore error");
+			vi.mocked(getDocs).mockRejectedValue(error);
+
+			const { getGroupSightings } = await import("./firestore");
+			await expect(getGroupSightings(["user-1"])).rejects.toThrow(
+				"Firestore error",
+			);
 		});
 	});
 });
