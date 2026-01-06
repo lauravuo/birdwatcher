@@ -115,4 +115,85 @@ test.describe("User View Pagination", () => {
 			page.getByRole("button", { name: "Load More" }),
 		).not.toBeVisible();
 	});
+
+	test("does not show Load More button when there are fewer than 20 sightings", async ({
+		page,
+	}) => {
+		// 1. Setup Data
+		const credentials = getTestUserCredentials();
+		const user = await createTestUser(
+			credentials.email,
+			credentials.password,
+			"UserPaginationTesterSmall",
+		);
+
+		await seedUserProfile({
+			id: user.uid,
+			displayName: "UserPaginationTesterSmall",
+			email: credentials.email,
+			photoURL: null,
+		});
+
+		const groupName = "User Pagination Group Small";
+		const joinCode = "user-page-group-small";
+		await seedGroup({
+			name: groupName,
+			joinCode: joinCode,
+			ownerId: user.uid,
+			memberIds: [user.uid],
+		});
+
+		// Seed only 5 sightings
+		const year = 2024;
+		const month = 0; // January
+		const monthStr = "01";
+
+		const sightings = Array.from({ length: 5 }, (_, i) => ({
+			userId: user.uid,
+			birdId: `bird-${i}`,
+			date: `${year}-${monthStr}-01`,
+			time: "12:00",
+			type: "visual",
+			locationName: `Location ${i}`,
+			createdAt: Date.now() + i * 1000,
+		}));
+
+		// @ts-expect-error: Incomplete type mock for seeding
+		await seedSightings(sightings);
+
+		// Seed stats
+		const birdIds = sightings.map((s) => s.birdId);
+		await seedUserStats(user.uid, {
+			[`${year}-${monthStr}`]: birdIds,
+		});
+
+		// 2. Sign in and Navigate
+		await page.goto("/");
+		await signInInBrowser(page, credentials.email, credentials.password);
+
+		// 3. Enter Group
+		await page.getByRole("button", { name: new RegExp(groupName) }).click();
+
+		// 4. Navigate to User View
+		await page
+			.locator(".member-item")
+			.filter({ hasText: "UserPaginationTesterSmall" })
+			.click();
+		await expect(
+			page.getByRole("heading", { name: "UserPaginationTesterSmall" }),
+		).toBeVisible();
+
+		// 5. Select correct month/year
+		await page.getByLabel("Year").selectOption(String(year));
+		await page.getByLabel("Month").selectOption(String(month));
+
+		// 6. Verify sightings are loaded
+		await expect(page.getByText("bird-4")).toBeVisible({ timeout: 10000 });
+		await expect(page.getByText("bird-0")).toBeVisible();
+
+		// 7. Click Load More should NOT be visible
+		await expect(
+			page.getByRole("button", { name: "Load More" }),
+		).not.toBeVisible();
+	});
 });
