@@ -22,6 +22,7 @@ export function UserView() {
 	const now = new Date();
 	const [selectedMonth, setSelectedMonth] = useState(now.getMonth()); // 0-11
 	const [selectedYear, setSelectedYear] = useState(now.getFullYear());
+	const [viewMode, setViewMode] = useState<"month" | "year">("month");
 	const [sightings, setSightings] = useState<Sighting[]>([]);
 	const [stats, setStats] = useState<Record<string, string[]>>({});
 	const [loading, setLoading] = useState(true);
@@ -67,9 +68,21 @@ export function UserView() {
 			}
 
 			try {
-				const startDate = `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-01`;
-				const lastDay = new Date(selectedYear, selectedMonth + 1, 0).getDate();
-				const endDate = `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-${lastDay}`;
+				let startDate: string;
+				let endDate: string;
+
+				if (viewMode === "month") {
+					startDate = `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-01`;
+					const lastDay = new Date(
+						selectedYear,
+						selectedMonth + 1,
+						0,
+					).getDate();
+					endDate = `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-${lastDay}`;
+				} else {
+					startDate = `${selectedYear}-01-01`;
+					endDate = `${selectedYear}-12-31`;
+				}
 				const cursor = isInitial
 					? undefined
 					: (lastVisibleRef.current ?? undefined);
@@ -115,7 +128,7 @@ export function UserView() {
 				setLoadingMore(false);
 			}
 		},
-		[user, selectedMonth, selectedYear, t],
+		[user, selectedMonth, selectedYear, viewMode, t],
 	);
 
 	useEffect(() => {
@@ -168,6 +181,10 @@ export function UserView() {
 		return <div className="error-message">{t("errors.userNotFound")}</div>;
 	}
 
+	const currentStatsDate = new Date();
+	const currentStatsMonthKey = `${currentStatsDate.getFullYear()}-${String(currentStatsDate.getMonth() + 1).padStart(2, "0")}`;
+	const currentStatsYearKeyPrefix = `${currentStatsDate.getFullYear()}-`;
+
 	return (
 		<div className="user-view">
 			<div className="user-view-header">
@@ -187,20 +204,41 @@ export function UserView() {
 
 			<div className="filters-container">
 				<div className="filter-group">
-					<label htmlFor="month-select">{t("common.month")}</label>
-					<select
-						id="month-select"
-						className="filter-select"
-						value={selectedMonth}
-						onChange={(e) => setSelectedMonth(Number(e.target.value))}
-					>
-						{months.map((m) => (
-							<option key={m.value} value={m.value}>
-								{m.label}
-							</option>
-						))}
-					</select>
+					<div className="view-mode-toggle">
+						<button
+							type="button"
+							className={`toggle-button ${viewMode === "month" ? "active" : ""}`}
+							onClick={() => setViewMode("month")}
+						>
+							{t("common.month")}
+						</button>
+						<button
+							type="button"
+							className={`toggle-button ${viewMode === "year" ? "active" : ""}`}
+							onClick={() => setViewMode("year")}
+						>
+							{t("common.year")}
+						</button>
+					</div>
 				</div>
+
+				{viewMode === "month" && (
+					<div className="filter-group">
+						<label htmlFor="month-select">{t("common.month")}</label>
+						<select
+							id="month-select"
+							className="filter-select"
+							value={selectedMonth}
+							onChange={(e) => setSelectedMonth(Number(e.target.value))}
+						>
+							{months.map((m) => (
+								<option key={m.value} value={m.value}>
+									{m.label}
+								</option>
+							))}
+						</select>
+					</div>
+				)}
 				<div className="filter-group">
 					<label htmlFor="year-select">{t("common.year")}</label>
 					<select
@@ -221,25 +259,20 @@ export function UserView() {
 			<div className="stats-container">
 				<div className="stat-item">
 					<div className="stat-label">
-						{months[selectedMonth].label} {selectedYear}
+						{months[currentStatsDate.getMonth()].label}{" "}
+						{currentStatsDate.getFullYear()}
 					</div>
 					<div className="stat-value">
-						{
-							(
-								stats[
-									`${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}`
-								] || []
-							).length
-						}
+						{(stats[currentStatsMonthKey] || []).length}
 					</div>
 				</div>
 				<div className="stat-item">
 					<div className="stat-label">
-						{t("common.year")} {selectedYear}
+						{t("common.year")} {currentStatsDate.getFullYear()}
 					</div>
 					<div className="stat-value">
 						{Object.entries(stats)
-							.filter(([key]) => key.startsWith(`${selectedYear}-`))
+							.filter(([key]) => key.startsWith(currentStatsYearKeyPrefix))
 							.reduce((acc, [_, birds]) => acc + birds.length, 0)}
 					</div>
 				</div>
