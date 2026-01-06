@@ -23,13 +23,13 @@ test.describe("Sightings", () => {
 	});
 
 	test("add sighting button is visible", async ({ page }) => {
-		const addButton = page.getByRole("button", { name: /add sighting/i });
+		const addButton = page.getByLabel("Add sighting");
 		await expect(addButton).toBeVisible();
 		expect(await addButton.textContent()).toBe("+");
 	});
 
 	test("opens add sighting dialog when button is clicked", async ({ page }) => {
-		const addButton = page.getByRole("button", { name: /add sighting/i });
+		const addButton = page.getByLabel("Add sighting");
 		await addButton.click();
 
 		// Dialog should be visible
@@ -39,25 +39,30 @@ test.describe("Sightings", () => {
 	});
 
 	test("can add a sighting with required fields", async ({ page }) => {
+		// Get test user UID
+		const credentials = getTestUserCredentials();
+		const user = await createTestUser(credentials.email, credentials.password);
+
 		// Create a group first
 		const joinCode = "test-sightings";
 		await seedGroup({
 			name: "Test Group",
 			joinCode,
-			ownerId: "test-user-id",
-			memberIds: ["test-user-id"],
+			ownerId: user.uid,
+			memberIds: [user.uid],
 		});
 
 		// Navigate to group
 		await page.goto(`/?group=${joinCode}`);
-		await page.waitForTimeout(1000);
+		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
+		await page.getByRole("button", { name: new RegExp(joinCode) }).click();
 
 		// Open add sighting dialog
-		const addButton = page.getByRole("button", { name: /add sighting/i });
+		const addButton = page.getByLabel("Add sighting");
 		await addButton.click();
 
 		// Fill in bird
-		const birdInput = page.getByPlaceholderText(/type to filter/i);
+		const birdInput = page.getByPlaceholder(/type to filter/i);
 		await birdInput.fill("varis");
 		await page.waitForTimeout(500);
 
@@ -68,15 +73,18 @@ test.describe("Sightings", () => {
 
 		// Date should already be filled, verify it's today
 		const dateInput = page.getByLabel(/date/i);
-		const today = new Date().toISOString().slice(0, 10);
-		await expect(dateInput).toHaveValue(today);
+		const todayFormatted = new Date().toISOString().slice(0, 10);
+		await expect(dateInput).toHaveValue(todayFormatted);
 
 		// Observation type should default to audial
 		const audialRadio = page.getByLabel(/audial/i);
 		await expect(audialRadio).toBeChecked();
 
 		// Submit button should be enabled
-		const submitButton = page.getByRole("button", { name: /add sighting/i });
+		const submitButton = page.getByRole("button", {
+			name: "Add Sighting",
+			exact: true,
+		});
 		await expect(submitButton).not.toBeDisabled();
 
 		// Submit the form
@@ -89,18 +97,21 @@ test.describe("Sightings", () => {
 	test("submit button is disabled when required fields are missing", async ({
 		page,
 	}) => {
-		const addButton = page.getByRole("button", { name: /add sighting/i });
+		const addButton = page.getByLabel("Add sighting");
 		await addButton.click();
 
-		const submitButton = page.getByRole("button", { name: /add sighting/i });
+		const submitButton = page.getByRole("button", {
+			name: "Add Sighting",
+			exact: true,
+		});
 		await expect(submitButton).toBeDisabled();
 	});
 
 	test("can filter birds in autocomplete", async ({ page }) => {
-		const addButton = page.getByRole("button", { name: /add sighting/i });
+		const addButton = page.getByLabel("Add sighting");
 		await addButton.click();
 
-		const birdInput = page.getByPlaceholderText(/type to filter/i);
+		const birdInput = page.getByPlaceholder(/type to filter/i);
 		await birdInput.fill("var");
 
 		// Wait for dropdown to appear
@@ -118,7 +129,7 @@ test.describe("Sightings", () => {
 		// Mock geolocation
 		await context.setGeolocation({ latitude: 60.1699, longitude: 24.9384 });
 
-		const addButton = page.getByRole("button", { name: /add sighting/i });
+		const addButton = page.getByLabel("Add sighting");
 		await addButton.click();
 
 		const getLocationButton = page.getByRole("button", {
@@ -153,10 +164,13 @@ test.describe("Sightings", () => {
 
 		// Navigate to group
 		await page.goto(`/?group=${joinCode}`);
-		await page.waitForTimeout(1000);
+		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
+		await page.getByRole("button", { name: new RegExp(joinCode) }).click();
 
 		// Wait for sightings section
-		await expect(page.getByText(/sightings/i)).toBeVisible({ timeout: 10000 });
+		await expect(page.getByRole("heading", { name: /sightings/i })).toBeVisible(
+			{ timeout: 10000 },
+		);
 
 		// Initially should show no sightings
 		await expect(page.getByText(/no sightings yet/i)).toBeVisible({

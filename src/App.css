@@ -6,11 +6,12 @@
 }
 
 header {
-	background: #333;
-	color: white;
+	background: var(--bg-secondary);
+	color: var(--text-primary);
 	padding: 1rem 2rem;
 	display: flex;
 	justify-content: center;
+	border-bottom: 1px solid var(--border-color);
 }
 
 .header-content {
@@ -42,10 +43,11 @@ h1 {
 .card {
 	max-width: 800px;
 	margin: 2rem auto;
-	padding: 2rem;
-	background: #1e1e1e;
+	padding: 2.5rem;
+	background: var(--bg-secondary);
 	border-radius: 12px;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+	box-shadow: var(--shadow-lg);
+	border: 1px solid var(--border-color);
 }
 
 /* Group Members */
@@ -55,7 +57,7 @@ h1 {
 	align-items: flex-start;
 	gap: 0.5rem;
 	margin-bottom: 2rem;
-	border-bottom: 1px solid #444;
+	border-bottom: 1px solid var(--border-color);
 	padding-bottom: 1rem;
 }
 
@@ -74,7 +76,7 @@ h1 {
 }
 
 .join-code {
-	color: #888;
+	color: var(--text-secondary);
 	font-family: monospace;
 }
 
@@ -91,8 +93,10 @@ h1 {
 	align-items: center;
 	gap: 1rem;
 	padding: 1rem;
-	background: #2a2a2a;
+	background: var(--bg-tertiary);
 	border-radius: 8px;
+	margin-bottom: 0.5rem;
+	/* Separating member items */
 }
 
 .member-avatar {
@@ -100,7 +104,7 @@ h1 {
 	height: 40px;
 	border-radius: 50%;
 	overflow: hidden;
-	background: #444;
+	background: var(--bg-tertiary);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -121,7 +125,7 @@ h1 {
 
 .owner-badge {
 	font-size: 0.7rem;
-	background: #646cff;
+	background: var(--accent-primary);
 	color: white;
 	padding: 0.1rem 0.4rem;
 	border-radius: 4px;
@@ -143,7 +147,7 @@ h1 {
 	width: 100%;
 	text-align: left;
 	padding: 1rem;
-	background: #2a2a2a;
+	background: var(--bg-tertiary);
 	border: 1px solid transparent;
 	border-radius: 8px;
 	color: inherit;
@@ -157,15 +161,15 @@ h1 {
 }
 
 .group-button:hover {
-	background: #333;
-	border-color: #646cff;
+	background: var(--bg-hover);
+	border-color: var(--accent-primary);
 }
 
 /* Group Sightings */
 .group-sightings-container {
 	margin-top: 2rem;
 	padding-top: 2rem;
-	border-top: 1px solid #444;
+	border-top: 1px solid var(--border-color);
 }
 
 .group-sightings-container h3 {
@@ -174,7 +178,7 @@ h1 {
 }
 
 .no-sightings {
-	color: #888;
+	color: var(--text-dim);
 	font-style: italic;
 	padding: 1rem;
 	text-align: center;
@@ -189,15 +193,18 @@ h1 {
 }
 
 .sighting-item {
-	padding: 1rem;
-	background: #2a2a2a;
+	padding: 1.25rem;
+	background: var(--bg-tertiary);
 	border-radius: 8px;
-	border: 1px solid #444;
-	transition: border-color 0.2s;
+	border: 1px solid var(--border-color);
+	transition: all 0.2s;
+	color: var(--text-primary);
 }
 
 .sighting-item:hover {
-	border-color: #646cff;
+	border-color: var(--accent-primary);
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-sm);
 }
 
 .sighting-header {
@@ -220,16 +227,16 @@ h1 {
 	align-items: flex-end;
 	gap: 0.25rem;
 	font-size: 0.9em;
-	color: #888;
+	color: var(--text-secondary);
 }
 
 .sighting-member {
 	font-weight: 500;
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--text-primary);
 }
 
 .sighting-date {
-	color: #888;
+	color: var(--text-dim);
 }
 
 .sighting-details {
@@ -242,14 +249,14 @@ h1 {
 
 .sighting-type {
 	padding: 0.25rem 0.5rem;
-	background: #646cff;
+	background: var(--accent-primary);
 	color: white;
 	border-radius: 4px;
 	font-size: 0.85em;
 }
 
 .sighting-location {
-	color: #888;
+	color: var(--text-secondary);
 	display: flex;
 	align-items: center;
 	gap: 0.25rem;
@@ -258,43 +265,11 @@ h1 {
 .sighting-notes {
 	margin-top: 0.5rem;
 	padding-top: 0.5rem;
-	border-top: 1px solid #444;
-	color: #aaa;
+	border-top: 1px solid var(--border-color);
+	color: var(--text-secondary);
 	font-style: italic;
 	font-size: 0.9em;
 	width: 100%;
-}
-
-@media (prefers-color-scheme: light) {
-	.group-sightings-container {
-		border-top-color: #ccc;
-	}
-
-	.sighting-item {
-		background: #f9f9f9;
-		border-color: #ccc;
-	}
-
-	.sighting-item:hover {
-		border-color: #646cff;
-	}
-
-	.sighting-member {
-		color: #666;
-	}
-
-	.sighting-date {
-		color: #999;
-	}
-
-	.sighting-location {
-		color: #666;
-	}
-
-	.sighting-notes {
-		border-top-color: #ccc;
-		color: #666;
-	}
 }
 
 /* Add Sighting Button */
@@ -305,7 +280,7 @@ h1 {
 	width: 56px;
 	height: 56px;
 	border-radius: 50%;
-	background-color: #646cff;
+	background-color: var(--accent-primary);
 	color: white;
 	border: none;
 	font-size: 2rem;
@@ -322,7 +297,7 @@ h1 {
 }
 
 .add-sighting-button:hover {
-	background-color: #535bf2;
+	background-color: var(--accent-hover);
 	box-shadow: 0 6px 16px rgba(100, 108, 255, 0.6);
 	transform: scale(1.05);
 }
@@ -331,35 +306,17 @@ h1 {
 	transform: scale(0.95);
 }
 
-@media (prefers-color-scheme: light) {
-	.add-sighting-button {
-		background-color: #646cff;
-		box-shadow: 0 4px 12px rgba(100, 108, 255, 0.3);
-	}
-
-	.add-sighting-button:hover {
-		background-color: #535bf2;
-		box-shadow: 0 6px 16px rgba(100, 108, 255, 0.5);
-	}
-}
-
 /* Add Sighting Dialog */
 .add-sighting-dialog {
-	background: #1e1e1e;
-	color: rgba(255, 255, 255, 0.87);
+	background: var(--bg-secondary);
+	color: var(--text-primary);
 	padding: 24px;
 	border-radius: 8px;
 	min-width: 320px;
 	max-width: 500px;
 	max-height: 90vh;
 	overflow-y: auto;
-}
-
-@media (prefers-color-scheme: light) {
-	.add-sighting-dialog {
-		background: #ffffff;
-		color: #213547;
-	}
+	box-shadow: var(--shadow-lg);
 }
 
 /* Add Sighting Form */
@@ -373,7 +330,7 @@ h1 {
 
 .add-sighting-form label {
 	font-weight: 500;
-	color: inherit;
+	color: var(--text-primary);
 }
 
 .add-sighting-form input[type="date"],
@@ -381,10 +338,10 @@ h1 {
 .form-textarea {
 	width: 100%;
 	padding: 8px 12px;
-	border: 1px solid #444;
+	border: 1px solid var(--border-color);
 	border-radius: 6px;
-	background: #2a2a2a;
-	color: rgba(255, 255, 255, 0.87);
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
 	font-family: inherit;
 	font-size: 1em;
 }
@@ -392,24 +349,14 @@ h1 {
 .add-sighting-form input[type="date"]:focus,
 .form-input:focus,
 .form-textarea:focus {
-	outline: 2px solid #646cff;
+	outline: 2px solid var(--accent-primary);
 	outline-offset: 2px;
-	border-color: #646cff;
+	border-color: var(--accent-primary);
 }
 
 .form-textarea {
 	resize: vertical;
 	min-height: 80px;
-}
-
-@media (prefers-color-scheme: light) {
-	.add-sighting-form input[type="date"],
-	.form-input,
-	.form-textarea {
-		background: #f9f9f9;
-		color: #213547;
-		border-color: #ccc;
-	}
 }
 
 /* Bird Autocomplete */
@@ -421,26 +368,18 @@ h1 {
 .bird-input {
 	width: 100%;
 	padding: 8px 12px;
-	border: 1px solid #444;
+	border: 1px solid var(--border-color);
 	border-radius: 6px;
-	background: #2a2a2a;
-	color: rgba(255, 255, 255, 0.87);
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
 	font-family: inherit;
 	font-size: 1em;
 }
 
 .bird-input:focus {
-	outline: 2px solid #646cff;
+	outline: 2px solid var(--accent-primary);
 	outline-offset: 2px;
-	border-color: #646cff;
-}
-
-@media (prefers-color-scheme: light) {
-	.bird-input {
-		background: #f9f9f9;
-		color: #213547;
-		border-color: #ccc;
-	}
+	border-color: var(--accent-primary);
 }
 
 .bird-dropdown {
@@ -449,8 +388,8 @@ h1 {
 	left: 0;
 	right: 0;
 	margin-top: 4px;
-	background: #2a2a2a;
-	border: 1px solid #444;
+	background: var(--bg-tertiary);
+	border: 1px solid var(--border-color);
 	border-radius: 6px;
 	max-height: 300px;
 	overflow-y: auto;
@@ -472,7 +411,7 @@ h1 {
 	text-align: left;
 	background: transparent;
 	border: none;
-	color: rgba(255, 255, 255, 0.87);
+	color: var(--text-primary);
 	cursor: pointer;
 	font-family: inherit;
 	font-size: 1em;
@@ -481,11 +420,11 @@ h1 {
 
 .bird-option:hover,
 .bird-option.highlighted {
-	background: #333;
+	background: var(--bg-hover);
 }
 
 .bird-option.selected {
-	background: #646cff;
+	background: var(--accent-primary);
 	color: white;
 }
 
@@ -551,7 +490,7 @@ h1 {
 
 .location-button {
 	padding: 8px 16px;
-	background: #646cff;
+	background: var(--accent-primary);
 	color: white;
 	border: none;
 	border-radius: 6px;
@@ -562,7 +501,7 @@ h1 {
 }
 
 .location-button:hover:not(:disabled) {
-	background: #535bf2;
+	background: var(--accent-hover);
 }
 
 .location-button:disabled {
@@ -573,8 +512,8 @@ h1 {
 .location-clear-button {
 	padding: 8px 16px;
 	background: transparent;
-	color: rgba(255, 255, 255, 0.7);
-	border: 1px solid #444;
+	color: var(--text-secondary);
+	border: 1px solid var(--border-color);
 	border-radius: 6px;
 	font-size: 0.9em;
 	cursor: pointer;
@@ -582,9 +521,9 @@ h1 {
 }
 
 .location-clear-button:hover {
-	background: #333;
-	border-color: #666;
-	color: rgba(255, 255, 255, 0.9);
+	background: var(--bg-hover);
+	border-color: var(--text-secondary);
+	color: var(--text-primary);
 }
 
 @media (prefers-color-scheme: light) {
@@ -614,9 +553,9 @@ h1 {
 	flex-direction: column;
 	gap: 12px;
 	padding: 12px;
-	background: #2a2a2a;
+	background: var(--bg-tertiary);
 	border-radius: 6px;
-	border: 1px solid #444;
+	border: 1px solid var(--border-color);
 }
 
 @media (prefers-color-scheme: light) {
@@ -642,18 +581,18 @@ h1 {
 	flex: 1;
 	min-width: 150px;
 	padding: 6px 10px;
-	border: 1px solid #444;
+	border: 1px solid var(--border-color);
 	border-radius: 4px;
-	background: #1e1e1e;
-	color: rgba(255, 255, 255, 0.87);
+	background: var(--bg-primary);
+	color: var(--text-primary);
 	font-family: inherit;
 	font-size: 0.9em;
 }
 
 .coordinate-input:focus {
-	outline: 2px solid #646cff;
+	outline: 2px solid var(--accent-primary);
 	outline-offset: 2px;
-	border-color: #646cff;
+	border-color: var(--accent-primary);
 }
 
 @media (prefers-color-scheme: light) {
@@ -669,7 +608,7 @@ h1 {
 	margin-top: 8px;
 	width: 100%;
 	padding: 12px;
-	background: #646cff;
+	background: var(--accent-primary);
 	color: white;
 	border: none;
 	border-radius: 6px;
@@ -682,7 +621,7 @@ h1 {
 }
 
 .submit-button:hover:not(:disabled) {
-	background: #535bf2;
+	background: var(--accent-hover);
 }
 
 .submit-button:active:not(:disabled) {

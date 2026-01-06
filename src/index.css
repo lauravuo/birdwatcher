@@ -1,11 +1,40 @@
 :root {
-	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-	line-height: 1.5;
+	/* Nature/Dark Theme Palette */
+	--bg-primary: #1a1b1e;
+	/* Deep dark grey/blue/green hint */
+	--bg-secondary: #25262b;
+	/* Slightly lighter for cards */
+	--bg-tertiary: #2c2e33;
+	/* Inputs and list items */
+	--bg-hover: #373a40;
+	/* Hover states */
+
+	--text-primary: #e6e6e6;
+	/* High contrast reading text */
+	--text-secondary: #a0a0a0;
+	/* Metadata/secondary text */
+	--text-dim: #6c7079;
+	/* Placeholder/disabled */
+
+	--accent-primary: #4dabf7;
+	/* Soft Blue for actions */
+	--accent-hover: #339af0;
+	--accent-secondary: #51cf66;
+	/* Nature green for success/highlight */
+
+	--border-color: #373a40;
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+	--shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.6;
 	font-weight: 400;
 
-	color-scheme: light dark;
-	color: rgba(255, 255, 255, 0.87);
-	background-color: #242424;
+	color-scheme: dark;
+	/* Force dark mode preference for form controls */
+	color: var(--text-primary);
+	background-color: var(--bg-primary);
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -15,11 +44,13 @@
 
 a {
 	font-weight: 500;
-	color: #646cff;
+	color: var(--accent-primary);
 	text-decoration: inherit;
+	transition: color 0.2s;
 }
+
 a:hover {
-	color: #535bf2;
+	color: var(--accent-hover);
 }
 
 body {
@@ -28,11 +59,17 @@ body {
 	place-items: center;
 	min-width: 320px;
 	min-height: 100vh;
+	background-color: var(--bg-primary);
 }
 
-h1 {
-	font-size: 3.2em;
-	line-height: 1.1;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: var(--text-primary);
+	line-height: 1.2;
 }
 
 button {
@@ -42,27 +79,19 @@ button {
 	font-size: 1em;
 	font-weight: 500;
 	font-family: inherit;
-	background-color: #1a1a1a;
+	background-color: var(--bg-tertiary);
+	/* Consistent button bg */
+	color: var(--text-primary);
 	cursor: pointer;
-	transition: border-color 0.25s;
+	transition: all 0.25s;
 }
+
 button:hover {
-	border-color: #646cff;
+	background-color: var(--bg-hover);
+	border-color: var(--accent-primary);
 }
+
 button:focus,
 button:focus-visible {
 	outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-	:root {
-		color: #213547;
-		background-color: #ffffff;
-	}
-	a:hover {
-		color: #747bff;
-	}
-	button {
-		background-color: #f9f9f9;
-	}
 }
