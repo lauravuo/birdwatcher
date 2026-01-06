@@ -364,8 +364,10 @@ describe("Firestore Service", () => {
 
 			const result = await getUserSightings("user1", startDate, endDate);
 
-			expect(result).toHaveLength(1);
-			expect(result[0].id).toBe("s1");
+			expect(result.sightings).toHaveLength(1);
+			expect(result.sightings[0].id).toBe("s1");
+			// Since only 1 doc and it's the last, it should be the cursor
+			expect(result.lastVisible).toBeDefined();
 
 			expect(query).toHaveBeenCalled();
 			expect(collection).toHaveBeenCalledWith(expect.anything(), "sightings");
@@ -373,6 +375,37 @@ describe("Firestore Service", () => {
 			expect(where).toHaveBeenCalledWith("date", ">=", startDate);
 			expect(where).toHaveBeenCalledWith("date", "<=", endDate);
 			expect(orderBy).toHaveBeenCalledWith("date", "desc");
+			expect(orderBy).toHaveBeenCalledWith("createdAt", "desc");
+		});
+
+		it("returns pagination cursor", async () => {
+			const { getDocs } = await import("firebase/firestore");
+			const mockSightings = [
+				{
+					id: "s1",
+					userId: "user-1",
+					date: "2024-01-01",
+				},
+			];
+			const mockSnapshot = {
+				docs: mockSightings.map((s) => ({
+					id: s.id,
+					data: () => s,
+					ref: { id: s.id },
+				})),
+			};
+			// @ts-expect-error: Mocking
+			vi.mocked(getDocs).mockResolvedValue(mockSnapshot);
+
+			const { getUserSightings } = await import("./firestore");
+			const { sightings, lastVisible } = await getUserSightings(
+				"user1",
+				"2024-01-01",
+				"2024-01-31",
+			);
+
+			expect(sightings).toHaveLength(1);
+			expect(lastVisible).toBeDefined();
 		});
 	});
 });

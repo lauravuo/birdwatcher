@@ -40,6 +40,15 @@ h1 {
 	object-fit: cover;
 }
 
+.user-avatar-large {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 4px solid var(--bg-secondary);
+	box-shadow: var(--shadow-md);
+}
+
 .card {
 	max-width: 800px;
 	margin: 2rem auto;

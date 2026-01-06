@@ -279,21 +279,36 @@ export const getUserSightings = async (
 	userId: string,
 	startDate: string, // YYYY-MM-DD
 	endDate: string, // YYYY-MM-DD
-): Promise<Sighting[]> => {
+	limitCount = 20,
+	lastSightingCursor?: QueryDocumentSnapshot,
+): Promise<{
+	sightings: Sighting[];
+	lastVisible: QueryDocumentSnapshot | null;
+}> => {
 	const sightingsRef = collection(db, "sightings");
-	const q = query(
-		sightingsRef,
+	const constraints: QueryConstraint[] = [
 		where("userId", "==", userId),
 		where("date", ">=", startDate),
 		where("date", "<=", endDate),
 		orderBy("date", "desc"),
 		orderBy("createdAt", "desc"),
-	);
+		limit(limitCount),
+	];
+
+	if (lastSightingCursor) {
+		constraints.push(startAfter(lastSightingCursor));
+	}
+
+	const q = query(sightingsRef, ...constraints);
 
 	const snapshot = await getDocs(q);
-	return snapshot.docs.map(
+	const sightings = snapshot.docs.map(
 		(doc) => ({ id: doc.id, ...doc.data() }) as Sighting,
 	);
+	const lastVisible =
+		snapshot.docs.length > 0 ? snapshot.docs[snapshot.docs.length - 1] : null;
+
+	return { sightings, lastVisible };
 };
 
 export const getUserStats = async (
