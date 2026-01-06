@@ -3,6 +3,19 @@
 		"title": "Birdwatcher",
 		"logout": "Logout"
 	},
+	"common": {
+		"loadMore": "Load More",
+		"loading": "Loading...",
+		"back": "Back",
+		"month": "Month",
+		"year": "Year",
+		"total": "Total"
+	},
+	"userView": {
+		"sightings": "Sightings",
+		"noSightings": "No sightings found for this period",
+		"failedToLoad": "Failed to load sightings"
+	},
 	"login": {
 		"title": "Birdwatcher",
 		"subtitle": "Please sign in to continue.",

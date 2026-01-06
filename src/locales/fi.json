@@ -3,6 +3,19 @@
 		"title": "Lintuvahti",
 		"logout": "Kirjaudu ulos"
 	},
+	"common": {
+		"loadMore": "Lataa lisää",
+		"loading": "Ladataan...",
+		"back": "Takaisin",
+		"month": "Kuukausi",
+		"year": "Vuosi",
+		"total": "Yhteensä"
+	},
+	"userView": {
+		"sightings": "Havainnot",
+		"noSightings": "Ei havaintoja tälle ajanjaksolle",
+		"failedToLoad": "Havaintojen lataaminen epäonnistui"
+	},
 	"login": {
 		"title": "Lintuvahti",
 		"subtitle": "Kirjaudu sisään jatkaaksesi.",

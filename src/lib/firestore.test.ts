@@ -22,6 +22,8 @@ vi.mock("firebase/firestore", async () => {
 			return await updateFunction(mockTransaction);
 		}),
 		arrayUnion: vi.fn((val) => ["arrayUnion", val]),
+		limit: vi.fn(),
+		startAfter: vi.fn(),
 	};
 });
 
@@ -263,11 +265,39 @@ describe("Firestore Service", () => {
 			vi.mocked(getDocs).mockResolvedValue(mockSnapshot);
 
 			const { getGroupSightings } = await import("./firestore");
-			const sightings = await getGroupSightings(["user-1", "user-2"]);
+			const { sightings } = await getGroupSightings(["user-1", "user-2"]);
 
 			expect(sightings).toHaveLength(2);
 			expect(sightings[0].id).toBe("s2"); // Most recent first
 			expect(sightings[1].id).toBe("s1");
+		});
+
+		it("returns pagination cursor", async () => {
+			const mockSightings = [
+				{
+					id: "s1",
+					userId: "user-1",
+					createdAt: 100,
+					date: "2024-01-01",
+				},
+			];
+			const mockSnapshot = {
+				docs: mockSightings.map((s) => ({
+					id: s.id,
+					data: () => s,
+					ref: { id: s.id }, // Mock ref
+				})),
+			};
+			// @ts-expect-error: Mocking
+			vi.mocked(getDocs).mockResolvedValue(mockSnapshot);
+
+			const { getGroupSightings } = await import("./firestore");
+			const { sightings, lastVisible } = await getGroupSightings(["user-1"]);
+
+			expect(sightings).toHaveLength(1);
+			expect(lastVisible).toBeDefined();
+			// @ts-expect-error: Mocking
+			expect(lastVisible.id).toBe("s1");
 		});
 
 		it("batches queries when more than 10 members", async () => {
@@ -286,7 +316,7 @@ describe("Firestore Service", () => {
 
 		it("returns empty array if no member IDs", async () => {
 			const { getGroupSightings } = await import("./firestore");
-			const sightings = await getGroupSightings([]);
+			const { sightings } = await getGroupSightings([]);
 			expect(sightings).toEqual([]);
 			expect(getDocs).not.toHaveBeenCalled();
 		});

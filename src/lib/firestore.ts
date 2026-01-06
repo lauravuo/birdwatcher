@@ -3,9 +3,13 @@ import {
 	collection,
 	doc,
 	getDocs,
+	limit,
 	orderBy,
+	type QueryConstraint,
+	type QueryDocumentSnapshot,
 	query,
 	runTransaction,
+	startAfter,
 	where,
 } from "firebase/firestore";
 
@@ -202,33 +206,69 @@ export async function addSighting(
 
 export const getGroupSightings = async (
 	memberIds: string[],
-): Promise<Sighting[]> => {
-	if (memberIds.length === 0) return [];
+	limitCount = 20,
+	lastSightingCursor?: QueryDocumentSnapshot,
+): Promise<{
+	sightings: Sighting[];
+	lastVisible: QueryDocumentSnapshot | null;
+}> => {
+	if (memberIds.length === 0) return { sightings: [], lastVisible: null };
 
 	// Firestore "in" query has a limit of 10 items
 	// If we have more than 10 members, we need to batch the queries
 	const batchSize = 10;
-	const allSightings: Sighting[] = [];
+	const allSightings: {
+		data: Sighting;
+		snapshot: QueryDocumentSnapshot;
+	}[] = [];
 
 	try {
 		for (let i = 0; i < memberIds.length; i += batchSize) {
 			const batch = memberIds.slice(i, i + batchSize);
 			if (batch.length === 0) continue;
 
-			const q = query(
-				collection(db, "sightings"),
+			const constraints: QueryConstraint[] = [
 				where("userId", "in", batch),
-			);
+				orderBy("date", "desc"),
+				orderBy("createdAt", "desc"),
+				limit(limitCount),
+			];
+
+			if (lastSightingCursor) {
+				constraints.push(startAfter(lastSightingCursor));
+			}
+
+			const q = query(collection(db, "sightings"), ...constraints);
 			const snapshot = await getDocs(q);
-			const batchSightings = snapshot.docs.map((d) => ({
-				id: d.id,
-				...(d.data() as Omit<Sighting, "id">),
-			})) as Sighting[];
-			allSightings.push(...batchSightings);
+
+			// We need to keep the snapshot to return it as cursor
+			snapshot.docs.forEach((d) => {
+				allSightings.push({
+					data: { id: d.id, ...(d.data() as Omit<Sighting, "id">) } as Sighting,
+					snapshot: d,
+				});
+			});
 		}
 
-		// Sort all sightings by createdAt descending (most recent first)
-		return allSightings.sort((a, b) => b.createdAt - a.createdAt);
+		// Sort all sightings by date descending (most recent first)
+		// For stable sort with same date, we fall back to createdAt (which matches implicit snapshot order)
+		const sortedResults = allSightings.sort((a, b) => {
+			if (b.data.date !== a.data.date) {
+				return b.data.date.localeCompare(a.data.date);
+			}
+			return b.data.createdAt - a.data.createdAt;
+		});
+
+		// Take only the requested limit
+		const slicedResults = sortedResults.slice(0, limitCount);
+
+		const sightings = slicedResults.map((r) => r.data);
+		const lastVisible =
+			slicedResults.length > 0
+				? slicedResults[slicedResults.length - 1].snapshot
+				: null;
+
+		return { sightings, lastVisible };
 	} catch (error) {
 		console.error("Error fetching group sightings:", error);
 		throw error;
@@ -247,6 +287,7 @@ export const getUserSightings = async (
 		where("date", ">=", startDate),
 		where("date", "<=", endDate),
 		orderBy("date", "desc"),
+		orderBy("createdAt", "desc"),
 	);
 
 	const snapshot = await getDocs(q);

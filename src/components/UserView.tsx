@@ -14,7 +14,7 @@ interface UserViewProps {
 }
 
 export function UserView({ user, onBack }: UserViewProps) {
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation();
 	const now = new Date();
 	const [selectedMonth, setSelectedMonth] = useState(now.getMonth()); // 0-11
 	const [selectedYear, setSelectedYear] = useState(now.getFullYear());
@@ -66,7 +66,7 @@ export function UserView({ user, onBack }: UserViewProps) {
 
 	const formatDate = (dateString: string, timeString?: string) => {
 		const date = new Date(`${dateString}T00:00:00`);
-		const dateFormatted = date.toLocaleDateString(undefined, {
+		const dateFormatted = date.toLocaleDateString(i18n.language, {
 			year: "numeric",
 			month: "short",
 			day: "numeric",
@@ -94,7 +94,7 @@ export function UserView({ user, onBack }: UserViewProps) {
 		const date = new Date(2000, i, 1);
 		return {
 			value: i,
-			label: date.toLocaleDateString(undefined, { month: "long" }),
+			label: date.toLocaleDateString(i18n.language, { month: "long" }),
 		};
 	});
 
@@ -104,7 +104,7 @@ export function UserView({ user, onBack }: UserViewProps) {
 		<div className="user-view">
 			<div className="user-view-header">
 				<button type="button" onClick={onBack} className="back-button">
-					← {t("common.back", "Back")}
+					← {t("common.back")}
 				</button>
 				<div className="user-profile-summary">
 					{user.photoURL && (
@@ -120,7 +120,7 @@ export function UserView({ user, onBack }: UserViewProps) {
 
 			<div className="filters-container">
 				<div className="filter-group">
-					<label htmlFor="month-select">{t("common.month", "Month")}</label>
+					<label htmlFor="month-select">{t("common.month")}</label>
 					<select
 						id="month-select"
 						className="filter-select"
@@ -135,7 +135,7 @@ export function UserView({ user, onBack }: UserViewProps) {
 					</select>
 				</div>
 				<div className="filter-group">
-					<label htmlFor="year-select">{t("common.year", "Year")}</label>
+					<label htmlFor="year-select">{t("common.year")}</label>
 					<select
 						id="year-select"
 						className="filter-select"
@@ -168,7 +168,7 @@ export function UserView({ user, onBack }: UserViewProps) {
 				</div>
 				<div className="stat-item">
 					<div className="stat-label">
-						{t("common.year", "Year")} {selectedYear}
+						{t("common.year")} {selectedYear}
 					</div>
 					<div className="stat-value">
 						{Object.entries(stats)
@@ -177,7 +177,7 @@ export function UserView({ user, onBack }: UserViewProps) {
 					</div>
 				</div>
 				<div className="stat-item">
-					<div className="stat-label">{t("common.total", "Total")}</div>
+					<div className="stat-label">{t("common.total")}</div>
 					<div className="stat-value">
 						{Object.values(stats).reduce((acc, birds) => acc + birds.length, 0)}
 					</div>
@@ -185,18 +185,16 @@ export function UserView({ user, onBack }: UserViewProps) {
 			</div>
 
 			{loading ? (
-				<div>{t("common.loading", "Loading...")}</div>
+				<div>{t("common.loading")}</div>
 			) : error ? (
 				<div className="error-message">{error}</div>
 			) : (
 				<div className="group-sightings-container">
 					<h3>
-						{t("userView.sightings", "Sightings")} ({sightings.length})
+						{t("userView.sightings")} ({sightings.length})
 					</h3>
 					{sightings.length === 0 ? (
-						<p className="no-sightings">
-							{t("userView.noSightings", "No sightings found for this period")}
-						</p>
+						<p className="no-sightings">{t("userView.noSightings")}</p>
 					) : (
 						<ul className="sightings-list">
 							{sightings.map((sighting) => {
