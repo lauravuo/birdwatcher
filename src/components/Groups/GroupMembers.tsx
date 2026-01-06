@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getGroupMembers } from "../../lib/firestore";
 import type { Group, UserProfile } from "../../types";
+import { GroupSightings } from "./GroupSightings";
 
 interface GroupMembersProps {
 	group: Group;
@@ -84,6 +85,8 @@ export function GroupMembers({ group, onBack }: GroupMembersProps) {
 					))}
 				</ul>
 			</div>
+
+			<GroupSightings group={group} />
 		</div>
 	);
 }

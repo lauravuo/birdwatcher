@@ -1,12 +1,14 @@
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import AddSightingButton from "./components/AddSightingButton";
 import { GroupList } from "./components/Groups/GroupList";
 import { GroupMembers } from "./components/Groups/GroupMembers";
 import { Login } from "./components/Login";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { db } from "./lib/firebase";
 import type { Group } from "./types";
+import "./App.css";
 
 function AuthenticatedApp() {
 	const { currentUser, logout } = useAuth();
@@ -94,6 +96,7 @@ function AuthenticatedApp() {
 						<GroupList onSelectGroup={setSelectedGroup} />
 					)}
 				</div>
+				<AddSightingButton />
 			</main>
 		</div>
 	);

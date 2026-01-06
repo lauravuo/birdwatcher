@@ -1,0 +1,1001 @@
+[
+	{
+		"id": "alli"
+	},
+	{
+		"id": "allihaahka"
+	},
+	{
+		"id": "alppirautiainen"
+	},
+	{
+		"id": "amerikanhaapana"
+	},
+	{
+		"id": "amerikantavi"
+	},
+	{
+		"id": "ampuhaukka"
+	},
+	{
+		"id": "aroharmaalokki"
+	},
+	{
+		"id": "arokotka"
+	},
+	{
+		"id": "arosuohaukka"
+	},
+	{
+		"id": "avosetti"
+	},
+	{
+		"id": "eskimohanhi"
+	},
+	{
+		"id": "etelanharmaalokki"
+	},
+	{
+		"id": "etelankiisla"
+	},
+	{
+		"id": "etelansatakieli"
+	},
+	{
+		"id": "fasaani"
+	},
+	{
+		"id": "haahka"
+	},
+	{
+		"id": "haapana"
+	},
+	{
+		"id": "haarahaukka"
+	},
+	{
+		"id": "haarapaasky"
+	},
+	{
+		"id": "harakka"
+	},
+	{
+		"id": "harjalintu"
+	},
+	{
+		"id": "harkalintu"
+	},
+	{
+		"id": "harmaahaikara"
+	},
+	{
+		"id": "harmaalokki"
+	},
+	{
+		"id": "harmaapaatikka"
+	},
+	{
+		"id": "harmaasieppo"
+	},
+	{
+		"id": "harmaasirkku"
+	},
+	{
+		"id": "harmaasorsa"
+	},
+	{
+		"id": "heinakurppa"
+	},
+	{
+		"id": "heinatavi"
+	},
+	{
+		"id": "helmipollo"
+	},
+	{
+		"id": "hemppo"
+	},
+	{
+		"id": "hernekerttu"
+	},
+	{
+		"id": "hiirihaukka"
+	},
+	{
+		"id": "hiiripollo"
+	},
+	{
+		"id": "hippiainen"
+	},
+	{
+		"id": "hippiaisuunilintu"
+	},
+	{
+		"id": "homotiainen"
+	},
+	{
+		"id": "huuhkaja"
+	},
+	{
+		"id": "idanmehilaishaukka"
+	},
+	{
+		"id": "idanpikkusieppo"
+	},
+	{
+		"id": "idanuunilintu"
+	},
+	{
+		"id": "isohaarahaukka"
+	},
+	{
+		"id": "isokapylintu"
+	},
+	{
+		"id": "isokoskelo"
+	},
+	{
+		"id": "isolepinkainen"
+	},
+	{
+		"id": "isolokki"
+	},
+	{
+		"id": "isosirri"
+	},
+	{
+		"id": "jaakuikka"
+	},
+	{
+		"id": "jaalokki"
+	},
+	{
+		"id": "jalohaikara"
+	},
+	{
+		"id": "jankakurppa"
+	},
+	{
+		"id": "jankasirriainen"
+	},
+	{
+		"id": "jarripeippo"
+	},
+	{
+		"id": "jouhisorsa"
+	},
+	{
+		"id": "kaakkuri"
+	},
+	{
+		"id": "kaenpiika"
+	},
+	{
+		"id": "kaitanokkalokki"
+	},
+	{
+		"id": "kaki"
+	},
+	{
+		"id": "kalalokki"
+	},
+	{
+		"id": "kalatiira"
+	},
+	{
+		"id": "kalliopaasky"
+	},
+	{
+		"id": "kanadanhanhi"
+	},
+	{
+		"id": "kanahaukka"
+	},
+	{
+		"id": "kangaskiuru"
+	},
+	{
+		"id": "kapustarinta"
+	},
+	{
+		"id": "kapytikka"
+	},
+	{
+		"id": "karikukko"
+	},
+	{
+		"id": "karimetso"
+	},
+	{
+		"id": "kattohaikara"
+	},
+	{
+		"id": "kaulushaikara"
+	},
+	{
+		"id": "kehraaja"
+	},
+	{
+		"id": "keltahemppo"
+	},
+	{
+		"id": "keltajalkaviklo"
+	},
+	{
+		"id": "keltasirkku"
+	},
+	{
+		"id": "keltavastarakki"
+	},
+	{
+		"id": "kerakurmitsa"
+	},
+	{
+		"id": "kesykyyhkypulu"
+	},
+	{
+		"id": "kettusirkku"
+	},
+	{
+		"id": "kiiruna"
+	},
+	{
+		"id": "kiljuhanhi"
+	},
+	{
+		"id": "kiljukotka"
+	},
+	{
+		"id": "kirjokerttu"
+	},
+	{
+		"id": "kirjosieppo"
+	},
+	{
+		"id": "kirjosiipikapylintu"
+	},
+	{
+		"id": "kiuru"
+	},
+	{
+		"id": "kivitasku"
+	},
+	{
+		"id": "korppi"
+	},
+	{
+		"id": "koskikara"
+	},
+	{
+		"id": "kottarainen"
+	},
+	{
+		"id": "kuhankeittaja"
+	},
+	{
+		"id": "kuikka"
+	},
+	{
+		"id": "kulorastas"
+	},
+	{
+		"id": "kultarinta"
+	},
+	{
+		"id": "kultasirkku"
+	},
+	{
+		"id": "kuningaskalastaja"
+	},
+	{
+		"id": "kuovi"
+	},
+	{
+		"id": "kuovisirri"
+	},
+	{
+		"id": "kurki"
+	},
+	{
+		"id": "kurnuliejukana"
+	},
+	{
+		"id": "kuukkeli"
+	},
+	{
+		"id": "kuusitiainen"
+	},
+	{
+		"id": "kyhmyhaahka"
+	},
+	{
+		"id": "kyhmyjoutsen"
+	},
+	{
+		"id": "kylapollonen"
+	},
+	{
+		"id": "lampiviklo"
+	},
+	{
+		"id": "lapasorsa"
+	},
+	{
+		"id": "lapasotka"
+	},
+	{
+		"id": "lapinkirvinen"
+	},
+	{
+		"id": "lapinpollo"
+	},
+	{
+		"id": "lapinsirkku"
+	},
+	{
+		"id": "lapinsirri"
+	},
+	{
+		"id": "lapintiainen"
+	},
+	{
+		"id": "lapintiira"
+	},
+	{
+		"id": "laulujoutsen"
+	},
+	{
+		"id": "laulurastas"
+	},
+	{
+		"id": "lehmahaikara"
+	},
+	{
+		"id": "lehtokerttu"
+	},
+	{
+		"id": "lehtokurppa"
+	},
+	{
+		"id": "lehtopollo"
+	},
+	{
+		"id": "leppalintu"
+	},
+	{
+		"id": "leveapyrstokihu"
+	},
+	{
+		"id": "liejukana"
+	},
+	{
+		"id": "liro"
+	},
+	{
+		"id": "luhtahuitti"
+	},
+	{
+		"id": "luhtakana"
+	},
+	{
+		"id": "luhtakerttunen"
+	},
+	{
+		"id": "lunni"
+	},
+	{
+		"id": "luotokirvinen"
+	},
+	{
+		"id": "lyhytnokkahanhi"
+	},
+	{
+		"id": "lyhytvarvaskiuru"
+	},
+	{
+		"id": "maakotka"
+	},
+	{
+		"id": "mandariinisorsa"
+	},
+	{
+		"id": "mantysirkku"
+	},
+	{
+		"id": "mehilaishaukka"
+	},
+	{
+		"id": "mehilaissyoja"
+	},
+	{
+		"id": "merihanhi"
+	},
+	{
+		"id": "meriharakka"
+	},
+	{
+		"id": "merikeiju"
+	},
+	{
+		"id": "merikihu"
+	},
+	{
+		"id": "merikotka"
+	},
+	{
+		"id": "merilokki"
+	},
+	{
+		"id": "merimetso"
+	},
+	{
+		"id": "merisirri"
+	},
+	{
+		"id": "metsahanhi"
+	},
+	{
+		"id": "metsakirvinen"
+	},
+	{
+		"id": "metsaviklo"
+	},
+	{
+		"id": "metso"
+	},
+	{
+		"id": "mustahaikara"
+	},
+	{
+		"id": "mustajalkatylli"
+	},
+	{
+		"id": "mustakaularastas"
+	},
+	{
+		"id": "mustakaulauikku"
+	},
+	{
+		"id": "mustakurkkukerttu"
+	},
+	{
+		"id": "mustakurkkuuikku"
+	},
+	{
+		"id": "mustaleppalintu"
+	},
+	{
+		"id": "mustalintu"
+	},
+	{
+		"id": "mustaotsalepinkainen"
+	},
+	{
+		"id": "mustapaakerttu"
+	},
+	{
+		"id": "mustapaatasku"
+	},
+	{
+		"id": "mustapyrstokuiri"
+	},
+	{
+		"id": "mustarastas"
+	},
+	{
+		"id": "mustatiira"
+	},
+	{
+		"id": "mustavaris"
+	},
+	{
+		"id": "mustaviklo"
+	},
+	{
+		"id": "muuttohaukka"
+	},
+	{
+		"id": "myrskykeiju"
+	},
+	{
+		"id": "myrskylintu"
+	},
+	{
+		"id": "naakka"
+	},
+	{
+		"id": "narhi"
+	},
+	{
+		"id": "naurulokki"
+	},
+	{
+		"id": "niittykirvinen"
+	},
+	{
+		"id": "niittysuohaukka"
+	},
+	{
+		"id": "nokikana"
+	},
+	{
+		"id": "nokisorsa"
+	},
+	{
+		"id": "nokitasku"
+	},
+	{
+		"id": "nokkavarpunen"
+	},
+	{
+		"id": "nuolihaukka"
+	},
+	{
+		"id": "pahkinahakki"
+	},
+	{
+		"id": "pahkinanakkeli"
+	},
+	{
+		"id": "pajulintu"
+	},
+	{
+		"id": "pajusirkku"
+	},
+	{
+		"id": "palokarki"
+	},
+	{
+		"id": "palsasirri"
+	},
+	{
+		"id": "peippo"
+	},
+	{
+		"id": "peltopyy"
+	},
+	{
+		"id": "peltosirkku"
+	},
+	{
+		"id": "pensaskerttu"
+	},
+	{
+		"id": "pensassirkkalintu"
+	},
+	{
+		"id": "pensastasku"
+	},
+	{
+		"id": "pensasvarpunen"
+	},
+	{
+		"id": "peukaloinen"
+	},
+	{
+		"id": "piekana"
+	},
+	{
+		"id": "pikkuhuitti"
+	},
+	{
+		"id": "pikkujoutsen"
+	},
+	{
+		"id": "pikkukajava"
+	},
+	{
+		"id": "pikkukanadanhanhi"
+	},
+	{
+		"id": "pikkukapylintu"
+	},
+	{
+		"id": "pikkukiljukotka"
+	},
+	{
+		"id": "pikkukorppikotka"
+	},
+	{
+		"id": "pikkukuovi"
+	},
+	{
+		"id": "pikkulepinkainen"
+	},
+	{
+		"id": "pikkulokki"
+	},
+	{
+		"id": "pikkusieppo"
+	},
+	{
+		"id": "pikkusirkku"
+	},
+	{
+		"id": "pikkusirri"
+	},
+	{
+		"id": "pikkutiira"
+	},
+	{
+		"id": "pikkutikka"
+	},
+	{
+		"id": "pikkutuulihaukka"
+	},
+	{
+		"id": "pikkutylli"
+	},
+	{
+		"id": "pikkuuikku"
+	},
+	{
+		"id": "pikkuvarpunen"
+	},
+	{
+		"id": "pilkkasiipi"
+	},
+	{
+		"id": "pohjansirkku"
+	},
+	{
+		"id": "pohjantikka"
+	},
+	{
+		"id": "pronssiiibis"
+	},
+	{
+		"id": "pulmunen"
+	},
+	{
+		"id": "pulmussirri"
+	},
+	{
+		"id": "punajalkahaukka"
+	},
+	{
+		"id": "punajalkaviklo"
+	},
+	{
+		"id": "punakaulahanhi"
+	},
+	{
+		"id": "punakuiri"
+	},
+	{
+		"id": "punakylkirastas"
+	},
+	{
+		"id": "punapaanarsku"
+	},
+	{
+		"id": "punarinta"
+	},
+	{
+		"id": "punasotka"
+	},
+	{
+		"id": "punatulkku"
+	},
+	{
+		"id": "punavarpunen"
+	},
+	{
+		"id": "pussitiainen"
+	},
+	{
+		"id": "puukiipija"
+	},
+	{
+		"id": "pyrstotiainen"
+	},
+	{
+		"id": "pyy"
+	},
+	{
+		"id": "rakattirastas"
+	},
+	{
+		"id": "rantakurvi"
+	},
+	{
+		"id": "rantasipi"
+	},
+	{
+		"id": "rastaskerttunen"
+	},
+	{
+		"id": "rautiainen"
+	},
+	{
+		"id": "rayska"
+	},
+	{
+		"id": "raystaspaasky"
+	},
+	{
+		"id": "riekko"
+	},
+	{
+		"id": "riskila"
+	},
+	{
+		"id": "ristisorsa"
+	},
+	{
+		"id": "riuttatiira"
+	},
+	{
+		"id": "ruisraakka"
+	},
+	{
+		"id": "ruokki"
+	},
+	{
+		"id": "ruokokerttunen"
+	},
+	{
+		"id": "ruokosirkkalintu"
+	},
+	{
+		"id": "ruostesorsa"
+	},
+	{
+		"id": "ruskosotka"
+	},
+	{
+		"id": "ruskosuohaukka"
+	},
+	{
+		"id": "rusorintakerttu"
+	},
+	{
+		"id": "rytikerttunen"
+	},
+	{
+		"id": "saaksi"
+	},
+	{
+		"id": "samettipaakerttu"
+	},
+	{
+		"id": "sarvipollo"
+	},
+	{
+		"id": "satakieli"
+	},
+	{
+		"id": "selkalokki"
+	},
+	{
+		"id": "sepelhanhi"
+	},
+	{
+		"id": "sepelkyyhky"
+	},
+	{
+		"id": "sepelrastas"
+	},
+	{
+		"id": "sepelsieppo"
+	},
+	{
+		"id": "silkkihaikara"
+	},
+	{
+		"id": "silkkiuikku"
+	},
+	{
+		"id": "sinipyrsto"
+	},
+	{
+		"id": "sinirastas"
+	},
+	{
+		"id": "sinirinta"
+	},
+	{
+		"id": "sinisorsa"
+	},
+	{
+		"id": "sinisuohaukka"
+	},
+	{
+		"id": "sinitiainen"
+	},
+	{
+		"id": "sirittaja"
+	},
+	{
+		"id": "sitruunahemppo"
+	},
+	{
+		"id": "sitruunavastarakki"
+	},
+	{
+		"id": "suokukko"
+	},
+	{
+		"id": "suopollo"
+	},
+	{
+		"id": "suosirri"
+	},
+	{
+		"id": "taigauunilintu"
+	},
+	{
+		"id": "taivaanvuohi"
+	},
+	{
+		"id": "talitiainen"
+	},
+	{
+		"id": "tammitikka"
+	},
+	{
+		"id": "tavi"
+	},
+	{
+		"id": "taviokuurna"
+	},
+	{
+		"id": "teeri"
+	},
+	{
+		"id": "telkka"
+	},
+	{
+		"id": "tervapaasky"
+	},
+	{
+		"id": "tiibetinhanhi"
+	},
+	{
+		"id": "tiiralokki"
+	},
+	{
+		"id": "tikli"
+	},
+	{
+		"id": "tilhi"
+	},
+	{
+		"id": "tiltaltti"
+	},
+	{
+		"id": "tormapaasky"
+	},
+	{
+		"id": "tornipollo"
+	},
+	{
+		"id": "toyhtohyyppa"
+	},
+	{
+		"id": "toyhtokiuru"
+	},
+	{
+		"id": "toyhtotiainen"
+	},
+	{
+		"id": "tukkakoskelo"
+	},
+	{
+		"id": "tukkasotka"
+	},
+	{
+		"id": "tulipaahippiainen"
+	},
+	{
+		"id": "tundrahanhi"
+	},
+	{
+		"id": "tundrakurmitsa"
+	},
+	{
+		"id": "tundrakurppelo"
+	},
+	{
+		"id": "tundraurpiainen"
+	},
+	{
+		"id": "tunturihaukka"
+	},
+	{
+		"id": "tunturikihu"
+	},
+	{
+		"id": "tunturikiuru"
+	},
+	{
+		"id": "tunturipollo"
+	},
+	{
+		"id": "turkinkyyhky"
+	},
+	{
+		"id": "turturikyyhky"
+	},
+	{
+		"id": "tuulihaukka"
+	},
+	{
+		"id": "tylli"
+	},
+	{
+		"id": "uivelo"
+	},
+	{
+		"id": "urpiainen"
+	},
+	{
+		"id": "uuttukyyhky"
+	},
+	{
+		"id": "valkoposkihanhi"
+	},
+	{
+		"id": "valkoselkatikka"
+	},
+	{
+		"id": "valkosiipitiira"
+	},
+	{
+		"id": "valkoviklo"
+	},
+	{
+		"id": "varis"
+	},
+	{
+		"id": "varpunen"
+	},
+	{
+		"id": "varpushaukka"
+	},
+	{
+		"id": "varpuspollo"
+	},
+	{
+		"id": "vastarakki"
+	},
+	{
+		"id": "vesipaasky"
+	},
+	{
+		"id": "viherpeippo"
+	},
+	{
+		"id": "vihertikka"
+	},
+	{
+		"id": "vihervarpunen"
+	},
+	{
+		"id": "viiksitimali"
+	},
+	{
+		"id": "viiriainen"
+	},
+	{
+		"id": "viirupollo"
+	},
+	{
+		"id": "viitakerttunen"
+	},
+	{
+		"id": "viitasirkkalintu"
+	},
+	{
+		"id": "viitatiainen"
+	},
+	{
+		"id": "virtavastarakki"
+	},
+	{
+		"id": "vuorihemppo"
+	},
+	{
+		"id": "vuoriuunilintu"
+	}
+]
