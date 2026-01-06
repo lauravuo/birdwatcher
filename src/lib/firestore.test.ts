@@ -10,6 +10,7 @@ vi.mock("firebase/firestore", async () => {
 		doc: vi.fn(() => ({ id: "mock-group-id" })),
 		query: vi.fn(),
 		where: vi.fn(),
+		orderBy: vi.fn(),
 		getDocs: vi.fn(),
 		addDoc: vi.fn(),
 		runTransaction: vi.fn(async (_db, updateFunction) => {
@@ -339,6 +340,50 @@ describe("Firestore Service", () => {
 			await expect(getGroupSightings(["user-1"])).rejects.toThrow(
 				"Firestore error",
 			);
+		});
+	});
+	describe("getUserSightings", () => {
+		it("fetches sightings for a user with date filters", async () => {
+			const { getDocs, query, collection, where, orderBy } = await import(
+				"firebase/firestore"
+			);
+			const mockSightings = [
+				{
+					id: "s1",
+					userId: "user-1",
+					birdId: "varis",
+					date: "2024-01-15",
+					type: "visual",
+					createdAt: 1705320000000,
+				},
+			];
+
+			const mockSnapshot = {
+				docs: mockSightings.map((s) => ({
+					id: s.id,
+					data: () => s,
+				})),
+			};
+
+			// @ts-expect-error: Mocking
+			vi.mocked(getDocs).mockResolvedValue(mockSnapshot);
+
+			const { getUserSightings } = await import("./firestore");
+
+			const startDate = "2024-01-01";
+			const endDate = "2024-01-31";
+
+			const result = await getUserSightings("user1", startDate, endDate);
+
+			expect(result).toHaveLength(1);
+			expect(result[0].id).toBe("s1");
+
+			expect(query).toHaveBeenCalled();
+			expect(collection).toHaveBeenCalledWith(expect.anything(), "sightings");
+			expect(where).toHaveBeenCalledWith("userId", "==", "user1");
+			expect(where).toHaveBeenCalledWith("date", ">=", startDate);
+			expect(where).toHaveBeenCalledWith("date", "<=", endDate);
+			expect(orderBy).toHaveBeenCalledWith("date", "desc");
 		});
 	});
 });

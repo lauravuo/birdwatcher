@@ -7,9 +7,14 @@ import { GroupSightings } from "./GroupSightings";
 interface GroupMembersProps {
 	group: Group;
 	onBack?: () => void;
+	onSelectUser: (user: UserProfile) => void;
 }
 
-export function GroupMembers({ group, onBack }: GroupMembersProps) {
+export function GroupMembers({
+	group,
+	onBack,
+	onSelectUser,
+}: GroupMembersProps) {
 	const { t } = useTranslation();
 	const [members, setMembers] = useState<UserProfile[]>([]);
 	const [loading, setLoading] = useState(true);
@@ -66,21 +71,27 @@ export function GroupMembers({ group, onBack }: GroupMembersProps) {
 				<ul className="members-list">
 					{members.map((member) => (
 						<li key={member.id} className="member-item">
-							<div className="member-avatar">
-								{member.photoURL ? (
-									<img src={member.photoURL} alt={member.displayName} />
-								) : (
-									<div className="avatar-placeholder">
-										{member.displayName.charAt(0).toUpperCase()}
-									</div>
-								)}
-							</div>
-							<div className="member-info">
-								<span className="member-name">{member.displayName}</span>
-								{member.id === group.ownerId && (
-									<span className="owner-badge">{t("groups.owner")}</span>
-								)}
-							</div>
+							<button
+								type="button"
+								className="member-item-button"
+								onClick={() => onSelectUser(member)}
+							>
+								<div className="member-avatar">
+									{member.photoURL ? (
+										<img src={member.photoURL} alt={member.displayName} />
+									) : (
+										<div className="avatar-placeholder">
+											{member.displayName.charAt(0).toUpperCase()}
+										</div>
+									)}
+								</div>
+								<div className="member-info">
+									<span className="member-name">{member.displayName}</span>
+									{member.id === group.ownerId && (
+										<span className="owner-badge">{t("groups.owner")}</span>
+									)}
+								</div>
+							</button>
 						</li>
 					))}
 				</ul>

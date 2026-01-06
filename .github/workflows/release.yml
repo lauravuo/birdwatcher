@@ -41,7 +41,7 @@ jobs:
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BIRD_WATCHER }}' > "$HOME/gcp_key.json"
           export GOOGLE_APPLICATION_CREDENTIALS="$HOME/gcp_key.json"
-          npx firebase deploy --only firestore:rules --project birdwatcher-ac749
+          npx firebase deploy --only firestore:rules,firestore:indexes --project birdwatcher-ac749
 
       - name: Cleanup Credentials
         if: always()

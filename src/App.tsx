@@ -5,15 +5,17 @@ import AddSightingButton from "./components/AddSightingButton";
 import { GroupList } from "./components/Groups/GroupList";
 import { GroupMembers } from "./components/Groups/GroupMembers";
 import { Login } from "./components/Login";
+import { UserView } from "./components/UserView";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { db } from "./lib/firebase";
-import type { Group } from "./types";
+import type { Group, UserProfile } from "./types";
 import "./App.css";
 
 function AuthenticatedApp() {
 	const { currentUser, logout } = useAuth();
 	const { t } = useTranslation();
 	const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
+	const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
 	const [groups, setGroups] = useState<Group[]>([]);
 
 	// Fetch user's groups
@@ -85,12 +87,18 @@ function AuthenticatedApp() {
 			</header>
 			<main>
 				<div className="card">
-					{selectedGroup ? (
+					{selectedUser ? (
+						<UserView
+							user={selectedUser}
+							onBack={() => setSelectedUser(null)}
+						/>
+					) : selectedGroup ? (
 						<GroupMembers
 							group={selectedGroup}
 							onBack={
 								isSingleGroupNonOwner ? undefined : () => setSelectedGroup(null)
 							}
+							onSelectUser={setSelectedUser}
 						/>
 					) : (
 						<GroupList onSelectGroup={setSelectedGroup} />

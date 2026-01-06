@@ -38,7 +38,21 @@ export async function createTestUser(
 	} catch (error) {
 		// User might already exist, try signing in
 		if ((error as { code?: string }).code === "auth/email-already-in-use") {
-			return await signInTestUser(email, password);
+			const user = await signInTestUser(email, password);
+			// Always ensure profile is updated to match requested state
+			await updateProfile(user, {
+				displayName: displayName || (user.displayName ?? email.split("@")[0]),
+				photoURL:
+					user.photoURL ||
+					`https://api.dicebear.com/7.x/initials/svg?seed=${(
+						displayName ||
+						user.displayName ||
+						email
+					)
+						.substring(0, 2)
+						.toUpperCase()}`,
+			});
+			return user;
 		}
 		throw error;
 	}
