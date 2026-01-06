@@ -100,5 +100,6 @@ To enable GitHub Actions to deploy to Firebase (Hosting & Rules):
     - Edit permissions and ensure it has:
         - **Firebase Hosting Admin** (To deploy the site)
         - **Firebase Rules Admin** (To deploy security rules)
+        - **Cloud Datastore Index Admin** (To manage composite indexes)
         - **Service Usage Consumer** (Required for enabling APIs via CLI).
             - *Note: Without this, you may get `HTTP 403` errors on `firestore.googleapis.com`.*
