@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import type { QueryDocumentSnapshot } from "firebase/firestore";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
 	getUserSightings,
@@ -21,47 +22,80 @@ export function UserView({ user, onBack }: UserViewProps) {
 	const [sightings, setSightings] = useState<Sighting[]>([]);
 	const [stats, setStats] = useState<Record<string, string[]>>({});
 	const [loading, setLoading] = useState(true);
+	const [loadingMore, setLoadingMore] = useState(false);
+	const [hasMore, setHasMore] = useState(false);
+	const lastVisibleRef = useRef<QueryDocumentSnapshot | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
-	const fetchData = useCallback(async () => {
-		setLoading(true);
-		setError(null);
-		try {
-			const startDate = `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-01`;
-			const lastDay = new Date(selectedYear, selectedMonth + 1, 0).getDate();
-			const endDate = `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-${lastDay}`;
-
-			const [sightingsData, statsData] = await Promise.all([
-				getUserSightings(user.id, startDate, endDate),
-				getUserStats(user.id),
-			]);
-
-			setSightings(sightingsData);
-			setStats(statsData);
-
-			// Auto-recalculate if stats seem empty but we have sightings (backfill)
-			// This is a simple heuristic: if we have sightings for this month but no stats for this month.
-			// Ideally we assume if the document is empty we might need backfill.
-			// Let's just check if stats is completely empty but sightings is not empty.
-			// But since we only fetched this month's sightings, we can't be sure about global state.
-			// A safer check: if stats is empty, try recalculate once.
-			if (Object.keys(statsData).length === 0 && sightingsData.length > 0) {
-				console.log("Stats missing, recalculating...");
-				await recalculateUserStats(user.id);
-				const newStats = await getUserStats(user.id);
-				setStats(newStats);
+	const fetchData = useCallback(
+		async (isInitial = true) => {
+			if (isInitial) {
+				setLoading(true);
+				setError(null);
+			} else {
+				setLoadingMore(true);
 			}
 
-			setLoading(false);
-		} catch (err) {
-			console.error("Failed to fetch user data:", err);
-			setError(t("userView.failedToLoad", "Failed to load sightings"));
-			setLoading(false);
-		}
-	}, [user.id, selectedMonth, selectedYear, t]);
+			try {
+				const startDate = `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-01`;
+				const lastDay = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+				const endDate = `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-${lastDay}`;
+				const cursor = isInitial
+					? undefined
+					: (lastVisibleRef.current ?? undefined);
+
+				const [sightingsResponse, statsData] = await Promise.all([
+					getUserSightings(user.id, startDate, endDate, 20, cursor),
+					// Only fetch stats on initial load to avoid redundant reads?
+					// For simplicity keeping as is, or optimize if needed.
+					// Actually, getUserStats is cheap if cached, but let's just fetch it.
+					// However, if we paginate, we shouldn't re-fetch stats every time?
+					// Let's assume stats won't change drastically during pagination.
+					// But the current implementation fetches both in parallel.
+					// We only need stats for the header.
+					isInitial ? getUserStats(user.id) : Promise.resolve({}),
+				]);
+
+				const { sightings: newSightings, lastVisible: newCursor } =
+					sightingsResponse;
+
+				if (isInitial) {
+					setSightings(newSightings);
+					setStats(statsData);
+
+					// Auto-recalculate if stats seem empty but we have sightings (backfill)
+					if (
+						Object.keys(statsData).length === 0 &&
+						newSightings.length > 0 &&
+						cursor === undefined
+					) {
+						console.log("Stats missing, recalculating...");
+						await recalculateUserStats(user.id);
+						const newStats = await getUserStats(user.id);
+						setStats(newStats);
+					}
+				} else {
+					setSightings((prev) => [...prev, ...newSightings]);
+				}
+
+				lastVisibleRef.current = newCursor;
+				// Only show "Load More" if we received a full page of results
+				setHasMore(newSightings.length === 20);
+
+				setLoading(false);
+				setLoadingMore(false);
+			} catch (err) {
+				console.error("Failed to fetch user data:", err);
+				setError(t("userView.failedToLoad", "Failed to load sightings"));
+				setLoading(false);
+				setLoadingMore(false);
+			}
+		},
+		[user.id, selectedMonth, selectedYear, t],
+	);
 
 	useEffect(() => {
-		fetchData();
+		fetchData(true);
 	}, [fetchData]);
 
 	const formatDate = (dateString: string, timeString?: string) => {
@@ -229,6 +263,16 @@ export function UserView({ user, onBack }: UserViewProps) {
 								);
 							})}
 						</ul>
+					)}
+					{hasMore && (
+						<button
+							type="button"
+							onClick={() => fetchData(false)}
+							className="load-more-button"
+							disabled={loadingMore}
+						>
+							{loadingMore ? t("common.loading") : t("common.loadMore")}
+						</button>
 					)}
 				</div>
 			)}
