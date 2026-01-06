@@ -88,15 +88,28 @@ h1 {
 	gap: 1rem;
 }
 
-.member-item {
+/* Grid item */
+
+.member-item-button {
+	width: 100%;
 	display: flex;
 	align-items: center;
 	gap: 1rem;
 	padding: 1rem;
 	background: var(--bg-tertiary);
+	border: 1px solid transparent;
 	border-radius: 8px;
-	margin-bottom: 0.5rem;
-	/* Separating member items */
+	color: inherit;
+	cursor: pointer;
+	text-align: left;
+	transition:
+		background 0.2s,
+		border-color 0.2s;
+}
+
+.member-item-button:hover {
+	background: var(--bg-hover);
+	border-color: var(--accent-primary);
 }
 
 .member-avatar {

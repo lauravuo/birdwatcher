@@ -4,6 +4,7 @@ import {
 	collection,
 	doc,
 	getDocs,
+	orderBy,
 	query,
 	runTransaction,
 	where,
@@ -198,4 +199,24 @@ export const getGroupSightings = async (
 		console.error("Error fetching group sightings:", error);
 		throw error;
 	}
+};
+
+export const getUserSightings = async (
+	userId: string,
+	startDate: string, // YYYY-MM-DD
+	endDate: string, // YYYY-MM-DD
+): Promise<Sighting[]> => {
+	const sightingsRef = collection(db, "sightings");
+	const q = query(
+		sightingsRef,
+		where("userId", "==", userId),
+		where("date", ">=", startDate),
+		where("date", "<=", endDate),
+		orderBy("date", "desc"),
+	);
+
+	const snapshot = await getDocs(q);
+	return snapshot.docs.map(
+		(doc) => ({ id: doc.id, ...doc.data() }) as Sighting,
+	);
 };
