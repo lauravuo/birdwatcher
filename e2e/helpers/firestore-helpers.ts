@@ -8,6 +8,40 @@ import {
 } from "firebase/firestore";
 import { db } from "../../src/lib/firebase";
 import type { Group } from "../../src/types";
+import type { Sighting } from "../../src/types/sighting";
+
+/**
+ * Seed a user profile in Firestore
+ */
+export async function seedUserProfile(user: {
+	id: string;
+	displayName: string | null;
+	email: string | null;
+	photoURL: string | null;
+}): Promise<void> {
+	await setDoc(doc(db, "users", user.id), {
+		id: user.id,
+		displayName: user.displayName || "Anonymous",
+		email: user.email || "",
+		photoURL: user.photoURL || null,
+		groupIds: [],
+		createdAt: Date.now(),
+	});
+}
+
+/**
+ * Seed multiple sightings in Firestore
+ */
+export async function seedSightings(
+	sightings: Omit<Sighting, "id">[],
+): Promise<void> {
+	await Promise.all(
+		sightings.map(async (sighting) => {
+			const ref = doc(collection(db, "sightings"));
+			await setDoc(ref, { ...sighting, id: ref.id });
+		}),
+	);
+}
 
 /**
  * Seed a test group in Firestore
@@ -83,4 +117,13 @@ export async function getGroupByCode(joinCode: string): Promise<Group | null> {
 		id: doc.id,
 		...(doc.data() as Omit<Group, "id">),
 	} as Group;
+}
+/**
+ * Seed user statistics in Firestore
+ */
+export async function seedUserStats(
+	userId: string,
+	stats: Record<string, string[]>,
+): Promise<void> {
+	await setDoc(doc(db, "user_stats", userId), { stats });
 }

@@ -1,6 +1,13 @@
 import { expect, type Page, test } from "@playwright/test";
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
-import { clearAllTestData } from "./helpers/firestore-helpers";
+import { signInInBrowser } from "./helpers/browser-auth";
+import {
+	clearAllTestData,
+	seedGroup,
+	seedSightings,
+	seedUserProfile,
+	seedUserStats,
+} from "./helpers/firestore-helpers";
 
 test.describe("User View", () => {
 	const createGroup = async (
@@ -166,5 +173,88 @@ test.describe("User View", () => {
 		await expect(page.locator(".stat-item").nth(1)).toContainText("3");
 		// Total should be 3
 		await expect(page.locator(".stat-item").nth(2)).toContainText("3");
+	});
+
+	test("displays other user's sightings and stats correctly", async ({
+		page,
+	}) => {
+		// 1. Setup Data
+		const credentialsA = getTestUserCredentials();
+		const userA = await createTestUser(
+			credentialsA.email,
+			credentialsA.password,
+			"UserA",
+		);
+
+		const groupName = "Shared Group";
+		const joinCode = "shared-group-1";
+
+		// Create User B and add to group
+		const emailB = "userb@example.com";
+		const userB = await createTestUser(emailB, "password123", "UserB");
+
+		// Ensure User B has a Firestore profile
+		await seedUserProfile({
+			id: userB.uid,
+			displayName: userB.displayName,
+			email: userB.email,
+			photoURL: userB.photoURL,
+		});
+
+		// Seed group once with both members
+		await seedGroup({
+			name: groupName,
+			joinCode: joinCode,
+			ownerId: userA.uid,
+			memberIds: [userA.uid, userB.uid],
+		});
+
+		// Seed sightings for User B
+		const sightingDate = "2024-03-15";
+		await seedSightings([
+			{
+				userId: userB.uid,
+				birdId: "harakka",
+				date: sightingDate,
+				time: "10:00",
+				type: "visual",
+				locationName: "Park",
+				createdAt: Date.now(),
+			},
+		]);
+
+		// Seed stats for User B
+		await seedUserStats(userB.uid, {
+			"2024-03": ["harakka"],
+		});
+
+		// 2. Sign in as User A
+		await page.goto("/");
+		await signInInBrowser(page, credentialsA.email, credentialsA.password);
+
+		// 3. Navigate to Group
+		await page.getByRole("button", { name: new RegExp(groupName) }).click();
+		await expect(
+			page.getByRole("heading", { name: "Members (2)" }),
+		).toBeVisible();
+
+		// 4. Click on User B
+		await page.locator(".member-item").filter({ hasText: "UserB" }).click();
+
+		// 5. Verify User View for User B
+		await expect(page.getByRole("heading", { name: "UserB" })).toBeVisible();
+
+		// Filter to March 2024
+		await page.getByLabel("Month").selectOption("2"); // March is 2
+		await page.getByLabel("Year").selectOption("2024");
+
+		// Check Stats
+		await expect(page.locator(".stat-item").nth(0)).toContainText("1"); // Month
+		await expect(page.locator(".stat-item").nth(1)).toContainText("1"); // Year
+		await expect(page.locator(".stat-item").nth(2)).toContainText("1"); // Total
+
+		// Check Sightings List
+		await expect(page.getByText("Harakka")).toBeVisible();
+		await expect(page.getByText("Park")).toBeVisible();
 	});
 });

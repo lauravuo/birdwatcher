@@ -11,6 +11,10 @@
 				{
 					"fieldPath": "date",
 					"order": "DESCENDING"
+				},
+				{
+					"fieldPath": "createdAt",
+					"order": "DESCENDING"
 				}
 			]
 		}
