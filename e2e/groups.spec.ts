@@ -3,7 +3,7 @@ import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
 import { signInInBrowser, signOutInBrowser } from "./helpers/browser-auth";
 import { clearAllTestData, getGroupByCode } from "./helpers/firestore-helpers";
 
-test.describe("Groups UI with Emulator", () => {
+test.describe("Groups UI", () => {
 	const createGroup = async (
 		page: Page,
 		groupName: string,
@@ -55,7 +55,7 @@ test.describe("Groups UI with Emulator", () => {
 		// Clear all test data before each test
 		await clearAllTestData();
 
-		// 1. Create test user in emulator (Node context)
+		// 1. Create test user (Node context)
 		const credentials = getTestUserCredentials();
 		await createTestUser(credentials.email, credentials.password, "Tester");
 
@@ -101,8 +101,11 @@ test.describe("Groups UI with Emulator", () => {
 		// Wait for auto-join
 		await expect(page).not.toHaveURL(/group=/, { timeout: 10000 });
 
-		// Verify group appears in the list for the primary user
-		await expect(page.getByText("Test Birds Group")).toBeVisible({
+		// Verify group appears (redirects to group view for single group)
+		// It resolves to Heading because of auto-redirect
+		await expect(
+			page.getByRole("heading", { name: "Test Birds Group" }),
+		).toBeVisible({
 			timeout: 10000,
 		});
 
@@ -129,22 +132,25 @@ test.describe("Groups UI with Emulator", () => {
 		const groupName = "Test Birds Group Click";
 		await createGroup(page, groupName, joinCode);
 
-		// 2. Click the group in the list
-		const groupItem = page.getByRole("button", { name: new RegExp(groupName) });
+		// 2. Click the group in the list (now a Link)
+		const groupItem = page.getByRole("link", { name: new RegExp(groupName) });
 		await expect(groupItem).toBeVisible();
 		await groupItem.click();
 
-		// 3. Verify member list is shown
+		// 3. Verify member list is shown & URL is correct
 		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
 		await expect(page.getByText(/Members \(1\)/)).toBeVisible();
+		await expect(page).toHaveURL(/\/groups\//);
 
 		// Verify owner is in the list
 		await expect(page.locator(".member-name")).toContainText("GroupOwner");
 		await expect(page.locator(".owner-badge")).toContainText("Owner");
 
-		// 4. Test back button
-		await page.getByRole("button", { name: "← Back" }).click();
-		await expect(page.getByText("Your Groups")).toBeVisible();
+		// 4. Test Breadcrumb "Birdwatcher" (Home) removed
+		// Verify it is NOT visible
+		await expect(
+			page.getByRole("link", { name: "Birdwatcher" }),
+		).not.toBeVisible();
 
 		expect(logTypes).not.toContain("error");
 	});
@@ -187,14 +193,17 @@ test.describe("Groups UI with Emulator", () => {
 		// Wait for auto-join
 		await expect(page).not.toHaveURL(/group=/, { timeout: 10000 });
 
-		// 4. Member should see the group view directly (not the list)
+		// 4. Member should be redirected to group view directly (not the list)
+		// because of the single-group auto-redirect logic
 		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
 		await expect(page.getByText(/Members \(2\)/)).toBeVisible();
+		await expect(page).toHaveURL(/\/groups\//);
 
-		// 5. Verify no back button and no "Your Groups" list
+		// 5. Verify no manual back button (Breadcrumbs exist but manual button is gone)
 		await expect(
 			page.getByRole("button", { name: "← Back" }),
 		).not.toBeVisible();
+		// The "Your Groups" list is NOT visible because we are in group view
 		await expect(page.getByText("Your Groups")).not.toBeVisible();
 
 		expect(logTypes).not.toContain("error");
@@ -231,15 +240,16 @@ test.describe("Groups UI with Emulator", () => {
 		await expect(page.getByText(groupName)).toBeVisible();
 
 		// 3. Click group to view members
-		const groupItem = page.getByRole("button", { name: new RegExp(groupName) });
+		const groupItem = page.getByRole("link", { name: new RegExp(groupName) });
 		await groupItem.click();
 
-		// 4. Verify back button is shown for owner
-		await expect(page.getByRole("button", { name: "← Back" })).toBeVisible();
+		// 4. Verify Breadcrumbs allow going back
+		await expect(
+			page.getByRole("link", { name: "Birdwatcher" }),
+		).not.toBeVisible();
 
-		// 5. Click back and verify group list reappears
-		await page.getByRole("button", { name: "← Back" }).click();
-		await expect(page.getByText("Your Groups")).toBeVisible();
+		// 5. User stays on group view (cannot navigate back via breadcrumb)
+		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
 
 		expect(logTypes).not.toContain("error");
 	});

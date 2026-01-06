@@ -75,7 +75,7 @@ test.describe("User View Pagination", () => {
 		await signInInBrowser(page, credentials.email, credentials.password);
 
 		// 3. Enter Group
-		await page.getByRole("button", { name: new RegExp(groupName) }).click();
+		await page.getByRole("link", { name: new RegExp(groupName) }).click();
 
 		// 4. Navigate to User View (Click own profile in members list)
 		await page
@@ -172,7 +172,7 @@ test.describe("User View Pagination", () => {
 		await signInInBrowser(page, credentials.email, credentials.password);
 
 		// 3. Enter Group
-		await page.getByRole("button", { name: new RegExp(groupName) }).click();
+		await page.getByRole("link", { name: new RegExp(groupName) }).click();
 
 		// 4. Navigate to User View
 		await page
