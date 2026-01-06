@@ -1,18 +1,17 @@
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../lib/firebase";
 import { createGroup, joinGroup } from "../../lib/firestore";
 import type { Group } from "../../types";
 
-export function GroupList({
-	onSelectGroup,
-}: {
-	onSelectGroup: (group: Group) => void;
-}) {
+export function GroupList() {
 	const { currentUser } = useAuth();
 	const { t } = useTranslation();
+	const navigate = useNavigate();
+	const [searchParams, setSearchParams] = useSearchParams();
 	const [groups, setGroups] = useState<Group[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -45,6 +44,16 @@ export function GroupList({
 				})) as Group[];
 				setGroups(userGroups);
 				setLoading(false);
+
+				// Auto-select logic moved from App.tsx
+				// If user is not owner of any group and has exactly 1 group, redirect to it
+				if (userGroups.length === 1) {
+					const group = userGroups[0];
+					const isOwner = group.ownerId === currentUser.uid;
+					if (!isOwner) {
+						navigate(`/groups/${group.id}`);
+					}
+				}
 			},
 			(err) => {
 				console.error("onSnapshot error:", err);
@@ -56,14 +65,13 @@ export function GroupList({
 		return () => {
 			unsubscribe();
 		};
-	}, [currentUser, t]);
+	}, [currentUser, t, navigate]);
 
 	// Auto-join from URL param
 	useEffect(() => {
 		if (!currentUser) return;
 
-		const params = new URLSearchParams(window.location.search);
-		const codeToJoin = params.get("group");
+		const codeToJoin = searchParams.get("group");
 
 		if (codeToJoin) {
 			joinGroup(codeToJoin, {
@@ -74,7 +82,7 @@ export function GroupList({
 			})
 				.then(() => {
 					// Clear the param from URL
-					window.history.replaceState({}, "", window.location.pathname);
+					setSearchParams({});
 				})
 				.catch((err) => {
 					console.error("Auto-join failed:", err);
@@ -85,7 +93,7 @@ export function GroupList({
 					);
 				});
 		}
-	}, [currentUser, t]);
+	}, [currentUser, t, searchParams, setSearchParams]);
 
 	const handleCreate = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -139,13 +147,9 @@ export function GroupList({
 				<ul className="group-list">
 					{groups.map((group) => (
 						<li key={group.id} className="group-item">
-							<button
-								type="button"
-								className="group-button"
-								onClick={() => onSelectGroup(group)}
-							>
+							<Link to={`/groups/${group.id}`} className="group-button">
 								<strong>{group.name}</strong> <small>({group.joinCode})</small>
-							</button>
+							</Link>
 						</li>
 					))}
 				</ul>

@@ -1,68 +1,80 @@
+import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link, useParams } from "react-router-dom";
+import { db } from "../../lib/firebase";
 import { getGroupMembers } from "../../lib/firestore";
 import type { Group, UserProfile } from "../../types";
 import { GroupSightings } from "./GroupSightings";
 
-interface GroupMembersProps {
-	group: Group;
-	onBack?: () => void;
-	onSelectUser: (user: UserProfile) => void;
-}
-
-export function GroupMembers({
-	group,
-	onBack,
-	onSelectUser,
-}: GroupMembersProps) {
+export function GroupMembers() {
 	const { t } = useTranslation();
+	const { groupId } = useParams<{ groupId: string }>();
+	const [group, setGroup] = useState<Group | null>(null);
 	const [members, setMembers] = useState<UserProfile[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
+	// Fetch Group and Members
 	useEffect(() => {
+		if (!groupId) return;
+
 		let isMounted = true;
 
-		async function fetchMembers() {
+		async function fetchData(id: string) {
 			try {
-				const membersData = await getGroupMembers(group.memberIds);
+				// Fetch Group
+				const groupRef = doc(db, "groups", id);
+				const groupSnap = await getDoc(groupRef);
+
+				if (!groupSnap.exists()) {
+					if (isMounted) {
+						setError(t("errors.groupNotFound"));
+						setLoading(false);
+					}
+					return;
+				}
+
+				const groupData = { id: groupSnap.id, ...groupSnap.data() } as Group;
+
+				if (isMounted) {
+					setGroup(groupData);
+				}
+
+				// Fetch Members
+				const membersData = await getGroupMembers(groupData.memberIds);
 				if (isMounted) {
 					setMembers(membersData);
 					setLoading(false);
 				}
 			} catch (err) {
 				if (isMounted) {
-					console.error("Failed to fetch members:", err);
+					console.error("Failed to fetch group data:", err);
 					setError(t("groupMembers.failedToLoadMembers"));
 					setLoading(false);
 				}
 			}
 		}
 
-		fetchMembers();
+		fetchData(groupId);
 
 		return () => {
 			isMounted = false;
 		};
-	}, [group.memberIds, t]);
+	}, [groupId, t]);
 
 	if (loading) return <div>{t("groupMembers.loadingMembers")}</div>;
+	if (error) return <div className="error-message">{error}</div>;
+	if (!group) return <div>{t("errors.groupNotFound")}</div>;
 
 	return (
 		<div className="group-members-container">
 			<div className="group-header">
-				{onBack && (
-					<button type="button" onClick={onBack} className="back-button">
-						{t("groupMembers.backButton")}
-					</button>
-				)}
 				<h2>{group.name}</h2>
 				<small className="join-code">
 					{t("groups.joinCode")}: {group.joinCode}
 				</small>
 			</div>
-
-			{error && <div className="error-message">{error}</div>}
 
 			<div className="members-section">
 				<h3>
@@ -71,10 +83,9 @@ export function GroupMembers({
 				<ul className="members-list">
 					{members.map((member) => (
 						<li key={member.id} className="member-item">
-							<button
-								type="button"
+							<Link
+								to={`/groups/${group.id}/members/${member.id}`}
 								className="member-item-button"
-								onClick={() => onSelectUser(member)}
 							>
 								<div className="member-avatar">
 									{member.photoURL ? (
@@ -91,7 +102,7 @@ export function GroupMembers({
 										<span className="owner-badge">{t("groups.owner")}</span>
 									)}
 								</div>
-							</button>
+							</Link>
 						</li>
 					))}
 				</ul>

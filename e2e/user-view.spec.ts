@@ -50,7 +50,7 @@ test.describe("User View", () => {
 		await createGroup(page, groupName, joinCode);
 
 		// 1. Enter Group
-		await page.getByRole("button", { name: new RegExp(groupName) }).click();
+		await page.getByRole("link", { name: new RegExp(groupName) }).click();
 		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
 
 		// 2. Add a Sighting (Jan)
@@ -78,6 +78,13 @@ test.describe("User View", () => {
 		await expect(
 			page.getByRole("heading", { name: "Members (1)" }),
 		).toBeVisible();
+		// In Router version, member items are links, but filtering by text still works if container is clickable
+		// The implementation has <Link className="member-item-button">.
+		// Locator(".member-item").filter(...) finds the LI. We need to click the Link/Button inside or just the LI if it bubbles.
+		// Actually GroupMembers.tsx: <li className="member-item"><Link ... className="member-item-button">
+		// So clicking ".member-item" might miss the link if not careful, but usually works.
+		// Better to target the link explicitly?
+		// Let's try sticking to existing selector unless it fails, but I know "member-item" wrapping "member-item-button" usually works.
 		await page.locator(".member-item").filter({ hasText: "Tester" }).click();
 
 		// 4. Verify User View Stats
@@ -96,7 +103,11 @@ test.describe("User View", () => {
 		await expect(page.getByText("Harakka")).toBeVisible();
 
 		// 5. Add another sighting for SAME BIRD in SAME MONTH (should not increase count)
-		await page.getByRole("button", { name: "← Back" }).click();
+		// Navigate back to Group View via Breadcrumb to access Member List again?
+		// Actually, logic below clicks "Add sighting" which is global.
+		// Then it clicks member item again. Implicitly expects to be in Group View.
+		// So yes, I must go back.
+		await page.getByRole("link", { name: groupName }).click();
 		await page.getByLabel("Add sighting").click();
 		await birdInput.fill("Harakka");
 		await page.waitForTimeout(500);
@@ -120,7 +131,7 @@ test.describe("User View", () => {
 		await expect(page.locator(".stat-item").nth(2)).toContainText("1");
 
 		// 6. Add sighting for DIFFERENT BIRD in SAME MONTH
-		await page.getByRole("button", { name: "← Back" }).click();
+		await page.getByRole("link", { name: groupName }).click();
 		await page.getByLabel("Add sighting").click();
 		await birdInput.fill("Varis");
 		await page.waitForTimeout(500);
@@ -143,7 +154,7 @@ test.describe("User View", () => {
 		await expect(page.locator(".stat-item").nth(2)).toContainText("2");
 
 		// 7. Add sighting for SAME BIRD in DIFFERENT MONTH
-		await page.getByRole("button", { name: "← Back" }).click();
+		await page.getByRole("link", { name: groupName }).click();
 		await page.getByLabel("Add sighting").click();
 		await birdInput.fill("Harakka");
 		await page.waitForTimeout(500);
@@ -233,7 +244,7 @@ test.describe("User View", () => {
 		await signInInBrowser(page, credentialsA.email, credentialsA.password);
 
 		// 3. Navigate to Group
-		await page.getByRole("button", { name: new RegExp(groupName) }).click();
+		await page.getByRole("link", { name: new RegExp(groupName) }).click();
 		await expect(
 			page.getByRole("heading", { name: "Members (2)" }),
 		).toBeVisible();

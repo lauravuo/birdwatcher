@@ -56,7 +56,7 @@ test.describe("Group Sightings Pagination", () => {
 		await signInInBrowser(page, credentials.email, credentials.password);
 
 		// 3. Enter Group
-		await page.getByRole("button", { name: new RegExp(groupName) }).click();
+		await page.getByRole("link", { name: new RegExp(groupName) }).click();
 
 		// 4. Verify initial load (Should see top 20, newest first)
 		// Newest is s-24 (Bird: bird-24)
@@ -117,7 +117,7 @@ test.describe("Group Sightings Pagination", () => {
 		await signInInBrowser(page, credentials.email, credentials.password);
 
 		// 3. Enter Group
-		await page.getByRole("button", { name: new RegExp(groupName) }).click();
+		await page.getByRole("link", { name: new RegExp(groupName) }).click();
 
 		// 4. Verify sightings loaded
 		await expect(page.getByText("bird-4")).toBeVisible();

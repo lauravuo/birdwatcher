@@ -664,3 +664,50 @@ h1 {
 	border: 1px solid rgba(255, 107, 107, 0.3);
 	margin-bottom: 8px;
 }
+
+/* Breadcrumbs */
+.breadcrumbs {
+	padding: 1rem 2rem;
+	background: var(--bg-tertiary);
+	border-bottom: 1px solid var(--border-color);
+}
+
+.breadcrumbs ol {
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	gap: 0.5rem;
+	align-items: center;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.breadcrumbs li {
+	display: flex;
+	align-items: center;
+	color: var(--text-secondary);
+}
+
+.breadcrumbs li:not(:last-child)::after {
+	content: "/";
+	margin-left: 0.5rem;
+	color: var(--text-dim);
+}
+
+.breadcrumbs li:last-child {
+	color: var(--text-primary);
+	font-weight: 500;
+	pointer-events: none;
+}
+
+.breadcrumbs a {
+	color: var(--text-secondary);
+	text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+	color: var(--accent-primary);
+	text-decoration: underline;
+}

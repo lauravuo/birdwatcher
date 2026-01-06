@@ -2,6 +2,7 @@ import {
 	arrayUnion,
 	collection,
 	doc,
+	getDoc,
 	getDocs,
 	limit,
 	orderBy,
@@ -151,6 +152,17 @@ export const getGroupMembers = async (
 	const q = query(collection(db, "users"), where("id", "in", memberIds));
 	const snapshot = await getDocs(q);
 	return snapshot.docs.map((d) => d.data() as UserProfile);
+};
+
+export const getUserProfile = async (
+	userId: string,
+): Promise<UserProfile | null> => {
+	const docRef = doc(db, "users", userId);
+	const snapshot = await getDoc(docRef);
+	if (snapshot.exists()) {
+		return snapshot.data() as UserProfile;
+	}
+	return null;
 };
 
 export async function addSighting(

@@ -1,7 +1,9 @@
 import type { QueryDocumentSnapshot } from "firebase/firestore";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import {
+	getUserProfile,
 	getUserSightings,
 	getUserStats,
 	recalculateUserStats,
@@ -9,13 +11,14 @@ import {
 import type { UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
 
-interface UserViewProps {
-	user: UserProfile;
-	onBack: () => void;
-}
-
-export function UserView({ user, onBack }: UserViewProps) {
+export function UserView() {
 	const { t, i18n } = useTranslation();
+	const { userId } = useParams<{ userId: string }>();
+	// const navigate = useNavigate();
+
+	const [user, setUser] = useState<UserProfile | null>(null);
+	const [userLoading, setUserLoading] = useState(true);
+
 	const now = new Date();
 	const [selectedMonth, setSelectedMonth] = useState(now.getMonth()); // 0-11
 	const [selectedYear, setSelectedYear] = useState(now.getFullYear());
@@ -27,8 +30,35 @@ export function UserView({ user, onBack }: UserViewProps) {
 	const lastVisibleRef = useRef<QueryDocumentSnapshot | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
+	// Fetch User Profile
+	useEffect(() => {
+		if (!userId) return;
+		let isMounted = true;
+		async function loadUser(id: string) {
+			try {
+				const userProfile = await getUserProfile(id);
+				if (isMounted) {
+					setUser(userProfile);
+					setUserLoading(false);
+				}
+			} catch (err) {
+				if (isMounted) {
+					console.error("Failed to load user profile", err);
+					setError(t("errors.userNotFound")); // Or generic error
+					setUserLoading(false);
+				}
+			}
+		}
+		loadUser(userId);
+		return () => {
+			isMounted = false;
+		};
+	}, [userId, t]);
+
 	const fetchData = useCallback(
 		async (isInitial = true) => {
+			if (!user) return;
+
 			if (isInitial) {
 				setLoading(true);
 				setError(null);
@@ -46,13 +76,7 @@ export function UserView({ user, onBack }: UserViewProps) {
 
 				const [sightingsResponse, statsData] = await Promise.all([
 					getUserSightings(user.id, startDate, endDate, 20, cursor),
-					// Only fetch stats on initial load to avoid redundant reads?
-					// For simplicity keeping as is, or optimize if needed.
-					// Actually, getUserStats is cheap if cached, but let's just fetch it.
-					// However, if we paginate, we shouldn't re-fetch stats every time?
-					// Let's assume stats won't change drastically during pagination.
-					// But the current implementation fetches both in parallel.
-					// We only need stats for the header.
+					// Only fetch stats on initial load
 					isInitial ? getUserStats(user.id) : Promise.resolve({}),
 				]);
 
@@ -91,12 +115,14 @@ export function UserView({ user, onBack }: UserViewProps) {
 				setLoadingMore(false);
 			}
 		},
-		[user.id, selectedMonth, selectedYear, t],
+		[user, selectedMonth, selectedYear, t],
 	);
 
 	useEffect(() => {
-		fetchData(true);
-	}, [fetchData]);
+		if (user) {
+			fetchData(true);
+		}
+	}, [fetchData, user]);
 
 	const formatDate = (dateString: string, timeString?: string) => {
 		const date = new Date(`${dateString}T00:00:00`);
@@ -134,12 +160,19 @@ export function UserView({ user, onBack }: UserViewProps) {
 
 	const years = Array.from({ length: 5 }, (_, i) => now.getFullYear() - i);
 
+	if (userLoading) {
+		return <div>{t("common.loading")}</div>;
+	}
+
+	if (!user) {
+		return <div className="error-message">{t("errors.userNotFound")}</div>;
+	}
+
 	return (
 		<div className="user-view">
 			<div className="user-view-header">
-				<button type="button" onClick={onBack} className="back-button">
-					← {t("common.back")}
-				</button>
+				{/* Removed Back button as Breadcrumbs handle navigation */}
+
 				<div className="user-profile-summary">
 					{user.photoURL && (
 						<img

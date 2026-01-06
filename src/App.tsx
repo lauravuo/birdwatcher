@@ -1,69 +1,21 @@
-import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Navigate, Route, Routes } from "react-router-dom";
 import AddSightingButton from "./components/AddSightingButton";
+import { Breadcrumbs } from "./components/Breadcrumbs";
 import { GroupList } from "./components/Groups/GroupList";
 import { GroupMembers } from "./components/Groups/GroupMembers";
 import { Login } from "./components/Login";
 import { UserView } from "./components/UserView";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
-import { db } from "./lib/firebase";
-import type { Group, UserProfile } from "./types";
 import "./App.css";
 
 function AuthenticatedApp() {
 	const { currentUser, logout } = useAuth();
 	const { t } = useTranslation();
-	const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
-	const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
-	const [groups, setGroups] = useState<Group[]>([]);
-
-	// Fetch user's groups
-	useEffect(() => {
-		if (!currentUser) {
-			setGroups([]);
-			return;
-		}
-
-		const q = query(
-			collection(db, "groups"),
-			where("memberIds", "array-contains", currentUser.uid),
-		);
-
-		const unsubscribe = onSnapshot(
-			q,
-			(snapshot) => {
-				const userGroups = snapshot.docs.map((d) => ({
-					id: d.id,
-					...(d.data() as Omit<Group, "id">),
-				})) as Group[];
-				setGroups(userGroups);
-
-				// Auto-select if user is not owner of any group and has exactly 1 group
-				const isOwnerOfAny = userGroups.some(
-					(g) => g.ownerId === currentUser.uid,
-				);
-				if (!isOwnerOfAny && userGroups.length === 1 && !selectedGroup) {
-					setSelectedGroup(userGroups[0]);
-				}
-			},
-			(err) => {
-				console.error("Failed to fetch groups:", err);
-			},
-		);
-
-		return () => {
-			unsubscribe();
-		};
-	}, [currentUser, selectedGroup]);
 
 	if (!currentUser) {
 		return <Login />;
 	}
-
-	// Check if user owns any groups
-	const isOwnerOfAny = groups.some((g) => g.ownerId === currentUser.uid);
-	const isSingleGroupNonOwner = !isOwnerOfAny && groups.length === 1;
 
 	return (
 		<div className="app-container">
@@ -85,24 +37,18 @@ function AuthenticatedApp() {
 					</div>
 				</div>
 			</header>
+			<Breadcrumbs />
 			<main>
 				<div className="card">
-					{selectedUser ? (
-						<UserView
-							user={selectedUser}
-							onBack={() => setSelectedUser(null)}
+					<Routes>
+						<Route path="/" element={<GroupList />} />
+						<Route path="/groups/:groupId" element={<GroupMembers />} />
+						<Route
+							path="/groups/:groupId/members/:userId"
+							element={<UserView />}
 						/>
-					) : selectedGroup ? (
-						<GroupMembers
-							group={selectedGroup}
-							onBack={
-								isSingleGroupNonOwner ? undefined : () => setSelectedGroup(null)
-							}
-							onSelectUser={setSelectedUser}
-						/>
-					) : (
-						<GroupList onSelectGroup={setSelectedGroup} />
-					)}
+						<Route path="*" element={<Navigate to="/" replace />} />
+					</Routes>
 				</div>
 				<AddSightingButton />
 			</main>

@@ -25,13 +25,11 @@ test.describe("Authentication", () => {
 		await expect(page.getByText("Dashboard")).not.toBeVisible();
 	});
 
-	test("authenticated user sees dashboard (via Auth Emulator)", async ({
-		page,
-	}) => {
+	test("authenticated user sees dashboard", async ({ page }) => {
 		const email = "test@birdwatcher.test";
 		const password = "testpassword123";
 
-		// 1. Create user in emulator (Node context)
+		// 1. Create user (Node context)
 		await createTestUser(email, password);
 
 		// 2. Navigate and sign in (Browser context)

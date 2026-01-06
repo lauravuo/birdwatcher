@@ -54,8 +54,9 @@ test.describe("Sightings", () => {
 
 		// Navigate to group
 		await page.goto(`/?group=${joinCode}`);
+		// Owner sees "Your Groups"
 		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
-		await page.getByRole("button", { name: new RegExp(joinCode) }).click();
+		await page.getByRole("link", { name: new RegExp(joinCode) }).click();
 
 		// Open add sighting dialog
 		const addButton = page.getByLabel("Add sighting");
@@ -164,8 +165,10 @@ test.describe("Sightings", () => {
 
 		// Navigate to group
 		await page.goto(`/?group=${joinCode}`);
+
+		// Owner sees "Your Groups"
 		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
-		await page.getByRole("button", { name: new RegExp(joinCode) }).click();
+		await page.getByRole("link", { name: new RegExp(joinCode) }).click();
 
 		// Wait for sightings section
 		await expect(page.getByRole("heading", { name: /sightings/i })).toBeVisible(
