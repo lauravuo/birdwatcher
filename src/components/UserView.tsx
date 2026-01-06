@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getUserSightings } from "../lib/firestore";
+import {
+	getUserSightings,
+	getUserStats,
+	recalculateUserStats,
+} from "../lib/firestore";
 import type { UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
 
@@ -15,6 +19,7 @@ export function UserView({ user, onBack }: UserViewProps) {
 	const [selectedMonth, setSelectedMonth] = useState(now.getMonth()); // 0-11
 	const [selectedYear, setSelectedYear] = useState(now.getFullYear());
 	const [sightings, setSightings] = useState<Sighting[]>([]);
+	const [stats, setStats] = useState<Record<string, string[]>>({});
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
@@ -26,11 +31,30 @@ export function UserView({ user, onBack }: UserViewProps) {
 			const lastDay = new Date(selectedYear, selectedMonth + 1, 0).getDate();
 			const endDate = `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-${lastDay}`;
 
-			const data = await getUserSightings(user.id, startDate, endDate);
-			setSightings(data);
+			const [sightingsData, statsData] = await Promise.all([
+				getUserSightings(user.id, startDate, endDate),
+				getUserStats(user.id),
+			]);
+
+			setSightings(sightingsData);
+			setStats(statsData);
+
+			// Auto-recalculate if stats seem empty but we have sightings (backfill)
+			// This is a simple heuristic: if we have sightings for this month but no stats for this month.
+			// Ideally we assume if the document is empty we might need backfill.
+			// Let's just check if stats is completely empty but sightings is not empty.
+			// But since we only fetched this month's sightings, we can't be sure about global state.
+			// A safer check: if stats is empty, try recalculate once.
+			if (Object.keys(statsData).length === 0 && sightingsData.length > 0) {
+				console.log("Stats missing, recalculating...");
+				await recalculateUserStats(user.id);
+				const newStats = await getUserStats(user.id);
+				setStats(newStats);
+			}
+
 			setLoading(false);
 		} catch (err) {
-			console.error("Failed to fetch user sightings:", err);
+			console.error("Failed to fetch user data:", err);
 			setError(t("userView.failedToLoad", "Failed to load sightings"));
 			setLoading(false);
 		}
@@ -124,6 +148,39 @@ export function UserView({ user, onBack }: UserViewProps) {
 							</option>
 						))}
 					</select>
+				</div>
+			</div>
+
+			<div className="stats-container">
+				<div className="stat-item">
+					<div className="stat-label">
+						{months[selectedMonth].label} {selectedYear}
+					</div>
+					<div className="stat-value">
+						{
+							(
+								stats[
+									`${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}`
+								] || []
+							).length
+						}
+					</div>
+				</div>
+				<div className="stat-item">
+					<div className="stat-label">
+						{t("common.year", "Year")} {selectedYear}
+					</div>
+					<div className="stat-value">
+						{Object.entries(stats)
+							.filter(([key]) => key.startsWith(`${selectedYear}-`))
+							.reduce((acc, [_, birds]) => acc + birds.length, 0)}
+					</div>
+				</div>
+				<div className="stat-item">
+					<div className="stat-label">{t("common.total", "Total")}</div>
+					<div className="stat-value">
+						{Object.values(stats).reduce((acc, birds) => acc + birds.length, 0)}
+					</div>
 				</div>
 			</div>
 

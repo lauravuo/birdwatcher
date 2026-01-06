@@ -1,5 +1,4 @@
 import {
-	addDoc,
 	arrayUnion,
 	collection,
 	doc,
@@ -9,6 +8,7 @@ import {
 	runTransaction,
 	where,
 } from "firebase/firestore";
+
 import type { Group, UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
 import { db } from "./firebase";
@@ -157,11 +157,45 @@ export async function addSighting(
 		Object.entries(sighting).filter(([_, value]) => value !== undefined),
 	) as Omit<Sighting, "id" | "createdAt">;
 
-	const docRef = await addDoc(collection(db, "sightings"), {
+	const timestamp = Date.now();
+	const sightingData = {
 		...cleanSighting,
-		createdAt: Date.now(),
+		createdAt: timestamp,
+	};
+
+	// Create sighting and update stats atomically using a transaction or batched write could be better,
+	// but addDoc doesn't support transaction easily without generating ID first.
+	// For simplicity and to match current pattern, we'll do them in parallel or sequence.
+	// Actually, strict atomicity is best. Let's use runTransaction if possible, but addDoc is convenient.
+	// Given the previous code used addDoc, let's stick to it for the sighting, and then update stats.
+	// Or better: Use batch/transaction to ensure consistency.
+
+	// Let's use a batch to ensure both happen or neither (if possible, but addDoc generates ID).
+	// We'll generate ID first.
+	const sightingRef = doc(collection(db, "sightings"));
+
+	const statsDate = new Date(sighting.date);
+	const yearMonth = `${statsDate.getFullYear()}-${String(statsDate.getMonth() + 1).padStart(2, "0")}`;
+
+	await runTransaction(db, async (transaction) => {
+		transaction.set(sightingRef, sightingData);
+
+		const statsRef = doc(db, "user_stats", sighting.userId);
+		// Check if doc exists is checking efficiently done via set with merge?
+		// We want to arrayUnion.
+		// note: set with merge: true will create if not exists.
+		transaction.set(
+			statsRef,
+			{
+				stats: {
+					[yearMonth]: arrayUnion(sighting.birdId),
+				},
+			},
+			{ merge: true },
+		);
 	});
-	return docRef.id;
+
+	return sightingRef.id;
 }
 
 // --- Sighting Service ---
@@ -218,5 +252,48 @@ export const getUserSightings = async (
 	const snapshot = await getDocs(q);
 	return snapshot.docs.map(
 		(doc) => ({ id: doc.id, ...doc.data() }) as Sighting,
+	);
+};
+
+export const getUserStats = async (
+	userId: string,
+): Promise<Record<string, string[]>> => {
+	const docRef = doc(db, "user_stats", userId);
+	const snapshot = await import("firebase/firestore").then((fs) =>
+		fs.getDoc(docRef),
+	);
+
+	if (snapshot.exists()) {
+		return snapshot.data().stats || {};
+	}
+	return {};
+};
+
+export const recalculateUserStats = async (userId: string): Promise<void> => {
+	// 1. Fetch all user sightings
+	const q = query(collection(db, "sightings"), where("userId", "==", userId));
+	const snapshot = await getDocs(q);
+	const sightings = snapshot.docs.map((d) => d.data() as Sighting);
+
+	// 2. Calculate stats
+	const stats: Record<string, string[]> = {};
+
+	for (const sighting of sightings) {
+		const date = new Date(sighting.date);
+		const yearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+
+		if (!stats[yearMonth]) {
+			stats[yearMonth] = [];
+		}
+
+		if (!stats[yearMonth].includes(sighting.birdId)) {
+			stats[yearMonth].push(sighting.birdId);
+		}
+	}
+
+	// 3. Save to user_stats
+	const statsRef = doc(db, "user_stats", userId);
+	await import("firebase/firestore").then((fs) =>
+		fs.setDoc(statsRef, { stats }),
 	);
 };
