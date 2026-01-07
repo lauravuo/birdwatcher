@@ -43,7 +43,7 @@ test.describe("Groups UI", () => {
 		// Set language to English for tests (before any navigation)
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");
-			window.location.reload = () => { };
+			window.location.reload = () => {};
 		});
 
 		// Capture browser logs
@@ -268,7 +268,7 @@ test.describe("Groups UI", () => {
 		// We are signed in as "GroupOwner" (from createGroup -> createTestUser("GroupOwner"))
 		// We need the UID of "GroupOwner".
 		// We can get it from getTestUserCredentials() IF createGroup used it, but createGroup uses specific email.
-		const ownerEmail = "owner@birdwatcher.test";
+
 		// We can fetch user by email or just assume we can add via UI.
 		// Adding via UI is slow.
 		// Let's re-login as the helper-created user?
