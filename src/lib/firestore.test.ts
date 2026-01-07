@@ -265,7 +265,11 @@ describe("Firestore Service", () => {
 			vi.mocked(getDocs).mockResolvedValue(mockSnapshot);
 
 			const { getGroupSightings } = await import("./firestore");
-			const { sightings } = await getGroupSightings(["user-1", "user-2"]);
+			const { sightings } = await getGroupSightings(
+				["user-1", "user-2"],
+				"2023-01-01",
+				"2024-12-31",
+			);
 
 			expect(sightings).toHaveLength(2);
 			expect(sightings[0].id).toBe("s2"); // Most recent first
@@ -292,7 +296,11 @@ describe("Firestore Service", () => {
 			vi.mocked(getDocs).mockResolvedValue(mockSnapshot);
 
 			const { getGroupSightings } = await import("./firestore");
-			const { sightings, lastVisible } = await getGroupSightings(["user-1"]);
+			const { sightings, lastVisible } = await getGroupSightings(
+				["user-1"],
+				"2023-01-01",
+				"2024-12-31",
+			);
 
 			expect(sightings).toHaveLength(1);
 			expect(lastVisible).toBeDefined();
@@ -308,7 +316,7 @@ describe("Firestore Service", () => {
 			vi.mocked(getDocs).mockResolvedValue(mockSnapshot);
 
 			const { getGroupSightings } = await import("./firestore");
-			await getGroupSightings(memberIds);
+			await getGroupSightings(memberIds, "2023-01-01", "2024-12-31");
 
 			// Should be called 3 times (10 + 10 + 5)
 			expect(getDocs).toHaveBeenCalledTimes(3);
@@ -316,7 +324,11 @@ describe("Firestore Service", () => {
 
 		it("returns empty array if no member IDs", async () => {
 			const { getGroupSightings } = await import("./firestore");
-			const { sightings } = await getGroupSightings([]);
+			const { sightings } = await getGroupSightings(
+				[],
+				"2023-01-01",
+				"2024-12-31",
+			);
 			expect(sightings).toEqual([]);
 			expect(getDocs).not.toHaveBeenCalled();
 		});
@@ -326,9 +338,9 @@ describe("Firestore Service", () => {
 			vi.mocked(getDocs).mockRejectedValue(error);
 
 			const { getGroupSightings } = await import("./firestore");
-			await expect(getGroupSightings(["user-1"])).rejects.toThrow(
-				"Firestore error",
-			);
+			await expect(
+				getGroupSightings(["user-1"], "2023-01-01", "2024-12-31"),
+			).rejects.toThrow("Firestore error");
 		});
 	});
 	describe("getUserSightings", () => {

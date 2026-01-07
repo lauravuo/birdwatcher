@@ -51,11 +51,12 @@
 		"membersCount": "Members"
 	},
 	"groupSightings": {
-		"title": "Sightings",
-		"loading": "Loading sightings...",
+		"title": "Group Sightings",
+		"noSightings": "No sightings found for this group.",
+		"loading": "Loading...",
+		"loadMore": "Load More",
 		"failedToLoad": "Failed to load sightings.",
-		"noSightings": "No sightings yet. Be the first to add one!",
-		"unknownUser": "Unknown user"
+		"unknownUser": "Unknown User"
 	},
 	"errors": {
 		"unknown": "Unknown error"

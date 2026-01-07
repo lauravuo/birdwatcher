@@ -50,13 +50,6 @@
 		"backButton": "← Takaisin",
 		"membersCount": "Jäsenet"
 	},
-	"groupSightings": {
-		"title": "Havainnot",
-		"loading": "Ladataan havaintoja...",
-		"failedToLoad": "Havaintojen lataaminen epäonnistui.",
-		"noSightings": "Ei vielä havaintoja. Ole ensimmäinen, joka lisää havainnon!",
-		"unknownUser": "Tuntematon käyttäjä"
-	},
 	"errors": {
 		"unknown": "Tuntematon virhe"
 	},
@@ -424,5 +417,13 @@
 		"submit": "Lisää havainto",
 		"submitting": "Lisätään...",
 		"submitError": "Havainnon lisääminen epäonnistui. Yritä uudelleen."
+	},
+	"groupSightings": {
+		"title": "Ryhmän havainnot",
+		"noSightings": "Ei havaintoja tässä ryhmässä.",
+		"loading": "Ladataan...",
+		"loadMore": "Lataa lisää",
+		"failedToLoad": "Havaintojen lataus epäonnistui.",
+		"unknownUser": "Tuntematon käyttäjä"
 	}
 }

@@ -16,6 +16,15 @@ test.describe("Group Sightings Pagination", () => {
 		await clearAllTestData();
 	});
 
+	// Helper to get today's date in YYYY-MM-DD format
+	const getToday = () => {
+		const now = new Date();
+		const year = now.getFullYear();
+		const month = String(now.getMonth() + 1).padStart(2, "0");
+		const day = String(now.getDate()).padStart(2, "0");
+		return `${year}-${month}-${day}`;
+	};
+
 	test("loads more sightings when clicking Load More button", async ({
 		page,
 	}) => {
@@ -36,12 +45,14 @@ test.describe("Group Sightings Pagination", () => {
 			memberIds: [user.uid],
 		});
 
+		const today = getToday();
+
 		// Seed 25 sightings (Limit is 20)
 		// ID s-0 is oldest, s-24 is newest.
 		const sightings = Array.from({ length: 25 }, (_, i) => ({
 			userId: user.uid,
 			birdId: `bird-${i}`,
-			date: "2024-01-01",
+			date: today,
 			time: "12:00",
 			type: "visual",
 			locationName: `Location ${i}`,
@@ -98,11 +109,13 @@ test.describe("Group Sightings Pagination", () => {
 			memberIds: [user.uid],
 		});
 
+		const today = getToday();
+
 		// Seed 5 sightings (Limit is 20)
 		const sightings = Array.from({ length: 5 }, (_, i) => ({
 			userId: user.uid,
 			birdId: `bird-${i}`,
-			date: "2024-01-01",
+			date: today,
 			time: "12:00",
 			type: "visual",
 			locationName: `Location ${i}`,
