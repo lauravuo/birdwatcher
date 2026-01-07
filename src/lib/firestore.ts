@@ -218,6 +218,8 @@ export async function addSighting(
 
 export const getGroupSightings = async (
 	memberIds: string[],
+	startDate: string, // YYYY-MM-DD
+	endDate: string, // YYYY-MM-DD
 	limitCount = 20,
 	lastSightingCursor?: QueryDocumentSnapshot,
 ): Promise<{
@@ -241,6 +243,8 @@ export const getGroupSightings = async (
 
 			const constraints: QueryConstraint[] = [
 				where("userId", "in", batch),
+				where("date", ">=", startDate),
+				where("date", "<=", endDate),
 				orderBy("date", "desc"),
 				orderBy("createdAt", "desc"),
 				limit(limitCount),

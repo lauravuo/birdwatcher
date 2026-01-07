@@ -176,7 +176,7 @@ test.describe("Sightings", () => {
 		);
 
 		// Initially should show no sightings
-		await expect(page.getByText(/no sightings yet/i)).toBeVisible({
+		await expect(page.getByText(/no sightings found/i)).toBeVisible({
 			timeout: 5000,
 		});
 	});

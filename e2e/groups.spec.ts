@@ -253,4 +253,128 @@ test.describe("Groups UI", () => {
 
 		expect(logTypes).not.toContain("error");
 	});
+
+	test("toggles between month and year view in group", async ({ page }) => {
+		const groupName = "Mode Group";
+		const joinCode = "mode-group";
+		await createGroup(page, groupName, joinCode);
+
+		// 1. Setup Data: We need to seed sightings via Firestore directly or UI?
+		// createGroup helper leaves us signed in as Owner.
+		// Let's use UI to add sightings? Or helpers?
+		// Existing tests use helpers mixed with UI.
+		// But createGroup uses UI.
+		// Let's use seedSightings from helpers, requiring uid.
+		// We are signed in as "GroupOwner" (from createGroup -> createTestUser("GroupOwner"))
+		// We need the UID of "GroupOwner".
+		// We can get it from getTestUserCredentials() IF createGroup used it, but createGroup uses specific email.
+
+		// We can fetch user by email or just assume we can add via UI.
+		// Adding via UI is slow.
+		// Let's re-login as the helper-created user?
+		// createGroup creates "GroupOwner".
+		// We can import { getUserByEmail } from "./helpers/firestore-helpers"?
+		// Or just use the current user from auth context?
+		// Simpler: Just rely on UI to verified toggle existence first, then maybe check empty state changes?
+		// Or:
+		// 1. Create user via helper.
+		// 2. Create group via helper.
+		// 3. Login and navigate.
+		// This parallels the standalone test I wrote.
+		// But I want to use `createGroup` helper if possible?
+		// `createGroup` helper is complex.
+
+		// Let's use the standalone logic but inside this file.
+		// We need imports: seedGroup, seedSightings.
+		const { seedGroup, seedSightings } = await import(
+			"./helpers/firestore-helpers"
+		);
+		const { getTestUserCredentials } = await import("./helpers/auth-helpers");
+
+		// Clear data again to be safe? beforeEach does it.
+		// So we are fresh.
+
+		const credentials = getTestUserCredentials();
+		// Re-create user (beforeEach created "Tester" already).
+		// We can use "Tester".
+		const user = await createTestUser(
+			credentials.email,
+			credentials.password,
+			"ModeTester",
+		);
+
+		await page.goto("/");
+		await signInInBrowser(page, credentials.email, credentials.password);
+
+		await seedGroup({
+			name: "Seeded Mode Group",
+			joinCode: "seeded-mode-group",
+			ownerId: user.uid,
+			memberIds: [user.uid],
+		});
+
+		const now = new Date();
+		const year = now.getFullYear();
+		const month = String(now.getMonth() + 1).padStart(2, "0");
+		const today = `${year}-${month}-15`;
+
+		// Previous Month/Year logic
+		const prevDateObj = new Date();
+		prevDateObj.setMonth(prevDateObj.getMonth() - 1);
+		const prevYear = prevDateObj.getFullYear();
+		const prevMonth = String(prevDateObj.getMonth() + 1).padStart(2, "0");
+		const prevDate = `${prevYear}-${prevMonth}-15`;
+
+		await seedSightings([
+			{
+				userId: user.uid,
+				birdId: "harakka",
+				date: today,
+				time: "12:00",
+				type: "visual",
+				createdAt: Date.now(),
+			},
+			{
+				userId: user.uid,
+				birdId: "varis",
+				date: prevDate,
+				time: "10:00",
+				type: "visual",
+				createdAt: Date.now() - 10000,
+			},
+		]);
+
+		await page.reload();
+		await page
+			.getByRole("link", { name: "Seeded Mode Group" })
+			.click({ timeout: 10000 });
+
+		await expect(
+			page.getByRole("heading", { name: "Group Sightings" }),
+		).toBeVisible();
+
+		// Default: Month View
+		await expect(page.getByText("Harakka").first()).toBeVisible();
+		if (month !== prevMonth) {
+			await expect(page.getByText("Varis")).toBeHidden();
+		}
+
+		// Switch to Year
+		await page.getByRole("button", { name: "Year" }).click();
+		await expect(page.getByLabel("Month")).toBeHidden();
+
+		// In Year view, if prevDate is same year, we see both.
+		if (prevYear === year) {
+			await expect(page.getByText("Harakka").first()).toBeVisible();
+			await expect(page.getByText("Varis").first()).toBeVisible();
+		} else {
+			// Different year
+			await expect(page.getByText("Harakka").first()).toBeVisible();
+			await expect(page.getByText("Varis")).toBeHidden();
+		}
+
+		// Switch back to Month
+		await page.getByRole("button", { name: "Month" }).click();
+		await expect(page.getByLabel("Month")).toBeVisible();
+	});
 });
