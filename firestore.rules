@@ -38,5 +38,13 @@ service cloud.firestore {
       allow read: if request.auth != null;
       allow write: if request.auth != null && request.auth.uid == userId;
     }
+
+    // New Schema: Yearly User Stats
+    // ID format: {userId}_{year}
+    match /user_yearly_stats/{statId} {
+      allow read: if request.auth != null;
+      // Ensure users can only write documents belonging to them
+      allow write: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
   }
 }

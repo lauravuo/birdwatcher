@@ -422,21 +422,34 @@ describe("Firestore Service", () => {
 		});
 	});
 	describe("getUsersStats", () => {
-		it("fetches stats for multiple users", async () => {
+		it("fetches stats for multiple users (no year)", async () => {
 			const { getDocs, where } = await import("firebase/firestore");
 			const mockStats = [
 				{
-					id: "user-1",
+					id: "user-1_2024",
 					data: () => ({
+						userId: "user-1",
+						year: 2024,
 						stats: {
 							"2024-01": ["bird1", "bird2"],
+						},
+					}),
+				},
+				{
+					id: "user-1_2023",
+					data: () => ({
+						userId: "user-1",
+						year: 2023,
+						stats: {
 							"2023-12": ["bird3"],
 						},
 					}),
 				},
 				{
-					id: "user-2",
+					id: "user-2_2024",
 					data: () => ({
+						userId: "user-2",
+						year: 2024,
 						stats: {
 							"2024-01": ["bird1"],
 						},
@@ -455,6 +468,7 @@ describe("Firestore Service", () => {
 			const statsMap = await getUsersStats(["user-1", "user-2"]);
 
 			expect(statsMap.size).toBe(2);
+			// Should merge stats from multiple years
 			expect(statsMap.get("user-1")).toEqual({
 				"2024-01": ["bird1", "bird2"],
 				"2023-12": ["bird3"],
@@ -463,21 +477,18 @@ describe("Firestore Service", () => {
 				"2024-01": ["bird1"],
 			});
 
-			expect(where).toHaveBeenCalledWith(expect.anything(), "in", [
-				"user-1",
-				"user-2",
-			]);
+			expect(where).toHaveBeenCalledWith("userId", "in", ["user-1", "user-2"]);
 		});
 
-		it("filters stats by year if provided", async () => {
-			const { getDocs } = await import("firebase/firestore");
+		it("fetches specific year stats by ID if year provided", async () => {
+			const { getDocs, documentId, where } = await import("firebase/firestore");
 			const mockStats = [
 				{
-					id: "user-1",
+					id: "user-1_2024",
 					data: () => ({
+						userId: "user-1",
 						stats: {
 							"2024-01": ["bird1"],
-							"2023-12": ["bird2"],
 							"2024-02": ["bird3"],
 						},
 					}),
@@ -496,14 +507,13 @@ describe("Firestore Service", () => {
 
 			const user1Stats = statsMap.get("user-1");
 			expect(user1Stats).toBeDefined();
-			if (user1Stats) {
-				expect(user1Stats).toEqual({
-					"2024-01": ["bird1"],
-					"2024-02": ["bird3"],
-				});
-				// Should NOT contain 2023 data
-				expect(Object.keys(user1Stats)).not.toContain("2023-12");
-			}
+			expect(user1Stats).toEqual({
+				"2024-01": ["bird1"],
+				"2024-02": ["bird3"],
+			});
+
+			// Verify we queried by documentId IN [user-1_2024]
+			expect(where).toHaveBeenCalledWith(documentId(), "in", ["user-1_2024"]);
 		});
 	});
 });
