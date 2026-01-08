@@ -73,7 +73,8 @@ export function GroupMembers() {
 			<div className="group-header">
 				<h2>{group.name}</h2>
 				<small className="join-code">
-					{t("groups.joinCode")}: {group.joinCode}
+					{t("groups.joinCode")}: {window.location.origin}?group=
+					{group.joinCode}
 				</small>
 			</div>
 
