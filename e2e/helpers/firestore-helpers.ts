@@ -125,5 +125,29 @@ export async function seedUserStats(
 	userId: string,
 	stats: Record<string, string[]>,
 ): Promise<void> {
-	await setDoc(doc(db, "user_stats", userId), { stats });
+	// Group stats by year
+	const statsByYear: Record<string, Record<string, string[]>> = {};
+
+	for (const [key, value] of Object.entries(stats)) {
+		const year = key.split("-")[0];
+		if (!statsByYear[year]) {
+			statsByYear[year] = {};
+		}
+		statsByYear[year][key] = value;
+	}
+
+	// Write value to user_yearly_stats collection
+	await Promise.all(
+		Object.entries(statsByYear).map(async ([year, yearStats]) => {
+			await setDoc(
+				doc(db, "user_yearly_stats", `${userId}_${year}`),
+				{
+					userId,
+					year: Number(year),
+					stats: yearStats,
+				},
+				{ merge: true },
+			);
+		}),
+	);
 }

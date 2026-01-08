@@ -2,6 +2,7 @@ import {
 	arrayUnion,
 	collection,
 	doc,
+	documentId,
 	getDoc,
 	getDocs,
 	limit,
@@ -17,6 +18,72 @@ import {
 import type { Group, UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
 import { db } from "./firebase";
+
+// ... (existing code) ...
+
+// --- User Stats Service ---
+
+export const getUsersStats = async (
+	userIds: string[],
+	year?: number,
+): Promise<Map<string, Record<string, string[]>>> => {
+	if (userIds.length === 0) return new Map();
+
+	const userStatsMap = new Map<string, Record<string, string[]>>();
+
+	// If year is provided, we can fetch specific documents directly by ID
+	if (year) {
+		const docIds = userIds.map((uid) => `${uid}_${year}`);
+		const batchSize = 10;
+
+		for (let i = 0; i < docIds.length; i += batchSize) {
+			const batch = docIds.slice(i, i + batchSize);
+			if (batch.length === 0) continue;
+
+			const q = query(
+				collection(db, "user_yearly_stats"),
+				where(documentId(), "in", batch),
+			);
+			const snapshot = await getDocs(q);
+
+			snapshot.forEach((doc) => {
+				const data = doc.data();
+				// Extract userId from doc ID or field. doc.id is "{userId}_{year}"
+				const userId = doc.id.split("_")[0];
+
+				// Return the stats object which contains month keys like "2024-01"
+				userStatsMap.set(
+					userId,
+					(data.stats || {}) as Record<string, string[]>,
+				);
+			});
+		}
+	} else {
+		// If no year provided, we must fetch ALL stats for these users.
+		// This requires a query by userId field.
+		// Note: The 'in' query limit is 10.
+		const batchSize = 10;
+		for (let i = 0; i < userIds.length; i += batchSize) {
+			const batch = userIds.slice(i, i + batchSize);
+			const q = query(
+				collection(db, "user_yearly_stats"),
+				where("userId", "in", batch),
+			);
+			const snapshot = await getDocs(q);
+
+			snapshot.forEach((doc) => {
+				const data = doc.data();
+				const userId = data.userId;
+				const stats = (data.stats || {}) as Record<string, string[]>;
+
+				const existing = userStatsMap.get(userId) || {};
+				userStatsMap.set(userId, { ...existing, ...stats });
+			});
+		}
+	}
+
+	return userStatsMap;
+};
 
 // --- Group Service ---
 
@@ -165,6 +232,8 @@ export const getUserProfile = async (
 	return null;
 };
 
+// --- Sighting Service ---
+
 export async function addSighting(
 	sighting: Omit<Sighting, "id" | "createdAt">,
 ) {
@@ -179,30 +248,21 @@ export async function addSighting(
 		createdAt: timestamp,
 	};
 
-	// Create sighting and update stats atomically using a transaction or batched write could be better,
-	// but addDoc doesn't support transaction easily without generating ID first.
-	// For simplicity and to match current pattern, we'll do them in parallel or sequence.
-	// Actually, strict atomicity is best. Let's use runTransaction if possible, but addDoc is convenient.
-	// Given the previous code used addDoc, let's stick to it for the sighting, and then update stats.
-	// Or better: Use batch/transaction to ensure consistency.
-
-	// Let's use a batch to ensure both happen or neither (if possible, but addDoc generates ID).
-	// We'll generate ID first.
 	const sightingRef = doc(collection(db, "sightings"));
 
 	const statsDate = new Date(sighting.date);
-	const yearMonth = `${statsDate.getFullYear()}-${String(statsDate.getMonth() + 1).padStart(2, "0")}`;
+	const year = statsDate.getFullYear();
+	const yearMonth = `${year}-${String(statsDate.getMonth() + 1).padStart(2, "0")}`;
 
 	await runTransaction(db, async (transaction) => {
 		transaction.set(sightingRef, sightingData);
 
-		const statsRef = doc(db, "user_stats", sighting.userId);
-		// Check if doc exists is checking efficiently done via set with merge?
-		// We want to arrayUnion.
-		// note: set with merge: true will create if not exists.
+		const statsRef = doc(db, "user_yearly_stats", `${sighting.userId}_${year}`);
 		transaction.set(
 			statsRef,
 			{
+				userId: sighting.userId,
+				year: year,
 				stats: {
 					[yearMonth]: arrayUnion(sighting.birdId),
 				},
@@ -213,8 +273,6 @@ export async function addSighting(
 
 	return sightingRef.id;
 }
-
-// --- Sighting Service ---
 
 export const getGroupSightings = async (
 	memberIds: string[],
@@ -330,15 +388,21 @@ export const getUserSightings = async (
 export const getUserStats = async (
 	userId: string,
 ): Promise<Record<string, string[]>> => {
-	const docRef = doc(db, "user_stats", userId);
-	const snapshot = await import("firebase/firestore").then((fs) =>
-		fs.getDoc(docRef),
+	// Fetch all yearly stats documents for this user
+	const q = query(
+		collection(db, "user_yearly_stats"),
+		where("userId", "==", userId),
 	);
+	const snapshot = await getDocs(q);
 
-	if (snapshot.exists()) {
-		return snapshot.data().stats || {};
-	}
-	return {};
+	let allStats: Record<string, string[]> = {};
+	snapshot.forEach((doc) => {
+		const data = doc.data();
+		const yearStats = (data.stats || {}) as Record<string, string[]>;
+		allStats = { ...allStats, ...yearStats };
+	});
+
+	return allStats;
 };
 
 export const recalculateUserStats = async (userId: string): Promise<void> => {
@@ -347,25 +411,42 @@ export const recalculateUserStats = async (userId: string): Promise<void> => {
 	const snapshot = await getDocs(q);
 	const sightings = snapshot.docs.map((d) => d.data() as Sighting);
 
-	// 2. Calculate stats
-	const stats: Record<string, string[]> = {};
+	// 2. Calculate stats grouped by year
+	// Structure: { "2024": { "2024-01": [birds...] } }
+	const statsByYear: Record<string, Record<string, string[]>> = {};
 
 	for (const sighting of sightings) {
 		const date = new Date(sighting.date);
-		const yearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+		const year = date.getFullYear().toString();
+		const yearMonth = `${year}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 
-		if (!stats[yearMonth]) {
-			stats[yearMonth] = [];
+		if (!statsByYear[year]) {
+			statsByYear[year] = {};
+		}
+		if (!statsByYear[year][yearMonth]) {
+			statsByYear[year][yearMonth] = [];
 		}
 
-		if (!stats[yearMonth].includes(sighting.birdId)) {
-			stats[yearMonth].push(sighting.birdId);
+		if (!statsByYear[year][yearMonth].includes(sighting.birdId)) {
+			statsByYear[year][yearMonth].push(sighting.birdId);
 		}
 	}
 
-	// 3. Save to user_stats
-	const statsRef = doc(db, "user_stats", userId);
-	await import("firebase/firestore").then((fs) =>
-		fs.setDoc(statsRef, { stats }),
-	);
+	// 3. Save to user_yearly_stats
+	// We use a batch/transaction loop or individual sets.
+	// Since this is a maintenance task, individual awaits are fine.
+	for (const [year, stats] of Object.entries(statsByYear)) {
+		const docRef = doc(db, "user_yearly_stats", `${userId}_${year}`);
+		await import("firebase/firestore").then((fs) =>
+			fs.setDoc(
+				docRef,
+				{
+					userId,
+					year: Number(year),
+					stats,
+				},
+				{ merge: true },
+			),
+		);
+	}
 };

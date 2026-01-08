@@ -425,5 +425,11 @@
 		"submit": "Add Sighting",
 		"submitting": "Submitting...",
 		"submitError": "Failed to add sighting. Please try again."
+	},
+	"leaderboard": {
+		"title": "Leaderboard",
+		"yearlyWinner": "Yearly Winner",
+		"monthlyWinner": "Monthly Winner ({{count}})",
+		"failedToLoad": "Failed to load leaderboard."
 	}
 }
