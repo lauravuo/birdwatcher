@@ -51,11 +51,13 @@ test.describe("User View", () => {
 
 	test("navigates to user view and filters sightings", async ({ page }) => {
 		const groupName = "User View Group";
-		const joinCode = await createGroup(page, groupName);
+		const _joinCode = await createGroup(page, groupName);
 
 		// 1. Enter Group
 		await page.getByRole("link", { name: new RegExp(groupName) }).click();
-		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
+		await expect(
+			page.locator(".breadcrumbs").getByText(groupName),
+		).toBeVisible();
 
 		// 2. Add a Sighting (Jan)
 		await page.getByLabel("Add sighting").click();

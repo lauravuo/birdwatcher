@@ -106,7 +106,7 @@ test.describe("Groups UI", () => {
 		// Verify group appears (redirects to group view for single group)
 		// It resolves to Heading because of auto-redirect
 		await expect(
-			page.getByRole("heading", { name: "Test Birds Group" }),
+			page.locator(".breadcrumbs").getByText("Test Birds Group"),
 		).toBeVisible({
 			timeout: 10000,
 		});
@@ -139,7 +139,9 @@ test.describe("Groups UI", () => {
 		await groupItem.click();
 
 		// 3. Verify member list is shown & URL is correct
-		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
+		await expect(
+			page.locator(".breadcrumbs").getByText(groupName),
+		).toBeVisible();
 		await expect(page.getByText(/Members \(1\)/)).toBeVisible();
 		await expect(page).toHaveURL(/\/groups\//);
 
@@ -201,7 +203,9 @@ test.describe("Groups UI", () => {
 
 		// 4. Member should be redirected to group view directly (not the list)
 		// because of the single-group auto-redirect logic
-		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
+		await expect(
+			page.locator(".breadcrumbs").getByText(groupName),
+		).toBeVisible();
 		await expect(page.getByText(/Members \(2\)/)).toBeVisible();
 		await expect(page).toHaveURL(/\/groups\//);
 
@@ -253,7 +257,9 @@ test.describe("Groups UI", () => {
 		).not.toBeVisible();
 
 		// 5. User stays on group view (cannot navigate back via breadcrumb)
-		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
+		await expect(
+			page.locator(".breadcrumbs").getByText(groupName),
+		).toBeVisible();
 
 		expect(logTypes).not.toContain("error");
 	});

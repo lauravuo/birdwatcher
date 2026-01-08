@@ -70,14 +70,6 @@ export function GroupMembers() {
 
 	return (
 		<div className="group-members-container">
-			<div className="group-header">
-				<h2>{group.name}</h2>
-				<small className="join-code">
-					{t("groups.joinCode")}: {window.location.origin}?group=
-					{group.joinCode}
-				</small>
-			</div>
-
 			<div className="members-section">
 				<h3>
 					{t("groupMembers.membersCount")} ({members.length})
