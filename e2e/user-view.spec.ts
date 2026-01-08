@@ -13,12 +13,17 @@ test.describe("User View", () => {
 	const createGroup = async (
 		page: Page,
 		groupName: string,
-		joinCode: string,
-	) => {
+	): Promise<string> => {
 		await page.getByLabel("Group Name:").fill(groupName);
-		await page.getByLabel("Unique Join Code:").fill(joinCode);
 		await page.getByRole("button", { name: "Create Group" }).click();
-		await expect(page.getByText(groupName)).toBeVisible({ timeout: 10000 });
+
+		const groupLink = page.getByRole("link", { name: new RegExp(groupName) });
+		await expect(groupLink).toBeVisible({ timeout: 10000 });
+
+		const text = await groupLink.innerText();
+		const match = text.match(/\(([^)]+)\)/);
+		if (!match) throw new Error(`Could not extract join code from "${text}"`);
+		return match[1];
 	};
 
 	const logTypes: string[] = [];
@@ -45,13 +50,14 @@ test.describe("User View", () => {
 	});
 
 	test("navigates to user view and filters sightings", async ({ page }) => {
-		const joinCode = "test-user-view";
 		const groupName = "User View Group";
-		await createGroup(page, groupName, joinCode);
+		const _joinCode = await createGroup(page, groupName);
 
 		// 1. Enter Group
 		await page.getByRole("link", { name: new RegExp(groupName) }).click();
-		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
+		await expect(
+			page.locator(".breadcrumbs").getByText(groupName),
+		).toBeVisible();
 
 		// 2. Add a Sighting (Jan)
 		await page.getByLabel("Add sighting").click();

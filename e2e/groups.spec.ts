@@ -7,8 +7,7 @@ test.describe("Groups UI", () => {
 	const createGroup = async (
 		page: Page,
 		groupName: string,
-		joinCode: string,
-	) => {
+	): Promise<string> => {
 		const ownerEmail = "owner@birdwatcher.test";
 		const ownerPassword = "password123";
 
@@ -26,13 +25,17 @@ test.describe("Groups UI", () => {
 
 		// 2. Create the group via UI
 		await page.getByLabel("Group Name:").fill(groupName);
-		await page.getByLabel("Unique Join Code:").fill(joinCode);
 		await page.getByRole("button", { name: "Create Group" }).click();
 
 		// Verify owner sees the new group
-		await expect(page.getByText(groupName)).toBeVisible({
-			timeout: 10000,
-		});
+		const groupLink = page.getByRole("link", { name: new RegExp(groupName) });
+		await expect(groupLink).toBeVisible({ timeout: 10000 });
+
+		// Extract join code from UI: "GroupName (code)"
+		const text = await groupLink.innerText();
+		const match = text.match(/\(([^)]+)\)/);
+		if (!match) throw new Error(`Could not extract join code from "${text}"`);
+		return match[1];
 	};
 	const logTypes: string[] = [];
 	test.beforeEach(async ({ page }) => {
@@ -85,8 +88,7 @@ test.describe("Groups UI", () => {
 	});
 
 	test("successfully joins group via URL", async ({ page }) => {
-		const joinCode = "test-birds-2024";
-		await createGroup(page, "Test Birds Group", joinCode);
+		const joinCode = await createGroup(page, "Test Birds Group");
 
 		// 3. Sign out owner and sign back in as the primary test user
 		await signOutInBrowser(page);
@@ -104,7 +106,7 @@ test.describe("Groups UI", () => {
 		// Verify group appears (redirects to group view for single group)
 		// It resolves to Heading because of auto-redirect
 		await expect(
-			page.getByRole("heading", { name: "Test Birds Group" }),
+			page.locator(".breadcrumbs").getByText("Test Birds Group"),
 		).toBeVisible({
 			timeout: 10000,
 		});
@@ -128,9 +130,8 @@ test.describe("Groups UI", () => {
 	});
 
 	test("shows member list when a group is selected", async ({ page }) => {
-		const joinCode = "test-birds-group-click";
 		const groupName = "Test Birds Group Click";
-		await createGroup(page, groupName, joinCode);
+		await createGroup(page, groupName);
 
 		// 2. Click the group in the list (now a Link)
 		const groupItem = page.getByRole("link", { name: new RegExp(groupName) });
@@ -138,7 +139,9 @@ test.describe("Groups UI", () => {
 		await groupItem.click();
 
 		// 3. Verify member list is shown & URL is correct
-		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
+		await expect(
+			page.locator(".breadcrumbs").getByText(groupName),
+		).toBeVisible();
 		await expect(page.getByText(/Members \(1\)/)).toBeVisible();
 		await expect(page).toHaveURL(/\/groups\//);
 
@@ -158,7 +161,6 @@ test.describe("Groups UI", () => {
 	test("shows single group by default without back button", async ({
 		page,
 	}) => {
-		const joinCode = "single-group-member";
 		const groupName = "Single Group Member";
 		const ownerEmail = "owner-member@birdwatcher.test";
 		const ownerPassword = "password123";
@@ -177,10 +179,16 @@ test.describe("Groups UI", () => {
 		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
 
 		await page.getByLabel("Group Name:").fill(groupName);
-		await page.getByLabel("Unique Join Code:").fill(joinCode);
 		await page.getByRole("button", { name: "Create Group" }).click();
 
 		await expect(page.getByText(groupName)).toBeVisible({ timeout: 10000 });
+
+		// Extract join code from UI
+		const groupLink = page.getByRole("link", { name: new RegExp(groupName) });
+		const text = await groupLink.innerText();
+		const match = text.match(/\(([^)]+)\)/);
+		if (!match) throw new Error("Could not extract join code");
+		const joinCode = match[1];
 
 		// 2. Sign out owner and create a non-owner member
 		await signOutInBrowser(page);
@@ -195,7 +203,9 @@ test.describe("Groups UI", () => {
 
 		// 4. Member should be redirected to group view directly (not the list)
 		// because of the single-group auto-redirect logic
-		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
+		await expect(
+			page.locator(".breadcrumbs").getByText(groupName),
+		).toBeVisible();
 		await expect(page.getByText(/Members \(2\)/)).toBeVisible();
 		await expect(page).toHaveURL(/\/groups\//);
 
@@ -212,7 +222,6 @@ test.describe("Groups UI", () => {
 	test("owner with single group sees back button and group list", async ({
 		page,
 	}) => {
-		const joinCode = "single-group-owner";
 		const groupName = "Single Group Owner";
 
 		// 1. Owner creates a group
@@ -230,7 +239,6 @@ test.describe("Groups UI", () => {
 		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
 
 		await page.getByLabel("Group Name:").fill(groupName);
-		await page.getByLabel("Unique Join Code:").fill(joinCode);
 		await page.getByRole("button", { name: "Create Group" }).click();
 
 		await expect(page.getByText(groupName)).toBeVisible({ timeout: 10000 });
@@ -249,54 +257,24 @@ test.describe("Groups UI", () => {
 		).not.toBeVisible();
 
 		// 5. User stays on group view (cannot navigate back via breadcrumb)
-		await expect(page.getByRole("heading", { name: groupName })).toBeVisible();
+		await expect(
+			page.locator(".breadcrumbs").getByText(groupName),
+		).toBeVisible();
 
 		expect(logTypes).not.toContain("error");
 	});
 
 	test("toggles between month and year view in group", async ({ page }) => {
 		const groupName = "Mode Group";
-		const joinCode = "mode-group";
-		await createGroup(page, groupName, joinCode);
+		await createGroup(page, groupName);
 
-		// 1. Setup Data: We need to seed sightings via Firestore directly or UI?
-		// createGroup helper leaves us signed in as Owner.
-		// Let's use UI to add sightings? Or helpers?
-		// Existing tests use helpers mixed with UI.
-		// But createGroup uses UI.
-		// Let's use seedSightings from helpers, requiring uid.
-		// We are signed in as "GroupOwner" (from createGroup -> createTestUser("GroupOwner"))
-		// We need the UID of "GroupOwner".
-		// We can get it from getTestUserCredentials() IF createGroup used it, but createGroup uses specific email.
-
-		// We can fetch user by email or just assume we can add via UI.
-		// Adding via UI is slow.
-		// Let's re-login as the helper-created user?
-		// createGroup creates "GroupOwner".
-		// We can import { getUserByEmail } from "./helpers/firestore-helpers"?
-		// Or just use the current user from auth context?
-		// Simpler: Just rely on UI to verified toggle existence first, then maybe check empty state changes?
-		// Or:
-		// 1. Create user via helper.
-		// 2. Create group via helper.
-		// 3. Login and navigate.
-		// This parallels the standalone test I wrote.
-		// But I want to use `createGroup` helper if possible?
-		// `createGroup` helper is complex.
-
-		// Let's use the standalone logic but inside this file.
-		// We need imports: seedGroup, seedSightings.
+		// 1. Setup Data
 		const { seedGroup, seedSightings } = await import(
 			"./helpers/firestore-helpers"
 		);
 		const { getTestUserCredentials } = await import("./helpers/auth-helpers");
 
-		// Clear data again to be safe? beforeEach does it.
-		// So we are fresh.
-
 		const credentials = getTestUserCredentials();
-		// Re-create user (beforeEach created "Tester" already).
-		// We can use "Tester".
 		const user = await createTestUser(
 			credentials.email,
 			credentials.password,

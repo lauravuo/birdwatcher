@@ -18,7 +18,6 @@ export function GroupList() {
 
 	// Create Form
 	const [newName, setNewName] = useState("");
-	const [newCode, setNewCode] = useState("");
 
 	// Join Form
 	const [joinCode, setJoinCode] = useState("");
@@ -100,14 +99,14 @@ export function GroupList() {
 		if (!currentUser) return;
 		setError(null);
 		try {
-			await createGroup(newName, newCode, {
+			const generatedCode = `${newName.toLowerCase().replace(/[^a-z0-9]/g, "-")}-${Math.random().toString(36).substring(2, 8)}`;
+			await createGroup(newName, generatedCode, {
 				uid: currentUser.uid,
 				displayName: currentUser.displayName,
 				email: currentUser.email,
 				photoURL: currentUser.photoURL,
 			});
 			setNewName("");
-			setNewCode("");
 		} catch (err) {
 			const message =
 				err instanceof Error ? err.message : t("groupList.failedToCreateGroup");
@@ -170,20 +169,6 @@ export function GroupList() {
 										type="text"
 										value={newName}
 										onChange={(e) => setNewName(e.target.value)}
-										required
-									/>
-								</label>
-							</div>
-							<div>
-								<label>
-									{t("groupList.joinCodeLabel")}:
-									<input
-										type="text"
-										value={newCode}
-										onChange={(e) => setNewCode(e.target.value)}
-										placeholder={t("groupList.joinCodePlaceholder")}
-										pattern="[a-z0-9\-]+"
-										title={t("groupList.joinCodePattern")}
 										required
 									/>
 								</label>

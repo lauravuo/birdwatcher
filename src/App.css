@@ -59,6 +59,22 @@ h1 {
 	border: 1px solid var(--border-color);
 }
 
+@media (max-width: 600px) {
+	header,
+	.breadcrumbs {
+		padding: 1rem;
+	}
+
+	.card {
+		margin: 0;
+		padding: 1.5rem;
+		border-radius: 0;
+		border-left: none;
+		border-right: none;
+		box-shadow: none;
+	}
+}
+
 /* Group Members */
 .group-header {
 	display: flex;
@@ -672,6 +688,15 @@ h1 {
 	border-bottom: 1px solid var(--border-color);
 }
 
+.breadcrumbs-content {
+	max-width: 800px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+}
+
 .breadcrumbs ol {
 	display: flex;
 	flex-wrap: wrap;
@@ -680,8 +705,21 @@ h1 {
 	margin: 0;
 	gap: 0.5rem;
 	align-items: center;
-	max-width: 800px;
-	margin: 0 auto;
+}
+
+.share-button {
+	padding: 0.4rem 0.8rem;
+	font-size: 0.85rem;
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+	color: var(--text-secondary);
+	white-space: nowrap;
+}
+
+.share-button:hover {
+	background: var(--bg-hover);
+	color: var(--text-primary);
+	border-color: var(--accent-primary);
 }
 
 .breadcrumbs li {
