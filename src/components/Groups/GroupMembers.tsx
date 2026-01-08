@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { db } from "../../lib/firebase";
 import { getGroupMembers } from "../../lib/firestore";
 import type { Group, UserProfile } from "../../types";
+import { GroupLeaderboard } from "./GroupLeaderboard";
 import { GroupSightings } from "./GroupSightings";
 
 export function GroupMembers() {
@@ -108,6 +109,7 @@ export function GroupMembers() {
 				</ul>
 			</div>
 
+			<GroupLeaderboard group={group} />
 			<GroupSightings group={group} />
 		</div>
 	);

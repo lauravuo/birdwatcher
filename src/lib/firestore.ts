@@ -2,6 +2,7 @@ import {
 	arrayUnion,
 	collection,
 	doc,
+	documentId,
 	getDoc,
 	getDocs,
 	limit,
@@ -18,6 +19,50 @@ import type { Group, UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
 import { db } from "./firebase";
 
+// ... (existing code) ...
+
+export const getUsersStats = async (
+	userIds: string[],
+	year?: number,
+): Promise<Map<string, Record<string, string[]>>> => {
+	if (userIds.length === 0) return new Map();
+
+	const userStatsMap = new Map<string, Record<string, string[]>>();
+	const batchSize = 10; // Firestore 'in' limit
+
+	// Process in chunks to respect Firestore limits
+	for (let i = 0; i < userIds.length; i += batchSize) {
+		const batch = userIds.slice(i, i + batchSize);
+		if (batch.length === 0) continue;
+
+		// Fetch documents by ID
+		const q = query(
+			collection(db, "user_stats"),
+			where(documentId(), "in", batch),
+		);
+		const snapshot = await getDocs(q);
+
+		snapshot.forEach((doc) => {
+			const data = doc.data();
+			const fullStats = (data.stats || {}) as Record<string, string[]>;
+			let filteredStats = fullStats;
+
+			// Optimization: Filter stats to only include the requested year
+			if (year) {
+				const yearPrefix = `${year}-`;
+				filteredStats = Object.fromEntries(
+					Object.entries(fullStats).filter(([key]) =>
+						key.startsWith(yearPrefix),
+					),
+				);
+			}
+
+			userStatsMap.set(doc.id, filteredStats);
+		});
+	}
+
+	return userStatsMap;
+};
 // --- Group Service ---
 
 export const createGroup = async (

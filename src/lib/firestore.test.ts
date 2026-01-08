@@ -24,6 +24,7 @@ vi.mock("firebase/firestore", async () => {
 		arrayUnion: vi.fn((val) => ["arrayUnion", val]),
 		limit: vi.fn(),
 		startAfter: vi.fn(),
+		documentId: vi.fn(() => "documentId()"),
 	};
 });
 
@@ -418,6 +419,91 @@ describe("Firestore Service", () => {
 
 			expect(sightings).toHaveLength(1);
 			expect(lastVisible).toBeDefined();
+		});
+	});
+	describe("getUsersStats", () => {
+		it("fetches stats for multiple users", async () => {
+			const { getDocs, where } = await import("firebase/firestore");
+			const mockStats = [
+				{
+					id: "user-1",
+					data: () => ({
+						stats: {
+							"2024-01": ["bird1", "bird2"],
+							"2023-12": ["bird3"],
+						},
+					}),
+				},
+				{
+					id: "user-2",
+					data: () => ({
+						stats: {
+							"2024-01": ["bird1"],
+						},
+					}),
+				},
+			];
+
+			const mockSnapshot = {
+				// biome-ignore lint/suspicious/noExplicitAny: Mocking complex object
+				forEach: (callback: (doc: any) => void) => mockStats.forEach(callback),
+			};
+			// @ts-expect-error: Mocking
+			vi.mocked(getDocs).mockResolvedValue(mockSnapshot);
+
+			const { getUsersStats } = await import("./firestore");
+			const statsMap = await getUsersStats(["user-1", "user-2"]);
+
+			expect(statsMap.size).toBe(2);
+			expect(statsMap.get("user-1")).toEqual({
+				"2024-01": ["bird1", "bird2"],
+				"2023-12": ["bird3"],
+			});
+			expect(statsMap.get("user-2")).toEqual({
+				"2024-01": ["bird1"],
+			});
+
+			expect(where).toHaveBeenCalledWith(expect.anything(), "in", [
+				"user-1",
+				"user-2",
+			]);
+		});
+
+		it("filters stats by year if provided", async () => {
+			const { getDocs } = await import("firebase/firestore");
+			const mockStats = [
+				{
+					id: "user-1",
+					data: () => ({
+						stats: {
+							"2024-01": ["bird1"],
+							"2023-12": ["bird2"],
+							"2024-02": ["bird3"],
+						},
+					}),
+				},
+			];
+
+			const mockSnapshot = {
+				// biome-ignore lint/suspicious/noExplicitAny: Mocking complex object
+				forEach: (callback: (doc: any) => void) => mockStats.forEach(callback),
+			};
+			// @ts-expect-error: Mocking
+			vi.mocked(getDocs).mockResolvedValue(mockSnapshot);
+
+			const { getUsersStats } = await import("./firestore");
+			const statsMap = await getUsersStats(["user-1"], 2024);
+
+			const user1Stats = statsMap.get("user-1");
+			expect(user1Stats).toBeDefined();
+			if (user1Stats) {
+				expect(user1Stats).toEqual({
+					"2024-01": ["bird1"],
+					"2024-02": ["bird3"],
+				});
+				// Should NOT contain 2023 data
+				expect(Object.keys(user1Stats)).not.toContain("2023-12");
+			}
 		});
 	});
 });
