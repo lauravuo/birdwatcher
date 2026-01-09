@@ -99,3 +99,124 @@ button:focus,
 button:focus-visible {
 	outline: 4px auto -webkit-focus-ring-color;
 }
+
+/* Sighting Details Styles */
+.sighting-details-container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 1rem;
+}
+
+.sighting-card-large {
+	background-color: var(--bg-secondary);
+	border-radius: 12px;
+	padding: 2rem;
+	box-shadow: var(--shadow-md);
+}
+
+.sighting-header-large {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid var(--border-color);
+	padding-bottom: 1.5rem;
+	margin-bottom: 1.5rem;
+}
+
+.sighting-header-large h2 {
+	margin: 0;
+	font-size: 2rem;
+	color: var(--text-primary);
+}
+
+.sighting-type-badge {
+	background-color: var(--bg-tertiary);
+	color: var(--accent-secondary);
+	padding: 0.5rem 1rem;
+	border-radius: 20px;
+	font-size: 0.9rem;
+	font-weight: 600;
+	border: 1px solid var(--border-color);
+}
+
+.sighting-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+	.sighting-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.detail-item {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.full-width {
+	grid-column: 1 / -1;
+}
+
+.detail-label {
+	font-size: 0.85rem;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--text-secondary);
+	font-weight: 600;
+}
+
+.detail-value {
+	font-size: 1.1rem;
+	color: var(--text-primary);
+}
+
+.user-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	background-color: var(--bg-tertiary);
+	padding: 0.25rem 0.75rem;
+	border-radius: 20px;
+}
+
+.user-avatar-tiny {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.sighting-notes-large {
+	font-size: 1.1rem;
+	font-style: italic;
+	color: var(--text-secondary);
+	line-height: 1.6;
+	background: var(--bg-tertiary);
+	padding: 1rem;
+	border-radius: 8px;
+	margin: 0;
+}
+
+.map-link {
+	display: inline-block;
+	color: var(--accent-primary);
+	text-decoration: none;
+	margin-top: 0.25rem;
+}
+
+.map-link:hover {
+	text-decoration: underline;
+}
+
+/* Sightings List User */
+.sighting-user {
+	font-size: 0.9em;
+	color: var(--text-secondary);
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+}

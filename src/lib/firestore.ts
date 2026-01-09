@@ -385,6 +385,18 @@ export const getUserSightings = async (
 	return { sightings, lastVisible };
 };
 
+export const getSighting = async (
+	sightingId: string,
+): Promise<Sighting | null> => {
+	const docRef = doc(db, "sightings", sightingId);
+	const snapshot = await getDoc(docRef);
+
+	if (snapshot.exists()) {
+		return { id: snapshot.id, ...snapshot.data() } as Sighting;
+	}
+	return null;
+};
+
 export const getUserStats = async (
 	userId: string,
 ): Promise<Record<string, string[]>> => {

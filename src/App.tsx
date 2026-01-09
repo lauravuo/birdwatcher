@@ -5,6 +5,7 @@ import { Breadcrumbs } from "./components/Breadcrumbs";
 import { GroupList } from "./components/Groups/GroupList";
 import { GroupView } from "./components/Groups/GroupView";
 import { Login } from "./components/Login";
+import { SightingDetails } from "./components/SightingDetails";
 import { UserView } from "./components/UserView";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import "./App.css";
@@ -46,6 +47,10 @@ function AuthenticatedApp() {
 						<Route
 							path="/groups/:groupId/members/:userId"
 							element={<UserView />}
+						/>
+						<Route
+							path="/groups/:groupId/members/:userId/sightings/:sightingId"
+							element={<SightingDetails />}
 						/>
 						<Route path="*" element={<Navigate to="/" replace />} />
 					</Routes>

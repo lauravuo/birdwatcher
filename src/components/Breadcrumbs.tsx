@@ -25,6 +25,14 @@ export function Breadcrumbs() {
 			? pathnames[memberIndex + 1]
 			: null;
 
+	const sightingIndex = pathnames.indexOf("sightings");
+	const sightingId =
+		sightingIndex !== -1 && pathnames[sightingIndex + 1]
+			? pathnames[sightingIndex + 1]
+			: null;
+
+	const [sightingBirdName, setSightingBirdName] = useState<string | null>(null);
+
 	// Fetch group name and code
 	useEffect(() => {
 		const fetchGroupData = async () => {
@@ -68,6 +76,28 @@ export function Breadcrumbs() {
 		fetchUserName();
 	}, [userId]);
 
+	// Fetch sighting (bird name) if sightingId is present
+	useEffect(() => {
+		const fetchSightingData = async () => {
+			if (sightingId) {
+				try {
+					const docRef = doc(db, "sightings", sightingId);
+					const docSnap = await getDoc(docRef);
+					if (docSnap.exists()) {
+						const birdId = docSnap.data().birdId;
+						const translatedName = t(`birds.${birdId}`);
+						setSightingBirdName(translatedName);
+					}
+				} catch (e) {
+					console.error("Failed to fetch sighting for breadcrumb", e);
+				}
+			} else {
+				setSightingBirdName(null);
+			}
+		};
+		fetchSightingData();
+	}, [sightingId, t]);
+
 	const handleShare = async () => {
 		if (!joinCode) return;
 		const url = `${window.location.origin}?group=${joinCode}`;
@@ -102,12 +132,16 @@ export function Breadcrumbs() {
 						let label = value;
 						if (value === "groups") return null;
 						if (value === "members") return null;
+						if (value === "sightings") return null;
 
 						if (pathnames[index - 1] === "groups" && groupName) {
 							label = groupName;
 						}
 						if (pathnames[index - 1] === "members" && userName) {
 							label = userName;
+						}
+						if (pathnames[index - 1] === "sightings" && sightingBirdName) {
+							label = sightingBirdName;
 						}
 
 						if (isLast) {
