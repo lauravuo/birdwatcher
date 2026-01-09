@@ -78,9 +78,11 @@ test.describe("User View", () => {
 			.click();
 
 		// Confirm sighting is visible in group view
+		await page.getByRole("button", { name: "Sightings" }).click();
 		await expect(page.getByText("Harakka")).toBeVisible();
 
 		// 3. Click Member (Tester) - Wait for list to load
+		await page.getByRole("button", { name: "Members" }).click();
 		await expect(
 			page.getByRole("heading", { name: "Members (1)" }),
 		).toBeVisible();
@@ -150,6 +152,7 @@ test.describe("User View", () => {
 			.click();
 
 		// Go back to user view
+		await page.getByRole("button", { name: "Members" }).click();
 		await page.locator(".member-item").filter({ hasText: "Tester" }).click();
 		await page.getByLabel("Month").selectOption("0"); // January
 
@@ -189,6 +192,7 @@ test.describe("User View", () => {
 			.getByRole("button", { name: "Add Sighting" })
 			.click();
 
+		await page.getByRole("button", { name: "Members" }).click();
 		await page.locator(".member-item").filter({ hasText: "Tester" }).click();
 		await page.getByLabel("Month").selectOption("0");
 
@@ -211,6 +215,7 @@ test.describe("User View", () => {
 			.getByRole("button", { name: "Add Sighting" })
 			.click();
 
+		await page.getByRole("button", { name: "Members" }).click();
 		await page.locator(".member-item").filter({ hasText: "Tester" }).click();
 
 		// Check Jan
@@ -292,6 +297,10 @@ test.describe("User View", () => {
 
 		// 3. Navigate to Group
 		await page.getByRole("link", { name: new RegExp(groupName) }).click();
+
+		// Click Members tab
+		await page.getByRole("button", { name: "Members" }).click();
+
 		await expect(
 			page.getByRole("heading", { name: "Members (2)" }),
 		).toBeVisible();

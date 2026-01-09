@@ -9,7 +9,9 @@
 		"back": "Takaisin",
 		"month": "Kuukausi",
 		"year": "Vuosi",
-		"total": "Yhteensä"
+		"total": "Yhteensä",
+		"anonymous": "Nimetön",
+		"copied": "Kopioitu!"
 	},
 	"userView": {
 		"sightings": "Havainnot",
@@ -26,7 +28,8 @@
 		"noGroups": "Et ole liittynyt mihinkään ryhmiin vielä.",
 		"joinCode": "Liittymiskoodi",
 		"members": "Jäsenet",
-		"owner": "Omistaja"
+		"owner": "Omistaja",
+		"share": "Jaa"
 	},
 	"groupList": {
 		"loadingGroups": "Ladataan ryhmiä...",
@@ -50,8 +53,16 @@
 		"backButton": "← Takaisin",
 		"membersCount": "Jäsenet"
 	},
+	"groupView": {
+		"tabs": {
+			"stats": "Tilastot",
+			"sightings": "Havainnot",
+			"members": "Jäsenet"
+		}
+	},
 	"errors": {
-		"unknown": "Tuntematon virhe"
+		"unknown": "Tuntematon virhe",
+		"groupNotFound": "Ryhmää ei löytynyt"
 	},
 	"birds": {
 		"alli": "Alli",
@@ -430,6 +441,9 @@
 		"title": "Tulostaulukko",
 		"yearlyWinner": "Vuoden voittaja",
 		"monthlyWinner": "Kuukauden voittaja ({{count}})",
-		"failedToLoad": "Tulostaulukon lataus epäonnistui."
+		"failedToLoad": "Tulostaulukon lataus epäonnistui.",
+		"yearPointsLeaders": "Pistepörssi ({{year}})",
+		"yearUniqueLeaders": "Ahkerimmat ({{year}})",
+		"monthUniqueLeaders": "Ahkerimmat ({{month}})"
 	}
 }

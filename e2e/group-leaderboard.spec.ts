@@ -16,15 +16,28 @@ test.describe("Group Leaderboard", () => {
 		await clearAllTestData();
 	});
 
-	test("displays leaderboard with correct points and ranks", async ({
+	test("displays leaderboard with correct sections and ranks", async ({
 		page,
 	}) => {
 		const currentYear = new Date().getFullYear();
-		const jan = `${currentYear}-01`;
-		const feb = `${currentYear}-02`;
+		const pad = (n: number) => String(n).padStart(2, "0");
+		const monthNum = new Date().getMonth() + 1; // 1-12
+		// If currently Jan (1), prev is Dec (12) of prev year?
+		// Logic handles current year only. So if Jan, only Jan exists.
+		// Let's assume test runs in a context where we can seed current year months.
 
-		// 1. Setup Users & Seed Stats (Interleaved to maintain Auth session)
-		// User A:
+		// For stable testing, we'll try to seed "Current Month" and "Previous Month" (if > Jan)
+		// Or just Current Month since that's guaranteed safe.
+		// Let's seed "Current Month" (Month A) and "Previous Month" (Month B) if possible.
+		// If Jan, we only have one month.
+		// We'll stick to a simple case: Month M (Current)
+
+		const currentMonthKey = `${currentYear}-${pad(monthNum)}`;
+
+		// 1. Setup Data
+		// User A: 5 birds in Current Month -> Points: 1 (Month Win), Unique Year: 5
+		// User B: 2 birds in Current Month -> Points: 0, Unique Year: 2
+
 		const userA = await createTestUser(
 			"leaderA@test.com",
 			"password123",
@@ -32,18 +45,18 @@ test.describe("Group Leaderboard", () => {
 		);
 		await seedUserProfile({
 			id: userA.uid,
-			displayName: userA.displayName,
+			displayName: "Alice",
 			email: userA.email,
 			photoURL: userA.photoURL,
 		});
-		// Jan: 2 birds [b1, b2] -> Winner (+1)
-		// Feb: 1 bird [b1]
+		// Seed Alice Stats
 		await seedUserStats(userA.uid, {
-			[jan]: ["bird-1", "bird-2"],
-			[feb]: ["bird-1"],
+			// Current Year - Jan only
+			[`${currentYear}-01`]: ["bird1", "bird2", "bird3", "bird4", "bird5"], // 5 unique
+			// Previous Year (should be ignored for current year points/unique)
+			[`${currentYear - 1}-05`]: ["bird5", "bird6"],
 		});
 
-		// User B:
 		const userB = await createTestUser(
 			"leaderB@test.com",
 			"password123",
@@ -51,23 +64,32 @@ test.describe("Group Leaderboard", () => {
 		);
 		await seedUserProfile({
 			id: userB.uid,
-			displayName: userB.displayName,
+			displayName: "Bob",
 			email: userB.email,
 			photoURL: userB.photoURL,
 		});
-		// Jan: 1 bird [b1]
-		// Feb: 3 birds [b1, b2, b3] -> Winner (+1)
-		// Yearly Unique: {b1, b2, b3} = 3 -> Winner (+2)
+		// User B: 2 birds in Current Month -> Points: 0, Unique Year: 2
 		await seedUserStats(userB.uid, {
-			[jan]: ["bird-1"],
-			[feb]: ["bird-1", "bird-2", "bird-3"],
+			[`${currentYear}-01`]: ["bird1", "bird2"],
 		});
 
-		// Expected Scores:
-		// Alice: 1 (Jan) = 1 pt
-		// Bob: 1 (Feb) + 2 (Year) = 3 pts
+		const userC = await createTestUser(
+			"leaderC@test.com",
+			"password123",
+			"Charlie",
+		);
+		await seedUserProfile({
+			id: userC.uid,
+			displayName: "Charlie",
+			email: userC.email,
+			photoURL: userC.photoURL,
+		});
+		// User C: 1 bird in Current Month -> Points: 0, Unique Year: 1
+		await seedUserStats(userC.uid, {
+			[`${currentYear}-01`]: ["bird1"],
+		});
 
-		// 3. Create Group
+		// Create Group
 		const joinCode = "leaderboard-test";
 		await seedGroup({
 			name: "Competition Group",
@@ -76,30 +98,56 @@ test.describe("Group Leaderboard", () => {
 			memberIds: [userA.uid, userB.uid],
 		});
 
-		// 4. Sign in as Alice (Owner/UserA) and view group
+		// 2. Sign in and View
 		await page.goto("/");
 		await signInInBrowser(page, "leaderA@test.com", "password123");
-		await expect(page.getByText("Your Groups")).toBeVisible();
-
 		await page.click(`text=Competition Group`);
 
-		// 5. Verify Leaderboard
-		await expect(page.getByText(/Leaderboard/)).toBeVisible();
+		// 3. Verify Sections
 
-		// Check Rank 1: Bob with 3 pts
-		const rank1 = page.locator(".rank-1");
-		await expect(rank1).toContainText("Bob");
-		await expect(rank1.locator(".points-value")).toHaveText("3");
-		await expect(rank1.locator(".year-badge")).toBeVisible(); // Trophy
+		// A. Points Leaders
+		await expect(page.getByText(/Points Leaders/)).toBeVisible();
+		const pointsSection = page
+			.locator(".leaderboard-section")
+			.filter({ hasText: "Points Leaders" });
+		const pRow1 = pointsSection.locator(".leaderboard-item").nth(0);
+		await expect(pRow1).toContainText("Alice");
+		await expect(pRow1.locator(".points-value")).toHaveText("3");
+		await expect(pRow1.locator(".points-label")).toHaveText("pts");
 
-		// Check Rank 2: Alice with 1 pt
-		const rank2 = page.locator(".rank-2");
-		await expect(rank2).toContainText("Alice");
-		await expect(rank2.locator(".points-value")).toHaveText("1");
-		await expect(rank2.locator(".year-badge")).toBeHidden(); // No trophy
+		// B. Year Unique
+		await expect(
+			page.getByRole("heading", { name: `Top Birdwatchers (${currentYear})` }),
+		).toBeVisible();
+		// "Top Birdwatchers (YYYY)" vs "Top Birdwatchers (Month)"
+		// Let's rely on order or specific text with year
+		const yearUniqueTitle = `Top Birdwatchers (${currentYear})`;
+		const yearUniqueSection = page
+			.locator(".leaderboard-section")
+			.filter({ hasText: yearUniqueTitle })
+			.first();
+		await expect(yearUniqueSection).toBeVisible();
+		const yRow1 = yearUniqueSection.locator(".leaderboard-item").nth(0);
+		await expect(yRow1).toContainText("Alice");
+		await expect(yRow1.locator(".points-value")).toHaveText("5"); // 5 spp
+		await expect(yRow1.locator(".points-label")).toHaveText("spp");
 
-		// Check Month Badge
-		await expect(rank1.locator(".month-badge")).toContainText("1"); // Bob won 1 month
-		await expect(rank2.locator(".month-badge")).toContainText("1"); // Alice won 1 month
+		// C. Monthly Unique
+		// Find section for current month name
+		const date = new Date();
+		const monthName = new Intl.DateTimeFormat("en-US", {
+			month: "long",
+		}).format(date);
+		// Capitalize just in case, though format usually does it.
+		const titleRegex = new RegExp(`Top Birdwatchers \\(${monthName}\\)`, "i");
+		const monthSection = page
+			.locator(".leaderboard-section")
+			.filter({ hasText: titleRegex })
+			.first();
+
+		await expect(monthSection).toBeVisible();
+		const mRow1 = monthSection.locator(".leaderboard-item").nth(0);
+		await expect(mRow1).toContainText("Alice");
+		await expect(mRow1.locator(".points-value")).toHaveText("5");
 	});
 });

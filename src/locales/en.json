@@ -9,7 +9,9 @@
 		"back": "Back",
 		"month": "Month",
 		"year": "Year",
-		"total": "Total"
+		"total": "Total",
+		"anonymous": "Anonymous",
+		"copied": "Copied!"
 	},
 	"userView": {
 		"sightings": "Sightings",
@@ -26,7 +28,8 @@
 		"noGroups": "You haven't joined any groups yet.",
 		"joinCode": "Join Code",
 		"members": "Members",
-		"owner": "Owner"
+		"owner": "Owner",
+		"share": "Share"
 	},
 	"groupList": {
 		"loadingGroups": "Loading groups...",
@@ -58,8 +61,16 @@
 		"failedToLoad": "Failed to load sightings.",
 		"unknownUser": "Unknown User"
 	},
+	"groupView": {
+		"tabs": {
+			"stats": "Stats",
+			"sightings": "Sightings",
+			"members": "Members"
+		}
+	},
 	"errors": {
-		"unknown": "Unknown error"
+		"unknown": "Unknown error",
+		"groupNotFound": "Group not found"
 	},
 	"birds": {
 		"alli": "Alli",
@@ -430,6 +441,9 @@
 		"title": "Leaderboard",
 		"yearlyWinner": "Yearly Winner",
 		"monthlyWinner": "Monthly Winner ({{count}})",
-		"failedToLoad": "Failed to load leaderboard."
+		"failedToLoad": "Failed to load leaderboard.",
+		"yearPointsLeaders": "Points Leaders ({{year}})",
+		"yearUniqueLeaders": "Top Birdwatchers ({{year}})",
+		"monthUniqueLeaders": "Top Birdwatchers ({{month}})"
 	}
 }

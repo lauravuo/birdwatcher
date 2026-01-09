@@ -170,6 +170,9 @@ test.describe("Sightings", () => {
 		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
 		await page.getByRole("link", { name: new RegExp(joinCode) }).click();
 
+		// Click Sightings tab
+		await page.getByRole("button", { name: "Sightings" }).click();
+
 		// Wait for sightings section
 		await expect(page.getByRole("heading", { name: /sightings/i })).toBeVisible(
 			{ timeout: 10000 },

@@ -5,10 +5,15 @@ import type { Group, UserProfile } from "../../types";
 
 interface LeaderboardEntry {
 	user: UserProfile;
-	totalPoints: number;
-	monthlyWins: number;
-	yearlyWin: boolean;
+	value: number;
 	rank: number;
+	// Auxiliary stats for display if needed
+	secondaryValue?: number;
+}
+
+interface LeaderboardSection {
+	title: string;
+	entries: LeaderboardEntry[];
 }
 
 interface GroupLeaderboardProps {
@@ -16,10 +21,19 @@ interface GroupLeaderboardProps {
 }
 
 export function GroupLeaderboard({ group }: GroupLeaderboardProps) {
-	const { t } = useTranslation();
-	const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+	const { t, i18n } = useTranslation();
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
+
+	const [yearPointsLeaders, setYearPointsLeaders] = useState<
+		LeaderboardEntry[]
+	>([]);
+	const [yearUniqueLeaders, setYearUniqueLeaders] = useState<
+		LeaderboardEntry[]
+	>([]);
+	const [monthlySections, setMonthlySections] = useState<LeaderboardSection[]>(
+		[],
+	);
 
 	const currentYear = new Date().getFullYear();
 
@@ -35,62 +49,124 @@ export function GroupLeaderboard({ group }: GroupLeaderboardProps) {
 					getUsersStats(group.memberIds, currentYear),
 				]);
 
-				// 2. Calculate Points
-				const points = new Map<string, number>();
-				const monthlyWins = new Map<string, number>();
-				const yearlyWins = new Map<string, boolean>();
+				// Data structures for calculation
+				const pointsMap = new Map<string, number>(); // UserID -> Total Points
+				const yearUniqueMap = new Map<string, Set<string>>(); // UserID -> Set of Bird IDs
+				const monthlyUniqueMap = new Map<string, Map<string, Set<string>>>(); // MonthKey (YYYY-MM) -> UserID -> Set of Bird IDs
 
+				// Initialize maps
 				group.memberIds.forEach((uid) => {
-					points.set(uid, 0);
-					monthlyWins.set(uid, 0);
-					yearlyWins.set(uid, false);
+					pointsMap.set(uid, 0);
+					yearUniqueMap.set(uid, new Set());
 				});
 
-				// Monthly Contest (0-11)
-				for (let month = 0; month < 12; month++) {
-					const monthKey = `${currentYear}-${String(month + 1).padStart(2, "0")}`;
+				// Initialize last 12 months (or just this year's months down to Jan)
+				// Request says "start with current month and go down to year start"
+				const currentMonthIndex = new Date().getMonth(); // 0-11
+				const months: string[] = [];
+				for (let m = currentMonthIndex; m >= 0; m--) {
+					const monthKey = `${currentYear}-${String(m + 1).padStart(2, "0")}`;
+					months.push(monthKey);
+					monthlyUniqueMap.set(monthKey, new Map());
+					group.memberIds.forEach((uid) => {
+						monthlyUniqueMap.get(monthKey)?.set(uid, new Set());
+					});
+				}
+
+				// 2. Process Stats
+				// We need to process stats to fill:
+				// - yearUniqueMap (for "Year Unique" leaderboard)
+				// - monthlyUniqueMap (for "Monthly Unique" leaderboards)
+				// - Calculate Points based on Wins (for "Year Points" leaderboard)
+
+				// Helper to check if a sighting is in the current year
+				// The statsMap is structure: UserID -> { "YYYY-MM": ["birdId", ...] }
+				// Actually getUsersStats returns: Record<string, Record<string, string[]>>
+				// Outer key: userId, Inner key: "YYYY-MM", Value: array of bird IDs
+
+				members.forEach((member) => {
+					const userStats = statsMap.get(member.id);
+					if (!userStats) return;
+
+					Object.entries(userStats).forEach(([dateKey, birdIds]) => {
+						// Check if dateKey is in current year
+						if (!dateKey.startsWith(`${currentYear}-`)) return;
+
+						// Add to Year Unique
+						const yearSet = yearUniqueMap.get(member.id);
+						birdIds.forEach((b) => {
+							yearSet?.add(b);
+						});
+
+						// Add to Monthly Unique (if tracked)
+						if (monthlyUniqueMap.has(dateKey)) {
+							const monthSet = monthlyUniqueMap.get(dateKey)?.get(member.id);
+							birdIds.forEach((b) => {
+								monthSet?.add(b);
+							});
+						}
+					});
+				});
+
+				// 3. Calculate Points & Determine Winners
+
+				// A. Monthly Contests
+				// Iterate all 12 months (even future ones if we want, but logic implies valid data only for past/current)
+				// The loop above `months` only covers Jan -> Current Month.
+				// However, points calculation usually considers the whole year logic or just "wins so far"?
+				// Let's stick to the prompt: "current year... start with current month and go down to year start."
+				// But for POINTS, we should probably check all months that have passed or have data?
+				// Existing logic checked 0-11. Let's do that for Points Calculation validity.
+
+				const yearlyPointsTracker = new Map<string, number>(); // UserID -> Points
+				group.memberIds.forEach((uid) => {
+					yearlyPointsTracker.set(uid, 0);
+				});
+
+				for (let m = 0; m < 12; m++) {
+					const monthKey = `${currentYear}-${String(m + 1).padStart(2, "0")}`;
+					// We need to calculate max for this month to award point
 					let maxBirds = 0;
 					const winners: string[] = [];
 
-					// Find max birds for this month
 					members.forEach((member) => {
 						const userStats = statsMap.get(member.id);
-						const count = userStats?.[monthKey]?.length || 0;
-						if (count > maxBirds) {
-							maxBirds = count;
-							winners.length = 0; // Reset winners
+						const birdsInMonth = userStats?.[monthKey] || [];
+						// Unique check? The existing logic was `length`, implying just count of sightings?
+						// "most unique birds" is the prompt.
+						// Existing logic: `const count = userStats?.[monthKey]?.length || 0;` (Wait, existing logic used raw array length?)
+						// Previous code: `const count = userStats?.[monthKey]?.length || 0;`
+						// If stats are unique birds per month, then length is fine.
+						// But usually we want unique set size.
+						// Let's assume the array in stats might contain duplicates if the implementation allows, but usually `getUsersStats` returns sightings list.
+						// Safest is to use Set size.
+						const uniqueCount = new Set(birdsInMonth).size;
+
+						if (uniqueCount > maxBirds) {
+							maxBirds = uniqueCount;
+							winners.length = 0;
 							winners.push(member.id);
-						} else if (count === maxBirds && count > 0) {
+						} else if (uniqueCount === maxBirds && uniqueCount > 0) {
 							winners.push(member.id);
 						}
 					});
 
-					// Award points for monthly winners
 					if (maxBirds > 0) {
 						winners.forEach((uid) => {
-							points.set(uid, (points.get(uid) || 0) + 1);
-							monthlyWins.set(uid, (monthlyWins.get(uid) || 0) + 1);
+							yearlyPointsTracker.set(
+								uid,
+								(yearlyPointsTracker.get(uid) || 0) + 1,
+							);
 						});
 					}
 				}
 
-				// Yearly Contest
+				// B. Year Unique Contest
 				let maxYearlyUnique = 0;
 				const yearlyWinners: string[] = [];
 
 				members.forEach((member) => {
-					const userStats = statsMap.get(member.id) || {};
-					const allBirds = new Set<string>();
-
-					Object.entries(userStats).forEach(([key, birds]) => {
-						if (key.startsWith(`${currentYear}-`)) {
-							birds.forEach((b) => {
-								allBirds.add(b);
-							});
-						}
-					});
-
-					const count = allBirds.size;
+					const count = yearUniqueMap.get(member.id)?.size || 0;
 					if (count > maxYearlyUnique) {
 						maxYearlyUnique = count;
 						yearlyWinners.length = 0;
@@ -100,43 +176,119 @@ export function GroupLeaderboard({ group }: GroupLeaderboardProps) {
 					}
 				});
 
-				// Award points for yearly winners (+2)
 				if (maxYearlyUnique > 0) {
 					yearlyWinners.forEach((uid) => {
-						points.set(uid, (points.get(uid) || 0) + 2);
-						yearlyWins.set(uid, true);
+						// Year winner gets +2 points
+						yearlyPointsTracker.set(
+							uid,
+							(yearlyPointsTracker.get(uid) || 0) + 2,
+						);
 					});
 				}
 
-				// 3. Build Leaderboard Data
-				const data: LeaderboardEntry[] = members.map((member) => ({
-					user: member,
-					totalPoints: points.get(member.id) || 0,
-					monthlyWins: monthlyWins.get(member.id) || 0,
-					yearlyWin: yearlyWins.get(member.id) || false,
-					rank: 0,
-				}));
+				// 4. Build Leaderboard Sections
 
-				// Sort by Total Points DESC, then Name ASC
-				data.sort((a, b) => {
-					if (b.totalPoints !== a.totalPoints) {
-						return b.totalPoints - a.totalPoints;
-					}
-					return (a.user.displayName || "").localeCompare(
-						b.user.displayName || "",
-					);
-				});
+				// --- Year Points Leaders ---
+				const pointsEntries = members
+					.map((m) => ({
+						user: m,
+						value: yearlyPointsTracker.get(m.id) || 0,
+						rank: 0,
+					}))
+					.sort((a, b) => {
+						if (b.value !== a.value) return b.value - a.value;
+						return (a.user.displayName || "").localeCompare(
+							b.user.displayName || "",
+						);
+					});
 
-				// Assign ranks (handle ties)
-				let currentRank = 1;
-				for (let i = 0; i < data.length; i++) {
-					if (i > 0 && data[i].totalPoints < data[i - 1].totalPoints) {
-						currentRank = i + 1;
+				// Assign ranks
+				for (let i = 0; i < pointsEntries.length; i++) {
+					if (i > 0 && pointsEntries[i].value === pointsEntries[i - 1].value) {
+						pointsEntries[i].rank = pointsEntries[i - 1].rank;
+					} else {
+						pointsEntries[i].rank = i + 1;
 					}
-					data[i].rank = currentRank;
 				}
+				setYearPointsLeaders(pointsEntries.slice(0, 3));
 
-				setLeaderboard(data);
+				// --- Year Unique Leaders ---
+				const yearUniqueEntries = members
+					.map((m) => ({
+						user: m,
+						value: yearUniqueMap.get(m.id)?.size || 0,
+						rank: 0,
+					}))
+					.sort((a, b) => {
+						if (b.value !== a.value) return b.value - a.value;
+						return (a.user.displayName || "").localeCompare(
+							b.user.displayName || "",
+						);
+					});
+
+				for (let i = 0; i < yearUniqueEntries.length; i++) {
+					if (
+						i > 0 &&
+						yearUniqueEntries[i].value === yearUniqueEntries[i - 1].value
+					) {
+						yearUniqueEntries[i].rank = yearUniqueEntries[i - 1].rank;
+					} else {
+						yearUniqueEntries[i].rank = i + 1;
+					}
+				}
+				setYearUniqueLeaders(yearUniqueEntries.slice(0, 3));
+
+				// --- Monthly Unique Leaders ---
+				const newMonthlySections: LeaderboardSection[] = [];
+				for (const monthKey of months) {
+					const monthUserMap = monthlyUniqueMap.get(monthKey);
+					if (!monthUserMap) continue;
+
+					// Skip month if absolutely no activity?
+					// Prompt doesn't say. But cleaner to skip empty months or show "No data"?
+					// Let's check total sightings count in this month
+					let totalInMonth = 0;
+					monthUserMap.forEach((s) => {
+						totalInMonth += s.size;
+					});
+					if (totalInMonth === 0) continue;
+
+					const entries = members
+						.map((m) => ({
+							user: m,
+							value: monthUserMap.get(m.id)?.size || 0,
+							rank: 0,
+						}))
+						.sort((a, b) => {
+							if (b.value !== a.value) return b.value - a.value;
+							return (a.user.displayName || "").localeCompare(
+								b.user.displayName || "",
+							);
+						});
+
+					for (let i = 0; i < entries.length; i++) {
+						if (i > 0 && entries[i].value === entries[i - 1].value) {
+							entries[i].rank = entries[i - 1].rank;
+						} else {
+							entries[i].rank = i + 1;
+						}
+					}
+
+					// Format Month Name
+					const [y, m] = monthKey.split("-");
+					const date = new Date(parseInt(y, 10), parseInt(m, 10) - 1);
+					const monthName = new Intl.DateTimeFormat(i18n.language, {
+						month: "long",
+					}).format(date);
+					// Capitalize
+					const title = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+
+					newMonthlySections.push({
+						title,
+						entries: entries.slice(0, 3),
+					});
+				}
+				setMonthlySections(newMonthlySections);
 			} catch (err) {
 				console.error("Failed to calculate leaderboard:", err);
 				setError(t("leaderboard.failedToLoad"));
@@ -146,66 +298,93 @@ export function GroupLeaderboard({ group }: GroupLeaderboardProps) {
 		}
 
 		fetchAndCalculate();
-	}, [group.memberIds, currentYear, t]);
+	}, [group.memberIds, currentYear, t, i18n.language]);
 
 	if (loading)
 		return <div className="leaderboard-loading">{t("common.loading")}</div>;
 	if (error) return <div className="error-message">{error}</div>;
-	if (leaderboard.length === 0) return null;
+
+	const renderSection = (
+		title: string,
+		entries: LeaderboardEntry[],
+		unitLabel: string,
+	) => (
+		<div className="leaderboard-section">
+			<h4 className="leaderboard-section-title">{title}</h4>
+			{entries.length === 0 ? (
+				<div className="no-data">{t("userView.noSightings")}</div>
+			) : (
+				<div className="leaderboard-list group-tab-card">
+					{entries.map((entry) => (
+						<div
+							key={entry.user.id}
+							className={`leaderboard-item rank-${entry.rank}`}
+						>
+							<div className="leaderboard-rank">
+								{entry.rank === 1
+									? "🥇"
+									: entry.rank === 2
+										? "🥈"
+										: entry.rank === 3
+											? "🥉"
+											: `#${entry.rank}`}
+							</div>
+							<div className="leaderboard-user">
+								{entry.user.photoURL && (
+									<img
+										src={entry.user.photoURL}
+										alt={entry.user.displayName || "User"}
+										className="user-avatar-small"
+									/>
+								)}
+								<span className="user-name">
+									{entry.user.displayName || t("common.anonymous")}
+								</span>
+							</div>
+							<div className="leaderboard-stats">
+								<div className="points">
+									<span className="points-value">{entry.value}</span>
+									<span className="points-label">{unitLabel}</span>
+								</div>
+							</div>
+						</div>
+					))}
+				</div>
+			)}
+		</div>
+	);
 
 	return (
 		<div className="leaderboard-container">
-			<h3>
-				{t("leaderboard.title")} ({currentYear})
-			</h3>
-			<div className="leaderboard-list">
-				{leaderboard.map((entry) => (
-					<div
-						key={entry.user.id}
-						className={`leaderboard-item rank-${entry.rank}`}
-					>
-						<div className="leaderboard-rank">#{entry.rank}</div>
-						<div className="leaderboard-user">
-							{entry.user.photoURL && (
-								<img
-									src={entry.user.photoURL}
-									alt={entry.user.displayName || "User"}
-									className="user-avatar-small"
-								/>
-							)}
-							<span className="user-name">
-								{entry.user.displayName || t("common.anonymous")}
-							</span>
-						</div>
-						<div className="leaderboard-stats">
-							<div className="points">
-								<span className="points-value">{entry.totalPoints}</span>
-								<span className="points-label">pts</span>
-							</div>
-							<div className="badges">
-								{entry.yearlyWin && (
-									<span
-										className="badge year-badge"
-										title={t("leaderboard.yearlyWinner")}
-									>
-										🏆
-									</span>
-								)}
-								{entry.monthlyWins > 0 && (
-									<span
-										className="badge month-badge"
-										title={t("leaderboard.monthlyWinner", {
-											count: entry.monthlyWins,
-										})}
-									>
-										★ {entry.monthlyWins}
-									</span>
-								)}
-							</div>
-						</div>
-					</div>
-				))}
-			</div>
+			{/* 1. Year Points */}
+			{renderSection(
+				t("leaderboard.yearPointsLeaders", { year: currentYear }),
+				yearPointsLeaders,
+				"pts",
+			)}
+
+			{/* 2. Year Unique */}
+			{renderSection(
+				t("leaderboard.yearUniqueLeaders", { year: currentYear }),
+				yearUniqueLeaders,
+				"spp",
+			)}
+
+			{/* 3. Monthly Unique */}
+			{monthlySections.map((section) => (
+				<div key={section.title}>
+					{renderSection(
+						t("leaderboard.monthUniqueLeaders", { month: section.title }),
+						section.entries,
+						"spp",
+					)}
+				</div>
+			))}
+
+			{/* If absolutely empty */}
+			{yearPointsLeaders.length === 0 && monthlySections.length === 0 && (
+				<div className="empty-state">{t("groupSightings.noSightings")}</div>
+			)}
 		</div>
 	);
 }
