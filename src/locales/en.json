@@ -441,6 +441,9 @@
 		"title": "Leaderboard",
 		"yearlyWinner": "Yearly Winner",
 		"monthlyWinner": "Monthly Winner ({{count}})",
-		"failedToLoad": "Failed to load leaderboard."
+		"failedToLoad": "Failed to load leaderboard.",
+		"yearPointsLeaders": "Points Leaders ({{year}})",
+		"yearUniqueLeaders": "Top Birdwatchers ({{year}})",
+		"monthUniqueLeaders": "Top Birdwatchers ({{month}})"
 	}
 }
