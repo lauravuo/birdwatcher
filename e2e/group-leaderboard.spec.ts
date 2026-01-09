@@ -141,4 +141,56 @@ test.describe("Group Leaderboard", () => {
 		await expect(mRow1).toContainText("Alice");
 		await expect(mRow1.locator(".points-value")).toHaveText("5");
 	});
+
+	test("navigates to user view when clicking a leaderboard entry", async ({
+		page,
+	}) => {
+		const currentYear = new Date().getFullYear();
+
+		const userA = await createTestUser(
+			"clicktest@test.com",
+			"password123",
+			"Clicker",
+		);
+		await seedUserProfile({
+			id: userA.uid,
+			displayName: "Clicker",
+			email: userA.email,
+			photoURL: userA.photoURL,
+		});
+		// Seed stats so they appear on leaderboard
+		await seedUserStats(userA.uid, {
+			[`${currentYear}-01`]: ["bird1"],
+		});
+
+		// Create Group
+		const joinCode = "click-test";
+		await seedGroup({
+			name: "Click Group",
+			joinCode,
+			ownerId: userA.uid,
+			memberIds: [userA.uid],
+		});
+
+		// Sign in
+		await page.goto("/");
+		await signInInBrowser(page, "clicktest@test.com", "password123");
+		await page.click(`text=Click Group`);
+
+		// Wait for leaderboard and finding the user item
+		await expect(page.getByText(/Points Leaders/)).toBeVisible();
+		const userItem = page
+			.locator(".leaderboard-item")
+			.filter({ hasText: "Clicker" })
+			.first();
+		await expect(userItem).toBeVisible();
+
+		// Click the user
+		await userItem.click();
+
+		// Verify navigation
+		// Matching /groups/[groupId]/members/[userId]
+		await expect(page).toHaveURL(/\/groups\/[^/]+\/members\/[^/]+/);
+		await expect(page.getByRole("heading", { name: "Clicker" })).toBeVisible();
+	});
 });
