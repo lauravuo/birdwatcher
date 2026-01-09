@@ -20,19 +20,10 @@ test.describe("Group Leaderboard", () => {
 		page,
 	}) => {
 		const currentYear = new Date().getFullYear();
-		const pad = (n: number) => String(n).padStart(2, "0");
-		const monthNum = new Date().getMonth() + 1; // 1-12
-		// If currently Jan (1), prev is Dec (12) of prev year?
-		// Logic handles current year only. So if Jan, only Jan exists.
-		// Let's assume test runs in a context where we can seed current year months.
 
-		// For stable testing, we'll try to seed "Current Month" and "Previous Month" (if > Jan)
-		// Or just Current Month since that's guaranteed safe.
-		// Let's seed "Current Month" (Month A) and "Previous Month" (Month B) if possible.
-		// If Jan, we only have one month.
-		// We'll stick to a simple case: Month M (Current)
-
-		const currentMonthKey = `${currentYear}-${pad(monthNum)}`;
+		// 1. Setup Data
+		// User A: 5 birds in Current Month -> Points: 1 (Month Win), Unique Year: 5
+		// User B: 2 birds in Current Month -> Points: 0, Unique Year: 2
 
 		// 1. Setup Data
 		// User A: 5 birds in Current Month -> Points: 1 (Month Win), Unique Year: 5
@@ -149,5 +140,57 @@ test.describe("Group Leaderboard", () => {
 		const mRow1 = monthSection.locator(".leaderboard-item").nth(0);
 		await expect(mRow1).toContainText("Alice");
 		await expect(mRow1.locator(".points-value")).toHaveText("5");
+	});
+
+	test("navigates to user view when clicking a leaderboard entry", async ({
+		page,
+	}) => {
+		const currentYear = new Date().getFullYear();
+
+		const userA = await createTestUser(
+			"clicktest@test.com",
+			"password123",
+			"Clicker",
+		);
+		await seedUserProfile({
+			id: userA.uid,
+			displayName: "Clicker",
+			email: userA.email,
+			photoURL: userA.photoURL,
+		});
+		// Seed stats so they appear on leaderboard
+		await seedUserStats(userA.uid, {
+			[`${currentYear}-01`]: ["bird1"],
+		});
+
+		// Create Group
+		const joinCode = "click-test";
+		await seedGroup({
+			name: "Click Group",
+			joinCode,
+			ownerId: userA.uid,
+			memberIds: [userA.uid],
+		});
+
+		// Sign in
+		await page.goto("/");
+		await signInInBrowser(page, "clicktest@test.com", "password123");
+		await page.click(`text=Click Group`);
+
+		// Wait for leaderboard and finding the user item
+		await expect(page.getByText(/Points Leaders/)).toBeVisible();
+		const userItem = page
+			.locator(".leaderboard-item")
+			.filter({ hasText: "Clicker" })
+			.first();
+		await expect(userItem).toBeVisible();
+
+		// Click the user
+		await userItem.click();
+
+		// Verify navigation
+		// Matching /groups/[groupId]/members/[userId]
+		await expect(page).toHaveURL(/\/groups\/[^/]+\/members\/[^/]+/);
+		await expect(page.getByRole("heading", { name: "Clicker" })).toBeVisible();
 	});
 });

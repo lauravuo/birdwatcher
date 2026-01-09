@@ -4,13 +4,15 @@ import { useTranslation } from "react-i18next";
 import { getGroupMembers, getGroupSightings } from "../../lib/firestore";
 import type { Group, UserProfile } from "../../types";
 import type { Sighting } from "../../types/sighting";
+import { MonthYearFilter } from "../MonthYearFilter";
+import { SightingsList } from "../SightingsList";
 
 interface GroupSightingsProps {
 	group: Group;
 }
 
 export function GroupSightings({ group }: GroupSightingsProps) {
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	const now = new Date();
 	const [selectedMonth, setSelectedMonth] = useState(now.getMonth()); // 0-11
 	const [selectedYear, setSelectedYear] = useState(now.getFullYear());
@@ -23,16 +25,6 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 	const [hasMore, setHasMore] = useState(false);
 	const lastVisibleRef = useRef<QueryDocumentSnapshot | null>(null);
 	const [error, setError] = useState<string | null>(null);
-
-	const months = Array.from({ length: 12 }, (_, i) => {
-		const date = new Date(2000, i, 1);
-		return {
-			value: i,
-			label: date.toLocaleDateString(i18n.language, { month: "long" }),
-		};
-	});
-
-	const years = Array.from({ length: 5 }, (_, i) => now.getFullYear() - i);
 
 	const fetchData = useCallback(
 		async (isInitial = true) => {
@@ -120,32 +112,6 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 		};
 	}, [fetchData]);
 
-	const formatDate = (dateString: string, timeString?: string) => {
-		const date = new Date(`${dateString}T00:00:00`);
-		const dateFormatted = date.toLocaleDateString(i18n.language, {
-			year: "numeric",
-			month: "short",
-			day: "numeric",
-		});
-		if (timeString) {
-			return `${dateFormatted} ${timeString}`;
-		}
-		return dateFormatted;
-	};
-
-	const getObservationTypeLabel = (type: string) => {
-		switch (type) {
-			case "visual":
-				return t("addSighting.visual");
-			case "audial":
-				return t("addSighting.audial");
-			case "both":
-				return t("addSighting.both");
-			default:
-				return type;
-		}
-	};
-
 	if (loading) {
 		return <div>{t("groupSightings.loading")}</div>;
 	}
@@ -161,113 +127,23 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 			</h3>
 
 			<div className="group-tab-card">
-				<div className="filters-container">
-					<div className="filter-group">
-						<div className="view-mode-toggle">
-							<button
-								type="button"
-								className={`toggle-button ${viewMode === "month" ? "active" : ""}`}
-								onClick={() => setViewMode("month")}
-							>
-								{t("common.month")}
-							</button>
-							<button
-								type="button"
-								className={`toggle-button ${viewMode === "year" ? "active" : ""}`}
-								onClick={() => setViewMode("year")}
-							>
-								{t("common.year")}
-							</button>
-						</div>
-					</div>
+				<MonthYearFilter
+					viewMode={viewMode}
+					setViewMode={setViewMode}
+					selectedMonth={selectedMonth}
+					setSelectedMonth={setSelectedMonth}
+					selectedYear={selectedYear}
+					setSelectedYear={setSelectedYear}
+				/>
 
-					{viewMode === "month" && (
-						<div className="filter-group">
-							<label htmlFor="month-select">{t("common.month")}</label>
-							<select
-								id="month-select"
-								className="filter-select"
-								value={selectedMonth}
-								onChange={(e) => setSelectedMonth(Number(e.target.value))}
-							>
-								{months.map((m) => (
-									<option key={m.value} value={m.value}>
-										{m.label}
-									</option>
-								))}
-							</select>
-						</div>
-					)}
-					<div className="filter-group">
-						<label htmlFor="year-select">{t("common.year")}</label>
-						<select
-							id="year-select"
-							className="filter-select"
-							value={selectedYear}
-							onChange={(e) => setSelectedYear(Number(e.target.value))}
-						>
-							{years.map((y) => (
-								<option key={y} value={y}>
-									{y}
-								</option>
-							))}
-						</select>
-					</div>
-				</div>
-
-				{sightings.length === 0 ? (
-					<p className="no-sightings">{t("groupSightings.noSightings")}</p>
-				) : (
-					<ul className="sightings-list">
-						{sightings.map((sighting) => {
-							const member = members.get(sighting.userId);
-							const memberName =
-								member?.displayName || t("groupSightings.unknownUser");
-							const birdName = t(`birds.${sighting.birdId}`);
-
-							return (
-								<li key={sighting.id} className="sighting-item">
-									<div className="sighting-header">
-										<div className="sighting-bird">
-											<strong>{birdName}</strong>
-										</div>
-										<div className="sighting-meta">
-											<span className="sighting-member">{memberName}</span>
-											<span className="sighting-date">
-												{formatDate(sighting.date, sighting.time)}
-											</span>
-										</div>
-									</div>
-									<div className="sighting-details">
-										<span className="sighting-type">
-											{getObservationTypeLabel(sighting.type)}
-										</span>
-										{sighting.locationName && (
-											<span className="sighting-location">
-												📍 {sighting.locationName}
-											</span>
-										)}
-										{sighting.notes && (
-											<div className="sighting-notes">{sighting.notes}</div>
-										)}
-									</div>
-								</li>
-							);
-						})}
-					</ul>
-				)}
-				{hasMore && (
-					<button
-						type="button"
-						onClick={() => fetchData(false)}
-						className="load-more-button"
-						disabled={loadingMore}
-					>
-						{loadingMore
-							? t("common.loading", "Loading...")
-							: t("common.loadMore", "Load More")}
-					</button>
-				)}
+				<SightingsList
+					sightings={sightings}
+					hasMore={hasMore}
+					loadingMore={loadingMore}
+					onLoadMore={() => fetchData(false)}
+					showMemberName={true}
+					members={members}
+				/>
 			</div>
 		</div>
 	);
