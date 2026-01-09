@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Link, useParams } from "react-router-dom";
 import type { UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
 
@@ -20,6 +21,7 @@ export function SightingsList({
 	members,
 }: SightingsListProps) {
 	const { t, i18n } = useTranslation();
+	const { groupId } = useParams<{ groupId: string }>();
 
 	const formatDate = (dateString: string, timeString?: string) => {
 		const date = new Date(`${dateString}T00:00:00`);
@@ -51,57 +53,66 @@ export function SightingsList({
 		return <p className="no-sightings">{t("userView.noSightings")}</p>;
 	}
 
+	const getVideoIcon = (type: string) => {
+		if (type === "visual") return "👁️ "; // visual
+		if (type === "audial") return "👂 ";
+		if (type === "both") return "👁️👂 ";
+		return "👁️ "; // fallback
+	};
+
 	return (
 		<div className="sightings-list-container">
 			<ul className="sightings-list">
 				{sightings.map((sighting) => {
 					const birdName = t(`birds.${sighting.birdId}`);
-					const memberName = showMemberName
-						? members?.get(sighting.userId)?.displayName ||
-							t("groupSightings.unknownUser")
-						: null;
 
 					return (
 						<li key={sighting.id} className="sighting-item">
-							<div className="sighting-header">
-								<div className="sighting-bird">
-									<strong>{birdName}</strong>
-								</div>
-								<div className="sighting-meta">
-									{showMemberName && (
-										<span className="sighting-member">{memberName}</span>
-									)}
+							<Link
+								to={`/groups/${groupId}/members/${sighting.userId}/sightings/${sighting.id}`}
+								className="sighting-item-link"
+								style={{
+									textDecoration: "none",
+									color: "inherit",
+									display: "block",
+								}}
+							>
+								<div className="sighting-header">
+									<span className="bird-name">{birdName}</span>
 									<span className="sighting-date">
 										{formatDate(sighting.date, sighting.time)}
 									</span>
 								</div>
-							</div>
-							<div className="sighting-details">
-								<span className="sighting-type">
-									{getObservationTypeLabel(sighting.type)}
-								</span>
-								{sighting.locationName && (
-									<span className="sighting-location">
-										📍 {sighting.locationName}
+
+								<div className="sighting-meta">
+									<span className="observation-type">
+										{getVideoIcon(sighting.type)}
+										{getObservationTypeLabel(sighting.type)}
 									</span>
-								)}
-								{sighting.notes && (
-									<div className="sighting-notes">{sighting.notes}</div>
-								)}
-							</div>
+									{showMemberName && members && (
+										<span className="sighting-user">
+											👤{" "}
+											{members.get(sighting.userId)?.displayName ||
+												t("common.anonymous")}
+										</span>
+									)}
+								</div>
+							</Link>
 						</li>
 					);
 				})}
 			</ul>
-			{hasMore && onLoadMore && (
-				<button
-					type="button"
-					onClick={onLoadMore}
-					className="load-more-button"
-					disabled={loadingMore}
-				>
-					{loadingMore ? t("common.loading") : t("common.loadMore")}
-				</button>
+			{hasMore && (
+				<div className="load-more-container">
+					<button
+						type="button"
+						onClick={onLoadMore}
+						disabled={loadingMore}
+						className="load-more-button"
+					>
+						{loadingMore ? t("common.loading") : t("common.loadMore")}
+					</button>
+				</div>
 			)}
 		</div>
 	);

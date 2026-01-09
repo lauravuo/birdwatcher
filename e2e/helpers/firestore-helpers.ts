@@ -151,3 +151,12 @@ export async function seedUserStats(
 		}),
 	);
 }
+
+/**
+ * Seed a single sighting in Firestore
+ */
+export async function seedSighting(
+	sighting: Omit<Sighting, "id">,
+): Promise<void> {
+	await seedSightings([sighting]);
+}

@@ -323,6 +323,7 @@ test.describe("User View", () => {
 
 		// Check Sightings List
 		await expect(page.getByText("Harakka")).toBeVisible();
-		await expect(page.getByText("Park")).toBeVisible();
+		// Location should NOT be in the list view
+		await expect(page.getByText("Park")).not.toBeVisible();
 	});
 });
