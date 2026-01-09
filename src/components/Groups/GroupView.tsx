@@ -1,20 +1,24 @@
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { db } from "../../lib/firebase";
 import { getGroupMembers } from "../../lib/firestore";
 import type { Group, UserProfile } from "../../types";
 import { GroupLeaderboard } from "./GroupLeaderboard";
+import { GroupMembersList } from "./GroupMembersList";
 import { GroupSightings } from "./GroupSightings";
 
-export function GroupMembers() {
+export function GroupView() {
 	const { t } = useTranslation();
 	const { groupId } = useParams<{ groupId: string }>();
 	const [group, setGroup] = useState<Group | null>(null);
 	const [members, setMembers] = useState<UserProfile[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
+	const [activeTab, setActiveTab] = useState<"stats" | "sightings" | "members">(
+		"stats",
+	);
 
 	// Fetch Group and Members
 	useEffect(() => {
@@ -69,41 +73,38 @@ export function GroupMembers() {
 	if (!group) return <div>{t("errors.groupNotFound")}</div>;
 
 	return (
-		<div className="group-members-container">
-			<div className="members-section">
-				<h3>
-					{t("groupMembers.membersCount")} ({members.length})
-				</h3>
-				<ul className="members-list">
-					{members.map((member) => (
-						<li key={member.id} className="member-item">
-							<Link
-								to={`/groups/${group.id}/members/${member.id}`}
-								className="member-item-button"
-							>
-								<div className="member-avatar">
-									{member.photoURL ? (
-										<img src={member.photoURL} alt={member.displayName} />
-									) : (
-										<div className="avatar-placeholder">
-											{member.displayName.charAt(0).toUpperCase()}
-										</div>
-									)}
-								</div>
-								<div className="member-info">
-									<span className="member-name">{member.displayName}</span>
-									{member.id === group.ownerId && (
-										<span className="owner-badge">{t("groups.owner")}</span>
-									)}
-								</div>
-							</Link>
-						</li>
-					))}
-				</ul>
+		<div className="group-view-container">
+			<div className="tabs-container">
+				<button
+					type="button"
+					className={`tab-button ${activeTab === "stats" ? "active" : ""}`}
+					onClick={() => setActiveTab("stats")}
+				>
+					{t("groupView.tabs.stats")}
+				</button>
+				<button
+					type="button"
+					className={`tab-button ${activeTab === "sightings" ? "active" : ""}`}
+					onClick={() => setActiveTab("sightings")}
+				>
+					{t("groupView.tabs.sightings")}
+				</button>
+				<button
+					type="button"
+					className={`tab-button ${activeTab === "members" ? "active" : ""}`}
+					onClick={() => setActiveTab("members")}
+				>
+					{t("groupView.tabs.members")}
+				</button>
 			</div>
 
-			<GroupLeaderboard group={group} />
-			<GroupSightings group={group} />
+			<div className="tab-content">
+				{activeTab === "stats" && <GroupLeaderboard group={group} />}
+				{activeTab === "sightings" && <GroupSightings group={group} />}
+				{activeTab === "members" && (
+					<GroupMembersList group={group} members={members} />
+				)}
+			</div>
 		</div>
 	);
 }

@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import AddSightingButton from "./components/AddSightingButton";
 import { Breadcrumbs } from "./components/Breadcrumbs";
 import { GroupList } from "./components/Groups/GroupList";
-import { GroupMembers } from "./components/Groups/GroupMembers";
+import { GroupView } from "./components/Groups/GroupView";
 import { Login } from "./components/Login";
 import { UserView } from "./components/UserView";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
@@ -42,7 +42,7 @@ function AuthenticatedApp() {
 				<div className="card">
 					<Routes>
 						<Route path="/" element={<GroupList />} />
-						<Route path="/groups/:groupId" element={<GroupMembers />} />
+						<Route path="/groups/:groupId" element={<GroupView />} />
 						<Route
 							path="/groups/:groupId/members/:userId"
 							element={<UserView />}

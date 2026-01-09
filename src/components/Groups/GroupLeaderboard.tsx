@@ -158,7 +158,7 @@ export function GroupLeaderboard({ group }: GroupLeaderboardProps) {
 			<h3>
 				{t("leaderboard.title")} ({currentYear})
 			</h3>
-			<div className="leaderboard-list">
+			<div className="leaderboard-list group-tab-card">
 				{leaderboard.map((entry) => (
 					<div
 						key={entry.user.id}

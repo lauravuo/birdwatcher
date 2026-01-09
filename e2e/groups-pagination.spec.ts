@@ -69,6 +69,9 @@ test.describe("Group Sightings Pagination", () => {
 		// 3. Enter Group
 		await page.getByRole("link", { name: new RegExp(groupName) }).click();
 
+		// Click Sightings tab
+		await page.getByRole("button", { name: "Sightings" }).click();
+
 		// 4. Verify initial load (Should see top 20, newest first)
 		// Newest is s-24 (Bird: bird-24)
 		await expect(page.getByText("bird-24")).toBeVisible({ timeout: 10000 });
@@ -131,6 +134,9 @@ test.describe("Group Sightings Pagination", () => {
 
 		// 3. Enter Group
 		await page.getByRole("link", { name: new RegExp(groupName) }).click();
+
+		// Click Sightings tab
+		await page.getByRole("button", { name: "Sightings" }).click();
 
 		// 4. Verify sightings loaded
 		await expect(page.getByText("bird-4")).toBeVisible();

@@ -160,113 +160,115 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 				{t("groupSightings.title")} ({sightings.length})
 			</h3>
 
-			<div className="filters-container">
-				<div className="filter-group">
-					<div className="view-mode-toggle">
-						<button
-							type="button"
-							className={`toggle-button ${viewMode === "month" ? "active" : ""}`}
-							onClick={() => setViewMode("month")}
-						>
-							{t("common.month")}
-						</button>
-						<button
-							type="button"
-							className={`toggle-button ${viewMode === "year" ? "active" : ""}`}
-							onClick={() => setViewMode("year")}
-						>
-							{t("common.year")}
-						</button>
-					</div>
-				</div>
-
-				{viewMode === "month" && (
+			<div className="group-tab-card">
+				<div className="filters-container">
 					<div className="filter-group">
-						<label htmlFor="month-select">{t("common.month")}</label>
+						<div className="view-mode-toggle">
+							<button
+								type="button"
+								className={`toggle-button ${viewMode === "month" ? "active" : ""}`}
+								onClick={() => setViewMode("month")}
+							>
+								{t("common.month")}
+							</button>
+							<button
+								type="button"
+								className={`toggle-button ${viewMode === "year" ? "active" : ""}`}
+								onClick={() => setViewMode("year")}
+							>
+								{t("common.year")}
+							</button>
+						</div>
+					</div>
+
+					{viewMode === "month" && (
+						<div className="filter-group">
+							<label htmlFor="month-select">{t("common.month")}</label>
+							<select
+								id="month-select"
+								className="filter-select"
+								value={selectedMonth}
+								onChange={(e) => setSelectedMonth(Number(e.target.value))}
+							>
+								{months.map((m) => (
+									<option key={m.value} value={m.value}>
+										{m.label}
+									</option>
+								))}
+							</select>
+						</div>
+					)}
+					<div className="filter-group">
+						<label htmlFor="year-select">{t("common.year")}</label>
 						<select
-							id="month-select"
+							id="year-select"
 							className="filter-select"
-							value={selectedMonth}
-							onChange={(e) => setSelectedMonth(Number(e.target.value))}
+							value={selectedYear}
+							onChange={(e) => setSelectedYear(Number(e.target.value))}
 						>
-							{months.map((m) => (
-								<option key={m.value} value={m.value}>
-									{m.label}
+							{years.map((y) => (
+								<option key={y} value={y}>
+									{y}
 								</option>
 							))}
 						</select>
 					</div>
-				)}
-				<div className="filter-group">
-					<label htmlFor="year-select">{t("common.year")}</label>
-					<select
-						id="year-select"
-						className="filter-select"
-						value={selectedYear}
-						onChange={(e) => setSelectedYear(Number(e.target.value))}
-					>
-						{years.map((y) => (
-							<option key={y} value={y}>
-								{y}
-							</option>
-						))}
-					</select>
 				</div>
+
+				{sightings.length === 0 ? (
+					<p className="no-sightings">{t("groupSightings.noSightings")}</p>
+				) : (
+					<ul className="sightings-list">
+						{sightings.map((sighting) => {
+							const member = members.get(sighting.userId);
+							const memberName =
+								member?.displayName || t("groupSightings.unknownUser");
+							const birdName = t(`birds.${sighting.birdId}`);
+
+							return (
+								<li key={sighting.id} className="sighting-item">
+									<div className="sighting-header">
+										<div className="sighting-bird">
+											<strong>{birdName}</strong>
+										</div>
+										<div className="sighting-meta">
+											<span className="sighting-member">{memberName}</span>
+											<span className="sighting-date">
+												{formatDate(sighting.date, sighting.time)}
+											</span>
+										</div>
+									</div>
+									<div className="sighting-details">
+										<span className="sighting-type">
+											{getObservationTypeLabel(sighting.type)}
+										</span>
+										{sighting.locationName && (
+											<span className="sighting-location">
+												📍 {sighting.locationName}
+											</span>
+										)}
+										{sighting.notes && (
+											<div className="sighting-notes">{sighting.notes}</div>
+										)}
+									</div>
+								</li>
+							);
+						})}
+					</ul>
+				)}
+				{hasMore && (
+					<button
+						type="button"
+						onClick={() => fetchData(false)}
+						className="load-more-button"
+						disabled={loadingMore}
+					>
+						{loadingMore
+							? t("common.loading", "Loading...")
+							: t("common.loadMore", "Load More")}
+					</button>
+				)}
 			</div>
-
-			{sightings.length === 0 ? (
-				<p className="no-sightings">{t("groupSightings.noSightings")}</p>
-			) : (
-				<ul className="sightings-list">
-					{sightings.map((sighting) => {
-						const member = members.get(sighting.userId);
-						const memberName =
-							member?.displayName || t("groupSightings.unknownUser");
-						const birdName = t(`birds.${sighting.birdId}`);
-
-						return (
-							<li key={sighting.id} className="sighting-item">
-								<div className="sighting-header">
-									<div className="sighting-bird">
-										<strong>{birdName}</strong>
-									</div>
-									<div className="sighting-meta">
-										<span className="sighting-member">{memberName}</span>
-										<span className="sighting-date">
-											{formatDate(sighting.date, sighting.time)}
-										</span>
-									</div>
-								</div>
-								<div className="sighting-details">
-									<span className="sighting-type">
-										{getObservationTypeLabel(sighting.type)}
-									</span>
-									{sighting.locationName && (
-										<span className="sighting-location">
-											📍 {sighting.locationName}
-										</span>
-									)}
-									{sighting.notes && (
-										<div className="sighting-notes">{sighting.notes}</div>
-									)}
-								</div>
-							</li>
-						);
-					})}
-				</ul>
-			)}
-			{hasMore && (
-				<button
-					type="button"
-					onClick={() => fetchData(false)}
-					className="load-more-button"
-					disabled={loadingMore}
-				>
-					{loadingMore
-						? t("common.loading", "Loading...")
-						: t("common.loadMore", "Load More")}
-				</button>
-			)}
 		</div>
 	);
 }

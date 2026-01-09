@@ -142,6 +142,10 @@ test.describe("Groups UI", () => {
 		await expect(
 			page.locator(".breadcrumbs").getByText(groupName),
 		).toBeVisible();
+
+		// Click Members tab
+		await page.getByRole("button", { name: "Members" }).click();
+
 		await expect(page.getByText(/Members \(1\)/)).toBeVisible();
 		await expect(page).toHaveURL(/\/groups\//);
 
@@ -206,6 +210,10 @@ test.describe("Groups UI", () => {
 		await expect(
 			page.locator(".breadcrumbs").getByText(groupName),
 		).toBeVisible();
+
+		// Click Members tab
+		await page.getByRole("button", { name: "Members" }).click();
+
 		await expect(page.getByText(/Members \(2\)/)).toBeVisible();
 		await expect(page).toHaveURL(/\/groups\//);
 
@@ -326,6 +334,9 @@ test.describe("Groups UI", () => {
 		await page
 			.getByRole("link", { name: "Seeded Mode Group" })
 			.click({ timeout: 10000 });
+
+		// Click Sightings Tab
+		await page.getByRole("button", { name: "Sightings" }).click();
 
 		await expect(
 			page.getByRole("heading", { name: "Group Sightings" }),

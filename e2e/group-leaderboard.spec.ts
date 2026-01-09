@@ -83,7 +83,7 @@ test.describe("Group Leaderboard", () => {
 
 		await page.click(`text=Competition Group`);
 
-		// 5. Verify Leaderboard
+		// 5. Verify Leaderboard (Default Tab)
 		await expect(page.getByText(/Leaderboard/)).toBeVisible();
 
 		// Check Rank 1: Bob with 3 pts
