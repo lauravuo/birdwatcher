@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { getGroupMembers, getUsersStats } from "../../lib/firestore";
 import type { Group, UserProfile } from "../../types";
 
@@ -316,9 +317,11 @@ export function GroupLeaderboard({ group }: GroupLeaderboardProps) {
 			) : (
 				<div className="leaderboard-list group-tab-card">
 					{entries.map((entry) => (
-						<div
+						<Link
+							to={`/groups/${group.id}/members/${entry.user.id}`}
 							key={entry.user.id}
 							className={`leaderboard-item rank-${entry.rank}`}
+							style={{ textDecoration: "none", color: "inherit" }}
 						>
 							<div className="leaderboard-rank">
 								{entry.rank === 1
@@ -347,7 +350,7 @@ export function GroupLeaderboard({ group }: GroupLeaderboardProps) {
 									<span className="points-label">{unitLabel}</span>
 								</div>
 							</div>
-						</div>
+						</Link>
 					))}
 				</div>
 			)}
