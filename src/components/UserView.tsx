@@ -10,11 +10,12 @@ import {
 } from "../lib/firestore";
 import type { UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
+import { MonthYearFilter } from "./MonthYearFilter";
+import { SightingsList } from "./SightingsList";
 
 export function UserView() {
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	const { userId } = useParams<{ userId: string }>();
-	// const navigate = useNavigate();
 
 	const [user, setUser] = useState<UserProfile | null>(null);
 	const [userLoading, setUserLoading] = useState(true);
@@ -137,42 +138,6 @@ export function UserView() {
 		}
 	}, [fetchData, user]);
 
-	const formatDate = (dateString: string, timeString?: string) => {
-		const date = new Date(`${dateString}T00:00:00`);
-		const dateFormatted = date.toLocaleDateString(i18n.language, {
-			year: "numeric",
-			month: "short",
-			day: "numeric",
-		});
-		if (timeString) {
-			return `${dateFormatted} ${timeString}`;
-		}
-		return dateFormatted;
-	};
-
-	const getObservationTypeLabel = (type: string) => {
-		switch (type) {
-			case "visual":
-				return t("addSighting.visual");
-			case "audial":
-				return t("addSighting.audial");
-			case "both":
-				return t("addSighting.both");
-			default:
-				return type;
-		}
-	};
-
-	const months = Array.from({ length: 12 }, (_, i) => {
-		const date = new Date(2000, i, 1);
-		return {
-			value: i,
-			label: date.toLocaleDateString(i18n.language, { month: "long" }),
-		};
-	});
-
-	const years = Array.from({ length: 5 }, (_, i) => now.getFullYear() - i);
-
 	if (userLoading) {
 		return <div>{t("common.loading")}</div>;
 	}
@@ -184,6 +149,13 @@ export function UserView() {
 	const currentStatsDate = new Date();
 	const currentStatsMonthKey = `${currentStatsDate.getFullYear()}-${String(currentStatsDate.getMonth() + 1).padStart(2, "0")}`;
 	const currentStatsYearKeyPrefix = `${currentStatsDate.getFullYear()}-`;
+
+	// Needed for stats label
+	const currentMonthLabel = new Date(
+		currentStatsDate.getFullYear(),
+		currentStatsDate.getMonth(),
+		1,
+	).toLocaleDateString(undefined, { month: "long" });
 
 	return (
 		<div className="user-view">
@@ -202,65 +174,19 @@ export function UserView() {
 				</div>
 			</div>
 
-			<div className="filters-container">
-				<div className="filter-group">
-					<div className="view-mode-toggle">
-						<button
-							type="button"
-							className={`toggle-button ${viewMode === "month" ? "active" : ""}`}
-							onClick={() => setViewMode("month")}
-						>
-							{t("common.month")}
-						</button>
-						<button
-							type="button"
-							className={`toggle-button ${viewMode === "year" ? "active" : ""}`}
-							onClick={() => setViewMode("year")}
-						>
-							{t("common.year")}
-						</button>
-					</div>
-				</div>
-
-				{viewMode === "month" && (
-					<div className="filter-group">
-						<label htmlFor="month-select">{t("common.month")}</label>
-						<select
-							id="month-select"
-							className="filter-select"
-							value={selectedMonth}
-							onChange={(e) => setSelectedMonth(Number(e.target.value))}
-						>
-							{months.map((m) => (
-								<option key={m.value} value={m.value}>
-									{m.label}
-								</option>
-							))}
-						</select>
-					</div>
-				)}
-				<div className="filter-group">
-					<label htmlFor="year-select">{t("common.year")}</label>
-					<select
-						id="year-select"
-						className="filter-select"
-						value={selectedYear}
-						onChange={(e) => setSelectedYear(Number(e.target.value))}
-					>
-						{years.map((y) => (
-							<option key={y} value={y}>
-								{y}
-							</option>
-						))}
-					</select>
-				</div>
-			</div>
+			<MonthYearFilter
+				viewMode={viewMode}
+				setViewMode={setViewMode}
+				selectedMonth={selectedMonth}
+				setSelectedMonth={setSelectedMonth}
+				selectedYear={selectedYear}
+				setSelectedYear={setSelectedYear}
+			/>
 
 			<div className="stats-container">
 				<div className="stat-item">
 					<div className="stat-label">
-						{months[currentStatsDate.getMonth()].label}{" "}
-						{currentStatsDate.getFullYear()}
+						{currentMonthLabel} {currentStatsDate.getFullYear()}
 					</div>
 					<div className="stat-value">
 						{(stats[currentStatsMonthKey] || []).length}
@@ -293,53 +219,12 @@ export function UserView() {
 					<h3>
 						{t("userView.sightings")} ({sightings.length})
 					</h3>
-					{sightings.length === 0 ? (
-						<p className="no-sightings">{t("userView.noSightings")}</p>
-					) : (
-						<ul className="sightings-list">
-							{sightings.map((sighting) => {
-								const birdName = t(`birds.${sighting.birdId}`);
-
-								return (
-									<li key={sighting.id} className="sighting-item">
-										<div className="sighting-header">
-											<div className="sighting-bird">
-												<strong>{birdName}</strong>
-											</div>
-											<div className="sighting-meta">
-												<span className="sighting-date">
-													{formatDate(sighting.date, sighting.time)}
-												</span>
-											</div>
-										</div>
-										<div className="sighting-details">
-											<span className="sighting-type">
-												{getObservationTypeLabel(sighting.type)}
-											</span>
-											{sighting.locationName && (
-												<span className="sighting-location">
-													📍 {sighting.locationName}
-												</span>
-											)}
-											{sighting.notes && (
-												<div className="sighting-notes">{sighting.notes}</div>
-											)}
-										</div>
-									</li>
-								);
-							})}
-						</ul>
-					)}
-					{hasMore && (
-						<button
-							type="button"
-							onClick={() => fetchData(false)}
-							className="load-more-button"
-							disabled={loadingMore}
-						>
-							{loadingMore ? t("common.loading") : t("common.loadMore")}
-						</button>
-					)}
+					<SightingsList
+						sightings={sightings}
+						hasMore={hasMore}
+						loadingMore={loadingMore}
+						onLoadMore={() => fetchData(false)}
+					/>
 				</div>
 			)}
 		</div>
