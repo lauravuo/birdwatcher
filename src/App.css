@@ -60,7 +60,6 @@ h1 {
 }
 
 @media (max-width: 600px) {
-
 	header,
 	.breadcrumbs {
 		padding: 1rem;
@@ -203,8 +202,6 @@ h1 {
 	background: var(--bg-hover);
 	border-color: var(--accent-primary);
 }
-
-
 
 .no-sightings {
 	color: var(--text-dim);
