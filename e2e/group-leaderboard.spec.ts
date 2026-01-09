@@ -20,19 +20,10 @@ test.describe("Group Leaderboard", () => {
 		page,
 	}) => {
 		const currentYear = new Date().getFullYear();
-		const pad = (n: number) => String(n).padStart(2, "0");
-		const monthNum = new Date().getMonth() + 1; // 1-12
-		// If currently Jan (1), prev is Dec (12) of prev year?
-		// Logic handles current year only. So if Jan, only Jan exists.
-		// Let's assume test runs in a context where we can seed current year months.
 
-		// For stable testing, we'll try to seed "Current Month" and "Previous Month" (if > Jan)
-		// Or just Current Month since that's guaranteed safe.
-		// Let's seed "Current Month" (Month A) and "Previous Month" (Month B) if possible.
-		// If Jan, we only have one month.
-		// We'll stick to a simple case: Month M (Current)
-
-		const currentMonthKey = `${currentYear}-${pad(monthNum)}`;
+		// 1. Setup Data
+		// User A: 5 birds in Current Month -> Points: 1 (Month Win), Unique Year: 5
+		// User B: 2 birds in Current Month -> Points: 0, Unique Year: 2
 
 		// 1. Setup Data
 		// User A: 5 birds in Current Month -> Points: 1 (Month Win), Unique Year: 5
