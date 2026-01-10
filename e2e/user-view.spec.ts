@@ -252,6 +252,28 @@ test.describe("User View", () => {
 		await expect(
 			page.locator(".sightings-list").getByText("Varis").first(),
 		).toBeVisible();
+
+		// 9. Test Context-Aware Species Filtering
+		// Select Jan (contains "Harakka" and "Varis")
+		await page.getByLabel("Month").selectOption("0"); // Jan
+
+		const speciesSelect = page.getByLabel("Species");
+
+		await expect(
+			speciesSelect.locator("option[value='harakka']"),
+		).toBeAttached();
+		await expect(speciesSelect.locator("option[value='varis']")).toBeAttached();
+
+		// Select Feb (contains "Harakka" added in step 7)
+		await page.getByLabel("Month").selectOption("1"); // Feb
+		// Varis was NOT added to Feb. Harakka WAS.
+		// So species dropdown should have Harakka, but NOT Varis.
+		await expect(
+			speciesSelect.locator("option[value='harakka']"),
+		).toBeAttached();
+		await expect(
+			speciesSelect.locator("option[value='varis']"),
+		).not.toBeAttached();
 	});
 
 	test("displays other user's sightings and stats correctly", async ({

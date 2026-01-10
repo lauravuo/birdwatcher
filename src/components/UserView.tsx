@@ -62,13 +62,24 @@ export function UserView() {
 	useEffect(() => {
 		const species = new Set<string>();
 		// Stats is Record<string, string[]>
-		Object.values(stats).forEach((birds) => {
+		// Key is "YYYY-MM"
+		Object.entries(stats).forEach(([dateKey, birds]) => {
+			const [y, m] = dateKey.split("-").map(Number);
+			// Filter by Year
+			if (y !== selectedYear) return;
+
+			// Filter by Month (if not "Any")
+			// month in stats is 1-based (01..12), selectedMonth is 0-based (0..11) or null
+			if (selectedMonth !== null) {
+				if (m !== selectedMonth + 1) return;
+			}
+
 			birds.forEach((bird) => {
 				species.add(bird);
 			});
 		});
 		setAvailableSpecies(Array.from(species).sort());
-	}, [stats]);
+	}, [stats, selectedYear, selectedMonth]);
 
 	// Fetch User Profile
 	useEffect(() => {

@@ -304,18 +304,23 @@ export const getGroupSightings = async (
 				where("userId", "in", batch),
 				where("date", ">=", startDate),
 				where("date", "<=", endDate),
-				orderBy("date", "desc"),
-				orderBy("createdAt", "desc"),
-				limit(limitCount),
 			];
 
 			if (birdId) {
 				constraints.push(where("birdId", "==", birdId));
 			}
 
+			constraints.push(
+				orderBy("date", "desc"),
+				orderBy("createdAt", "desc"),
+			);
+
 			if (lastSightingCursor) {
 				constraints.push(startAfter(lastSightingCursor));
 			}
+
+			// Apply limit last
+			constraints.push(limit(limitCount));
 
 			const q = query(collection(db, "sightings"), ...constraints);
 			const snapshot = await getDocs(q);
@@ -370,18 +375,23 @@ export const getUserSightings = async (
 		where("userId", "==", userId),
 		where("date", ">=", startDate),
 		where("date", "<=", endDate),
-		orderBy("date", "desc"),
-		orderBy("createdAt", "desc"),
-		limit(limitCount),
 	];
 
 	if (birdId) {
 		constraints.push(where("birdId", "==", birdId));
 	}
 
+	constraints.push(
+		orderBy("date", "desc"),
+		orderBy("createdAt", "desc"),
+	);
+
 	if (lastSightingCursor) {
 		constraints.push(startAfter(lastSightingCursor));
 	}
+
+	// Apply limit last
+	constraints.push(limit(limitCount));
 
 	const q = query(sightingsRef, ...constraints);
 

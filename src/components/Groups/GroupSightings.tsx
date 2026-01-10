@@ -64,7 +64,17 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 		const species = new Set<string>();
 
 		stats.forEach((userStats) => {
-			Object.values(userStats).forEach((birds) => {
+			Object.entries(userStats).forEach(([dateKey, birds]) => {
+				const [y, m] = dateKey.split("-").map(Number);
+				// Filter by Year
+				if (y !== selectedYear) return;
+
+				// Filter by Month (if not "Any")
+				// month in stats is 1-based (01..12), selectedMonth is 0-based (0..11) or null
+				if (selectedMonth !== null) {
+					if (m !== selectedMonth + 1) return;
+				}
+
 				birds.forEach((bird) => {
 					species.add(bird);
 				});
@@ -72,7 +82,7 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 		});
 
 		setAvailableSpecies(Array.from(species).sort());
-	}, [stats]);
+	}, [stats, selectedYear, selectedMonth]);
 
 	const fetchData = useCallback(
 		async (isInitial = true) => {

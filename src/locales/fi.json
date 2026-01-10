@@ -11,7 +11,8 @@
 		"year": "Vuosi",
 		"total": "Yhteensä",
 		"anonymous": "Nimetön",
-		"any": "Kaikki"
+		"any": "Kaikki",
+		"species": "Laji"
 	},
 	"userView": {
 		"sightings": "Havainnot",

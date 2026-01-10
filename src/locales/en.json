@@ -11,7 +11,8 @@
 		"year": "Year",
 		"total": "Total",
 		"anonymous": "Anonymous",
-		"any": "Any"
+		"any": "Any",
+		"species": "Species"
 	},
 	"userView": {
 		"sightings": "Sightings",
