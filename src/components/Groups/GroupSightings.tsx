@@ -35,6 +35,7 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 	const [loadingMore, setLoadingMore] = useState(false);
 	const [hasMore, setHasMore] = useState(false);
 	const lastVisibleRef = useRef<QueryDocumentSnapshot | null>(null);
+	const requestIdRef = useRef(0);
 	const [error, setError] = useState<string | null>(null);
 
 	// Derived filter options
@@ -67,6 +68,8 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 
 	const fetchData = useCallback(
 		async (isInitial = true) => {
+			const requestId = ++requestIdRef.current;
+
 			if (isInitial) {
 				setLoading(true);
 				setError(null);
@@ -109,6 +112,8 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 						? getUsersStats(group.memberIds)
 						: Promise.resolve(new Map()),
 				]);
+
+				if (requestId !== requestIdRef.current) return;
 
 				const { sightings: newSightings, lastVisible: newCursor } =
 					sightingsResponse;

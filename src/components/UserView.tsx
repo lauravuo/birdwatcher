@@ -34,6 +34,7 @@ export function UserView() {
 	const [loadingMore, setLoadingMore] = useState(false);
 	const [hasMore, setHasMore] = useState(false);
 	const lastVisibleRef = useRef<QueryDocumentSnapshot | null>(null);
+	const requestIdRef = useRef(0);
 	const [error, setError] = useState<string | null>(null);
 
 	// Derived filter options
@@ -93,6 +94,8 @@ export function UserView() {
 		async (isInitial = true) => {
 			if (!user) return;
 
+			const requestId = ++requestIdRef.current;
+
 			if (isInitial) {
 				setLoading(true);
 				setError(null);
@@ -132,6 +135,8 @@ export function UserView() {
 					// Only fetch stats on initial load
 					isInitial ? getUserStats(user.id) : Promise.resolve({}),
 				]);
+
+				if (requestId !== requestIdRef.current) return;
 
 				const { sightings: newSightings, lastVisible: newCursor } =
 					sightingsResponse;
