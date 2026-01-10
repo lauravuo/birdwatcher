@@ -10,20 +10,23 @@ import {
 } from "../lib/firestore";
 import type { UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
-import { MonthYearFilter } from "./MonthYearFilter";
+import { SightingsFilter } from "./SightingsFilter";
 import { SightingsList } from "./SightingsList";
 
 export function UserView() {
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation();
 	const { userId } = useParams<{ userId: string }>();
 
 	const [user, setUser] = useState<UserProfile | null>(null);
 	const [userLoading, setUserLoading] = useState(true);
 
 	const now = new Date();
-	const [selectedMonth, setSelectedMonth] = useState(now.getMonth()); // 0-11
+	const [selectedMonth, setSelectedMonth] = useState<number | null>(
+		now.getMonth(),
+	);
 	const [selectedYear, setSelectedYear] = useState(now.getFullYear());
-	const [viewMode, setViewMode] = useState<"month" | "year">("month");
+	const [selectedSpecies, setSelectedSpecies] = useState<string | null>(null);
+
 	const [sightings, setSightings] = useState<Sighting[]>([]);
 	const [stats, setStats] = useState<Record<string, string[]>>({});
 	const [loading, setLoading] = useState(true);
@@ -31,6 +34,41 @@ export function UserView() {
 	const [hasMore, setHasMore] = useState(false);
 	const lastVisibleRef = useRef<QueryDocumentSnapshot | null>(null);
 	const [error, setError] = useState<string | null>(null);
+
+	// Derived filter options
+	const [availableYears, setAvailableYears] = useState<number[]>([]);
+	const [availableMonths, setAvailableMonths] = useState<
+		{ value: number | null; label: string }[]
+	>([]);
+	const [availableSpecies, setAvailableSpecies] = useState<string[]>([]);
+
+	// Calculate static options (Years/Months) and dynamic Species
+	useEffect(() => {
+		const currentYear = new Date().getFullYear();
+		// Show 5 years
+		setAvailableYears(Array.from({ length: 5 }, (_, i) => currentYear - i));
+
+		setAvailableMonths([
+			{ value: null, label: t("common.any") },
+			...Array.from({ length: 12 }, (_, i) => ({
+				value: i,
+				label: new Date(2000, i, 1).toLocaleDateString(i18n.language, {
+					month: "long",
+				}),
+			})),
+		]);
+	}, [i18n.language, t]);
+
+	useEffect(() => {
+		const species = new Set<string>();
+		// Stats is Record<string, string[]>
+		Object.values(stats).forEach((birds) => {
+			birds.forEach((bird) => {
+				species.add(bird);
+			});
+		});
+		setAvailableSpecies(Array.from(species).sort());
+	}, [stats]);
 
 	// Fetch User Profile
 	useEffect(() => {
@@ -72,7 +110,7 @@ export function UserView() {
 				let startDate: string;
 				let endDate: string;
 
-				if (viewMode === "month") {
+				if (selectedMonth !== null) {
 					startDate = `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-01`;
 					const lastDay = new Date(
 						selectedYear,
@@ -89,7 +127,14 @@ export function UserView() {
 					: (lastVisibleRef.current ?? undefined);
 
 				const [sightingsResponse, statsData] = await Promise.all([
-					getUserSightings(user.id, startDate, endDate, 20, cursor),
+					getUserSightings(
+						user.id,
+						startDate,
+						endDate,
+						20,
+						cursor,
+						selectedSpecies,
+					),
 					// Only fetch stats on initial load
 					isInitial ? getUserStats(user.id) : Promise.resolve({}),
 				]);
@@ -99,7 +144,9 @@ export function UserView() {
 
 				if (isInitial) {
 					setSightings(newSightings);
-					setStats(statsData);
+					if (Object.keys(statsData).length > 0) {
+						setStats(statsData);
+					}
 
 					// Auto-recalculate if stats seem empty but we have sightings (backfill)
 					if (
@@ -129,7 +176,7 @@ export function UserView() {
 				setLoadingMore(false);
 			}
 		},
-		[user, selectedMonth, selectedYear, viewMode, t],
+		[user, selectedMonth, selectedYear, selectedSpecies, t],
 	);
 
 	useEffect(() => {
@@ -145,17 +192,6 @@ export function UserView() {
 	if (!user) {
 		return <div className="error-message">{t("errors.userNotFound")}</div>;
 	}
-
-	const currentStatsDate = new Date();
-	const currentStatsMonthKey = `${currentStatsDate.getFullYear()}-${String(currentStatsDate.getMonth() + 1).padStart(2, "0")}`;
-	const currentStatsYearKeyPrefix = `${currentStatsDate.getFullYear()}-`;
-
-	// Needed for stats label
-	const currentMonthLabel = new Date(
-		currentStatsDate.getFullYear(),
-		currentStatsDate.getMonth(),
-		1,
-	).toLocaleDateString(undefined, { month: "long" });
 
 	return (
 		<div className="user-view">
@@ -174,41 +210,17 @@ export function UserView() {
 				</div>
 			</div>
 
-			<MonthYearFilter
-				viewMode={viewMode}
-				setViewMode={setViewMode}
-				selectedMonth={selectedMonth}
-				setSelectedMonth={setSelectedMonth}
+			<SightingsFilter
+				years={availableYears}
 				selectedYear={selectedYear}
 				setSelectedYear={setSelectedYear}
+				months={availableMonths}
+				selectedMonth={selectedMonth}
+				setSelectedMonth={setSelectedMonth}
+				species={availableSpecies}
+				selectedSpecies={selectedSpecies}
+				setSelectedSpecies={setSelectedSpecies}
 			/>
-
-			<div className="stats-container">
-				<div className="stat-item">
-					<div className="stat-label">
-						{currentMonthLabel} {currentStatsDate.getFullYear()}
-					</div>
-					<div className="stat-value">
-						{(stats[currentStatsMonthKey] || []).length}
-					</div>
-				</div>
-				<div className="stat-item">
-					<div className="stat-label">
-						{t("common.year")} {currentStatsDate.getFullYear()}
-					</div>
-					<div className="stat-value">
-						{Object.entries(stats)
-							.filter(([key]) => key.startsWith(currentStatsYearKeyPrefix))
-							.reduce((acc, [_, birds]) => acc + birds.length, 0)}
-					</div>
-				</div>
-				<div className="stat-item">
-					<div className="stat-label">{t("common.total")}</div>
-					<div className="stat-value">
-						{Object.values(stats).reduce((acc, birds) => acc + birds.length, 0)}
-					</div>
-				</div>
-			</div>
 
 			{loading ? (
 				<div>{t("common.loading")}</div>
