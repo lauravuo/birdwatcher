@@ -343,27 +343,39 @@ test.describe("Groups UI", () => {
 		).toBeVisible();
 
 		// Default: Month View
-		await expect(page.getByText("Harakka").first()).toBeVisible();
+		await expect(
+			page.locator(".sightings-list").getByText("Harakka").first(),
+		).toBeVisible();
 		if (month !== prevMonth) {
-			await expect(page.getByText("Varis")).toBeHidden();
+			await expect(
+				page.locator(".sightings-list").getByText("Varis"),
+			).toBeHidden();
 		}
 
 		// Switch to Year
-		await page.getByRole("button", { name: "Year" }).click();
-		await expect(page.getByLabel("Month")).toBeHidden();
+		await page.getByLabel("Month").selectOption("any");
+		await expect(page.getByLabel("Month")).toBeVisible();
 
 		// In Year view, if prevDate is same year, we see both.
 		if (prevYear === year) {
-			await expect(page.getByText("Harakka").first()).toBeVisible();
-			await expect(page.getByText("Varis").first()).toBeVisible();
+			await expect(
+				page.locator(".sightings-list").getByText("Harakka").first(),
+			).toBeVisible();
+			await expect(
+				page.locator(".sightings-list").getByText("Varis").first(),
+			).toBeVisible();
 		} else {
 			// Different year
-			await expect(page.getByText("Harakka").first()).toBeVisible();
-			await expect(page.getByText("Varis")).toBeHidden();
+			await expect(
+				page.locator(".sightings-list").getByText("Harakka").first(),
+			).toBeVisible();
+			await expect(
+				page.locator(".sightings-list").getByText("Varis"),
+			).toBeHidden();
 		}
 
 		// Switch back to Month
-		await page.getByRole("button", { name: "Month" }).click();
+		await page.getByLabel("Month").selectOption(String(Number(month) - 1)); // Select original month index
 		await expect(page.getByLabel("Month")).toBeVisible();
 	});
 });

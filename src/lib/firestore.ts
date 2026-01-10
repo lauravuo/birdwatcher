@@ -280,6 +280,7 @@ export const getGroupSightings = async (
 	endDate: string, // YYYY-MM-DD
 	limitCount = 20,
 	lastSightingCursor?: QueryDocumentSnapshot,
+	birdId?: string | null,
 ): Promise<{
 	sightings: Sighting[];
 	lastVisible: QueryDocumentSnapshot | null;
@@ -307,6 +308,10 @@ export const getGroupSightings = async (
 				orderBy("createdAt", "desc"),
 				limit(limitCount),
 			];
+
+			if (birdId) {
+				constraints.push(where("birdId", "==", birdId));
+			}
 
 			if (lastSightingCursor) {
 				constraints.push(startAfter(lastSightingCursor));
@@ -355,6 +360,7 @@ export const getUserSightings = async (
 	endDate: string, // YYYY-MM-DD
 	limitCount = 20,
 	lastSightingCursor?: QueryDocumentSnapshot,
+	birdId?: string | null,
 ): Promise<{
 	sightings: Sighting[];
 	lastVisible: QueryDocumentSnapshot | null;
@@ -368,6 +374,10 @@ export const getUserSightings = async (
 		orderBy("createdAt", "desc"),
 		limit(limitCount),
 	];
+
+	if (birdId) {
+		constraints.push(where("birdId", "==", birdId));
+	}
 
 	if (lastSightingCursor) {
 		constraints.push(startAfter(lastSightingCursor));

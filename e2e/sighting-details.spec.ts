@@ -102,7 +102,9 @@ test.describe("Sighting Details", () => {
 		// Let's assume default or check for birdId if translation missing.
 		// Safest is to wait for something we know.
 		// Other tests used "Harakka" for "harakka".
-		await expect(page.getByText("Harakka")).toBeVisible();
+		await expect(
+			page.locator(".sighting-item-link").getByText("Harakka"),
+		).toBeVisible();
 
 		// 2. hidden/visible check
 		// Should NOT see notes or location in list
@@ -114,7 +116,7 @@ test.describe("Sighting Details", () => {
 
 		// 4. Verify Detail View
 		await expect(page).toHaveURL(/\/groups\/.*\/sightings\/.*/);
-		await expect(page.getByText("Harakka")).toBeVisible();
+		await expect(page.getByRole("heading", { name: "Harakka" })).toBeVisible();
 		await expect(page.getByText("Hidden Valley")).toBeVisible();
 		await expect(page.getByText("A strictly secret note")).toBeVisible();
 	});
