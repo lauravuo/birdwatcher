@@ -17,6 +17,28 @@
 					"order": "DESCENDING"
 				}
 			]
+		},
+		{
+			"collectionGroup": "sightings",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{
+					"fieldPath": "userId",
+					"order": "ASCENDING"
+				},
+				{
+					"fieldPath": "birdId",
+					"order": "ASCENDING"
+				},
+				{
+					"fieldPath": "date",
+					"order": "DESCENDING"
+				},
+				{
+					"fieldPath": "createdAt",
+					"order": "DESCENDING"
+				}
+			]
 		}
 	],
 	"fieldOverrides": []

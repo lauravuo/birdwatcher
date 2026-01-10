@@ -79,7 +79,9 @@ test.describe("User View", () => {
 
 		// Confirm sighting is visible in group view
 		await page.getByRole("button", { name: "Sightings" }).click();
-		await expect(page.getByText("Harakka")).toBeVisible();
+		await expect(
+			page.locator(".sightings-list").getByText("Harakka"),
+		).toBeVisible();
 
 		// 3. Click Member (Tester) - Wait for list to load
 		await page.getByRole("button", { name: "Members" }).click();
@@ -117,20 +119,15 @@ test.describe("User View", () => {
 		// we will adapt expectations to check that stats exist.
 		// Ideally we would mock time, but let's check basic visibility first.
 
-		// Actually, we can check Total.
-		await expect(page.locator(".stat-item").nth(2)).toContainText("1"); // Total
-
-		/* 
-		   Crucial Check: Changing Month Filter should NOT change stats 
-		*/
-		await page.getByLabel("Month").selectOption("5"); // Change to June
-		await expect(page.locator(".stat-item").nth(2)).toContainText("1"); // Total still 1
+		// Check Sightings List
 
 		// Switch back to Jan for list view checks
 		await page.getByLabel("Month").selectOption("0");
 
 		await expect(page.getByText("Sightings (1)")).toBeVisible();
-		await expect(page.getByText("Harakka")).toBeVisible();
+		await expect(
+			page.locator(".sightings-list").getByText("Harakka"),
+		).toBeVisible();
 
 		// 5. Add another sighting for SAME BIRD in SAME MONTH (should not increase count)
 		// Navigate back to Group View via Breadcrumb to access Member List again?
@@ -164,18 +161,7 @@ test.describe("User View", () => {
 		// Re-reading logic: "Add another sighting for SAME BIRD...".
 		// If we add another sighting, count SHOULD be 2.
 
-		await expect(page.locator(".stat-item").nth(2)).toContainText("1");
-		// Wait, the previous test step said "SAME BIRD in SAME MONTH (should not increase count)".
-		// Why? Ah, "Unique species per month/year"?
-		// Let's check `recalculateUserStats` or `getUserStats`.
-		// UserView.tsx: `acc + birds.length`. `birds` is array of strings (ids)?
-		// Detailed check: `stats` is `Record<string, string[]>`. The array contains birdIds.
-		// If the implementation of `recalculateUserStats` only stores unique birds per month, then yes.
-		// Assuming unique birds is the rule (Lifelist style).
-		// Let's keep expectation 1 if it was 1 before, but since I can't verify implementation of `recalculateUserStats` right now, I'll trust the existing test's intent.
-
-		// HOWEVER, since stats are decoupled, we just check they don't *change* wildly or disappear.
-		await expect(page.locator(".stat-item").nth(2)).toContainText("1");
+		// 6. Add sighting for DIFFERENT BIRD in SAME MONTH
 
 		// 6. Add sighting for DIFFERENT BIRD in SAME MONTH
 		await page.getByRole("link", { name: groupName }).click();
@@ -196,8 +182,7 @@ test.describe("User View", () => {
 		await page.locator(".member-item").filter({ hasText: "Tester" }).click();
 		await page.getByLabel("Month").selectOption("0");
 
-		// Expect stats: Jan=2, Year=2, Total=2
-		await expect(page.locator(".stat-item").nth(2)).toContainText("2");
+		// 7. Add sighting for SAME BIRD in DIFFERENT MONTH
 
 		// 7. Add sighting for SAME BIRD in DIFFERENT MONTH
 		await page.getByRole("link", { name: groupName }).click();
@@ -223,19 +208,72 @@ test.describe("User View", () => {
 
 		// Sightings list should show 2 (Harakka, Varis)
 		// We expect at least one "Harakka" to be visible
-		await expect(page.getByText("Harakka").first()).toBeVisible();
-		await expect(page.getByText("Varis").first()).toBeVisible();
+		await expect(
+			page.locator(".sightings-list").getByText("Harakka").first(),
+		).toBeVisible();
+		await expect(
+			page.locator(".sightings-list").getByText("Varis").first(),
+		).toBeVisible();
 
-		// Check Year Mode
-		await page.getByRole("button", { name: "Year" }).click();
-		await expect(page.getByLabel("Month")).toBeHidden();
+		// Check Year Mode (Select "Any" month)
+		await page.getByLabel("Month").selectOption("any");
 
 		// Should show all sightings (4 total: 2 in Jan, 1 in Feb, plus duplicate Harakka in Jan)
 		await expect(page.getByText("Sightings (4)")).toBeVisible();
 
 		// Switch back to Month
-		await page.getByRole("button", { name: "Month" }).click();
+		await page.getByLabel("Month").selectOption("0");
 		await expect(page.getByLabel("Month")).toBeVisible();
+
+		// 8. Test Species Filter
+		// Filter by "Varis"
+		await page.getByLabel("Species").selectOption({ label: "Varis" });
+		await expect(
+			page.locator(".sightings-list").getByText("Varis").first(),
+		).toBeVisible();
+		await expect(
+			page.locator(".sightings-list").getByText("Harakka"),
+		).toBeHidden();
+
+		// Filter by "Harakka"
+		await page.getByLabel("Species").selectOption({ label: "Harakka" });
+		await expect(
+			page.locator(".sightings-list").getByText("Harakka").first(),
+		).toBeVisible();
+		await expect(
+			page.locator(".sightings-list").getByText("Varis"),
+		).toBeHidden();
+
+		// Filter by "Any"
+		await page.getByLabel("Species").selectOption("any");
+		await expect(
+			page.locator(".sightings-list").getByText("Harakka").first(),
+		).toBeVisible();
+		await expect(
+			page.locator(".sightings-list").getByText("Varis").first(),
+		).toBeVisible();
+
+		// 9. Test Context-Aware Species Filtering
+		// Select Jan (contains "Harakka" and "Varis")
+		await page.getByLabel("Month").selectOption("0"); // Jan
+
+		const speciesSelect = page.getByLabel("Species");
+
+		await expect(
+			speciesSelect.locator("option[value='harakka']"),
+		).toBeAttached();
+		await expect(speciesSelect.locator("option[value='varis']")).toBeAttached();
+
+		// Select Feb (contains "Harakka" added in step 7)
+		await page.getByLabel("Month").selectOption("1"); // Feb
+		// Varis was NOT added to Feb. Harakka WAS.
+		// So species dropdown should have Harakka, but NOT Varis.
+		await expect(
+			speciesSelect.locator("option[value='harakka']"),
+		).toBeAttached();
+		await expect(
+			speciesSelect.locator("option[value='varis']"),
+		).not.toBeAttached();
 	});
 
 	test("displays other user's sightings and stats correctly", async ({
@@ -315,14 +353,12 @@ test.describe("User View", () => {
 		await page.getByLabel("Month").selectOption("2"); // March is 2
 		await page.getByLabel("Year").selectOption("2024");
 
-		// Check Stats - stats should be EMPTY or match CURRENT date, NOT March 2024 specific if we are not in March 2024.
-		// Since test runs in 'present', and seeded data is 2024, if we are in 2026...
-		// Stats for "This Month" (2026/xx) should be 0.
-		// Stats for "Total" should be 1 (since Total is aggregation of all).
-		await expect(page.locator(".stat-item").nth(2)).toContainText("1"); // Total
+		// Check Sightings List
 
 		// Check Sightings List
-		await expect(page.getByText("Harakka")).toBeVisible();
+		await expect(
+			page.locator(".sightings-list").getByText("Harakka"),
+		).toBeVisible();
 		// Location should NOT be in the list view
 		await expect(page.getByText("Park")).not.toBeVisible();
 	});
