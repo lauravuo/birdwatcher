@@ -1,6 +1,7 @@
 import type { QueryDocumentSnapshot } from "firebase/firestore";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useAvailableSpecies } from "../../hooks/useAvailableSpecies";
 import {
 	getGroupMembers,
 	getGroupSightings,
@@ -41,9 +42,7 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 	const [availableMonths, setAvailableMonths] = useState<
 		{ value: number | null; label: string }[]
 	>([]);
-	const [availableSpecies, setAvailableSpecies] = useState<string[]>([]);
-
-	// Calculate static options (Years/Months) and dynamic Species
+	// Calculate static options (Years/Months)
 	useEffect(() => {
 		const currentYear = new Date().getFullYear();
 		// Show 5 years
@@ -60,29 +59,11 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 		]);
 	}, [i18n.language, t]);
 
-	useEffect(() => {
-		const species = new Set<string>();
-
-		stats.forEach((userStats) => {
-			Object.entries(userStats).forEach(([dateKey, birds]) => {
-				const [y, m] = dateKey.split("-").map(Number);
-				// Filter by Year
-				if (y !== selectedYear) return;
-
-				// Filter by Month (if not "Any")
-				// month in stats is 1-based (01..12), selectedMonth is 0-based (0..11) or null
-				if (selectedMonth !== null) {
-					if (m !== selectedMonth + 1) return;
-				}
-
-				birds.forEach((bird) => {
-					species.add(bird);
-				});
-			});
-		});
-
-		setAvailableSpecies(Array.from(species).sort());
-	}, [stats, selectedYear, selectedMonth]);
+	const availableSpecies = useAvailableSpecies(
+		stats,
+		selectedYear,
+		selectedMonth,
+	);
 
 	const fetchData = useCallback(
 		async (isInitial = true) => {
