@@ -310,10 +310,7 @@ export const getGroupSightings = async (
 				constraints.push(where("birdId", "==", birdId));
 			}
 
-			constraints.push(
-				orderBy("date", "desc"),
-				orderBy("createdAt", "desc"),
-			);
+			constraints.push(orderBy("date", "desc"), orderBy("createdAt", "desc"));
 
 			if (lastSightingCursor) {
 				constraints.push(startAfter(lastSightingCursor));
@@ -381,10 +378,7 @@ export const getUserSightings = async (
 		constraints.push(where("birdId", "==", birdId));
 	}
 
-	constraints.push(
-		orderBy("date", "desc"),
-		orderBy("createdAt", "desc"),
-	);
+	constraints.push(orderBy("date", "desc"), orderBy("createdAt", "desc"));
 
 	if (lastSightingCursor) {
 		constraints.push(startAfter(lastSightingCursor));
