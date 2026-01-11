@@ -48,6 +48,7 @@ export function SightingsFilter({
 				<select
 					id="month-select"
 					className="filter-select"
+					data-testid="month-filter"
 					value={selectedMonth === null ? "any" : selectedMonth}
 					onChange={(e) => {
 						const value = e.target.value;

@@ -79,6 +79,7 @@ export function GroupView() {
 					type="button"
 					className={`tab-button ${activeTab === "stats" ? "active" : ""}`}
 					onClick={() => setActiveTab("stats")}
+					data-testid="tab-stats"
 				>
 					{t("groupView.tabs.stats")}
 				</button>
@@ -86,6 +87,7 @@ export function GroupView() {
 					type="button"
 					className={`tab-button ${activeTab === "sightings" ? "active" : ""}`}
 					onClick={() => setActiveTab("sightings")}
+					data-testid="tab-sightings"
 				>
 					{t("groupView.tabs.sightings")}
 				</button>
@@ -93,6 +95,7 @@ export function GroupView() {
 					type="button"
 					className={`tab-button ${activeTab === "members" ? "active" : ""}`}
 					onClick={() => setActiveTab("members")}
+					data-testid="tab-members"
 				>
 					{t("groupView.tabs.members")}
 				</button>

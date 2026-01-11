@@ -16,7 +16,20 @@ test.describe("Sightings", () => {
 
 		// Create test user and sign in
 		const credentials = getTestUserCredentials();
-		await createTestUser(credentials.email, credentials.password, "Tester");
+		const user = await createTestUser(
+			credentials.email,
+			credentials.password,
+			"Tester",
+		);
+
+		// Seed a group so the Add Sighting button is visible
+		await seedGroup({
+			name: "Test Group",
+			joinCode: "test-group",
+			ownerId: user.uid,
+			memberIds: [user.uid],
+		});
+
 		await page.goto("/");
 		await signInInBrowser(page, credentials.email, credentials.password);
 		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });

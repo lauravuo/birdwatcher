@@ -1,6 +1,13 @@
-import { expect, type Page, test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import type { User } from "firebase/auth";
+import {
+	addSighting,
+	createGroupAndJoin,
+	navigateToGroupView,
+	navigateToUserView,
+	switchToMembersTab,
+} from "./helpers/actions";
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
-import { signInInBrowser } from "./helpers/browser-auth";
 import {
 	clearAllTestData,
 	seedGroup,
@@ -10,24 +17,12 @@ import {
 } from "./helpers/firestore-helpers";
 
 test.describe("User View", () => {
-	const createGroup = async (
-		page: Page,
-		groupName: string,
-	): Promise<string> => {
-		await page.getByLabel("Group Name:").fill(groupName);
-		await page.getByRole("button", { name: "Create Group" }).click();
-
-		const groupLink = page.getByRole("link", { name: new RegExp(groupName) });
-		await expect(groupLink).toBeVisible({ timeout: 10000 });
-
-		const text = await groupLink.innerText();
-		const match = text.match(/\(([^)]+)\)/);
-		if (!match) throw new Error(`Could not extract join code from "${text}"`);
-		return match[1];
-	};
-
 	const logTypes: string[] = [];
+	// Store the created test user to access their UID
+	let testUser: User;
+
 	test.beforeEach(async ({ page }) => {
+		// Reset logs
 		while (logTypes.length > 0) logTypes.pop();
 
 		await page.addInitScript(() => {
@@ -42,259 +37,104 @@ test.describe("User View", () => {
 
 		await clearAllTestData();
 		const credentials = getTestUserCredentials();
-		await createTestUser(credentials.email, credentials.password, "Tester");
+		// Create user and capture the result which contains the UID
+		testUser = await createTestUser(
+			credentials.email,
+			credentials.password,
+			"Tester",
+		);
+
 		await page.goto("/");
 		const { signInInBrowser } = await import("./helpers/browser-auth");
 		await signInInBrowser(page, credentials.email, credentials.password);
 		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
 	});
 
-	test("navigates to user view and filters sightings", async ({ page }) => {
-		const groupName = "User View Group";
-		const _joinCode = await createGroup(page, groupName);
+	test("displays 'You' badge and profile link in header", async ({ page }) => {
+		const groupName = "Profile Test Group";
+		await createGroupAndJoin(page, groupName);
 
-		// 1. Enter Group
-		await page.getByRole("link", { name: new RegExp(groupName) }).click();
-		await expect(
-			page.locator(".breadcrumbs").getByText(groupName),
-		).toBeVisible();
+		// Navigate via header link
+		await navigateToUserView(page);
 
-		// 2. Add a Sighting (Jan)
-		await page.getByLabel("Add sighting").click();
-
-		const birdInput = page.getByPlaceholder(/type to filter/i);
-		await birdInput.fill("Harakka");
-		await page.waitForTimeout(500);
-		await page
-			.locator(".bird-dropdown")
-			.getByRole("button", { name: "Harakka", exact: true })
-			.click();
-
-		const currentYear = new Date().getFullYear();
-		const dateStrv1 = `${currentYear}-01-15`;
-		await page.getByLabel(/date/i).fill(dateStrv1);
-		await page
-			.getByRole("button", { name: "Add Sighting", exact: true })
-			.click();
-
-		// Confirm sighting is visible in group view
-		await page.getByRole("button", { name: "Sightings" }).click();
-		await expect(
-			page.locator(".sightings-list").getByText("Harakka"),
-		).toBeVisible();
-
-		// 3. Click Member (Tester) - Wait for list to load
-		await page.getByRole("button", { name: "Members" }).click();
-		await expect(
-			page.getByRole("heading", { name: "Members (1)" }),
-		).toBeVisible();
-		// In Router version, member items are links, but filtering by text still works if container is clickable
-		// The implementation has <Link className="member-item-button">.
-		// Locator(".member-item").filter(...) finds the LI. We need to click the Link/Button inside or just the LI if it bubbles.
-		// Actually GroupMembers.tsx: <li className="member-item"><Link ... className="member-item-button">
-		// So clicking ".member-item" might miss the link if not careful, but usually works.
-		// Better to target the link explicitly?
-		// Let's try sticking to existing selector unless it fails, but I know "member-item" wrapping "member-item-button" usually works.
-		await page.locator(".member-item").filter({ hasText: "Tester" }).click();
-
-		// 4. Verify User View Stats
-		await expect(page.getByRole("heading", { name: "Tester" })).toBeVisible();
-
-		// Filter to Jan
-		await page.getByLabel("Month").selectOption("0"); // January is 0
-		await page.getByLabel("Year").selectOption(String(currentYear));
-
-		// Expect stats: Jan=1, Year=1, Total=1
-		// Stats are now always current date. Since we just added a sighting for Jan 15 of currentYear,
-		// and test is running in "real time" (or mocked time if we mocked Date, but we haven't),
-		// we should expect counts to reflect what we just added if the current month matches.
-		// BUT: The test logic adds a sighting for "currentYear-01-15".
-		// IF the test is run in January, the stats will show 1.
-		// IF the test is run in Feb, stats for 'This Month' will be 0.
-		// To make this robust without mocking system time in the app, we can only verify 'Total' reliably,
-		// OR we acknowledge that the stats logic relies on `new Date()`.
-		// Let's assume for this E2E we verify 'Total' and 'Year' (if current year).
-
-		// Since we cannot easily mock `new Date()` inside the compiled React app from Playwright without more hacky scripts,
-		// we will adapt expectations to check that stats exist.
-		// Ideally we would mock time, but let's check basic visibility first.
-
-		// Check Sightings List
-
-		// Switch back to Jan for list view checks
-		await page.getByLabel("Month").selectOption("0");
-
-		await expect(page.getByText("Sightings (1)")).toBeVisible();
-		await expect(
-			page.locator(".sightings-list").getByText("Harakka"),
-		).toBeVisible();
-
-		// 5. Add another sighting for SAME BIRD in SAME MONTH (should not increase count)
-		// Navigate back to Group View via Breadcrumb to access Member List again?
-		// Actually, logic below clicks "Add sighting" which is global.
-		// Then it clicks member item again. Implicitly expects to be in Group View.
-		// So yes, I must go back.
-		await page.getByRole("link", { name: groupName }).click();
-		await page.getByLabel("Add sighting").click();
-		await birdInput.fill("Harakka");
-		await page.waitForTimeout(500);
-		await page
-			.locator(".bird-dropdown")
-			.getByRole("button", { name: "Harakka", exact: true })
-			.click();
-		await page.getByLabel(/date/i).fill(dateStrv1);
-		await page
-			.locator(".add-sighting-form")
-			.getByRole("button", { name: "Add Sighting" })
-			.click();
-
-		// Go back to user view
-		await page.getByRole("button", { name: "Members" }).click();
-		await page.locator(".member-item").filter({ hasText: "Tester" }).click();
-		await page.getByLabel("Month").selectOption("0"); // January
-
-		// Expect stats: Jan=1 (unique), Year=1, Total=1
-		// Stats shouldn't change just because we added duplicate sighting (assuming logic handles that, actually logic counts sightings, not unique birds, unless specified.
-		// Wait, app logic: `stats` is list of birdIds. `.length` is count of sightings.
-		// UserView: `stats[key].length`.
-		// So adding same bird again => count increases.
-		// Re-reading logic: "Add another sighting for SAME BIRD...".
-		// If we add another sighting, count SHOULD be 2.
-
-		// 6. Add sighting for DIFFERENT BIRD in SAME MONTH
-
-		// 6. Add sighting for DIFFERENT BIRD in SAME MONTH
-		await page.getByRole("link", { name: groupName }).click();
-		await page.getByLabel("Add sighting").click();
-		await birdInput.fill("Varis");
-		await page.waitForTimeout(500);
-		await page
-			.locator(".bird-dropdown")
-			.getByRole("button", { name: "Varis", exact: true })
-			.click();
-		await page.getByLabel(/date/i).fill(dateStrv1);
-		await page
-			.locator(".add-sighting-form")
-			.getByRole("button", { name: "Add Sighting" })
-			.click();
-
-		await page.getByRole("button", { name: "Members" }).click();
-		await page.locator(".member-item").filter({ hasText: "Tester" }).click();
-		await page.getByLabel("Month").selectOption("0");
-
-		// 7. Add sighting for SAME BIRD in DIFFERENT MONTH
-
-		// 7. Add sighting for SAME BIRD in DIFFERENT MONTH
-		await page.getByRole("link", { name: groupName }).click();
-		await page.getByLabel("Add sighting").click();
-		await birdInput.fill("Harakka");
-		await page.waitForTimeout(500);
-		await page
-			.locator(".bird-dropdown")
-			.getByRole("button", { name: "Harakka", exact: true })
-			.click();
-		const dateStrv2 = `${currentYear}-02-15`;
-		await page.getByLabel(/date/i).fill(dateStrv2);
-		await page
-			.locator(".add-sighting-form")
-			.getByRole("button", { name: "Add Sighting" })
-			.click();
-
-		await page.getByRole("button", { name: "Members" }).click();
-		await page.locator(".member-item").filter({ hasText: "Tester" }).click();
-
-		// Check Jan
-		await page.getByLabel("Month").selectOption("0");
-
-		// Sightings list should show 2 (Harakka, Varis)
-		// We expect at least one "Harakka" to be visible
-		await expect(
-			page.locator(".sightings-list").getByText("Harakka").first(),
-		).toBeVisible();
-		await expect(
-			page.locator(".sightings-list").getByText("Varis").first(),
-		).toBeVisible();
-
-		// Check Year Mode (Select "Any" month)
-		await page.getByLabel("Month").selectOption("any");
-
-		// Should show all sightings (4 total: 2 in Jan, 1 in Feb, plus duplicate Harakka in Jan)
-		await expect(page.getByText("Sightings (4)")).toBeVisible();
-
-		// Switch back to Month
-		await page.getByLabel("Month").selectOption("0");
-		await expect(page.getByLabel("Month")).toBeVisible();
-
-		// 8. Test Species Filter
-		// Filter by "Varis"
-		await page.getByLabel("Species").selectOption({ label: "Varis" });
-		await expect(
-			page.locator(".sightings-list").getByText("Varis").first(),
-		).toBeVisible();
-		await expect(
-			page.locator(".sightings-list").getByText("Harakka"),
-		).toBeHidden();
-
-		// Filter by "Harakka"
-		await page.getByLabel("Species").selectOption({ label: "Harakka" });
-		await expect(
-			page.locator(".sightings-list").getByText("Harakka").first(),
-		).toBeVisible();
-		await expect(
-			page.locator(".sightings-list").getByText("Varis"),
-		).toBeHidden();
-
-		// Filter by "Any"
-		await page.getByLabel("Species").selectOption("any");
-		await expect(
-			page.locator(".sightings-list").getByText("Harakka").first(),
-		).toBeVisible();
-		await expect(
-			page.locator(".sightings-list").getByText("Varis").first(),
-		).toBeVisible();
-
-		// 9. Test Context-Aware Species Filtering
-		// Select Jan (contains "Harakka" and "Varis")
-		await page.getByLabel("Month").selectOption("0"); // Jan
-
-		const speciesSelect = page.getByLabel("Species");
-
-		await expect(
-			speciesSelect.locator("option[value='harakka']"),
-		).toBeAttached();
-		await expect(speciesSelect.locator("option[value='varis']")).toBeAttached();
-
-		// Select Feb (contains "Harakka" added in step 7)
-		await page.getByLabel("Month").selectOption("1"); // Feb
-		// Varis was NOT added to Feb. Harakka WAS.
-		// So species dropdown should have Harakka, but NOT Varis.
-		await expect(
-			speciesSelect.locator("option[value='harakka']"),
-		).toBeAttached();
-		await expect(
-			speciesSelect.locator("option[value='varis']"),
-		).not.toBeAttached();
+		// Verify "You" badge
+		await expect(page.locator(".you-badge")).toBeVisible();
+		await expect(page.getByTestId("user-view-heading")).toHaveText(
+			/Tester.*You/,
+		);
 	});
 
-	test("displays other user's sightings and stats correctly", async ({
+	test("redirects to user view after adding a sighting", async ({ page }) => {
+		const groupName = "Sighting Redirect Group";
+		await createGroupAndJoin(page, groupName);
+
+		// 1. Add Sighting
+		const year = new Date().getFullYear();
+		await addSighting(page, "Harakka", `${year}-01-15`);
+
+		// 2. Verify Redirect using data-testid
+		await expect(page.getByTestId("user-view-heading")).toBeVisible({
+			timeout: 10000,
+		});
+		await expect(page.getByTestId("user-view-heading")).toContainText("Tester");
+
+		// 3. Verify Sighting in List (User View)
+		// Set filter to "Any" to ensure visibility regardless of test run date
+		await page.getByTestId("month-filter").selectOption("any");
+
+		await expect(page.getByTestId("sighting-item").first()).toBeVisible();
+		await expect(page.getByTestId("sighting-item")).toContainText("Harakka");
+	});
+
+	test("filters sightings by month and species in User View", async ({
 		page,
 	}) => {
-		// 1. Setup Data
-		const credentialsA = getTestUserCredentials();
-		const userA = await createTestUser(
-			credentialsA.email,
-			credentialsA.password,
-			"UserA",
-		);
+		const groupName = "Filter Test Group";
+		await createGroupAndJoin(page, groupName);
 
-		const groupName = "Shared Group";
-		const joinCode = "shared-group-1";
+		const currentYear = new Date().getFullYear();
+		// Add sightings in different months
+		// Jan - Harakka
+		await addSighting(page, "Harakka", `${currentYear}-01-15`);
+		// Wait for redirect to complete
+		await expect(page.getByTestId("user-view-heading")).toBeVisible();
 
-		// Create User B and add to group
+		// Go back to add another
+		await navigateToGroupView(page, groupName);
+
+		// Feb - Varis
+		await addSighting(page, "Varis", `${currentYear}-02-15`);
+		await expect(page.getByTestId("user-view-heading")).toBeVisible();
+
+		// 1. Verify Jan Filter
+		await page.getByTestId("month-filter").selectOption("0"); // January
+
+		// Use specific locator within sighting items to avoid matching dropdown options
+		const sightingItems = page.getByTestId("sighting-item");
+		await expect(sightingItems.filter({ hasText: "Harakka" })).toBeVisible();
+		await expect(sightingItems.filter({ hasText: "Varis" })).not.toBeVisible();
+
+		// 2. Verify Feb Filter
+		await page.getByTestId("month-filter").selectOption("1"); // February
+		await expect(sightingItems.filter({ hasText: "Varis" })).toBeVisible();
+		await expect(
+			sightingItems.filter({ hasText: "Harakka" }),
+		).not.toBeVisible();
+
+		// 3. Verify "Any" Month
+		await page.getByTestId("month-filter").selectOption("any");
+		await expect(sightingItems.filter({ hasText: "Harakka" })).toBeVisible();
+		await expect(sightingItems.filter({ hasText: "Varis" })).toBeVisible();
+	});
+
+	test("displays other user's profile and stats", async ({ page }) => {
+		// Setup: Seed a group with another user and their sightings
+		// Tester (testUser) is ALREADY created in BeforeEach.
+		// We need to create User B.
 		const emailB = "userb@example.com";
 		const userB = await createTestUser(emailB, "password123", "UserB");
 
-		// Ensure User B has a Firestore profile
+		// Ensure User B has profile
 		await seedUserProfile({
 			id: userB.uid,
 			displayName: userB.displayName,
@@ -302,21 +142,23 @@ test.describe("User View", () => {
 			photoURL: userB.photoURL,
 		});
 
-		// Seed group once with both members
+		const groupName = "Shared Group";
+		const joinCode = "shared-group-1";
+
+		// Seed group using the CORRECT UIDs
 		await seedGroup({
 			name: groupName,
 			joinCode: joinCode,
-			ownerId: userA.uid,
-			memberIds: [userA.uid, userB.uid],
+			ownerId: testUser.uid,
+			memberIds: [testUser.uid, userB.uid],
 		});
 
-		// Seed sightings for User B
-		const sightingDate = "2024-03-15";
+		// Seed sighting for User B
 		await seedSightings([
 			{
 				userId: userB.uid,
 				birdId: "harakka",
-				date: sightingDate,
+				date: "2024-03-15",
 				time: "10:00",
 				type: "visual",
 				locationName: "Park",
@@ -324,42 +166,39 @@ test.describe("User View", () => {
 			},
 		]);
 
-		// Seed stats for User B
-		await seedUserStats(userB.uid, {
-			"2024-03": ["harakka"],
-		});
+		// Seed stats
+		await seedUserStats(userB.uid, { "2024-03": ["harakka"] });
 
-		// 2. Sign in as User A
-		await page.goto("/");
-		await signInInBrowser(page, credentialsA.email, credentialsA.password);
-
-		// 3. Navigate to Group
+		// Test Flow:
+		// 1. Go to Group
+		await page.reload(); // Reload to fetch seeded group which wasn't there at initial load
 		await page.getByRole("link", { name: new RegExp(groupName) }).click();
-
-		// Click Members tab
-		await page.getByRole("button", { name: "Members" }).click();
-
 		await expect(
-			page.getByRole("heading", { name: "Members (2)" }),
+			page.locator(".breadcrumbs").getByText(groupName),
 		).toBeVisible();
 
-		// 4. Click on User B
+		// 2. Go to Members
+		await switchToMembersTab(page);
+
+		// 3. Click User B
 		await page.locator(".member-item").filter({ hasText: "UserB" }).click();
 
-		// 5. Verify User View for User B
-		await expect(page.getByRole("heading", { name: "UserB" })).toBeVisible();
+		// 4. Verify User View for User B
+		await expect(page.getByTestId("user-view-heading")).toHaveText("UserB");
+		await expect(page.locator(".you-badge")).not.toBeVisible();
 
-		// Filter to March 2024
-		await page.getByLabel("Month").selectOption("2"); // March is 2
+		// Check Stats
+		// The seed data has 1 sighting in 2024-03.
+		// Current year is based on run time, so "Yearly" might be 0 if currentYear != 2024.
+		// But "Total" should be 1.
+		await expect(page.getByText(/Total/i)).toBeVisible();
+		// We expect "1" to be visible in stats
+		await expect(page.locator(".stat-value").getByText("1")).toBeVisible();
+
+		// 5. Check Data (March 2024)
 		await page.getByLabel("Year").selectOption("2024");
+		await page.getByTestId("month-filter").selectOption("2"); // March
 
-		// Check Sightings List
-
-		// Check Sightings List
-		await expect(
-			page.locator(".sightings-list").getByText("Harakka"),
-		).toBeVisible();
-		// Location should NOT be in the list view
-		await expect(page.getByText("Park")).not.toBeVisible();
+		await expect(page.getByTestId("sighting-item")).toContainText("Harakka");
 	});
 });

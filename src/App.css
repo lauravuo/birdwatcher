@@ -171,6 +171,34 @@ h1 {
 	margin-top: 0.2rem;
 }
 
+.you-badge {
+	font-size: 0.7rem;
+	background: #4caf50;
+	color: white;
+	padding: 0.1rem 0.4rem;
+	border-radius: 4px;
+	width: fit-content;
+	margin-top: 0.2rem;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 0.5rem;
+}
+
+.user-profile-link {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	text-decoration: none;
+	color: inherit;
+	padding: 0.25rem 0.5rem;
+	border-radius: 6px;
+	transition: background-color 0.2s;
+}
+
+.user-profile-link:hover {
+	background-color: var(--bg-hover);
+}
+
 /* Group List */
 .group-list {
 	list-style: none;
@@ -918,4 +946,59 @@ h1 {
 
 .tab-content {
 	min-height: 300px;
+}
+
+/* User Stats */
+.user-view-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 2rem;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.stats-container {
+	display: flex;
+	gap: 2rem;
+	background: var(--bg-secondary);
+	padding: 1rem 1.5rem;
+	border-radius: 12px;
+	box-shadow: var(--shadow-sm);
+	border: 1px solid var(--border-color);
+}
+
+.stat-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 80px;
+}
+
+.stat-label {
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--text-secondary);
+	margin-bottom: 0.4rem;
+	font-weight: 500;
+}
+
+.stat-value {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--accent-primary);
+	line-height: 1;
+}
+
+@media (max-width: 600px) {
+	.user-view-header {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.stats-container {
+		width: 100%;
+		justify-content: space-between;
+	}
 }

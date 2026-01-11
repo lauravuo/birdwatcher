@@ -1,7 +1,11 @@
 import { useState } from "react";
 import AddSighting from "./AddSighting";
 
-export default function AddSightingButton() {
+export default function AddSightingButton({
+	activeGroupId,
+}: {
+	activeGroupId: string;
+}) {
 	const [open, setOpen] = useState(false);
 
 	// Keyboard handler for closing dialog
@@ -48,7 +52,10 @@ export default function AddSightingButton() {
 							if (e.key === "Escape") setOpen(false);
 						}}
 					>
-						<AddSighting onSubmit={() => setOpen(false)} />
+						<AddSighting
+							activeGroupId={activeGroupId}
+							onSubmit={() => setOpen(false)}
+						/>
 					</div>
 				</div>
 			)}
