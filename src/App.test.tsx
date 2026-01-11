@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
 import App from "./App";
 import i18n from "./i18n";
@@ -26,7 +27,11 @@ describe("App", () => {
 			await i18n.init();
 		}
 
-		render(<App />);
+		render(
+			<MemoryRouter>
+				<App />
+			</MemoryRouter>,
+		);
 		await waitFor(() => {
 			const headline = screen.getByText(/Birdwatcher/i);
 			expect(headline).toBeInTheDocument();

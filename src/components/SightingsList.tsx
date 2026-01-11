@@ -67,7 +67,11 @@ export function SightingsList({
 					const birdName = t(`birds.${sighting.birdId}`);
 
 					return (
-						<li key={sighting.id} className="sighting-item">
+						<li
+							key={sighting.id}
+							className="sighting-item"
+							data-testid="sighting-item"
+						>
 							<Link
 								to={`/groups/${groupId}/members/${sighting.userId}/sightings/${sighting.id}`}
 								className="sighting-item-link"

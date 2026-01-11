@@ -1,6 +1,7 @@
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import birds from "../data/birds.json";
 import { addSighting } from "../lib/firestore";
@@ -15,9 +16,16 @@ const observationTypes = [
 	{ value: "both", label: "Both" },
 ];
 
-export default function AddSighting({ onSubmit }: { onSubmit?: () => void }) {
+export default function AddSighting({
+	activeGroupId,
+	onSubmit,
+}: {
+	activeGroupId: string;
+	onSubmit?: () => void;
+}) {
 	const { t } = useTranslation();
 	const { currentUser } = useAuth();
+	const navigate = useNavigate();
 	const [birdFilter, setBirdFilter] = useState("");
 	const [selectedBird, setSelectedBird] = useState("");
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -176,7 +184,12 @@ export default function AddSighting({ onSubmit }: { onSubmit?: () => void }) {
 			});
 			// Dispatch event to refresh sightings list
 			window.dispatchEvent(new CustomEvent("sightingAdded"));
+
+			// Small delay to ensure Firestore write is fully propagated
+			await new Promise((resolve) => setTimeout(resolve, 200));
+
 			if (onSubmit) onSubmit();
+			navigate(`/groups/${activeGroupId}/members/${currentUser.uid}`);
 		} catch (error) {
 			console.error("Failed to add sighting:", error);
 			setSubmitError(
@@ -190,7 +203,11 @@ export default function AddSighting({ onSubmit }: { onSubmit?: () => void }) {
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="add-sighting-form">
+		<form
+			onSubmit={handleSubmit}
+			className="add-sighting-form"
+			data-testid="add-sighting-form"
+		>
 			<label htmlFor="bird-input">{t("addSighting.bird")}</label>
 			<div className="bird-autocomplete">
 				<input
@@ -204,6 +221,7 @@ export default function AddSighting({ onSubmit }: { onSubmit?: () => void }) {
 					onKeyDown={handleKeyDown}
 					required
 					className="bird-input"
+					data-testid="bird-input"
 				/>
 				{isDropdownOpen && filteredBirds.length > 0 && (
 					<div ref={dropdownRef} className="bird-dropdown">
@@ -355,6 +373,7 @@ export default function AddSighting({ onSubmit }: { onSubmit?: () => void }) {
 				type="submit"
 				className="submit-button"
 				disabled={!isFormValid || isSubmitting}
+				data-testid="submit-sighting-btn"
 			>
 				{isSubmitting
 					? t("addSighting.submitting") || "Submitting..."

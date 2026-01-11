@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import type { Group, UserProfile } from "../../types";
 
 interface GroupMembersListProps {
@@ -9,6 +10,7 @@ interface GroupMembersListProps {
 
 export function GroupMembersList({ group, members }: GroupMembersListProps) {
 	const { t } = useTranslation();
+	const { currentUser } = useAuth();
 
 	return (
 		<div className="members-section">
@@ -36,6 +38,9 @@ export function GroupMembersList({ group, members }: GroupMembersListProps) {
 									<span className="member-name">{member.displayName}</span>
 									{member.id === group.ownerId && (
 										<span className="owner-badge">{t("groups.owner")}</span>
+									)}
+									{member.id === currentUser?.uid && (
+										<span className="you-badge">{t("groups.you")}</span>
 									)}
 								</div>
 							</Link>

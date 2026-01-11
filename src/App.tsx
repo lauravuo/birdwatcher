@@ -1,5 +1,12 @@
 import { useTranslation } from "react-i18next";
-import { Navigate, Route, Routes } from "react-router-dom";
+import {
+	Link,
+	matchPath,
+	Navigate,
+	Route,
+	Routes,
+	useLocation,
+} from "react-router-dom";
 import AddSightingButton from "./components/AddSightingButton";
 import { Breadcrumbs } from "./components/Breadcrumbs";
 import { GroupList } from "./components/Groups/GroupList";
@@ -8,15 +15,25 @@ import { Login } from "./components/Login";
 import { SightingDetails } from "./components/SightingDetails";
 import { UserView } from "./components/UserView";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { useUserGroups } from "./hooks/useUserGroups";
 import "./App.css";
 
 function AuthenticatedApp() {
 	const { currentUser, logout } = useAuth();
 	const { t } = useTranslation();
+	const location = useLocation();
+	const { groups } = useUserGroups();
 
 	if (!currentUser) {
 		return <Login />;
 	}
+
+	// Try to get groupId from current path
+	const match = matchPath({ path: "/groups/:groupId/*" }, location.pathname);
+	const urlGroupId = match?.params.groupId;
+
+	// Active group is either from URL or first found group
+	const activeGroupId = urlGroupId || (groups.length > 0 ? groups[0].id : null);
 
 	return (
 		<div className="app-container">
@@ -24,14 +41,24 @@ function AuthenticatedApp() {
 				<div className="header-content">
 					<h1>{t("app.title")}</h1>
 					<div className="user-info">
-						{currentUser.photoURL && (
-							<img
-								src={currentUser.photoURL}
-								alt=""
-								className="user-avatar-small"
-							/>
-						)}
-						<span>{currentUser.displayName}</span>
+						<Link
+							to={
+								activeGroupId
+									? `/groups/${activeGroupId}/members/${currentUser.uid}`
+									: "#"
+							}
+							className="user-profile-link"
+							data-testid="user-profile-link"
+						>
+							{currentUser.photoURL && (
+								<img
+									src={currentUser.photoURL}
+									alt=""
+									className="user-avatar-small"
+								/>
+							)}
+							<span>{currentUser.displayName}</span>
+						</Link>
 						<button type="button" onClick={logout} className="logout-button">
 							{t("app.logout")}
 						</button>
@@ -55,7 +82,9 @@ function AuthenticatedApp() {
 						<Route path="*" element={<Navigate to="/" replace />} />
 					</Routes>
 				</div>
-				<AddSightingButton />
+				{groups.length > 0 && activeGroupId && (
+					<AddSightingButton activeGroupId={activeGroupId} />
+				)}
 			</main>
 		</div>
 	);

@@ -2,6 +2,7 @@ import type { QueryDocumentSnapshot } from "firebase/firestore";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import { useAvailableSpecies } from "../hooks/useAvailableSpecies";
 import {
 	getUserProfile,
@@ -17,6 +18,7 @@ import { SightingsList } from "./SightingsList";
 export function UserView() {
 	const { t, i18n } = useTranslation();
 	const { userId } = useParams<{ userId: string }>();
+	const { currentUser } = useAuth();
 
 	const [user, setUser] = useState<UserProfile | null>(null);
 	const [userLoading, setUserLoading] = useState(true);
@@ -178,6 +180,15 @@ export function UserView() {
 		[user, selectedMonth, selectedYear, selectedSpecies, t],
 	);
 
+	// Listen for refresh events
+	useEffect(() => {
+		const handleRefresh = () => {
+			fetchData(true);
+		};
+		window.addEventListener("sightingAdded", handleRefresh);
+		return () => window.removeEventListener("sightingAdded", handleRefresh);
+	}, [fetchData]);
+
 	useEffect(() => {
 		if (user) {
 			fetchData(true);
@@ -205,7 +216,12 @@ export function UserView() {
 							className="user-avatar-large"
 						/>
 					)}
-					<h2>{user.displayName}</h2>
+					<h2 data-testid="user-view-heading">
+						{user.displayName}
+						{userId === currentUser?.uid && (
+							<span className="you-badge">{t("groups.you")}</span>
+						)}
+					</h2>
 				</div>
 			</div>
 
