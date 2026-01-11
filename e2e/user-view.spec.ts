@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import type { User } from "firebase/auth";
 import {
 	addSighting,
 	createGroupAndJoin,
@@ -18,7 +19,7 @@ import {
 test.describe("User View", () => {
 	const logTypes: string[] = [];
 	// Store the created test user to access their UID
-	let testUser: any;
+	let testUser: User;
 
 	test.beforeEach(async ({ page }) => {
 		// Reset logs
@@ -185,6 +186,14 @@ test.describe("User View", () => {
 		// 4. Verify User View for User B
 		await expect(page.getByTestId("user-view-heading")).toHaveText("UserB");
 		await expect(page.locator(".you-badge")).not.toBeVisible();
+
+		// Check Stats
+		// The seed data has 1 sighting in 2024-03.
+		// Current year is based on run time, so "Yearly" might be 0 if currentYear != 2024.
+		// But "Total" should be 1.
+		await expect(page.getByText(/Total/i)).toBeVisible();
+		// We expect "1" to be visible in stats
+		await expect(page.locator(".stat-value").getByText("1")).toBeVisible();
 
 		// 5. Check Data (March 2024)
 		await page.getByLabel("Year").selectOption("2024");

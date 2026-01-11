@@ -14,6 +14,7 @@ import type { UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
 import { SightingsFilter } from "./SightingsFilter";
 import { SightingsList } from "./SightingsList";
+import { UserStats } from "./UserStats";
 
 export function UserView() {
 	const { t, i18n } = useTranslation();
@@ -223,6 +224,7 @@ export function UserView() {
 						)}
 					</h2>
 				</div>
+				<UserStats stats={stats} />
 			</div>
 
 			<SightingsFilter
