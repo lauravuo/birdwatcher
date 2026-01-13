@@ -1,18 +1,26 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
-import { getSighting, getUserProfile } from "../lib/firestore";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { deleteSighting, getSighting, getUserProfile } from "../lib/firestore";
 import type { UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
+import AddSighting from "./AddSighting";
 
 export function SightingDetails() {
 	const { t, i18n } = useTranslation();
-	const { sightingId } = useParams<{ sightingId: string }>();
+	const { sightingId, groupId } = useParams<{
+		sightingId: string;
+		groupId?: string;
+	}>();
+	const { currentUser } = useAuth();
+	const navigate = useNavigate();
 
 	const [sighting, setSighting] = useState<Sighting | null>(null);
 	const [user, setUser] = useState<UserProfile | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
+	const [isEditing, setIsEditing] = useState(false);
 
 	useEffect(() => {
 		if (!sightingId) return;
@@ -82,11 +90,56 @@ export function SightingDetails() {
 		}
 	};
 
+	const handleDelete = async () => {
+		if (!sighting || !currentUser || !sighting.id) return;
+		if (window.confirm(t("common.confirmDelete"))) {
+			try {
+				await deleteSighting(sighting.id, currentUser.uid);
+				// Go back to previous page or group view
+				navigate(-1);
+			} catch (err) {
+				console.error("Failed to delete sighting", err);
+				alert(t("errors.generic"));
+			}
+		}
+	};
+
+	const handleEditSuccess = () => {
+		setIsEditing(false);
+		// Sighting updated, reload data would happen if we used a listener,
+		// or simpler: reload page to ensure fresh state
+		window.location.reload();
+	};
+
 	if (loading) return <div>{t("common.loading")}</div>;
 	if (error) return <div className="error-message">{error}</div>;
 	if (!sighting) return <div>{t("errors.sightingNotFound")}</div>;
 
 	const birdName = t(`birds.${sighting.birdId}`);
+	const isOwner = currentUser && currentUser.uid === sighting.userId;
+
+	if (isEditing) {
+		return (
+			<div className="sighting-details-container">
+				<div className="card sighting-card-large">
+					<button
+						type="button"
+						className="back-btn"
+						onClick={() => setIsEditing(false)}
+						style={{ marginBottom: "1rem" }}
+					>
+						← {t("common.cancel")}
+					</button>
+					<AddSighting
+						activeGroupId={groupId || ""}
+						onSubmit={handleEditSuccess}
+						initialSighting={sighting}
+						isEditing={true}
+					/>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="sighting-details-container">
@@ -160,6 +213,27 @@ export function SightingDetails() {
 						</div>
 					)}
 				</div>
+
+				{/* Edit/Delete Actions */}
+				{isOwner && (
+					<div className="sighting-actions" style={{ marginTop: "2rem" }}>
+						<button
+							type="button"
+							className="action-btn edit-btn"
+							onClick={() => setIsEditing(true)}
+							style={{ marginRight: "1rem" }}
+						>
+							✏️ {t("common.edit")}
+						</button>
+						<button
+							type="button"
+							className="action-btn delete-btn"
+							onClick={handleDelete}
+						>
+							🗑️ {t("common.delete")}
+						</button>
+					</div>
+				)}
 			</div>
 		</div>
 	);

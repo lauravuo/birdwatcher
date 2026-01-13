@@ -32,6 +32,7 @@ export function SightingsFilter({
 				<select
 					id="year-select"
 					className="filter-select"
+					data-testid="year-filter"
 					value={selectedYear}
 					onChange={(e) => setSelectedYear(Number(e.target.value))}
 				>

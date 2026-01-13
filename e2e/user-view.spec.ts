@@ -64,15 +64,17 @@ test.describe("User View", () => {
 		);
 	});
 
-	test("redirects to user view after adding a sighting", async ({ page }) => {
+	test("updates user view after adding a sighting", async ({ page }) => {
 		const groupName = "Sighting Redirect Group";
 		await createGroupAndJoin(page, groupName);
 
 		// 1. Add Sighting
 		const year = new Date().getFullYear();
-		await addSighting(page, "Harakka", `${year}-01-15`);
+		await addSighting(page, "Harakka", `${year}-01-01`);
 
-		// 2. Verify Redirect using data-testid
+		// 2. Navigate to User View (since modal doesn't redirect)
+		await navigateToUserView(page);
+
 		await expect(page.getByTestId("user-view-heading")).toBeVisible({
 			timeout: 10000,
 		});
@@ -92,19 +94,29 @@ test.describe("User View", () => {
 		const groupName = "Filter Test Group";
 		await createGroupAndJoin(page, groupName);
 
-		const currentYear = new Date().getFullYear();
+		// Use previous year to avoid future date issues
+		const year = new Date().getFullYear() - 1;
+
 		// Add sightings in different months
 		// Jan - Harakka
-		await addSighting(page, "Harakka", `${currentYear}-01-15`);
-		// Wait for redirect to complete
+		await addSighting(page, "Harakka", `${year}-01-15`);
+
+		// Manually navigate to User View (modal stays open/closes without redirect)
+		await navigateToUserView(page);
 		await expect(page.getByTestId("user-view-heading")).toBeVisible();
 
 		// Go back to add another
 		await navigateToGroupView(page, groupName);
 
 		// Feb - Varis
-		await addSighting(page, "Varis", `${currentYear}-02-15`);
+		await addSighting(page, "Varis", `${year}-02-15`);
+
+		// Manually navigate to User View
+		await navigateToUserView(page);
 		await expect(page.getByTestId("user-view-heading")).toBeVisible();
+
+		// Select the year we added sightings to
+		await page.getByTestId("year-filter").selectOption(String(year));
 
 		// 1. Verify Jan Filter
 		await page.getByTestId("month-filter").selectOption("0"); // January

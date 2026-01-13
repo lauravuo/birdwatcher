@@ -19,16 +19,19 @@ export async function createGroupAndJoin(
 export async function addSighting(page: Page, birdName: string, date: string) {
 	await page.getByLabel("Add sighting").click();
 
-	const birdInput = page.getByPlaceholder(/type to filter/i);
+	const birdInput = page.getByTestId("bird-input");
 	await birdInput.fill(birdName);
 	// Wait for debounce and search results
 	await page.waitForTimeout(500);
 
-	// Use more robust selector if possible, or fallback to role
 	await page
-		.locator(".bird-dropdown")
-		.getByRole("button", { name: birdName, exact: true })
+		.locator(".autocomplete-dropdown .bird-option")
+		.filter({ hasText: birdName })
+		.first()
 		.click();
+
+	// Ensure dropdown closes (selection made)
+	await expect(page.locator(".autocomplete-dropdown")).not.toBeVisible();
 
 	await page.getByLabel(/date/i).fill(date);
 
