@@ -12,7 +12,18 @@
 		"total": "Yhteensä",
 		"anonymous": "Nimetön",
 		"any": "Kaikki",
-		"species": "Laji"
+		"species": "Laji",
+		"observer": "Havaitsija",
+		"copied": "Kopioitu!",
+		"edit": "Muokkaa",
+		"delete": "Poista",
+		"save": "Tallenna",
+		"saving": "Tallennetaan...",
+		"cancel": "Peruuta",
+		"confirmDelete": "Haluatko varmasti poistaa tämän havainnon?",
+		"at": "klo",
+		"showFilters": "Näytä suodattimet",
+		"hideFilters": "Piilota suodattimet"
 	},
 	"userView": {
 		"sightings": "Havainnot",
@@ -64,7 +75,8 @@
 	},
 	"errors": {
 		"unknown": "Tuntematon virhe",
-		"groupNotFound": "Ryhmää ei löytynyt"
+		"groupNotFound": "Ryhmää ei löytynyt",
+		"sightingNotFound": "Havaintoa ei löytynyt"
 	},
 	"birds": {
 		"alli": "Alli",
@@ -429,7 +441,8 @@
 		"notesPlaceholder": "Vapaaehtoiset lisätiedot",
 		"submit": "Lisää havainto",
 		"submitting": "Lisätään...",
-		"submitError": "Havainnon lisääminen epäonnistui. Yritä uudelleen."
+		"submitError": "Havainnon lisääminen epäonnistui. Yritä uudelleen.",
+		"addSightingLabel": "Lisää havainto"
 	},
 	"groupSightings": {
 		"title": "Ryhmän havainnot",

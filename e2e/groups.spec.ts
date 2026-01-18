@@ -272,6 +272,34 @@ test.describe("Groups UI", () => {
 		expect(logTypes).not.toContain("error");
 	});
 
+	test("can toggle filters visibility in group view", async ({ page }) => {
+		const groupName = "Filter Toggle Group";
+		await createGroup(page, groupName);
+
+		// Click the group link to enter group view
+		await page.getByRole("link", { name: new RegExp(groupName) }).click();
+
+		// Click Sightings Tab
+		await page.getByRole("button", { name: "Sightings" }).click();
+
+		// Default State: Filters hidden
+		const toggleBtn = page.getByTestId("toggle-filters");
+		await expect(toggleBtn).toBeVisible();
+		await expect(toggleBtn).toHaveText("Show Filters");
+		await expect(page.locator(".filters-content")).not.toBeVisible();
+
+		// Open Filters
+		await toggleBtn.click();
+		await expect(toggleBtn).toHaveText("Hide Filters");
+		await expect(page.locator(".filters-content")).toBeVisible();
+		await expect(page.getByTestId("year-filter")).toBeVisible();
+
+		// Close Filters
+		await toggleBtn.click();
+		await expect(toggleBtn).toHaveText("Show Filters");
+		await expect(page.locator(".filters-content")).not.toBeVisible();
+	});
+
 	test("toggles between month and year view in group", async ({ page }) => {
 		const groupName = "Mode Group";
 		await createGroup(page, groupName);
@@ -353,6 +381,10 @@ test.describe("Groups UI", () => {
 		}
 
 		// Switch to Year
+		// Open filters
+		await page.getByTestId("toggle-filters").click();
+		await expect(page.locator(".filters-content")).toBeVisible();
+
 		await page.getByLabel("Month").selectOption("any");
 		await expect(page.getByLabel("Month")).toBeVisible();
 

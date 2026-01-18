@@ -171,18 +171,17 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 		};
 	}, [fetchData]);
 
-	if (loading) {
-		return <div>{t("groupSightings.loading")}</div>;
-	}
-
-	if (error) {
-		return <div className="error-message">{error}</div>;
-	}
+	// Active filter label
+	const filterLabel =
+		selectedMonth !== null
+			? `${new Date(2000, selectedMonth, 1).toLocaleDateString(i18n.language, { month: "long" })} ${selectedYear}`
+			: `${selectedYear}`;
 
 	return (
 		<div className="group-sightings-container">
 			<h3>
 				{t("groupSightings.title")} ({sightings.length})
+				<span className="active-filter-label"> - {filterLabel}</span>
 			</h3>
 
 			<div className="group-tab-card">
@@ -198,14 +197,20 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 					setSelectedSpecies={setSelectedSpecies}
 				/>
 
-				<SightingsList
-					sightings={sightings}
-					hasMore={hasMore}
-					loadingMore={loadingMore}
-					onLoadMore={() => fetchData(false)}
-					showMemberName={true}
-					members={members}
-				/>
+				{loading ? (
+					<div>{t("groupSightings.loading")}</div>
+				) : error ? (
+					<div className="error-message">{error}</div>
+				) : (
+					<SightingsList
+						sightings={sightings}
+						hasMore={hasMore}
+						loadingMore={loadingMore}
+						onLoadMore={() => fetchData(false)}
+						showMemberName={true}
+						members={members}
+					/>
+				)}
 			</div>
 		</div>
 	);

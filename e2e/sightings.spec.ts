@@ -71,17 +71,21 @@ test.describe("Sightings", () => {
 		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
 		await page.getByRole("link", { name: new RegExp(joinCode) }).click();
 
-		// Open add sighting dialog
+		// Use addSighting helper logic but we want to verify individual fields visibility first
+		// So we mostly keep manual steps but use better selectors
 		const addButton = page.getByLabel("Add sighting");
 		await addButton.click();
 
-		// Fill in bird
-		const birdInput = page.getByPlaceholder(/type to filter/i);
+		// Fill in bird using testid
+		const birdInput = page.getByTestId("bird-input");
 		await birdInput.fill("varis");
 		await page.waitForTimeout(500);
 
 		// Select bird from dropdown
-		const birdOption = page.getByText(/varis/i).first();
+		const birdOption = page
+			.locator(".autocomplete-dropdown .bird-option")
+			.filter({ hasText: /varis/i })
+			.first();
 		await expect(birdOption).toBeVisible({ timeout: 5000 });
 		await birdOption.click();
 
@@ -95,17 +99,16 @@ test.describe("Sightings", () => {
 		await expect(audialRadio).toBeChecked();
 
 		// Submit button should be enabled
-		const submitButton = page.getByRole("button", {
-			name: "Add Sighting",
-			exact: true,
-		});
+		const submitButton = page.getByTestId("submit-sighting-btn");
 		await expect(submitButton).not.toBeDisabled();
 
 		// Submit the form
 		await submitButton.click();
 
 		// Dialog should close
-		await expect(page.getByLabel(/bird/i)).not.toBeVisible({ timeout: 5000 });
+		await expect(page.getByTestId("add-sighting-form")).not.toBeVisible({
+			timeout: 5000,
+		});
 	});
 
 	test("submit button is disabled when required fields are missing", async ({
@@ -114,10 +117,7 @@ test.describe("Sightings", () => {
 		const addButton = page.getByLabel("Add sighting");
 		await addButton.click();
 
-		const submitButton = page.getByRole("button", {
-			name: "Add Sighting",
-			exact: true,
-		});
+		const submitButton = page.getByTestId("submit-sighting-btn");
 		await expect(submitButton).toBeDisabled();
 	});
 
@@ -125,14 +125,18 @@ test.describe("Sightings", () => {
 		const addButton = page.getByLabel("Add sighting");
 		await addButton.click();
 
-		const birdInput = page.getByPlaceholder(/type to filter/i);
+		// Use correct selector (testid)
+		const birdInput = page.getByTestId("bird-input");
 		await birdInput.fill("var");
 
 		// Wait for dropdown to appear
 		await page.waitForTimeout(500);
 
 		// Should show filtered results
-		const varisOption = page.getByText(/varis/i).first();
+		const varisOption = page
+			.locator(".autocomplete-dropdown .bird-option")
+			.filter({ hasText: /varis/i })
+			.first();
 		await expect(varisOption).toBeVisible({ timeout: 5000 });
 	});
 
@@ -146,17 +150,27 @@ test.describe("Sightings", () => {
 		const addButton = page.getByLabel("Add sighting");
 		await addButton.click();
 
-		const getLocationButton = page.getByRole("button", {
-			name: /get current location/i,
-		});
+		const getLocationButton = page.getByTestId("get-location-btn");
 		await getLocationButton.click();
 
-		// Wait for location to be fetched
-		await page.waitForTimeout(1000);
+		// Wait for location loading to finish
+		await expect(getLocationButton).not.toBeDisabled({ timeout: 10000 });
 
-		// Location fields should appear
-		await expect(page.getByLabel(/latitude/i)).toBeVisible({ timeout: 5000 });
-		await expect(page.getByLabel(/longitude/i)).toBeVisible();
+		// Check for error first
+		const errorMsg = page.locator(".error-message");
+		if (await errorMsg.isVisible()) {
+			console.log(
+				"Geolocation error:",
+				await errorMsg.textContent(),
+				" - This is likely an environment issue.",
+			);
+			// Do not fail the test if it's just environment setup, but ideally we fix it.
+			// For now, let's allow it to fail the proper assertion so we see it in report.
+		}
+
+		// Location fields should appear (coordinates displayed as text)
+		await expect(page.getByText("60.1699")).toBeVisible({ timeout: 5000 });
+		await expect(page.getByText("24.9384")).toBeVisible();
 	});
 
 	test("sightings list shows added sightings", async ({ page }) => {

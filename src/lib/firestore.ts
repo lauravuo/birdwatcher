@@ -274,6 +274,32 @@ export async function addSighting(
 	return sightingRef.id;
 }
 
+export async function deleteSighting(sightingId: string, userId: string) {
+	await import("firebase/firestore").then(async (fs) => {
+		await fs.deleteDoc(doc(db, "sightings", sightingId));
+	});
+	// Recalculate stats to ensure consistency (e.g. if this was unique bird for month)
+	await recalculateUserStats(userId);
+}
+
+export async function updateSighting(
+	sightingId: string,
+	sighting: Partial<Sighting> & { userId: string },
+) {
+	const sightingRef = doc(db, "sightings", sightingId);
+
+	// Filter out undefined values
+	const cleanSighting = Object.fromEntries(
+		Object.entries(sighting).filter(([_, value]) => value !== undefined),
+	);
+
+	await import("firebase/firestore").then(async (fs) => {
+		await fs.updateDoc(sightingRef, cleanSighting);
+	});
+
+	await recalculateUserStats(sighting.userId);
+}
+
 export const getGroupSightings = async (
 	memberIds: string[],
 	startDate: string, // YYYY-MM-DD

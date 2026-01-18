@@ -204,6 +204,12 @@ export function UserView() {
 		return <div className="error-message">{t("errors.userNotFound")}</div>;
 	}
 
+	// Active filter label
+	const filterLabel =
+		selectedMonth !== null
+			? `${new Date(2000, selectedMonth, 1).toLocaleDateString(i18n.language, { month: "long" })} ${selectedYear}`
+			: `${selectedYear}`;
+
 	return (
 		<div className="user-view">
 			<div className="user-view-header">
@@ -247,6 +253,7 @@ export function UserView() {
 				<div className="group-sightings-container">
 					<h3>
 						{t("userView.sightings")} ({sightings.length})
+						<span className="active-filter-label"> - {filterLabel}</span>
 					</h3>
 					<SightingsList
 						sightings={sightings}

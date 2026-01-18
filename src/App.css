@@ -73,6 +73,16 @@ h1 {
 		border-right: none;
 		box-shadow: none;
 	}
+
+	.user-profile-link span {
+		display: none;
+	}
+}
+
+.active-filter-label {
+	font-weight: 400;
+	color: var(--text-secondary);
+	font-size: 0.9em;
 }
 
 /* Group Members */
