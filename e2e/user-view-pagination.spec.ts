@@ -88,8 +88,10 @@ test.describe("User View Pagination", () => {
 		).toBeVisible();
 
 		// 5. Select correct month/year (Defaults to current, so we must switch to Jan 2024)
-		await page.getByLabel("Year").selectOption(String(year));
-		await page.getByLabel("Month").selectOption(String(month));
+		await page.getByTestId("toggle-filters").click();
+		await expect(page.locator(".filters-content")).toBeVisible();
+		await page.getByTestId("year-filter").selectOption(String(year));
+		await page.getByTestId("month-filter").selectOption(String(month));
 
 		// 6. Verify initial load (Should see top 20, newest first)
 		// Newest is s-24 (Bird: bird-24)
@@ -194,8 +196,10 @@ test.describe("User View Pagination", () => {
 		).toBeVisible();
 
 		// 5. Select correct month/year
-		await page.getByLabel("Year").selectOption(String(year));
-		await page.getByLabel("Month").selectOption(String(month));
+		await page.getByTestId("toggle-filters").click();
+		await expect(page.locator(".filters-content")).toBeVisible();
+		await page.getByTestId("year-filter").selectOption(String(year));
+		await page.getByTestId("month-filter").selectOption(String(month));
 
 		// 6. Verify sightings are loaded
 		await expect(
