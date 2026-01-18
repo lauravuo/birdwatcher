@@ -8,7 +8,7 @@ test.describe("Sightings", () => {
 		// Set language to English for tests
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");
-			window.location.reload = () => { };
+			window.location.reload = () => {};
 		});
 
 		// Clear all test data
