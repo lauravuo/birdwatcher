@@ -1,10 +1,6 @@
 import { expect, test } from "@playwright/test";
 import type { User } from "firebase/auth";
-import {
-	addSighting,
-	createGroupAndJoin,
-	switchToSightingsTab,
-} from "./helpers/actions";
+
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
 import { clearAllTestData, seedGroup } from "./helpers/firestore-helpers";
 

@@ -1,10 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
-import {
-	clearAllTestData,
-	seedGroup,
-	seedSighting,
-} from "./helpers/firestore-helpers";
+import { clearAllTestData, seedGroup } from "./helpers/firestore-helpers";
 
 test.describe("Redirection Logic", () => {
 	const groupName = "Nav Test Group";
