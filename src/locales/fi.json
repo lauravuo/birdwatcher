@@ -21,7 +21,9 @@
 		"saving": "Tallennetaan...",
 		"cancel": "Peruuta",
 		"confirmDelete": "Haluatko varmasti poistaa tämän havainnon?",
-		"at": "klo"
+		"at": "klo",
+		"showFilters": "Näytä suodattimet",
+		"hideFilters": "Piilota suodattimet"
 	},
 	"userView": {
 		"sightings": "Havainnot",

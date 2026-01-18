@@ -179,10 +179,17 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 		return <div className="error-message">{error}</div>;
 	}
 
+	// Active filter label
+	const filterLabel =
+		selectedMonth !== null
+			? `${new Date(2000, selectedMonth, 1).toLocaleDateString(i18n.language, { month: "long" })} ${selectedYear}`
+			: `${selectedYear}`;
+
 	return (
 		<div className="group-sightings-container">
 			<h3>
 				{t("groupSightings.title")} ({sightings.length})
+				<span className="active-filter-label"> - {filterLabel}</span>
 			</h3>
 
 			<div className="group-tab-card">

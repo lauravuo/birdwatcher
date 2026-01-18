@@ -163,14 +163,48 @@ button:focus-visible {
 
 /* Filters */
 .filters-container {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	display: flex;
+	flex-direction: column;
 	gap: 1rem;
 	margin-bottom: 2rem;
-	padding: 1.5rem;
+	padding: 1rem;
 	background: var(--bg-secondary);
 	border-radius: 12px;
 	border: 1px solid var(--border-color);
+}
+
+.filters-content {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	gap: 1rem;
+	width: 100%;
+	padding-top: 1rem;
+	border-top: 1px solid var(--border-color);
+}
+
+.filter-toggle {
+	width: 100%;
+	text-align: left;
+	background: transparent;
+	color: var(--text-primary);
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 0.9rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.filter-toggle::after {
+	content: "▼";
+	font-size: 0.8em;
+	transition: transform 0.2s;
+}
+
+.filter-toggle:hover {
+	color: var(--accent-primary);
 }
 
 .filter-group {

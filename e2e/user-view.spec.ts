@@ -27,7 +27,7 @@ test.describe("User View", () => {
 
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");
-			window.location.reload = () => {};
+			window.location.reload = () => { };
 		});
 
 		page.on("console", (msg) => {
@@ -81,11 +81,38 @@ test.describe("User View", () => {
 		await expect(page.getByTestId("user-view-heading")).toContainText("Tester");
 
 		// 3. Verify Sighting in List (User View)
+		// Open filters
+		await page.getByTestId("toggle-filters").click();
+
 		// Set filter to "Any" to ensure visibility regardless of test run date
 		await page.getByTestId("month-filter").selectOption("any");
 
 		await expect(page.getByTestId("sighting-item").first()).toBeVisible();
 		await expect(page.getByTestId("sighting-item")).toContainText("Harakka");
+	});
+
+	test("can toggle filters visibility", async ({ page }) => {
+		const groupName = "Toggle Test Group";
+		await createGroupAndJoin(page, groupName);
+		await navigateToUserView(page);
+
+		// Default State: Filters hidden
+		const toggleBtn = page.getByTestId("toggle-filters");
+		await expect(toggleBtn).toBeVisible();
+		await expect(toggleBtn).toHaveText("Show Filters");
+		await expect(page.locator(".filters-content")).not.toBeVisible();
+
+		// Open Filters
+		await toggleBtn.click();
+		await expect(toggleBtn).toHaveText("Hide Filters");
+		await expect(page.locator(".filters-content")).toBeVisible();
+		// Verify content (e.g., year filter) is accessible
+		await expect(page.getByTestId("year-filter")).toBeVisible();
+
+		// Close Filters
+		await toggleBtn.click();
+		await expect(toggleBtn).toHaveText("Show Filters");
+		await expect(page.locator(".filters-content")).not.toBeVisible();
 	});
 
 	test("filters sightings by month and species in User View", async ({
@@ -114,6 +141,9 @@ test.describe("User View", () => {
 		// Manually navigate to User View
 		await navigateToUserView(page);
 		await expect(page.getByTestId("user-view-heading")).toBeVisible();
+
+		// Open filters
+		await page.getByTestId("toggle-filters").click();
 
 		// Select the year we added sightings to
 		await page.getByTestId("year-filter").selectOption(String(year));
@@ -208,6 +238,9 @@ test.describe("User View", () => {
 		await expect(page.locator(".stat-value").getByText("1")).toBeVisible();
 
 		// 5. Check Data (March 2024)
+		// Open filters
+		await page.getByTestId("toggle-filters").click();
+
 		await page.getByLabel("Year").selectOption("2024");
 		await page.getByTestId("month-filter").selectOption("2"); // March
 

@@ -21,7 +21,9 @@
 		"saving": "Saving...",
 		"cancel": "Cancel",
 		"confirmDelete": "Are you sure you want to delete this sighting?",
-		"at": "at"
+		"at": "at",
+		"showFilters": "Show Filters",
+		"hideFilters": "Hide Filters"
 	},
 	"userView": {
 		"sightings": "Sightings",
