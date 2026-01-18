@@ -422,6 +422,7 @@
 		"vuoriuunilintu": "Vuoriuunilintu"
 	},
 	"addSighting": {
+		"title": "Add Sighting",
 		"bird": "Bird",
 		"filterBird": "Type to filter birds...",
 		"selectBird": "Select a bird",

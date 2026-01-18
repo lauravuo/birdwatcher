@@ -25,13 +25,13 @@ export async function addSighting(page: Page, birdName: string, date: string) {
 	await page.waitForTimeout(500);
 
 	await page
-		.locator(".autocomplete-dropdown .bird-option")
+		.locator(".bird-dropdown .bird-option")
 		.filter({ hasText: birdName })
 		.first()
 		.click();
 
 	// Ensure dropdown closes (selection made)
-	await expect(page.locator(".autocomplete-dropdown")).not.toBeVisible();
+	await expect(page.locator(".bird-dropdown")).not.toBeVisible();
 
 	await page.getByLabel(/date/i).fill(date);
 

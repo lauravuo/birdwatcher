@@ -76,7 +76,7 @@ test.describe("Sighting Modification (Edit/Delete)", () => {
 
 		// Select from dropdown
 		await page
-			.locator(".autocomplete-dropdown .bird-option")
+			.locator(".bird-dropdown .bird-option")
 			.filter({ hasText: newBirdName })
 			.first()
 			.click();

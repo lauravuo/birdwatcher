@@ -35,7 +35,7 @@ test.describe("Redirection Logic", () => {
 		const birdInput = page.getByTestId("bird-input");
 		await birdInput.click();
 		await birdInput.fill("Harakka");
-		await page.locator(".autocomplete-dropdown .bird-option").first().click();
+		await page.locator(".bird-dropdown .bird-option").first().click();
 		await page
 			.locator("#date-input")
 			.fill(new Date().toISOString().split("T")[0]);

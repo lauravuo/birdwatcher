@@ -83,7 +83,7 @@ test.describe("Sightings", () => {
 
 		// Select bird from dropdown
 		const birdOption = page
-			.locator(".autocomplete-dropdown .bird-option")
+			.locator(".bird-dropdown .bird-option")
 			.filter({ hasText: /varis/i })
 			.first();
 		await expect(birdOption).toBeVisible({ timeout: 5000 });
@@ -134,7 +134,7 @@ test.describe("Sightings", () => {
 
 		// Should show filtered results
 		const varisOption = page
-			.locator(".autocomplete-dropdown .bird-option")
+			.locator(".bird-dropdown .bird-option")
 			.filter({ hasText: /varis/i })
 			.first();
 		await expect(varisOption).toBeVisible({ timeout: 5000 });

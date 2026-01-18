@@ -211,7 +211,7 @@ export default function AddSighting({
 				{/* Bird Selection */}
 				<div className="form-group">
 					<label htmlFor="bird-input">{t("addSighting.bird")}</label>
-					<div className="autocomplete-wrapper">
+					<div className="bird-autocomplete">
 						<input
 							id="bird-input"
 							ref={inputRef}
@@ -226,7 +226,7 @@ export default function AddSighting({
 							data-testid="bird-input"
 						/>
 						{isDropdownOpen && filteredBirds.length > 0 && (
-							<ul className="autocomplete-dropdown" ref={dropdownRef}>
+							<ul className="bird-dropdown" ref={dropdownRef}>
 								{filteredBirds.map((bird, index) => (
 									<li
 										key={bird.id}
@@ -302,14 +302,6 @@ export default function AddSighting({
 				<div className="form-group">
 					<label htmlFor="location-input">{t("addSighting.location")}</label>
 					<div className="location-inputs">
-						<input
-							id="location-input"
-							type="text"
-							value={locationName}
-							onChange={(e) => setLocationName(e.target.value)}
-							placeholder={t("addSighting.locationNamePlaceholder")}
-							className="form-input"
-						/>
 						<button
 							type="button"
 							onClick={handleGetLocation}
@@ -318,7 +310,9 @@ export default function AddSighting({
 							data-testid="get-location-btn"
 							title={t("addSighting.getCurrentLocation")}
 						>
-							📍
+							{isGettingLocation
+								? t("addSighting.gettingLocation")
+								: t("addSighting.getCurrentLocation")}
 						</button>
 					</div>
 					{locationError && (
