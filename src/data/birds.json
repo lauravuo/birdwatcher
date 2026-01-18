@@ -1,1001 +1,1667 @@
 [
 	{
-		"id": "alli"
+		"id": "alli",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Alli",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Long-tailed-duck_%28cropped%29.jpg/640px-Long-tailed-duck_%28cropped%29.jpg"
 	},
 	{
-		"id": "allihaahka"
+		"id": "allihaahka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Allihaahka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Polysticta_stelleri_-Iceland_-swimming-8_%282%29.jpg/640px-Polysticta_stelleri_-Iceland_-swimming-8_%282%29.jpg"
 	},
 	{
-		"id": "alppirautiainen"
+		"id": "alppirautiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Alppirautiainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Accenteur_alpin_-_Mont_Caume_-_d%C3%A9cembre_2019.jpg/640px-Accenteur_alpin_-_Mont_Caume_-_d%C3%A9cembre_2019.jpg"
 	},
 	{
-		"id": "amerikanhaapana"
+		"id": "amerikanhaapana",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Amerikanhaapana",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/American_Wigeon_pair.JPG/640px-American_Wigeon_pair.JPG"
 	},
 	{
-		"id": "amerikantavi"
+		"id": "amerikantavi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Amerikantavi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Anas_carolinensis_FWS.jpg/640px-Anas_carolinensis_FWS.jpg"
 	},
 	{
-		"id": "ampuhaukka"
+		"id": "ampuhaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Ampuhaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Falco_columbarius_Male.jpg/640px-Falco_columbarius_Male.jpg"
 	},
 	{
-		"id": "aroharmaalokki"
+		"id": "aroharmaalokki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Aroharmaalokki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Larus_cachinnans_PKCS_2015-08-06_Amble%2C_Northumberland_1.jpg/640px-Larus_cachinnans_PKCS_2015-08-06_Amble%2C_Northumberland_1.jpg"
 	},
 	{
-		"id": "arokotka"
+		"id": "arokotka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Arokotka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/20191213_Aquila_nipalensis%2C_Jor_Beed_Bird_Sanctuary%2C_Bikaner_0927_8280.jpg/640px-20191213_Aquila_nipalensis%2C_Jor_Beed_Bird_Sanctuary%2C_Bikaner_0927_8280.jpg"
 	},
 	{
-		"id": "arosuohaukka"
+		"id": "arosuohaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Arosuohaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Circus_macrourus_roosting_in_little_rann_of_kutch.JPG/640px-Circus_macrourus_roosting_in_little_rann_of_kutch.JPG"
 	},
 	{
-		"id": "avosetti"
+		"id": "avosetti",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Avosetti",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Recurvirostra_avosetta_-_Zoo_Frankfurt_4.jpg/640px-Recurvirostra_avosetta_-_Zoo_Frankfurt_4.jpg"
 	},
 	{
-		"id": "eskimohanhi"
+		"id": "eskimohanhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Eskimohanhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Ross%27s_Goose_RWD.jpg/640px-Ross%27s_Goose_RWD.jpg"
 	},
 	{
-		"id": "etelanharmaalokki"
+		"id": "etelanharmaalokki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Etel%C3%A4nharmaalokki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/2004-04-10_Larus_michahellis_ad.jpg/640px-2004-04-10_Larus_michahellis_ad.jpg"
 	},
 	{
-		"id": "etelankiisla"
+		"id": "etelankiisla",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Etel%C3%A4nkiisla",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Uria_aalge7.jpg/640px-Uria_aalge7.jpg"
 	},
 	{
-		"id": "etelansatakieli"
+		"id": "etelansatakieli",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Etel%C3%A4nsatakieli",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Luscinia_megarhynchos_-_01_%28cropped%29.jpg/640px-Luscinia_megarhynchos_-_01_%28cropped%29.jpg"
 	},
 	{
-		"id": "fasaani"
+		"id": "fasaani",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Fasaani",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Phasianus_colchicus_2_tom_%28Lukasz_Lukasik%29.jpg/640px-Phasianus_colchicus_2_tom_%28Lukasz_Lukasik%29.jpg"
 	},
 	{
-		"id": "haahka"
+		"id": "haahka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Haahka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Somateria_mollissima_male_female.jpg/640px-Somateria_mollissima_male_female.jpg"
 	},
 	{
-		"id": "haapana"
+		"id": "haapana",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Haapana",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Haapanat.jpg/640px-Haapanat.jpg"
 	},
 	{
-		"id": "haarahaukka"
+		"id": "haarahaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Haarahaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Milvus_migrans_govinda.jpg/640px-Milvus_migrans_govinda.jpg"
 	},
 	{
-		"id": "haarapaasky"
+		"id": "haarapaasky",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Haarap%C3%A4%C3%A4sky",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/%D0%94%D0%B5%D1%80%D0%B5%D0%B2%D0%B5%D0%BD%D1%81%D0%BA%D0%B0%D1%8F_%D0%BB%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B0_%28Hirundo_rustica%29%2C_%D0%9C%D0%B5%D0%BB%D0%B8%D1%85%D0%BE%D0%B2%D0%BE.jpg/640px-%D0%94%D0%B5%D1%80%D0%B5%D0%B2%D0%B5%D0%BD%D1%81%D0%BA%D0%B0%D1%8F_%D0%BB%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B0_%28Hirundo_rustica%29%2C_%D0%9C%D0%B5%D0%BB%D0%B8%D1%85%D0%BE%D0%B2%D0%BE.jpg"
 	},
 	{
-		"id": "harakka"
+		"id": "harakka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Harakka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Sroka_Pica_Pica_II.jpg/640px-Sroka_Pica_Pica_II.jpg"
 	},
 	{
-		"id": "harjalintu"
+		"id": "harjalintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Harjalintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Hoopoe_at_Rajaji_NP_%28cropped%29.jpg/640px-Hoopoe_at_Rajaji_NP_%28cropped%29.jpg"
 	},
 	{
-		"id": "harkalintu"
+		"id": "harkalintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/H%C3%A4rk%C3%A4lintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Podiceps_grisegena_%2833665871935%29.jpg/640px-Podiceps_grisegena_%2833665871935%29.jpg"
 	},
 	{
-		"id": "harmaahaikara"
+		"id": "harmaahaikara",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Harmaahaikara",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Grey_heron%2C_Schwetzingen%2C_Germany%2C_2017.jpg/640px-Grey_heron%2C_Schwetzingen%2C_Germany%2C_2017.jpg"
 	},
 	{
-		"id": "harmaalokki"
+		"id": "harmaalokki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Harmaalokki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Seagull1.jpg/640px-Seagull1.jpg"
 	},
 	{
-		"id": "harmaapaatikka"
+		"id": "harmaapaatikka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Harmaap%C3%A4%C3%A4tikka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/%D0%A1%D0%B5%D0%B4%D0%BE%D0%B9_%D0%B4%D1%8F%D1%82%D0%B5%D0%BB_%D1%83_%D0%B1%D0%BE%D0%BB%D0%BE%D1%82%D0%B0_%D1%80%D0%B5%D1%87%D0%BA%D0%B8_%D0%97%D0%B8%D0%BC%D1%91%D0%BD%D0%BA%D0%B8.jpg/640px-%D0%A1%D0%B5%D0%B4%D0%BE%D0%B9_%D0%B4%D1%8F%D1%82%D0%B5%D0%BB_%D1%83_%D0%B1%D0%BE%D0%BB%D0%BE%D1%82%D0%B0_%D1%80%D0%B5%D1%87%D0%BA%D0%B8_%D0%97%D0%B8%D0%BC%D1%91%D0%BD%D0%BA%D0%B8.jpg"
 	},
 	{
-		"id": "harmaasieppo"
+		"id": "harmaasieppo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Harmaasieppo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/SpottedFlycatcheronfence.jpg/640px-SpottedFlycatcheronfence.jpg"
 	},
 	{
-		"id": "harmaasirkku"
+		"id": "harmaasirkku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Harmaasirkku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Emberiza_calandra_-Jardin_des_Plantes%2C_Paris%2C_France-8.jpg/640px-Emberiza_calandra_-Jardin_des_Plantes%2C_Paris%2C_France-8.jpg"
 	},
 	{
-		"id": "harmaasorsa"
+		"id": "harmaasorsa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Harmaasorsa",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Anas_strepera_pair.jpg/640px-Anas_strepera_pair.jpg"
 	},
 	{
-		"id": "heinakurppa"
+		"id": "heinakurppa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Hein%C3%A4kurppa",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Greatsnipe_1000_%28cropped%29.jpg/640px-Greatsnipe_1000_%28cropped%29.jpg"
 	},
 	{
-		"id": "heinatavi"
+		"id": "heinatavi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Hein%C3%A4tavi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Anas_querquedula%2C_Viladecans%2C_Catalunya%2C_Spain_1.jpg/640px-Anas_querquedula%2C_Viladecans%2C_Catalunya%2C_Spain_1.jpg"
 	},
 	{
-		"id": "helmipollo"
+		"id": "helmipollo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Helmip%C3%B6ll%C3%B6",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Boreal_Owl_%28Aegolius_funereus%29_-_Flickr_-_gilgit2.jpg/640px-Boreal_Owl_%28Aegolius_funereus%29_-_Flickr_-_gilgit2.jpg"
 	},
 	{
-		"id": "hemppo"
+		"id": "hemppo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Hemppo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Carduelis_cannabina_-England_-male-8.jpg/640px-Carduelis_cannabina_-England_-male-8.jpg"
 	},
 	{
-		"id": "hernekerttu"
+		"id": "hernekerttu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Hernekerttu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/%D0%A1%D0%BB%D0%B0%D0%B2%D0%BA%D0%B0-%D0%B7%D0%B0%D0%B2%D0%B8%D1%80%D1%83%D1%88%D0%BA%D0%B0%2C_%D0%B8%D0%BB%D0%B8_%D1%81%D0%BB%D0%B0%D0%B2%D0%BA%D0%B0-%D0%BC%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D1%87%D0%B5%D0%BA_%28Sylvia_curruca%29.jpg/640px-%D0%A1%D0%BB%D0%B0%D0%B2%D0%BA%D0%B0-%D0%B7%D0%B0%D0%B2%D0%B8%D1%80%D1%83%D1%88%D0%BA%D0%B0%2C_%D0%B8%D0%BB%D0%B8_%D1%81%D0%BB%D0%B0%D0%B2%D0%BA%D0%B0-%D0%BC%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D1%87%D0%B5%D0%BA_%28Sylvia_curruca%29.jpg"
 	},
 	{
-		"id": "hiirihaukka"
+		"id": "hiirihaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Hiirihaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Buteo_buteo_-Scotland-8.jpg/640px-Buteo_buteo_-Scotland-8.jpg"
 	},
 	{
-		"id": "hiiripollo"
+		"id": "hiiripollo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Hiirip%C3%B6ll%C3%B6",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/V%C3%B6%C3%B6tkakk_%28cropped%29.jpg/640px-V%C3%B6%C3%B6tkakk_%28cropped%29.jpg"
 	},
 	{
-		"id": "hippiainen"
+		"id": "hippiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Hippi%C3%A4inen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/%D0%97%D0%BE%D0%BB%D0%BE%D1%82%D0%BE%D0%BC%D1%83%D1%88%D0%BA%D0%B0_%D0%B6%D0%BE%D0%B2%D1%82%D0%BE%D1%87%D1%83%D0%B1%D0%B0_%28%D0%B0%D0%BD%D0%B3%D0%BB._Goldcrest%3B_%D0%BB%D0%B0%D1%82._Regulus_regulus%29.jpg/640px-%D0%97%D0%BE%D0%BB%D0%BE%D1%82%D0%BE%D0%BC%D1%83%D1%88%D0%BA%D0%B0_%D0%B6%D0%BE%D0%B2%D1%82%D0%BE%D1%87%D1%83%D0%B1%D0%B0_%28%D0%B0%D0%BD%D0%B3%D0%BB._Goldcrest%3B_%D0%BB%D0%B0%D1%82._Regulus_regulus%29.jpg"
 	},
 	{
-		"id": "hippiaisuunilintu"
+		"id": "hippiaisuunilintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Hippi%C3%A4isuunilintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/20070304%E8%B4%B5%E9%98%B3-%E9%BB%84%E8%85%B0%E6%9F%B3%E8%8E%BA.jpg/640px-20070304%E8%B4%B5%E9%98%B3-%E9%BB%84%E8%85%B0%E6%9F%B3%E8%8E%BA.jpg"
 	},
 	{
-		"id": "homotiainen"
+		"id": "homotiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/H%C3%B6m%C3%B6tiainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Poecile_Montanus_Kittila_20120307.JPG/640px-Poecile_Montanus_Kittila_20120307.JPG"
 	},
 	{
-		"id": "huuhkaja"
+		"id": "huuhkaja",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Huuhkaja",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Bubo_bubo_sibiricus_-_01.JPG/640px-Bubo_bubo_sibiricus_-_01.JPG"
 	},
 	{
-		"id": "idanmehilaishaukka"
+		"id": "idanmehilaishaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Id%C3%A4nmehil%C3%A4ishaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Oriental_honey_buzzard_Mudumalai_Mar21_DSC01405.jpg/640px-Oriental_honey_buzzard_Mudumalai_Mar21_DSC01405.jpg"
 	},
 	{
-		"id": "idanpikkusieppo"
+		"id": "idanpikkusieppo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Id%C3%A4npikkusieppo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Red-throated_or_Taiga_Flycatcher_female_by_Dr._Raju_Kasambe_DSCN4790_%288%29.jpg/640px-Red-throated_or_Taiga_Flycatcher_female_by_Dr._Raju_Kasambe_DSCN4790_%288%29.jpg"
 	},
 	{
-		"id": "idanuunilintu"
+		"id": "idanuunilintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Id%C3%A4nuunilintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Greenish_Warbler_%28Phylloscopus_trochiloides%29_%2851194051728%29.jpg/640px-Greenish_Warbler_%28Phylloscopus_trochiloides%29_%2851194051728%29.jpg"
 	},
 	{
-		"id": "isohaarahaukka"
+		"id": "isohaarahaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Isohaarahaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Milvus_milvus_R%28ThKraft%29.jpg/640px-Milvus_milvus_R%28ThKraft%29.jpg"
 	},
 	{
-		"id": "isokapylintu"
+		"id": "isokapylintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Isok%C3%A4pylintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Loxia_pytyopsittacus%2C_Budby_Common_3.jpg/640px-Loxia_pytyopsittacus%2C_Budby_Common_3.jpg"
 	},
 	{
-		"id": "isokoskelo"
+		"id": "isokoskelo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Isokoskelo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Gaensesaeger.jpg/640px-Gaensesaeger.jpg"
 	},
 	{
-		"id": "isolepinkainen"
+		"id": "isolepinkainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Isolepink%C3%A4inen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/%D0%A1%D1%96%D1%80%D0%B8%D0%B9_%D1%81%D0%BE%D1%80%D0%BE%D0%BA%D0%BE%D0%BF%D1%83%D0%B4.jpg/640px-%D0%A1%D1%96%D1%80%D0%B8%D0%B9_%D1%81%D0%BE%D1%80%D0%BE%D0%BA%D0%BE%D0%BF%D1%83%D0%B4.jpg"
 	},
 	{
-		"id": "isolokki"
+		"id": "isolokki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Isolokki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Grote-burgemeester-3_%2828569608651%29.jpg/640px-Grote-burgemeester-3_%2828569608651%29.jpg"
 	},
 	{
-		"id": "isosirri"
+		"id": "isosirri",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Isosirri",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Calidris_canutus_2_-_Boat_Harbour.jpg/640px-Calidris_canutus_2_-_Boat_Harbour.jpg"
 	},
 	{
-		"id": "jaakuikka"
+		"id": "jaakuikka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/J%C3%A4%C3%A4kuikka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Yellow-billed_Loon_Chipp_South_8-12-13_Ryan_Askren.jpg/640px-Yellow-billed_Loon_Chipp_South_8-12-13_Ryan_Askren.jpg"
 	},
 	{
-		"id": "jaalokki"
+		"id": "jaalokki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/J%C3%A4%C3%A4lokki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Pagophila_eburnea-USFWS.jpg/640px-Pagophila_eburnea-USFWS.jpg"
 	},
 	{
-		"id": "jalohaikara"
+		"id": "jalohaikara",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Jalohaikara",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Ardea_alba_003.jpg/640px-Ardea_alba_003.jpg"
 	},
 	{
-		"id": "jankakurppa"
+		"id": "jankakurppa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/J%C3%A4nk%C3%A4kurppa",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Lymnocryptes_minimus.jpg/640px-Lymnocryptes_minimus.jpg"
 	},
 	{
-		"id": "jankasirriainen"
+		"id": "jankasirriainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/J%C3%A4nk%C3%A4sirri%C3%A4inen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Broad-billed_sandpiper.jpg/640px-Broad-billed_sandpiper.jpg"
 	},
 	{
-		"id": "jarripeippo"
+		"id": "jarripeippo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/J%C3%A4rripeippo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Fringilla_montifringilla_male.JPG/640px-Fringilla_montifringilla_male.JPG"
 	},
 	{
-		"id": "jouhisorsa"
+		"id": "jouhisorsa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Jouhisorsa",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Anas_acuta_FWS.jpg/640px-Anas_acuta_FWS.jpg"
 	},
 	{
-		"id": "kaakkuri"
+		"id": "kaakkuri",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kaakkuri",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Gavia_stellata_-Iceland_-swimming-8.jpg/640px-Gavia_stellata_-Iceland_-swimming-8.jpg"
 	},
 	{
-		"id": "kaenpiika"
+		"id": "kaenpiika",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/K%C3%A4enpiika",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Jynx_torquilla_%D0%BA%D1%80%D1%83%D1%82%D0%B8%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BA%D0%B0.jpg/640px-Jynx_torquilla_%D0%BA%D1%80%D1%83%D1%82%D0%B8%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BA%D0%B0.jpg"
 	},
 	{
-		"id": "kaitanokkalokki"
+		"id": "kaitanokkalokki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kaitanokkalokki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Larus_genei.jpg/640px-Larus_genei.jpg"
 	},
 	{
-		"id": "kaki"
+		"id": "kaki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/K%C3%A4ki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Cuculus_canorus2.jpg/640px-Cuculus_canorus2.jpg"
 	},
 	{
-		"id": "kalalokki"
+		"id": "kalalokki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kalalokki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Larus_canus_Common_Gull_in_Norway.jpg/640px-Larus_canus_Common_Gull_in_Norway.jpg"
 	},
 	{
-		"id": "kalatiira"
+		"id": "kalatiira",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kalatiira",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Sterna_hirundo_%28adult%29.jpg/640px-Sterna_hirundo_%28adult%29.jpg"
 	},
 	{
-		"id": "kalliopaasky"
+		"id": "kalliopaasky",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kalliop%C3%A4%C3%A4sky",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Ptyonoprogne_rupestris_-Alcobaca%2C_Portugal_-perching_on_roof.jpg/640px-Ptyonoprogne_rupestris_-Alcobaca%2C_Portugal_-perching_on_roof.jpg"
 	},
 	{
-		"id": "kanadanhanhi"
+		"id": "kanadanhanhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kanadanhanhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Canada-Goose-Szmurlo.jpg/640px-Canada-Goose-Szmurlo.jpg"
 	},
 	{
-		"id": "kanahaukka"
+		"id": "kanahaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kanahaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Northern_Goshawk_ad_M2.jpg/640px-Northern_Goshawk_ad_M2.jpg"
 	},
 	{
-		"id": "kangaskiuru"
+		"id": "kangaskiuru",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kangaskiuru",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/%C5%A0kovr%C3%A1nok_stromov%C3%BD_%28Lullula_arborea%29_2.jpg/640px-%C5%A0kovr%C3%A1nok_stromov%C3%BD_%28Lullula_arborea%29_2.jpg"
 	},
 	{
-		"id": "kapustarinta"
+		"id": "kapustarinta",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kapustarinta",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Kapustarinta.jpg/640px-Kapustarinta.jpg"
 	},
 	{
-		"id": "kapytikka"
+		"id": "kapytikka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/K%C3%A4pytikka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Dendrocopos_major%2C_female_and_male.jpg/640px-Dendrocopos_major%2C_female_and_male.jpg"
 	},
 	{
-		"id": "karikukko"
+		"id": "karikukko",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Karikukko",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Arenaria_interpres_%28habitus%29.jpg/640px-Arenaria_interpres_%28habitus%29.jpg"
 	},
 	{
-		"id": "karimetso"
+		"id": "karimetso",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Karimetso",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Phalacrocorax_aristotelis_desmarestii.jpg/640px-Phalacrocorax_aristotelis_desmarestii.jpg"
 	},
 	{
-		"id": "kattohaikara"
+		"id": "kattohaikara",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kattohaikara",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/%D0%90%D0%B8%D1%81%D1%82%D1%8B_%D0%BD%D0%B0_%D0%B3%D0%BD%D0%B5%D0%B7%D0%B4%D0%B5_%28Ciconia_ciconia%29.jpg/640px-%D0%90%D0%B8%D1%81%D1%82%D1%8B_%D0%BD%D0%B0_%D0%B3%D0%BD%D0%B5%D0%B7%D0%B4%D0%B5_%28Ciconia_ciconia%29.jpg"
 	},
 	{
-		"id": "kaulushaikara"
+		"id": "kaulushaikara",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kaulushaikara",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Botaurus_stellaris_%28Marek_Szczepanek%29.jpg/640px-Botaurus_stellaris_%28Marek_Szczepanek%29.jpg"
 	},
 	{
-		"id": "kehraaja"
+		"id": "kehraaja",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kehr%C3%A4%C3%A4j%C3%A4",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Paukstelis.jpg/640px-Paukstelis.jpg"
 	},
 	{
-		"id": "keltahemppo"
+		"id": "keltahemppo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Keltahemppo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Serinus_serinus_1_%28Martin_Mecnarowski%29.jpg/640px-Serinus_serinus_1_%28Martin_Mecnarowski%29.jpg"
 	},
 	{
-		"id": "keltajalkaviklo"
+		"id": "keltajalkaviklo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Keltajalkaviklo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Lesser_Yellowlegs_%2851020949637%29.jpg/640px-Lesser_Yellowlegs_%2851020949637%29.jpg"
 	},
 	{
-		"id": "keltasirkku"
+		"id": "keltasirkku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Keltasirkku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Emberiza_citrinella.jpg/640px-Emberiza_citrinella.jpg"
 	},
 	{
-		"id": "keltavastarakki"
+		"id": "keltavastarakki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Keltav%C3%A4st%C3%A4r%C3%A4kki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Motacilla_flava_Oulu_20140623_01.JPG/640px-Motacilla_flava_Oulu_20140623_01.JPG"
 	},
 	{
-		"id": "kerakurmitsa"
+		"id": "kerakurmitsa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Ker%C3%A4kurmitsa",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Charadrius_morinellus_male.jpg/640px-Charadrius_morinellus_male.jpg"
 	},
 	{
-		"id": "kesykyyhkypulu"
+		"id": "kesykyyhky",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/kesykyyhky",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Columba_Livia_from_Finland-1.jpg/640px-Columba_Livia_from_Finland-1.jpg"
 	},
 	{
-		"id": "kettusirkku"
+		"id": "kettusirkku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kettusirkku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Fox_sparrow_in_Central_Park_%2811050%29.jpg/640px-Fox_sparrow_in_Central_Park_%2811050%29.jpg"
 	},
 	{
-		"id": "kiiruna"
+		"id": "kiiruna",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kiiruna_(lintu)",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Lagopus_muta_%28Bernese_Oberland%29.jpg/640px-Lagopus_muta_%28Bernese_Oberland%29.jpg"
 	},
 	{
-		"id": "kiljuhanhi"
+		"id": "kiljuhanhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kiljuhanhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Fj%C3%A4llg%C3%A5s%2C_S%C3%A4tunaviken%2C_%C3%96sterg%C3%B6tland%2C_April_2017_1.jpg/640px-Fj%C3%A4llg%C3%A5s%2C_S%C3%A4tunaviken%2C_%C3%96sterg%C3%B6tland%2C_April_2017_1.jpg"
 	},
 	{
-		"id": "kiljukotka"
+		"id": "kiljukotka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kiljukotka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Greater_spotted_eagle.jpg/640px-Greater_spotted_eagle.jpg"
 	},
 	{
-		"id": "kirjokerttu"
+		"id": "kirjokerttu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kirjokerttu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Barred_Warbler_-_Hortobagy_-_Hungary_282_%2818677066453%29.jpg/640px-Barred_Warbler_-_Hortobagy_-_Hungary_282_%2818677066453%29.jpg"
 	},
 	{
-		"id": "kirjosieppo"
+		"id": "kirjosieppo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kirjosieppo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Svarthvitfluesnapper_hann_%28cropped%29.JPG/640px-Svarthvitfluesnapper_hann_%28cropped%29.JPG"
 	},
 	{
-		"id": "kirjosiipikapylintu"
+		"id": "kirjosiipikapylintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kirjosiipik%C3%A4pylintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Whitewingedcrossbillmale09.jpg/640px-Whitewingedcrossbillmale09.jpg"
 	},
 	{
-		"id": "kiuru"
+		"id": "kiuru",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kiuru",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Alauda_arvensis_2.jpg/640px-Alauda_arvensis_2.jpg"
 	},
 	{
-		"id": "kivitasku"
+		"id": "kivitasku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kivitasku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Steinschmaetzer_Northern_wheatear_male.jpg/640px-Steinschmaetzer_Northern_wheatear_male.jpg"
 	},
 	{
-		"id": "korppi"
+		"id": "korppi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Korppi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Corvus_corax_%28FWS%29.jpg/640px-Corvus_corax_%28FWS%29.jpg"
 	},
 	{
-		"id": "koskikara"
+		"id": "koskikara",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Koskikara",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Cinclus_cinclus_R%28ThKraft%29.jpg/640px-Cinclus_cinclus_R%28ThKraft%29.jpg"
 	},
 	{
-		"id": "kottarainen"
+		"id": "kottarainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kottarainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Bird_%2826576011703%29.jpg/640px-Bird_%2826576011703%29.jpg"
 	},
 	{
-		"id": "kuhankeittaja"
+		"id": "kuhankeittaja",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kuhankeitt%C3%A4j%C3%A4",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Loriot_d%27Europe_by_Michel_Idre.jpg/640px-Loriot_d%27Europe_by_Michel_Idre.jpg"
 	},
 	{
-		"id": "kuikka"
+		"id": "kuikka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kuikka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Black-throated_Diver%2C_Oulu%2C_Finland_02_%2815195370798%29.jpg/640px-Black-throated_Diver%2C_Oulu%2C_Finland_02_%2815195370798%29.jpg"
 	},
 	{
-		"id": "kulorastas"
+		"id": "kulorastas",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kulorastas",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Turdus_viscivorus_1.jpg/640px-Turdus_viscivorus_1.jpg"
 	},
 	{
-		"id": "kultarinta"
+		"id": "kultarinta",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kultarinta",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Hippolais_icterina2.jpg/640px-Hippolais_icterina2.jpg"
 	},
 	{
-		"id": "kultasirkku"
+		"id": "kultasirkku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kultasirkku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/EmberizaAureolaM.jpg/640px-EmberizaAureolaM.jpg"
 	},
 	{
-		"id": "kuningaskalastaja"
+		"id": "kuningaskalastaja",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kuningaskalastaja",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Alcedo_atthis_1_tb.jpg/640px-Alcedo_atthis_1_tb.jpg"
 	},
 	{
-		"id": "kuovi"
+		"id": "kuovi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kuovi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Eurasian_Curlew.jpg/640px-Eurasian_Curlew.jpg"
 	},
 	{
-		"id": "kuovisirri"
+		"id": "kuovisirri",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kuovisirri",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Curlew_Sandpiper_%28Calidris_ferruginea%29_%2836289503056%29.jpg/640px-Curlew_Sandpiper_%28Calidris_ferruginea%29_%2836289503056%29.jpg"
 	},
 	{
-		"id": "kurki"
+		"id": "kurki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kurki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Grus_grus_2_%28Marek_Szczepanek%29.jpg/640px-Grus_grus_2_%28Marek_Szczepanek%29.jpg"
 	},
 	{
-		"id": "kurnuliejukana"
+		"id": "kurnuliejukana",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kurnuliejukana",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Porphyrio_alleni_Martien_Brand.jpg/640px-Porphyrio_alleni_Martien_Brand.jpg"
 	},
 	{
-		"id": "kuukkeli"
+		"id": "kuukkeli",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kuukkeli",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Perisoreus_infaustus_Enonteki%C3%B6_20190328_6.jpg/640px-Perisoreus_infaustus_Enonteki%C3%B6_20190328_6.jpg"
 	},
 	{
-		"id": "kuusitiainen"
+		"id": "kuusitiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kuusitiainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Coal_tit_UK09.JPG/640px-Coal_tit_UK09.JPG"
 	},
 	{
-		"id": "kyhmyhaahka"
+		"id": "kyhmyhaahka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kyhmyhaahka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Somateria_spectabilis_%28King_Eider_-_Prachteiderente%29_-_Weltvogelpark_Walsrode_2012-16.jpg/640px-Somateria_spectabilis_%28King_Eider_-_Prachteiderente%29_-_Weltvogelpark_Walsrode_2012-16.jpg"
 	},
 	{
-		"id": "kyhmyjoutsen"
+		"id": "kyhmyjoutsen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kyhmyjoutsen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Mute_Swan_616.jpg/640px-Mute_Swan_616.jpg"
 	},
 	{
-		"id": "kylapollonen"
+		"id": "kylapollonen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Kyl%C3%A4p%C3%B6ll%C3%B6nen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/O.scops_in_Cair.jpg/640px-O.scops_in_Cair.jpg"
 	},
 	{
-		"id": "lampiviklo"
+		"id": "lampiviklo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lampiviklo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Marsh_sandpiper%28Tringa_stagnatilis%29_2.jpg/640px-Marsh_sandpiper%28Tringa_stagnatilis%29_2.jpg"
 	},
 	{
-		"id": "lapasorsa"
+		"id": "lapasorsa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lapasorsa",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Anas_clypeata_jp_02.jpg/640px-Anas_clypeata_jp_02.jpg"
 	},
 	{
-		"id": "lapasotka"
+		"id": "lapasotka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lapasotka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Aythya_marila3.jpg/640px-Aythya_marila3.jpg"
 	},
 	{
-		"id": "lapinkirvinen"
+		"id": "lapinkirvinen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lapinkirvinen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Red-throated_Pipit.jpg/640px-Red-throated_Pipit.jpg"
 	},
 	{
-		"id": "lapinpollo"
+		"id": "lapinpollo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lapinp%C3%B6ll%C3%B6",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Great_Gray_Owl_-_Flickr_-_Fyn_Kynd.jpg/640px-Great_Gray_Owl_-_Flickr_-_Fyn_Kynd.jpg"
 	},
 	{
-		"id": "lapinsirkku"
+		"id": "lapinsirkku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lapinsirkku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Lapland_Longspur_-_Calcarius_lapponicus_-_Sportittlingur_1.jpg/640px-Lapland_Longspur_-_Calcarius_lapponicus_-_Sportittlingur_1.jpg"
 	},
 	{
-		"id": "lapinsirri"
+		"id": "lapinsirri",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lapinsirri",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Temmincks_Stint.jpg/640px-Temmincks_Stint.jpg"
 	},
 	{
-		"id": "lapintiainen"
+		"id": "lapintiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lapintiainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Poecile_Cinctus_Kittila_20120306.JPG/640px-Poecile_Cinctus_Kittila_20120306.JPG"
 	},
 	{
-		"id": "lapintiira"
+		"id": "lapintiira",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lapintiira",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sterna_paradisaea-Norderoog.jpg/640px-Sterna_paradisaea-Norderoog.jpg"
 	},
 	{
-		"id": "laulujoutsen"
+		"id": "laulujoutsen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Laulujoutsen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Whooper_Swan_%28Cygnus_cygnus%29_%2826%29.jpg/640px-Whooper_Swan_%28Cygnus_cygnus%29_%2826%29.jpg"
 	},
 	{
-		"id": "laulurastas"
+		"id": "laulurastas",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Laulurastas",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/%D0%9F%D0%B5%D0%B2%D1%87%D0%B8%D0%B9_%D0%B4%D1%80%D0%BE%D0%B7%D0%B4_%D0%BD%D0%B0_%D0%BF%D0%B5%D0%BD%D1%8C%D0%BA%D0%B5_%28Turdus_philomelos%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg/640px-%D0%9F%D0%B5%D0%B2%D1%87%D0%B8%D0%B9_%D0%B4%D1%80%D0%BE%D0%B7%D0%B4_%D0%BD%D0%B0_%D0%BF%D0%B5%D0%BD%D1%8C%D0%BA%D0%B5_%28Turdus_philomelos%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg"
 	},
 	{
-		"id": "lehmahaikara"
+		"id": "lehmahaikara",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lehm%C3%A4haikara",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Cattle_Egret.jpg/640px-Cattle_Egret.jpg"
 	},
 	{
-		"id": "lehtokerttu"
+		"id": "lehtokerttu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lehtokerttu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Sylvia_borin_%28%C3%96rebro_County%29.jpg/640px-Sylvia_borin_%28%C3%96rebro_County%29.jpg"
 	},
 	{
-		"id": "lehtokurppa"
+		"id": "lehtokurppa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lehtokurppa",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Woodcock_earthworm.jpg/640px-Woodcock_earthworm.jpg"
 	},
 	{
-		"id": "lehtopollo"
+		"id": "lehtopollo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lehtop%C3%B6ll%C3%B6",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Strix_aluco_aluco.jpg/640px-Strix_aluco_aluco.jpg"
 	},
 	{
-		"id": "leppalintu"
+		"id": "leppalintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lepp%C3%A4lintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Phoenicurus_phoenicurus_male%28js%29_%28cropped%29.jpg/640px-Phoenicurus_phoenicurus_male%28js%29_%28cropped%29.jpg"
 	},
 	{
-		"id": "leveapyrstokihu"
+		"id": "leveapyrstokihu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Leve%C3%A4pyrst%C3%B6kihu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Pomarine_Jaeger_%28Skua%29.jpg/640px-Pomarine_Jaeger_%28Skua%29.jpg"
 	},
 	{
-		"id": "liejukana"
+		"id": "liejukana",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Liejukana",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Gallinula_galeata_at_Squaw_Creek_NWR.jpg/640px-Gallinula_galeata_at_Squaw_Creek_NWR.jpg"
 	},
 	{
-		"id": "liro"
+		"id": "liro",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Liro",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Wood_Sandpiper_Safari_Park.jpg/640px-Wood_Sandpiper_Safari_Park.jpg"
 	},
 	{
-		"id": "luhtahuitti"
+		"id": "luhtahuitti",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Luhtahuitti",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Spotted_Crake_%28Porzana_porzana%29_%2850657674927%29.jpg/640px-Spotted_Crake_%28Porzana_porzana%29_%2850657674927%29.jpg"
 	},
 	{
-		"id": "luhtakana"
+		"id": "luhtakana",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Luhtakana",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Water_rail_2022_04_30_01.jpg/640px-Water_rail_2022_04_30_01.jpg"
 	},
 	{
-		"id": "luhtakerttunen"
+		"id": "luhtakerttunen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Luhtakerttunen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Acrocephalus_palustris_Irpin4.JPG/640px-Acrocephalus_palustris_Irpin4.JPG"
 	},
 	{
-		"id": "lunni"
+		"id": "lunni",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lunni",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Papageitaucher_Fratercula_arctica_%28cropped%29.jpg/640px-Papageitaucher_Fratercula_arctica_%28cropped%29.jpg"
 	},
 	{
-		"id": "luotokirvinen"
+		"id": "luotokirvinen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Luotokirvinen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Rock_Pipit_-Red_Nab_%2851374868530%29.jpg/640px-Rock_Pipit_-Red_Nab_%2851374868530%29.jpg"
 	},
 	{
-		"id": "lyhytnokkahanhi"
+		"id": "lyhytnokkahanhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lyhytnokkahanhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Anser_brachyrhynchus.jpg/640px-Anser_brachyrhynchus.jpg"
 	},
 	{
-		"id": "lyhytvarvaskiuru"
+		"id": "lyhytvarvaskiuru",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Lyhytvarvaskiuru",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Alondra.jpg/640px-Alondra.jpg"
 	},
 	{
-		"id": "maakotka"
+		"id": "maakotka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Maakotka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Maakotka_%28Aquila_chrysaetos%29_by_Jarkko_J%C3%A4rvinen_%28crop%29.jpg/640px-Maakotka_%28Aquila_chrysaetos%29_by_Jarkko_J%C3%A4rvinen_%28crop%29.jpg"
 	},
 	{
-		"id": "mandariinisorsa"
+		"id": "mandariinisorsa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mandariinisorsa",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Pair_of_mandarin_ducks.jpg/640px-Pair_of_mandarin_ducks.jpg"
 	},
 	{
-		"id": "mantysirkku"
+		"id": "mantysirkku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/M%C3%A4ntysirkku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pine_Bunting_%28Emberiza_leucocephalos%29_-_%D0%A6%D0%B0%D0%B3%D0%B0%D0%B0%D0%BD%D1%88%D0%B0%D0%BD%D0%B0%D0%B0%D1%82_%D1%85%D3%A9%D0%BC%D1%80%D3%A9%D0%B3_%2815617685422%29.jpg/640px-Pine_Bunting_%28Emberiza_leucocephalos%29_-_%D0%A6%D0%B0%D0%B3%D0%B0%D0%B0%D0%BD%D1%88%D0%B0%D0%BD%D0%B0%D0%B0%D1%82_%D1%85%D3%A9%D0%BC%D1%80%D3%A9%D0%B3_%2815617685422%29.jpg"
 	},
 	{
-		"id": "mehilaishaukka"
+		"id": "mehilaishaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mehil%C3%A4ishaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Wespenbussard_European_honey_buzzard_Pernis_apivorus.jpg/640px-Wespenbussard_European_honey_buzzard_Pernis_apivorus.jpg"
 	},
 	{
-		"id": "mehilaissyoja"
+		"id": "mehilaissyoja",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mehil%C3%A4issy%C3%B6j%C3%A4",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Bee_Eater_%28160087893%29.jpeg/640px-Bee_Eater_%28160087893%29.jpeg"
 	},
 	{
-		"id": "merihanhi"
+		"id": "merihanhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Merihanhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Greylag_Goose_%28Anser_anser%29.jpg/640px-Greylag_Goose_%28Anser_anser%29.jpg"
 	},
 	{
-		"id": "meriharakka"
+		"id": "meriharakka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Meriharakka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Haematopus_ostralegus_He.jpg/640px-Haematopus_ostralegus_He.jpg"
 	},
 	{
-		"id": "merikeiju"
+		"id": "merikeiju",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Merikeiju",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/European_Storm_Petrel_From_The_Crossley_ID_Guide_Eastern_Birds.jpg/640px-European_Storm_Petrel_From_The_Crossley_ID_Guide_Eastern_Birds.jpg"
 	},
 	{
-		"id": "merikihu"
+		"id": "merikihu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Merikihu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Arctic_skua_%28Stercorarius_parasiticus%29_on_an_ice_floe%2C_Svalbard.jpg/640px-Arctic_skua_%28Stercorarius_parasiticus%29_on_an_ice_floe%2C_Svalbard.jpg"
 	},
 	{
-		"id": "merikotka"
+		"id": "merikotka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Merikotka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/White-tailed-eagle.jpg/640px-White-tailed-eagle.jpg"
 	},
 	{
-		"id": "merilokki"
+		"id": "merilokki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Merilokki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Larus_marinus_watching.jpg/640px-Larus_marinus_watching.jpg"
 	},
 	{
-		"id": "merimetso"
+		"id": "merimetso",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Merimetso",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Phalacrocorax_carbo02.jpg/640px-Phalacrocorax_carbo02.jpg"
 	},
 	{
-		"id": "merisirri"
+		"id": "merisirri",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Merisirri",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Calidris_maritima.jpg/640px-Calidris_maritima.jpg"
 	},
 	{
-		"id": "metsahanhi"
+		"id": "metsahanhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mets%C3%A4hanhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Bean.goose.600pix.jpg/640px-Bean.goose.600pix.jpg"
 	},
 	{
-		"id": "metsakirvinen"
+		"id": "metsakirvinen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mets%C3%A4kirvinen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Anthus_trivialis_vogelartinfo_chris_romeiks_CHR4025_%28cropped%29.jpg/640px-Anthus_trivialis_vogelartinfo_chris_romeiks_CHR4025_%28cropped%29.jpg"
 	},
 	{
-		"id": "metsaviklo"
+		"id": "metsaviklo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mets%C3%A4viklo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Green_Sandpiper_%28Tringa_ochropus%29_%2830725772867%29.jpg/640px-Green_Sandpiper_%28Tringa_ochropus%29_%2830725772867%29.jpg"
 	},
 	{
-		"id": "metso"
+		"id": "metso",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Metso",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Tetrao_urogallus%2C_Glenfeshie%2C_Scotland_1.jpg/640px-Tetrao_urogallus%2C_Glenfeshie%2C_Scotland_1.jpg"
 	},
 	{
-		"id": "mustahaikara"
+		"id": "mustahaikara",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustahaikara",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Ciconia_nigra_1_%28Marek_Szczepanek%29.jpg/640px-Ciconia_nigra_1_%28Marek_Szczepanek%29.jpg"
 	},
 	{
-		"id": "mustajalkatylli"
+		"id": "mustajalkatylli",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustajalkatylli",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Charadrius_alexandrinus_%28Kentish_Plover%29%2C_Port_d%27Alc%C3%BAdia%2C_Mallorca.jpg/640px-Charadrius_alexandrinus_%28Kentish_Plover%29%2C_Port_d%27Alc%C3%BAdia%2C_Mallorca.jpg"
 	},
 	{
-		"id": "mustakaularastas"
+		"id": "mustakaularastas",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustakaularastas",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Black-throated_Thrush_%28Turdus_atrogularis%29_%2851101748886%29.jpg/640px-Black-throated_Thrush_%28Turdus_atrogularis%29_%2851101748886%29.jpg"
 	},
 	{
-		"id": "mustakaulauikku"
+		"id": "mustakaulauikku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustakaulauikku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Black-necked_Grebe_Schwarzhalstaucher.jpg/640px-Black-necked_Grebe_Schwarzhalstaucher.jpg"
 	},
 	{
-		"id": "mustakurkkukerttu"
+		"id": "mustakurkkukerttu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustakurkkukerttu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Sylvia_rueppelli.jpg/640px-Sylvia_rueppelli.jpg"
 	},
 	{
-		"id": "mustakurkkuuikku"
+		"id": "mustakurkkuuikku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustakurkku-uikku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Podiceps_auritus1.jpg/640px-Podiceps_auritus1.jpg"
 	},
 	{
-		"id": "mustaleppalintu"
+		"id": "mustaleppalintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustalepp%C3%A4lintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Black_Redstart_I2_IMG_0862.jpg/640px-Black_Redstart_I2_IMG_0862.jpg"
 	},
 	{
-		"id": "mustalintu"
+		"id": "mustalintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustalintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Sj%C3%B6orre_-_Common_Scoter.jpg/640px-Sj%C3%B6orre_-_Common_Scoter.jpg"
 	},
 	{
-		"id": "mustaotsalepinkainen"
+		"id": "mustaotsalepinkainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustaotsalepink%C3%A4inen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Lesser_Grey_Shrike_%28F%29_%2819845194239%29.jpg/640px-Lesser_Grey_Shrike_%28F%29_%2819845194239%29.jpg"
 	},
 	{
-		"id": "mustapaakerttu"
+		"id": "mustapaakerttu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustap%C3%A4%C3%A4kerttu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Sylvia_atricapilla_male_2.jpg/640px-Sylvia_atricapilla_male_2.jpg"
 	},
 	{
-		"id": "mustapaatasku"
+		"id": "mustapaatasku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustap%C3%A4%C3%A4tasku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Saxicola_torquatus_axillaris%2C_Nanyuki%2C_Kenya.jpg/640px-Saxicola_torquatus_axillaris%2C_Nanyuki%2C_Kenya.jpg"
 	},
 	{
-		"id": "mustapyrstokuiri"
+		"id": "mustapyrstokuiri",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustapyrst%C3%B6kuiri",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Limosa_limosa_3_%28Marek_Szczepanek%29.jpg/640px-Limosa_limosa_3_%28Marek_Szczepanek%29.jpg"
 	},
 	{
-		"id": "mustarastas"
+		"id": "mustarastas",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustarastas",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/%D0%A7%D1%91%D1%80%D0%BD%D1%8B%D0%B9_%D0%B4%D1%80%D0%BE%D0%B7%D0%B4_%28Turdus_merula%2C_per_aspera%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg/640px-%D0%A7%D1%91%D1%80%D0%BD%D1%8B%D0%B9_%D0%B4%D1%80%D0%BE%D0%B7%D0%B4_%28Turdus_merula%2C_per_aspera%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg"
 	},
 	{
-		"id": "mustatiira"
+		"id": "mustatiira",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustatiira",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/%C4%8Cor%C3%ADk_%C4%8Dierny_%28Chlidonias_niger%29_a_%284644831482%29.jpg/640px-%C4%8Cor%C3%ADk_%C4%8Dierny_%28Chlidonias_niger%29_a_%284644831482%29.jpg"
 	},
 	{
-		"id": "mustavaris"
+		"id": "mustavaris",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustavaris",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Corvus_Frugilegus_Berlin-2.jpg/640px-Corvus_Frugilegus_Berlin-2.jpg"
 	},
 	{
-		"id": "mustaviklo"
+		"id": "mustaviklo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Mustaviklo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Tringa_erythropus_%28summer_plumage%29.JPG/640px-Tringa_erythropus_%28summer_plumage%29.JPG"
 	},
 	{
-		"id": "muuttohaukka"
+		"id": "muuttohaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Muuttohaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/PeregrineFalcon.jpg/640px-PeregrineFalcon.jpg"
 	},
 	{
-		"id": "myrskykeiju"
+		"id": "myrskykeiju",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Myrskykeiju",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Lesp1.jpg/640px-Lesp1.jpg"
 	},
 	{
-		"id": "myrskylintu"
+		"id": "myrskylintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Myrskylintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Fulmarus_glacialis_1_8.jpg/640px-Fulmarus_glacialis_1_8.jpg"
 	},
 	{
-		"id": "naakka"
+		"id": "naakka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Naakka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/%D0%93%D0%B0%D0%BB%D0%BA%D0%B0_%28Corvus_monedula%29%2C_%D0%A6%D0%B0%D1%80%D0%B8%D1%86%D1%8B%D0%BD%D0%BE.jpg/640px-%D0%93%D0%B0%D0%BB%D0%BA%D0%B0_%28Corvus_monedula%29%2C_%D0%A6%D0%B0%D1%80%D0%B8%D1%86%D1%8B%D0%BD%D0%BE.jpg"
 	},
 	{
-		"id": "narhi"
+		"id": "narhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/N%C3%A4rhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Garrulus_glandarius_1_Luc_Viatour.jpg/640px-Garrulus_glandarius_1_Luc_Viatour.jpg"
 	},
 	{
-		"id": "naurulokki"
+		"id": "naurulokki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Naurulokki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Larus_ridibundus.jpg/640px-Larus_ridibundus.jpg"
 	},
 	{
-		"id": "niittykirvinen"
+		"id": "niittykirvinen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Niittykirvinen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Wiesenpieper_Anthus_pratensis.jpg/640px-Wiesenpieper_Anthus_pratensis.jpg"
 	},
 	{
-		"id": "niittysuohaukka"
+		"id": "niittysuohaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Niittysuohaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Montagu%27s_Harrier-_Male.JPG/640px-Montagu%27s_Harrier-_Male.JPG"
 	},
 	{
-		"id": "nokikana"
+		"id": "nokikana",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Nokikana",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/%D0%9B%D1%8B%D1%81%D1%83%D1%85%D0%B0_%28Fulica_atra%29%2C_%D0%9A%D0%B0%D0%BB%D0%B8%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4.jpg/640px-%D0%9B%D1%8B%D1%81%D1%83%D1%85%D0%B0_%28Fulica_atra%29%2C_%D0%9A%D0%B0%D0%BB%D0%B8%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4.jpg"
 	},
 	{
-		"id": "nokisorsa"
+		"id": "nokisorsa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Nokisorsa",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/American_Black_Duck_Anas_rubripes_male_2.jpg/640px-American_Black_Duck_Anas_rubripes_male_2.jpg"
 	},
 	{
-		"id": "nokitasku"
+		"id": "nokitasku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Nokitasku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Pied_Bushchat_%28Saxicola_caprata%29-_Female_at_Hodal_I_IMG_5887.jpg/640px-Pied_Bushchat_%28Saxicola_caprata%29-_Female_at_Hodal_I_IMG_5887.jpg"
 	},
 	{
-		"id": "nokkavarpunen"
+		"id": "nokkavarpunen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Nokkavarpunen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Coccothraustes_coccothraustes_Parco_Della_Piana_around_Firenze%2C_Italy.jpg/640px-Coccothraustes_coccothraustes_Parco_Della_Piana_around_Firenze%2C_Italy.jpg"
 	},
 	{
-		"id": "nuolihaukka"
+		"id": "nuolihaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Nuolihaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Eurasian_Hobby_%28Falco_subbuteo%29_%2842082070560%29.jpg/640px-Eurasian_Hobby_%28Falco_subbuteo%29_%2842082070560%29.jpg"
 	},
 	{
-		"id": "pahkinahakki"
+		"id": "pahkinahakki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/P%C3%A4hkin%C3%A4hakki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Spotted_Nutcracker.jpg/640px-Spotted_Nutcracker.jpg"
 	},
 	{
-		"id": "pahkinanakkeli"
+		"id": "pahkinanakkeli",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/P%C3%A4hkin%C3%A4nakkeli",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Eurasian_Nuthatch%2C_Davos%2C_Switzerland_%2823901486802%29.jpg/640px-Eurasian_Nuthatch%2C_Davos%2C_Switzerland_%2823901486802%29.jpg"
 	},
 	{
-		"id": "pajulintu"
+		"id": "pajulintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pajulintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Willow_warbler_UK09.JPG/640px-Willow_warbler_UK09.JPG"
 	},
 	{
-		"id": "pajusirkku"
+		"id": "pajusirkku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pajusirkku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Rohrammer_maenchen.jpg/640px-Rohrammer_maenchen.jpg"
 	},
 	{
-		"id": "palokarki"
+		"id": "palokarki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Palok%C3%A4rki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Black_Woodpecker_taking_an_ant_bath_-_HungaryCS4E4536_%2815788008504%29.jpg/640px-Black_Woodpecker_taking_an_ant_bath_-_HungaryCS4E4536_%2815788008504%29.jpg"
 	},
 	{
-		"id": "palsasirri"
+		"id": "palsasirri",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Palsasirri",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Pectoral-Sandpiper.jpg/640px-Pectoral-Sandpiper.jpg"
 	},
 	{
-		"id": "peippo"
+		"id": "peippo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Peippo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Common_Chaffinch_%28Fringilla_coelebs%29_-_Oslo%2C_Norway_%2801%29.jpg/640px-Common_Chaffinch_%28Fringilla_coelebs%29_-_Oslo%2C_Norway_%2801%29.jpg"
 	},
 	{
-		"id": "peltopyy"
+		"id": "peltopyy",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Peltopyy",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Perdix_perdix_%28Marek_Szczepanek%29.jpg/640px-Perdix_perdix_%28Marek_Szczepanek%29.jpg"
 	},
 	{
-		"id": "peltosirkku"
+		"id": "peltosirkku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Peltosirkku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ortolan_bunting_in_Sierra_de_Guara%2C_Aragon%2C_Spain.jpg/640px-Ortolan_bunting_in_Sierra_de_Guara%2C_Aragon%2C_Spain.jpg"
 	},
 	{
-		"id": "pensaskerttu"
+		"id": "pensaskerttu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pensaskerttu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Common_Whitethroat.jpg/640px-Common_Whitethroat.jpg"
 	},
 	{
-		"id": "pensassirkkalintu"
+		"id": "pensassirkkalintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pensassirkkalintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Grashoppsangare-070512.jpg/640px-Grashoppsangare-070512.jpg"
 	},
 	{
-		"id": "pensastasku"
+		"id": "pensastasku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pensastasku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Saxicola_rubetra_-Belgium_-male-8-cropped.jpeg/640px-Saxicola_rubetra_-Belgium_-male-8-cropped.jpeg"
 	},
 	{
-		"id": "pensasvarpunen"
+		"id": "pensasvarpunen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pensasvarpunen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Passer_hispaniolensis_Israel_2.jpg/640px-Passer_hispaniolensis_Israel_2.jpg"
 	},
 	{
-		"id": "peukaloinen"
+		"id": "peukaloinen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Peukaloinen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Ein_neugieriger_Zaunk%C3%B6nig.jpg/640px-Ein_neugieriger_Zaunk%C3%B6nig.jpg"
 	},
 	{
-		"id": "piekana"
+		"id": "piekana",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Piekana",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Buteo_lagopus_29283.JPG/640px-Buteo_lagopus_29283.JPG"
 	},
 	{
-		"id": "pikkuhuitti"
+		"id": "pikkuhuitti",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkuhuitti",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Little_crake_%2850319200211%29.jpg/640px-Little_crake_%2850319200211%29.jpg"
 	},
 	{
-		"id": "pikkujoutsen"
+		"id": "pikkujoutsen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkujoutsen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Cygnus_columbianus_jcwf.jpg/640px-Cygnus_columbianus_jcwf.jpg"
 	},
 	{
-		"id": "pikkukajava"
+		"id": "pikkukajava",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkukajava",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Kittiwake.jpg/640px-Kittiwake.jpg"
 	},
 	{
-		"id": "pikkukanadanhanhi"
+		"id": "pikkukanadanhanhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkukanadanhanhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/AleutianCanadaGoose2.jpg/640px-AleutianCanadaGoose2.jpg"
 	},
 	{
-		"id": "pikkukapylintu"
+		"id": "pikkukapylintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkuk%C3%A4pylintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Loxia_curvirostra1.jpg/640px-Loxia_curvirostra1.jpg"
 	},
 	{
-		"id": "pikkukiljukotka"
+		"id": "pikkukiljukotka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkukiljukotka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Lesser_spotted_eagle_2016.jpg/640px-Lesser_spotted_eagle_2016.jpg"
 	},
 	{
-		"id": "pikkukorppikotka"
+		"id": "pikkukorppikotka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkukorppikotka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Egyptian_vulture.jpg/640px-Egyptian_vulture.jpg"
 	},
 	{
-		"id": "pikkukuovi"
+		"id": "pikkukuovi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkukuovi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Whimbrel_Numenius_phaeopus.jpg/640px-Whimbrel_Numenius_phaeopus.jpg"
 	},
 	{
-		"id": "pikkulepinkainen"
+		"id": "pikkulepinkainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkulepink%C3%A4inen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Neunt%C3%B6ter_Weibchen.jpg/640px-Neunt%C3%B6ter_Weibchen.jpg"
 	},
 	{
-		"id": "pikkulokki"
+		"id": "pikkulokki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkulokki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/RacekMaly.jpg/640px-RacekMaly.jpg"
 	},
 	{
-		"id": "pikkusieppo"
+		"id": "pikkusieppo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkusieppo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Ficedula_parva_%D0%BC%D1%83%D1%85%D0%BE%D0%BB%D0%BE%D0%B2%D0%BA%D0%B0_%D0%BC%D0%B0%D0%BB%D0%B0.jpg/640px-Ficedula_parva_%D0%BC%D1%83%D1%85%D0%BE%D0%BB%D0%BE%D0%B2%D0%BA%D0%B0_%D0%BC%D0%B0%D0%BB%D0%B0.jpg"
 	},
 	{
-		"id": "pikkusirkku"
+		"id": "pikkusirkku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkusirkku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Zwergammer.jpg/640px-Zwergammer.jpg"
 	},
 	{
-		"id": "pikkusirri"
+		"id": "pikkusirri",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkusirri",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Little_Stint.jpg/640px-Little_Stint.jpg"
 	},
 	{
-		"id": "pikkutiira"
+		"id": "pikkutiira",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkutiira",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Little_Tern_-_Kurnell.jpg/640px-Little_Tern_-_Kurnell.jpg"
 	},
 	{
-		"id": "pikkutikka"
+		"id": "pikkutikka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkutikka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/%D0%9C%D0%B0%D0%BB%D1%8B%D0%B9_%D0%BF%D1%91%D1%81%D1%82%D1%80%D1%8B%D0%B9_%D0%B4%D1%8F%D1%82%D0%B5%D0%BB_%D0%BD%D0%B0_%D1%80%D0%B5%D0%BF%D0%B5%D0%B9%D0%BD%D0%B8%D0%BA%D0%B5_%28Dendrocopos_minor%2C_fem%29%2C_%D0%9A%D1%80%D1%8B%D0%BB%D0%B0%D1%82%D1%81%D0%BA%D0%B8%D0%B5_%D1%85%D0%BE%D0%BB%D0%BC%D1%8B.jpg/640px-%D0%9C%D0%B0%D0%BB%D1%8B%D0%B9_%D0%BF%D1%91%D1%81%D1%82%D1%80%D1%8B%D0%B9_%D0%B4%D1%8F%D1%82%D0%B5%D0%BB_%D0%BD%D0%B0_%D1%80%D0%B5%D0%BF%D0%B5%D0%B9%D0%BD%D0%B8%D0%BA%D0%B5_%28Dendrocopos_minor%2C_fem%29%2C_%D0%9A%D1%80%D1%8B%D0%BB%D0%B0%D1%82%D1%81%D0%BA%D0%B8%D0%B5_%D1%85%D0%BE%D0%BB%D0%BC%D1%8B.jpg"
 	},
 	{
-		"id": "pikkutuulihaukka"
+		"id": "pikkutuulihaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkutuulihaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Falco-grillaio.jpg/640px-Falco-grillaio.jpg"
 	},
 	{
-		"id": "pikkutylli"
+		"id": "pikkutylli",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkutylli",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Charadrius_dubius_curonicus_s7.JPG/640px-Charadrius_dubius_curonicus_s7.JPG"
 	},
 	{
-		"id": "pikkuuikku"
+		"id": "pikkuuikku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikku-uikku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Zwergtaucher_060319_3.jpg/640px-Zwergtaucher_060319_3.jpg"
 	},
 	{
-		"id": "pikkuvarpunen"
+		"id": "pikkuvarpunen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pikkuvarpunen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Eurasian_Tree_Sparrow_%2814181664512%29.jpg/640px-Eurasian_Tree_Sparrow_%2814181664512%29.jpg"
 	},
 	{
-		"id": "pilkkasiipi"
+		"id": "pilkkasiipi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pilkkasiipi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Wwscoter12.JPG/640px-Wwscoter12.JPG"
 	},
 	{
-		"id": "pohjansirkku"
+		"id": "pohjansirkku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pohjansirkku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Emberiza_rustica_latifascia.JPG/640px-Emberiza_rustica_latifascia.JPG"
 	},
 	{
-		"id": "pohjantikka"
+		"id": "pohjantikka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pohjantikka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Three-toed_Woodpecker_-_Finlandia_0005_%283%29.jpg/640px-Three-toed_Woodpecker_-_Finlandia_0005_%283%29.jpg"
 	},
 	{
-		"id": "pronssiiibis"
+		"id": "pronssiiibis",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pronssi-iibis",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Plegadis_falcinellus_-_Lake_Wallace.jpg/640px-Plegadis_falcinellus_-_Lake_Wallace.jpg"
 	},
 	{
-		"id": "pulmunen"
+		"id": "pulmunen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pulmunen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Snow_Bunting_%2838501566691%29.jpg/640px-Snow_Bunting_%2838501566691%29.jpg"
 	},
 	{
-		"id": "pulmussirri"
+		"id": "pulmussirri",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pulmussirri",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Calidris-alba-001.jpg/640px-Calidris-alba-001.jpg"
 	},
 	{
-		"id": "punajalkahaukka"
+		"id": "punajalkahaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Punajalkahaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Falco_vespertinus.jpg/640px-Falco_vespertinus.jpg"
 	},
 	{
-		"id": "punajalkaviklo"
+		"id": "punajalkaviklo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Punajalkaviklo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Rotschenkel_Pfahl_%C3%9Cberblick.JPG/640px-Rotschenkel_Pfahl_%C3%9Cberblick.JPG"
 	},
 	{
-		"id": "punakaulahanhi"
+		"id": "punakaulahanhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Punakaulahanhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Rufibrenta_ruficollis_Rothalsgans_1.jpg/640px-Rufibrenta_ruficollis_Rothalsgans_1.jpg"
 	},
 	{
-		"id": "punakuiri"
+		"id": "punakuiri",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Punakuiri",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/BartailedGodwit23.jpg/640px-BartailedGodwit23.jpg"
 	},
 	{
-		"id": "punakylkirastas"
+		"id": "punakylkirastas",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Punakylkirastas",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Rotdrossel_croppped.jpg/640px-Rotdrossel_croppped.jpg"
 	},
 	{
-		"id": "punapaanarsku"
+		"id": "punapaanarsku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Punap%C3%A4%C3%A4narsku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Netta_rufina_m2.jpg/640px-Netta_rufina_m2.jpg"
 	},
 	{
-		"id": "punarinta"
+		"id": "punarinta",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Punarinta",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/%D0%97%D0%B0%D1%80%D1%8F%D0%BD%D0%BA%D0%B0_-_%D0%BC%D0%B0%D0%BB%D0%B8%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%28Erithacus_rubecula%29%2C_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0.jpg/640px-%D0%97%D0%B0%D1%80%D1%8F%D0%BD%D0%BA%D0%B0_-_%D0%BC%D0%B0%D0%BB%D0%B8%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%28Erithacus_rubecula%29%2C_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0.jpg"
 	},
 	{
-		"id": "punasotka"
+		"id": "punasotka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Punasotka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D1%8B%D0%B9_%D0%BD%D1%8B%D1%80%D0%BE%D0%BA_%28Aythya_ferina%2C_mas%29%2C_%D0%91%D0%B5%D0%BB%D0%BE%D0%B5_%D0%BE%D0%B7%D0%B5%D1%80%D0%BE.jpg/640px-%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D1%8B%D0%B9_%D0%BD%D1%8B%D1%80%D0%BE%D0%BA_%28Aythya_ferina%2C_mas%29%2C_%D0%91%D0%B5%D0%BB%D0%BE%D0%B5_%D0%BE%D0%B7%D0%B5%D1%80%D0%BE.jpg"
 	},
 	{
-		"id": "punatulkku"
+		"id": "punatulkku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Punatulkku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Pyrrhula_Pyrrhula_Kittila_20120305.JPG/640px-Pyrrhula_Pyrrhula_Kittila_20120305.JPG"
 	},
 	{
-		"id": "punavarpunen"
+		"id": "punavarpunen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Punavarpunen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Carpodacus_erythrinus_NAUMANN.jpg/640px-Carpodacus_erythrinus_NAUMANN.jpg"
 	},
 	{
-		"id": "pussitiainen"
+		"id": "pussitiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pussitiainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Remiz_pendulinus_%28Marek_Szczepanek%29.jpg/640px-Remiz_pendulinus_%28Marek_Szczepanek%29.jpg"
 	},
 	{
-		"id": "puukiipija"
+		"id": "puukiipija",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Puukiipij%C3%A4",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Treecreeper_%2851174963230%29.jpg/640px-Treecreeper_%2851174963230%29.jpg"
 	},
 	{
-		"id": "pyrstotiainen"
+		"id": "pyrstotiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pyrst%C3%B6tiainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Aegithalos_caudatus_front-on.jpg/640px-Aegithalos_caudatus_front-on.jpg"
 	},
 	{
-		"id": "pyy"
+		"id": "pyy",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Pyy",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Gelinotte.jpg/640px-Gelinotte.jpg"
 	},
 	{
-		"id": "rakattirastas"
+		"id": "rakattirastas",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/R%C3%A4k%C3%A4ttirastas",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Kwiczo%C5%82_Turdus_pilaris_Warszawa_2017.jpg/640px-Kwiczo%C5%82_Turdus_pilaris_Warszawa_2017.jpg"
 	},
 	{
-		"id": "rantakurvi"
+		"id": "rantakurvi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Rantakurvi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Xenus_cinereus_%28restig%29.jpg/640px-Xenus_cinereus_%28restig%29.jpg"
 	},
 	{
-		"id": "rantasipi"
+		"id": "rantasipi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Rantasipi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Actitis_hypoleucos_a2.jpg/640px-Actitis_hypoleucos_a2.jpg"
 	},
 	{
-		"id": "rastaskerttunen"
+		"id": "rastaskerttunen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Rastaskerttunen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Drosselrohrs%C3%A4nger_Great_reed_warbler.jpg/640px-Drosselrohrs%C3%A4nger_Great_reed_warbler.jpg"
 	},
 	{
-		"id": "rautiainen"
+		"id": "rautiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Rautiainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Dunnock_crop2.jpg/640px-Dunnock_crop2.jpg"
 	},
 	{
-		"id": "rayska"
+		"id": "rayska",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/R%C3%A4ysk%C3%A4",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Sterna-caspia-010.jpg/640px-Sterna-caspia-010.jpg"
 	},
 	{
-		"id": "raystaspaasky"
+		"id": "raystaspaasky",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/R%C3%A4yst%C3%A4sp%C3%A4%C3%A4sky",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Mehlschwalbe_Delichon_urbicum.jpg/640px-Mehlschwalbe_Delichon_urbicum.jpg"
 	},
 	{
-		"id": "riekko"
+		"id": "riekko",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Riekko",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/A_ptarmigan_%28cc09ce00-060b-45a6-bb30-b857702266ce%29.jpg/640px-A_ptarmigan_%28cc09ce00-060b-45a6-bb30-b857702266ce%29.jpg"
 	},
 	{
-		"id": "riskila"
+		"id": "riskila",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Riskil%C3%A4",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Tystie1.jpg/640px-Tystie1.jpg"
 	},
 	{
-		"id": "ristisorsa"
+		"id": "ristisorsa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Ristisorsa",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Tadorna_tadorna_%28aka%29.jpg/640px-Tadorna_tadorna_%28aka%29.jpg"
 	},
 	{
-		"id": "riuttatiira"
+		"id": "riuttatiira",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Riuttatiira",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/2021-07-10_Thalasseus_sandvicensis%2C_St_Marys_Island%2C_Northumberland_06.jpg/640px-2021-07-10_Thalasseus_sandvicensis%2C_St_Marys_Island%2C_Northumberland_06.jpg"
 	},
 	{
-		"id": "ruisraakka"
+		"id": "ruisraakka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Ruisr%C3%A4%C3%A4kk%C3%A4",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/CrexCrex.jpg/640px-CrexCrex.jpg"
 	},
 	{
-		"id": "ruokki"
+		"id": "ruokki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Ruokki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Alca_torda_Caithness%2C_Scotland.jpg/640px-Alca_torda_Caithness%2C_Scotland.jpg"
 	},
 	{
-		"id": "ruokokerttunen"
+		"id": "ruokokerttunen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Ruokokerttunen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Sedge_Warbler_%28Explore_360%29_-_Flickr_-_jimmyedmonds.jpg/640px-Sedge_Warbler_%28Explore_360%29_-_Flickr_-_jimmyedmonds.jpg"
 	},
 	{
-		"id": "ruokosirkkalintu"
+		"id": "ruokosirkkalintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Ruokosirkkalintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Locustellaluscinioides.jpg/640px-Locustellaluscinioides.jpg"
 	},
 	{
-		"id": "ruostesorsa"
+		"id": "ruostesorsa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Ruostesorsa",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/%D0%9E%D0%B3%D0%B0%D1%80%D1%8C%2C_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4.jpg/640px-%D0%9E%D0%B3%D0%B0%D1%80%D1%8C%2C_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4.jpg"
 	},
 	{
-		"id": "ruskosotka"
+		"id": "ruskosotka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Ruskosotka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Aythya_nyroca16.jpg/640px-Aythya_nyroca16.jpg"
 	},
 	{
-		"id": "ruskosuohaukka"
+		"id": "ruskosuohaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Ruskosuohaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Marsh_Harrier_Male_%28cropped%29.jpg/640px-Marsh_Harrier_Male_%28cropped%29.jpg"
 	},
 	{
-		"id": "rusorintakerttu"
+		"id": "rusorintakerttu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Rusorintakerttu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Sylvia_cantillans_espagne.jpg/640px-Sylvia_cantillans_espagne.jpg"
 	},
 	{
-		"id": "rytikerttunen"
+		"id": "rytikerttunen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Rytikerttunen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/2016.07.13.-01-Westensee_Felde--Teichrohrsaenger.jpg/640px-2016.07.13.-01-Westensee_Felde--Teichrohrsaenger.jpg"
 	},
 	{
-		"id": "saaksi"
+		"id": "saaksi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/S%C3%A4%C3%A4ksi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/OspreyNASA.jpg/640px-OspreyNASA.jpg"
 	},
 	{
-		"id": "samettipaakerttu"
+		"id": "samettipaakerttu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Samettip%C3%A4%C3%A4kerttu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Sardinian_warbler_%28Sylvia_melanocephala%29.jpg/640px-Sardinian_warbler_%28Sylvia_melanocephala%29.jpg"
 	},
 	{
-		"id": "sarvipollo"
+		"id": "sarvipollo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Sarvip%C3%B6ll%C3%B6",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Waldohreule_in_freier_Wildbahn.jpg/640px-Waldohreule_in_freier_Wildbahn.jpg"
 	},
 	{
-		"id": "satakieli"
+		"id": "satakieli",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Satakieli",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/%D0%92%D0%BE%D1%81%D1%82%D0%BE%D1%87%D0%BD%D1%8B%D0%B9_%D1%81%D0%BE%D0%BB%D0%BE%D0%B2%D0%B5%D0%B9_%28Luscinia_luscinia%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg/640px-%D0%92%D0%BE%D1%81%D1%82%D0%BE%D1%87%D0%BD%D1%8B%D0%B9_%D1%81%D0%BE%D0%BB%D0%BE%D0%B2%D0%B5%D0%B9_%28Luscinia_luscinia%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg"
 	},
 	{
-		"id": "selkalokki"
+		"id": "selkalokki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Selk%C3%A4lokki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Selk%C3%A4lokki.jpg/640px-Selk%C3%A4lokki.jpg"
 	},
 	{
-		"id": "sepelhanhi"
+		"id": "sepelhanhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Sepelhanhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Branta_bernicla_flying%28ThKraft%29.jpg/640px-Branta_bernicla_flying%28ThKraft%29.jpg"
 	},
 	{
-		"id": "sepelkyyhky"
+		"id": "sepelkyyhky",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Sepelkyyhky",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Columba_palumbus_1.JPG/640px-Columba_palumbus_1.JPG"
 	},
 	{
-		"id": "sepelrastas"
+		"id": "sepelrastas",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Sepelrastas",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Turdus_torquatus%2C_Spain_1.jpg/640px-Turdus_torquatus%2C_Spain_1.jpg"
 	},
 	{
-		"id": "sepelsieppo"
+		"id": "sepelsieppo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Sepelsieppo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Collared_Flycatcher_%2819034172073%29.jpg/640px-Collared_Flycatcher_%2819034172073%29.jpg"
 	},
 	{
-		"id": "silkkihaikara"
+		"id": "silkkihaikara",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Silkkihaikara",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Little_Egret_in_shallows.jpg/640px-Little_Egret_in_shallows.jpg"
 	},
 	{
-		"id": "silkkiuikku"
+		"id": "silkkiuikku",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Silkkiuikku",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/%D0%A7%D0%BE%D0%BC%D0%B3%D0%B0-%D0%BC%D0%B0%D1%82%D1%8C_%D1%81_%D1%80%D0%B5%D0%B1%D1%91%D0%BD%D0%BA%D0%BE%D0%BC%2C_%D0%A6%D0%B0%D1%80%D0%B8%D1%86%D1%8B%D0%BD%D0%BE.jpg/640px-%D0%A7%D0%BE%D0%BC%D0%B3%D0%B0-%D0%BC%D0%B0%D1%82%D1%8C_%D1%81_%D1%80%D0%B5%D0%B1%D1%91%D0%BD%D0%BA%D0%BE%D0%BC%2C_%D0%A6%D0%B0%D1%80%D0%B8%D1%86%D1%8B%D0%BD%D0%BE.jpg"
 	},
 	{
-		"id": "sinipyrsto"
+		"id": "sinipyrsto",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Sinipyrst%C3%B6",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Tarsiger_cyanurus_%28male%29.JPG/640px-Tarsiger_cyanurus_%28male%29.JPG"
 	},
 	{
-		"id": "sinirastas"
+		"id": "sinirastas",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Sinirastas",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Monticola_solitarius%2C_Spain_1.jpg/640px-Monticola_solitarius%2C_Spain_1.jpg"
 	},
 	{
-		"id": "sinirinta"
+		"id": "sinirinta",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Sinirinta",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Luscinia_svecica_volgae.jpg/640px-Luscinia_svecica_volgae.jpg"
 	},
 	{
-		"id": "sinisorsa"
+		"id": "sinisorsa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Sinisorsa",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Ducks_in_plymouth%2C_massachusetts.jpg/640px-Ducks_in_plymouth%2C_massachusetts.jpg"
 	},
 	{
-		"id": "sinisuohaukka"
+		"id": "sinisuohaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Sinisuohaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Wow2_filtered.jpg/640px-Wow2_filtered.jpg"
 	},
 	{
-		"id": "sinitiainen"
+		"id": "sinitiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Sinitiainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/%D0%9B%D0%B0%D0%B7%D0%BE%D1%80%D0%B5%D0%B2%D0%BA%D0%B0_%28Cyanistes_caeruleus%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg/640px-%D0%9B%D0%B0%D0%B7%D0%BE%D1%80%D0%B5%D0%B2%D0%BA%D0%B0_%28Cyanistes_caeruleus%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg"
 	},
 	{
-		"id": "sirittaja"
+		"id": "sirittaja",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Siritt%C3%A4j%C3%A4",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Flickr_-_Rainbirder_-_Wood_Warbler_%28Phylloscopus_sibilatrix%29_%283%29.jpg/640px-Flickr_-_Rainbirder_-_Wood_Warbler_%28Phylloscopus_sibilatrix%29_%283%29.jpg"
 	},
 	{
-		"id": "sitruunahemppo"
+		"id": "sitruunahemppo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Sitruunahemppo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Carduelis_citrinella_-Plateau_de_Beille%2C_Ariege%2C_Midi-Pyrenee%2C_France-8_%282%29.jpg/640px-Carduelis_citrinella_-Plateau_de_Beille%2C_Ariege%2C_Midi-Pyrenee%2C_France-8_%282%29.jpg"
 	},
 	{
-		"id": "sitruunavastarakki"
+		"id": "sitruunavastarakki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Sitruunav%C3%A4st%C3%A4r%C3%A4kki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Citrine_Wagtail_%28Motacilla_citreola%29_%2814343964296%29.jpg/640px-Citrine_Wagtail_%28Motacilla_citreola%29_%2814343964296%29.jpg"
 	},
 	{
-		"id": "suokukko"
+		"id": "suokukko",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Suokukko",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Brushane_Ruff_%2819729491733%29.jpg/640px-Brushane_Ruff_%2819729491733%29.jpg"
 	},
 	{
-		"id": "suopollo"
+		"id": "suopollo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Suop%C3%B6ll%C3%B6",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Asio-flammeus-001.jpg/640px-Asio-flammeus-001.jpg"
 	},
 	{
-		"id": "suosirri"
+		"id": "suosirri",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Suosirri",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Dunlin_RWD2.jpg/640px-Dunlin_RWD2.jpg"
 	},
 	{
-		"id": "taigauunilintu"
+		"id": "taigauunilintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Taigauunilintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Yellow-browed_warbler_%28Phylloscopus_inornatus%29%2C_Parc_du_Slot%2C_Woluw%C3%A9-St.-Lambert%2C_Brussels_%2834111120896%29.jpg/640px-Yellow-browed_warbler_%28Phylloscopus_inornatus%29%2C_Parc_du_Slot%2C_Woluw%C3%A9-St.-Lambert%2C_Brussels_%2834111120896%29.jpg"
 	},
 	{
-		"id": "taivaanvuohi"
+		"id": "taivaanvuohi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Taivaanvuohi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Gallinago_gallinago_1_%28Marek_Szczepanek%29.jpg/640px-Gallinago_gallinago_1_%28Marek_Szczepanek%29.jpg"
 	},
 	{
-		"id": "talitiainen"
+		"id": "talitiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Talitiainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/%D0%A1%D0%B8%D0%BD%D0%B8%D1%86%D0%B0_%28Parus_major%2C_fem%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg/640px-%D0%A1%D0%B8%D0%BD%D0%B8%D1%86%D0%B0_%28Parus_major%2C_fem%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg"
 	},
 	{
-		"id": "tammitikka"
+		"id": "tammitikka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tammitikka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/%D0%A1%D1%80%D0%B5%D0%B4%D0%BD%D0%B8%D0%B9_%D0%BF%D1%91%D1%81%D1%82%D1%80%D1%8B%D0%B9_%D0%B4%D1%8F%D1%82%D0%B5%D0%BB_%28Dendrocoptes_medius%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg/640px-%D0%A1%D1%80%D0%B5%D0%B4%D0%BD%D0%B8%D0%B9_%D0%BF%D1%91%D1%81%D1%82%D1%80%D1%8B%D0%B9_%D0%B4%D1%8F%D1%82%D0%B5%D0%BB_%28Dendrocoptes_medius%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg"
 	},
 	{
-		"id": "tavi"
+		"id": "tavi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tavi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Sarcelleh_1.jpg/640px-Sarcelleh_1.jpg"
 	},
 	{
-		"id": "taviokuurna"
+		"id": "taviokuurna",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Taviokuurna",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Pinicola_enucleator%2C_Kotka%2C_Finland_6.jpg/640px-Pinicola_enucleator%2C_Kotka%2C_Finland_6.jpg"
 	},
 	{
-		"id": "teeri"
+		"id": "teeri",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Teeri",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Black_Grouse_Nationalpark_Bayerischer_Wald.jpg/640px-Black_Grouse_Nationalpark_Bayerischer_Wald.jpg"
 	},
 	{
-		"id": "telkka"
+		"id": "telkka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Telkk%C3%A4",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Bucephala_clangula_ja_01.jpg/640px-Bucephala_clangula_ja_01.jpg"
 	},
 	{
-		"id": "tervapaasky"
+		"id": "tervapaasky",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tervap%C3%A4%C3%A4sky",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Apus_apus_-Barcelona%2C_Spain-8_%281%29.jpg/640px-Apus_apus_-Barcelona%2C_Spain-8_%281%29.jpg"
 	},
 	{
-		"id": "tiibetinhanhi"
+		"id": "tiibetinhanhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tiibetinhanhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Bar-headed_Goose_-_St_James%27s_Park%2C_London_-_Nov_2006.jpg/640px-Bar-headed_Goose_-_St_James%27s_Park%2C_London_-_Nov_2006.jpg"
 	},
 	{
-		"id": "tiiralokki"
+		"id": "tiiralokki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tiiralokki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Sabine%27s_Gull.jpg/640px-Sabine%27s_Gull.jpg"
 	},
 	{
-		"id": "tikli"
+		"id": "tikli",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tikli",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/%D0%A9%D0%B5%D0%B3%D0%BE%D0%BB_%D1%87%D0%B5%D1%80%D0%BD%D0%BE%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D1%8B%D0%B9_%D1%86%D0%B2%D0%B5%D1%82%D0%BE%D1%87%D0%BA%D0%B8_%D0%B8%D0%B2%D1%8B_%D1%89%D0%B8%D0%BF%D0%BB%D0%B5%D1%82_%28Carduelis_carduelis%29%2C_%D0%9A%D1%80%D1%8B%D0%BB%D0%B0%D1%82%D1%81%D0%BA%D0%B8%D0%B5_%D1%85%D0%BE%D0%BB%D0%BC%D1%8B.jpg/640px-%D0%A9%D0%B5%D0%B3%D0%BE%D0%BB_%D1%87%D0%B5%D1%80%D0%BD%D0%BE%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D1%8B%D0%B9_%D1%86%D0%B2%D0%B5%D1%82%D0%BE%D1%87%D0%BA%D0%B8_%D0%B8%D0%B2%D1%8B_%D1%89%D0%B8%D0%BF%D0%BB%D0%B5%D1%82_%28Carduelis_carduelis%29%2C_%D0%9A%D1%80%D1%8B%D0%BB%D0%B0%D1%82%D1%81%D0%BA%D0%B8%D0%B5_%D1%85%D0%BE%D0%BB%D0%BC%D1%8B.jpg"
 	},
 	{
-		"id": "tilhi"
+		"id": "tilhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tilhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Bombycilla_garrulusII.jpg/640px-Bombycilla_garrulusII.jpg"
 	},
 	{
-		"id": "tiltaltti"
+		"id": "tiltaltti",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tiltaltti",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Chiffchaff_-_Phylloscopus_collybita_%28cropped%29.jpg/640px-Chiffchaff_-_Phylloscopus_collybita_%28cropped%29.jpg"
 	},
 	{
-		"id": "tormapaasky"
+		"id": "tormapaasky",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/T%C3%B6rm%C3%A4p%C3%A4%C3%A4sky",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Bank_Swallow_%28Riparia_riparia%29.jpg/640px-Bank_Swallow_%28Riparia_riparia%29.jpg"
 	},
 	{
-		"id": "tornipollo"
+		"id": "tornipollo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tornip%C3%B6ll%C3%B6",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Tyto_alba_close_up.jpg/640px-Tyto_alba_close_up.jpg"
 	},
 	{
-		"id": "toyhtohyyppa"
+		"id": "toyhtohyyppa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/T%C3%B6yht%C3%B6hyypp%C3%A4",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Northern-Lapwing-Vanellus-vanellus.jpg/640px-Northern-Lapwing-Vanellus-vanellus.jpg"
 	},
 	{
-		"id": "toyhtokiuru"
+		"id": "toyhtokiuru",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/T%C3%B6yht%C3%B6kiuru",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Crested_lark_%28Galerida_cristata_kleinschmidti%29.jpg/640px-Crested_lark_%28Galerida_cristata_kleinschmidti%29.jpg"
 	},
 	{
-		"id": "toyhtotiainen"
+		"id": "toyhtotiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/T%C3%B6yht%C3%B6tiainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Lophophanes_cristatus_-Aviemore%2C_Scotland-8_%282%29.jpg/640px-Lophophanes_cristatus_-Aviemore%2C_Scotland-8_%282%29.jpg"
 	},
 	{
-		"id": "tukkakoskelo"
+		"id": "tukkakoskelo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tukkakoskelo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Red-breasted_merganser.jpg/640px-Red-breasted_merganser.jpg"
 	},
 	{
-		"id": "tukkasotka"
+		"id": "tukkasotka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tukkasotka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Tufted-Duck-male-female.jpg/640px-Tufted-Duck-male-female.jpg"
 	},
 	{
-		"id": "tulipaahippiainen"
+		"id": "tulipaahippiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tulip%C3%A4%C3%A4hippi%C3%A4inen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Firecrest_-_Appenines_-_Italy_S4E5211_%2817012449608%29.jpg/640px-Firecrest_-_Appenines_-_Italy_S4E5211_%2817012449608%29.jpg"
 	},
 	{
-		"id": "tundrahanhi"
+		"id": "tundrahanhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tundrahanhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/White-fronted.goose.2.750pix.jpg/640px-White-fronted.goose.2.750pix.jpg"
 	},
 	{
-		"id": "tundrakurmitsa"
+		"id": "tundrakurmitsa",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tundrakurmitsa",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Pluvialis_squatarola_%28summer_plumage%29.jpg/640px-Pluvialis_squatarola_%28summer_plumage%29.jpg"
 	},
 	{
-		"id": "tundrakurppelo"
+		"id": "tundrakurppelo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tundrakurppelo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Limnodromus_scolopaceus_Mike_Baird_crop.jpg/640px-Limnodromus_scolopaceus_Mike_Baird_crop.jpg"
 	},
 	{
-		"id": "tundraurpiainen"
+		"id": "tundraurpiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tundraurpiainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Carduelis_hornemanni_Tommy_Thompson_Park2.jpg/640px-Carduelis_hornemanni_Tommy_Thompson_Park2.jpg"
 	},
 	{
-		"id": "tunturihaukka"
+		"id": "tunturihaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tunturihaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Gyrfalcon_at_Lake_Myvatn_by_Bruce_McAdam.jpg/640px-Gyrfalcon_at_Lake_Myvatn_by_Bruce_McAdam.jpg"
 	},
 	{
-		"id": "tunturikihu"
+		"id": "tunturikihu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tunturikihu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Stercorarius_longicaudus2.jpg/640px-Stercorarius_longicaudus2.jpg"
 	},
 	{
-		"id": "tunturikiuru"
+		"id": "tunturikiuru",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tunturikiuru",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Shore_Lark.jpg/640px-Shore_Lark.jpg"
 	},
 	{
-		"id": "tunturipollo"
+		"id": "tunturipollo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tunturip%C3%B6ll%C3%B6",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Bubo_scandiacus_%28Linnaeus%2C_1758%29_Male.jpg/640px-Bubo_scandiacus_%28Linnaeus%2C_1758%29_Male.jpg"
 	},
 	{
-		"id": "turkinkyyhky"
+		"id": "turkinkyyhky",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Turkinkyyhky",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Collared.dove.jpg/640px-Collared.dove.jpg"
 	},
 	{
-		"id": "turturikyyhky"
+		"id": "turturikyyhky",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Turturikyyhky",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Turturikyyhky.jpg/640px-Turturikyyhky.jpg"
 	},
 	{
-		"id": "tuulihaukka"
+		"id": "tuulihaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tuulihaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Common_kestrel_falco_tinnunculus.jpg/640px-Common_kestrel_falco_tinnunculus.jpg"
 	},
 	{
-		"id": "tylli"
+		"id": "tylli",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Tylli",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Charadrius_hiaticula_He.jpg/640px-Charadrius_hiaticula_He.jpg"
 	},
 	{
-		"id": "uivelo"
+		"id": "uivelo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Uivelo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Smew.both.arp.600pix.jpg/640px-Smew.both.arp.600pix.jpg"
 	},
 	{
-		"id": "urpiainen"
+		"id": "urpiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Urpiainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Acanthis_flammea_EM1B6462_%2832614658378%29.jpg/640px-Acanthis_flammea_EM1B6462_%2832614658378%29.jpg"
 	},
 	{
-		"id": "uuttukyyhky"
+		"id": "uuttukyyhky",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Uuttukyyhky",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Columba_oenas0.jpg/640px-Columba_oenas0.jpg"
 	},
 	{
-		"id": "valkoposkihanhi"
+		"id": "valkoposkihanhi",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Valkoposkihanhi",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Branta_leucopsis_-standing_in_a_field-8.jpg/640px-Branta_leucopsis_-standing_in_a_field-8.jpg"
 	},
 	{
-		"id": "valkoselkatikka"
+		"id": "valkoselkatikka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Valkoselk%C3%A4tikka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Dendrocopos_leucotos_NAUMANN.jpg/640px-Dendrocopos_leucotos_NAUMANN.jpg"
 	},
 	{
-		"id": "valkosiipitiira"
+		"id": "valkosiipitiira",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Valkosiipitiira",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/White-winged_Tern%2C_M%C5%9Bcichy%2C_Biebrza%C5%84ski_Park_Narodowy%2C_Polska.jpg/640px-White-winged_Tern%2C_M%C5%9Bcichy%2C_Biebrza%C5%84ski_Park_Narodowy%2C_Polska.jpg"
 	},
 	{
-		"id": "valkoviklo"
+		"id": "valkoviklo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Valkoviklo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Tringa_nebularia_%28Marek_Szczepanek%29.jpg/640px-Tringa_nebularia_%28Marek_Szczepanek%29.jpg"
 	},
 	{
-		"id": "varis"
+		"id": "varis",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Varis",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Corvus_corone_Oulu_Finland_2020-09-20.jpg/640px-Corvus_corone_Oulu_Finland_2020-09-20.jpg"
 	},
 	{
-		"id": "varpunen"
+		"id": "varpunen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Varpunen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Huismus%2C_man.jpg/640px-Huismus%2C_man.jpg"
 	},
 	{
-		"id": "varpushaukka"
+		"id": "varpushaukka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Varpushaukka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/%D0%AF%D1%81%D1%82%D1%80%D0%B5%D0%B1-%D0%BF%D0%B5%D1%80%D0%B5%D0%BF%D0%B5%D0%BB%D1%8F%D1%82%D0%BD%D0%B8%D0%BA_%28Accipiter_nisus%2C_m%29%2C_%D0%98%D0%B7%D0%BC%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BF%D0%B0%D1%80%D0%BA.jpg/640px-%D0%AF%D1%81%D1%82%D1%80%D0%B5%D0%B1-%D0%BF%D0%B5%D1%80%D0%B5%D0%BF%D0%B5%D0%BB%D1%8F%D1%82%D0%BD%D0%B8%D0%BA_%28Accipiter_nisus%2C_m%29%2C_%D0%98%D0%B7%D0%BC%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BF%D0%B0%D1%80%D0%BA.jpg"
 	},
 	{
-		"id": "varpuspollo"
+		"id": "varpuspollo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Varpusp%C3%B6ll%C3%B6",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/%D0%92%D0%BE%D1%80%D0%BE%D0%B1%D1%8C%D0%B8%D0%BD%D1%8B%D0%B9_%D1%81%D1%8B%D1%87_%28Glaucidium_passerinum%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg/640px-%D0%92%D0%BE%D1%80%D0%BE%D0%B1%D1%8C%D0%B8%D0%BD%D1%8B%D0%B9_%D1%81%D1%8B%D1%87_%28Glaucidium_passerinum%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg"
 	},
 	{
-		"id": "vastarakki"
+		"id": "vastarakki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/V%C3%A4st%C3%A4r%C3%A4kki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/White-Wagtail.jpg/640px-White-Wagtail.jpg"
 	},
 	{
-		"id": "vesipaasky"
+		"id": "vesipaasky",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Vesip%C3%A4%C3%A4sky",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Red-necked_Phalarope.jpg/640px-Red-necked_Phalarope.jpg"
 	},
 	{
-		"id": "viherpeippo"
+		"id": "viherpeippo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Viherpeippo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Chloris_chloris_EM1B6228_%2846289989882%29.jpg/640px-Chloris_chloris_EM1B6228_%2846289989882%29.jpg"
 	},
 	{
-		"id": "vihertikka"
+		"id": "vihertikka",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Vihertikka",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Gr%C3%BCnspecht_Picus_viridis.jpg/640px-Gr%C3%BCnspecht_Picus_viridis.jpg"
 	},
 	{
-		"id": "vihervarpunen"
+		"id": "vihervarpunen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Vihervarpunen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Carduelis_spinus_male.jpg/640px-Carduelis_spinus_male.jpg"
 	},
 	{
-		"id": "viiksitimali"
+		"id": "viiksitimali",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Viiksitimali",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Bearded_Reedling_-_Hungary_CS4E4579_%2819363158940%29.jpg/640px-Bearded_Reedling_-_Hungary_CS4E4579_%2819363158940%29.jpg"
 	},
 	{
-		"id": "viiriainen"
+		"id": "viiriainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Viiri%C3%A4inen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Coturnix_coturnix%2C_Fraunberg%2C_Bayern%2C_Deutschland_1.jpg/640px-Coturnix_coturnix%2C_Fraunberg%2C_Bayern%2C_Deutschland_1.jpg"
 	},
 	{
-		"id": "viirupollo"
+		"id": "viirupollo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Viirup%C3%B6ll%C3%B6",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/2012-11-01_Ural_Owl%2C_Novosibirsk_Oblast%2C_Russia.jpg/640px-2012-11-01_Ural_Owl%2C_Novosibirsk_Oblast%2C_Russia.jpg"
 	},
 	{
-		"id": "viitakerttunen"
+		"id": "viitakerttunen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Viitakerttunen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Blyth%27s_Reed_Warbler_I2_IMG_9417.jpg/640px-Blyth%27s_Reed_Warbler_I2_IMG_9417.jpg"
 	},
 	{
-		"id": "viitasirkkalintu"
+		"id": "viitasirkkalintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Viitasirkkalintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Locustella_fluviatilis_123791068.jpg/640px-Locustella_fluviatilis_123791068.jpg"
 	},
 	{
-		"id": "viitatiainen"
+		"id": "viitatiainen",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Viitatiainen",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Sumpfmeise1.jpg/640px-Sumpfmeise1.jpg"
 	},
 	{
-		"id": "virtavastarakki"
+		"id": "virtavastarakki",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Virtav%C3%A4st%C3%A4r%C3%A4kki",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Grey_Wagtail_%286143292186%29.jpg/640px-Grey_Wagtail_%286143292186%29.jpg"
 	},
 	{
-		"id": "vuorihemppo"
+		"id": "vuorihemppo",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Vuorihemppo",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Twite_%28Carduelis_flavirostris%29_%2849178229491%29.jpg/640px-Twite_%28Carduelis_flavirostris%29_%2849178229491%29.jpg"
 	},
 	{
-		"id": "vuoriuunilintu"
+		"id": "vuoriuunilintu",
+		"wikiUrl": "https://fi.wikipedia.org/wiki/Vuoriuunilintu",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Phylloscopus_bonelli_2.jpg/640px-Phylloscopus_bonelli_2.jpg"
 	}
 ]
