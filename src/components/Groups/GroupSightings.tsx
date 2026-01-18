@@ -171,14 +171,6 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 		};
 	}, [fetchData]);
 
-	if (loading) {
-		return <div>{t("groupSightings.loading")}</div>;
-	}
-
-	if (error) {
-		return <div className="error-message">{error}</div>;
-	}
-
 	// Active filter label
 	const filterLabel =
 		selectedMonth !== null
@@ -205,14 +197,20 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 					setSelectedSpecies={setSelectedSpecies}
 				/>
 
-				<SightingsList
-					sightings={sightings}
-					hasMore={hasMore}
-					loadingMore={loadingMore}
-					onLoadMore={() => fetchData(false)}
-					showMemberName={true}
-					members={members}
-				/>
+				{loading ? (
+					<div>{t("groupSightings.loading")}</div>
+				) : error ? (
+					<div className="error-message">{error}</div>
+				) : (
+					<SightingsList
+						sightings={sightings}
+						hasMore={hasMore}
+						loadingMore={loadingMore}
+						onLoadMore={() => fetchData(false)}
+						showMemberName={true}
+						members={members}
+					/>
+				)}
 			</div>
 		</div>
 	);

@@ -27,7 +27,7 @@ test.describe("User View", () => {
 
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");
-			window.location.reload = () => { };
+			window.location.reload = () => {};
 		});
 
 		page.on("console", (msg) => {

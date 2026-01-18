@@ -60,7 +60,6 @@ h1 {
 }
 
 @media (max-width: 600px) {
-
 	header,
 	.breadcrumbs {
 		padding: 1rem;
