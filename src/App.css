@@ -982,6 +982,7 @@ h1 {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: space-between;
 	min-width: 80px;
 }
 
@@ -1011,4 +1012,14 @@ h1 {
 		width: 100%;
 		justify-content: space-between;
 	}
+}
+
+.user-profile-summary {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+.user-profile-summary h2 {
+	margin: 0;
 }
