@@ -452,6 +452,8 @@ h1 {
 	left: 0;
 	right: 0;
 	margin-top: 4px;
+	padding: 0;
+	list-style: none;
 	background: var(--bg-tertiary);
 	border: 1px solid var(--border-color);
 	border-radius: 6px;
@@ -695,6 +697,42 @@ h1 {
 .submit-button:disabled {
 	opacity: 0.5;
 	cursor: not-allowed;
+}
+
+/* Submit Button (Add Sighting Form) */
+.submit-btn {
+	margin-top: 16px;
+	width: 100%;
+	padding: 14px 20px;
+	background: var(--accent-primary);
+	color: white;
+	border: none;
+	border-radius: 8px;
+	font-size: 1.1em;
+	font-weight: 600;
+	cursor: pointer;
+	box-shadow: 0 2px 8px rgba(100, 108, 255, 0.3);
+	transition:
+		background-color 0.2s,
+		transform 0.1s,
+		box-shadow 0.2s;
+}
+
+.submit-btn:hover:not(:disabled) {
+	background: var(--accent-hover);
+	box-shadow: 0 4px 12px rgba(100, 108, 255, 0.4);
+	transform: translateY(-1px);
+}
+
+.submit-btn:active:not(:disabled) {
+	background: #4a52d9;
+	transform: translateY(0);
+}
+
+.submit-btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	box-shadow: none;
 }
 
 .submit-error {

@@ -414,6 +414,7 @@
 		"vuoriuunilintu": "Vuoriuunilintu"
 	},
 	"addSighting": {
+		"title": "Lisää havainto",
 		"bird": "Laji",
 		"filterBird": "Kirjoita lajin nimi...",
 		"selectBird": "Valitse laji",
