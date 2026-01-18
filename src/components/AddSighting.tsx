@@ -135,7 +135,7 @@ export default function AddSighting({
 		setIsGettingLocation(true);
 		setLocationError(null);
 		if (!navigator.geolocation) {
-			setLocationError(t("errors.geolocationNotSupported"));
+			setLocationError(t("addSighting.locationNotSupported"));
 			setIsGettingLocation(false);
 			return;
 		}
@@ -148,7 +148,7 @@ export default function AddSighting({
 			},
 			(error) => {
 				console.error("Error getting location:", error);
-				setLocationError(t("errors.locationPermissionDenied"));
+				setLocationError(t("addSighting.locationPermissionDenied"));
 				setIsGettingLocation(false);
 			},
 		);
@@ -182,6 +182,9 @@ export default function AddSighting({
 
 			// Wait for propagation
 			await new Promise((resolve) => setTimeout(resolve, 200));
+
+			// Notify listeners that a sighting was added/updated
+			window.dispatchEvent(new CustomEvent("sightingAdded"));
 
 			if (onSubmit) {
 				onSubmit();
@@ -304,7 +307,7 @@ export default function AddSighting({
 							type="text"
 							value={locationName}
 							onChange={(e) => setLocationName(e.target.value)}
-							placeholder={t("addSighting.locationPlaceholder")}
+							placeholder={t("addSighting.locationNamePlaceholder")}
 							className="form-input"
 						/>
 						<button
@@ -313,7 +316,7 @@ export default function AddSighting({
 							disabled={isGettingLocation}
 							className="location-btn"
 							data-testid="get-location-btn"
-							title={t("addSighting.getLocation")}
+							title={t("addSighting.getCurrentLocation")}
 						>
 							📍
 						</button>

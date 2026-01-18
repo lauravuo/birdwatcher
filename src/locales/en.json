@@ -12,7 +12,16 @@
 		"total": "Total",
 		"anonymous": "Anonymous",
 		"any": "Any",
-		"species": "Species"
+		"species": "Species",
+		"observer": "Observer",
+		"copied": "Copied!",
+		"edit": "Edit",
+		"delete": "Delete",
+		"save": "Save",
+		"saving": "Saving...",
+		"cancel": "Cancel",
+		"confirmDelete": "Are you sure you want to delete this sighting?",
+		"at": "at"
 	},
 	"userView": {
 		"sightings": "Sightings",
@@ -72,7 +81,8 @@
 	},
 	"errors": {
 		"unknown": "Unknown error",
-		"groupNotFound": "Group not found"
+		"groupNotFound": "Group not found",
+		"sightingNotFound": "Sighting not found"
 	},
 	"birds": {
 		"alli": "Alli",
@@ -437,7 +447,8 @@
 		"notesPlaceholder": "Additional notes (optional)",
 		"submit": "Add Sighting",
 		"submitting": "Submitting...",
-		"submitError": "Failed to add sighting. Please try again."
+		"submitError": "Failed to add sighting. Please try again.",
+		"addSightingLabel": "Add sighting"
 	},
 	"leaderboard": {
 		"title": "Leaderboard",

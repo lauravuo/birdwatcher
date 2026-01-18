@@ -45,15 +45,13 @@ test.describe("Sighting Modification (Edit/Delete)", () => {
 
 	test("can edit an existing sighting", async ({ page }) => {
 		// 1. Add a sighting
-		const { addSighting, switchToSightingsTab } = await import(
-			"./helpers/actions"
-		);
+		const { addSighting } = await import("./helpers/actions");
 		const birdName = "Harakka"; // Magpie
 		const today = new Date().toISOString().slice(0, 10);
 		await addSighting(page, birdName, today);
 
-		// Switch to Sightings tab to see the list
-		await switchToSightingsTab(page);
+		// We are now at User View which shows the sightings list
+		await expect(page.getByTestId("user-view-heading")).toBeVisible();
 
 		// Wait for sighting in list (Group View)
 		await expect(
@@ -102,15 +100,13 @@ test.describe("Sighting Modification (Edit/Delete)", () => {
 
 	test("can delete an existing sighting", async ({ page }) => {
 		// 1. Add a sighting
-		const { addSighting, switchToSightingsTab } = await import(
-			"./helpers/actions"
-		);
+		const { addSighting } = await import("./helpers/actions");
 		const birdName = "Talitiainen"; // Great Tit
 		const today = new Date().toISOString().slice(0, 10);
 		await addSighting(page, birdName, today);
 
-		// Switch to Sightings tab
-		await switchToSightingsTab(page);
+		// We are now at User View which shows the sightings list
+		await expect(page.getByTestId("user-view-heading")).toBeVisible();
 
 		// Wait for sighting in list
 		await expect(

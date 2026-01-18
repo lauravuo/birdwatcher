@@ -72,7 +72,7 @@ export function SightingDetails() {
 			day: "numeric",
 		});
 		if (timeString) {
-			return `${dateFormatted} ${t("common.at", "at")} ${timeString}`;
+			return `${dateFormatted} ${t("common.at")} ${timeString}`;
 		}
 		return dateFormatted;
 	};
@@ -163,9 +163,7 @@ export function SightingDetails() {
 					{/* Row 1: Observer */}
 					{user && (
 						<div className="detail-item">
-							<span className="detail-label">
-								👤 {t("common.observer", "Observer")}
-							</span>
+							<span className="detail-label">👤 {t("common.observer")}</span>
 							<span className="detail-value user-pill">
 								{user.photoURL && (
 									<img
