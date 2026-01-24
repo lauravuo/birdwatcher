@@ -240,28 +240,28 @@ export function SightingDetails() {
 					{/* Row 2: Location */}
 					{(sighting.locationName ||
 						(sighting.latitude && sighting.longitude)) && (
-							<div className="detail-item full-width">
-								<span className="detail-label">
-									📍 {t("addSighting.location")}
-								</span>
-								<div className="detail-value">
-									{sighting.locationName && (
-										<div className="location-name">{sighting.locationName}</div>
-									)}
-									{sighting.latitude && sighting.longitude && (
-										<a
-											href={`https://www.google.com/maps/search/?api=1&query=${sighting.latitude},${sighting.longitude}`}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="map-link"
-										>
-											{sighting.latitude.toFixed(6)},{" "}
-											{sighting.longitude.toFixed(6)}
-										</a>
-									)}
-								</div>
+						<div className="detail-item full-width">
+							<span className="detail-label">
+								📍 {t("addSighting.location")}
+							</span>
+							<div className="detail-value">
+								{sighting.locationName && (
+									<div className="location-name">{sighting.locationName}</div>
+								)}
+								{sighting.latitude && sighting.longitude && (
+									<a
+										href={`https://www.google.com/maps/search/?api=1&query=${sighting.latitude},${sighting.longitude}`}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="map-link"
+									>
+										{sighting.latitude.toFixed(6)},{" "}
+										{sighting.longitude.toFixed(6)}
+									</a>
+								)}
 							</div>
-						)}
+						</div>
+					)}
 
 					{/* Row 3: Notes */}
 					{sighting.notes && (
