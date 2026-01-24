@@ -78,6 +78,11 @@
 		"groupNotFound": "Ryhmää ei löytynyt",
 		"sightingNotFound": "Havaintoa ei löytynyt"
 	},
+	"sightingDetails": {
+		"imageBy": "Kuva",
+		"license": "Lisenssi",
+		"moreInfo": "Lisätietoja"
+	},
 	"birds": {
 		"alli": "Alli",
 		"allihaahka": "Allihaahka",
