@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import birds from "../data/birds.json";
 import { deleteSighting, getSighting, getUserProfile } from "../lib/firestore";
 import type { UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
@@ -117,6 +118,7 @@ export function SightingDetails() {
 
 	const birdName = t(`birds.${sighting.birdId}`);
 	const isOwner = currentUser && currentUser.uid === sighting.userId;
+	const birdData = birds.find((b) => b.id === sighting.birdId);
 
 	if (isEditing) {
 		return (
@@ -144,6 +146,64 @@ export function SightingDetails() {
 	return (
 		<div className="sighting-details-container">
 			<div className="card sighting-card-large">
+				{/* Bird Image */}
+				{birdData?.imageUrl && (
+					<div className="bird-image-container">
+						{birdData.wikiUrl ? (
+							<a
+								href={birdData.wikiUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="bird-image-link"
+							>
+								<img
+									src={birdData.imageUrl}
+									alt={birdName}
+									className="bird-image"
+								/>
+							</a>
+						) : (
+							<img
+								src={birdData.imageUrl}
+								alt={birdName}
+								className="bird-image"
+							/>
+						)}
+						<div className="bird-image-attribution">
+							{t("sightingDetails.imageBy")} {birdData.imageAuthor}
+							{birdData.imageLicense && (
+								<>
+									{" • "}
+									{t("sightingDetails.license")}:{" "}
+									{birdData.imageLicenseUrl ? (
+										<a
+											href={birdData.imageLicenseUrl}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											{birdData.imageLicense}
+										</a>
+									) : (
+										birdData.imageLicense
+									)}
+								</>
+							)}
+							{birdData.wikiUrl && (
+								<>
+									{" • "}
+									<a
+										href={birdData.wikiUrl}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{t("sightingDetails.moreInfo")}
+									</a>
+								</>
+							)}
+						</div>
+					</div>
+				)}
+
 				<div className="sighting-header-large">
 					<h2>{birdName}</h2>
 					<span className="sighting-type-badge">

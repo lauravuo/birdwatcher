@@ -86,6 +86,11 @@
 		"groupNotFound": "Group not found",
 		"sightingNotFound": "Sighting not found"
 	},
+	"sightingDetails": {
+		"imageBy": "Image by",
+		"license": "License",
+		"moreInfo": "More information"
+	},
 	"birds": {
 		"alli": "Alli",
 		"allihaahka": "Allihaahka",

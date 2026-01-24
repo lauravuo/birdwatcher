@@ -119,5 +119,19 @@ test.describe("Sighting Details", () => {
 		await expect(page.getByRole("heading", { name: "Harakka" })).toBeVisible();
 		await expect(page.getByText("Hidden Valley")).toBeVisible();
 		await expect(page.getByText("A strictly secret note")).toBeVisible();
+
+		// 5. Verify Bird Image and Attribution
+		const birdImage = page.locator(".bird-image");
+		await expect(birdImage).toBeVisible();
+		await expect(birdImage).toHaveAttribute("alt", "Harakka");
+
+		// Verify attribution is visible
+		const attribution = page.locator(".bird-image-attribution");
+		await expect(attribution).toBeVisible();
+		// Check that attribution contains author info
+		await expect(attribution).toContainText("Image by");
+		// Check that license link is present
+		const licenseLink = attribution.locator("a").first();
+		await expect(licenseLink).toBeVisible();
 	});
 });
