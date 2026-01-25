@@ -64,7 +64,9 @@
 		"loadingMembers": "Loading members...",
 		"failedToLoadMembers": "Failed to load group members.",
 		"backButton": "← Back",
-		"membersCount": "Members"
+		"membersCount": "Members",
+		"birdCount": "{{count}} birds",
+		"birdCount_one": "{{count}} bird"
 	},
 	"groupSightings": {
 		"title": "Group Sightings",

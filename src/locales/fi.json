@@ -64,7 +64,9 @@
 		"loadingMembers": "Ladataan jäseniä...",
 		"failedToLoadMembers": "Ryhmän jäsenten lataaminen epäonnistui.",
 		"backButton": "← Takaisin",
-		"membersCount": "Jäsenet"
+		"membersCount": "Jäsenet",
+		"birdCount": "{{count}} lintua",
+		"birdCount_one": "{{count}} lintu"
 	},
 	"groupView": {
 		"tabs": {

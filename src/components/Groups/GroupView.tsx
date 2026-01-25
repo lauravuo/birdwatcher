@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { db } from "../../lib/firebase";
-import { getGroupMembers } from "../../lib/firestore";
+import { getGroupMembers, getUsersStats } from "../../lib/firestore";
 import type { Group, UserProfile } from "../../types";
 import { GroupLeaderboard } from "./GroupLeaderboard";
 import { GroupMembersList } from "./GroupMembersList";
@@ -14,13 +14,18 @@ export function GroupView() {
 	const { groupId } = useParams<{ groupId: string }>();
 	const [group, setGroup] = useState<Group | null>(null);
 	const [members, setMembers] = useState<UserProfile[]>([]);
+	const [userStats, setUserStats] = useState<
+		Map<string, Record<string, string[]>>
+	>(new Map());
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [activeTab, setActiveTab] = useState<"stats" | "sightings" | "members">(
 		"stats",
 	);
 
-	// Fetch Group and Members
+	const currentYear = new Date().getFullYear();
+
+	// Fetch Group, Members, and Stats
 	useEffect(() => {
 		if (!groupId) return;
 
@@ -46,10 +51,15 @@ export function GroupView() {
 					setGroup(groupData);
 				}
 
-				// Fetch Members
-				const membersData = await getGroupMembers(groupData.memberIds);
+				// Fetch Members and Stats in parallel
+				const [membersData, statsData] = await Promise.all([
+					getGroupMembers(groupData.memberIds),
+					getUsersStats(groupData.memberIds, currentYear),
+				]);
+
 				if (isMounted) {
 					setMembers(membersData);
+					setUserStats(statsData);
 					setLoading(false);
 				}
 			} catch (err) {
@@ -66,7 +76,7 @@ export function GroupView() {
 		return () => {
 			isMounted = false;
 		};
-	}, [groupId, t]);
+	}, [groupId, currentYear, t]);
 
 	if (loading) return <div>{t("groupMembers.loadingMembers")}</div>;
 	if (error) return <div className="error-message">{error}</div>;
@@ -102,10 +112,20 @@ export function GroupView() {
 			</div>
 
 			<div className="tab-content">
-				{activeTab === "stats" && <GroupLeaderboard group={group} />}
+				{activeTab === "stats" && (
+					<GroupLeaderboard
+						group={group}
+						members={members}
+						userStats={userStats}
+					/>
+				)}
 				{activeTab === "sightings" && <GroupSightings group={group} />}
 				{activeTab === "members" && (
-					<GroupMembersList group={group} members={members} />
+					<GroupMembersList
+						group={group}
+						members={members}
+						userStats={userStats}
+					/>
 				)}
 			</div>
 		</div>
