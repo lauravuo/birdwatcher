@@ -26,8 +26,7 @@ async function setupUserWithStats(
 	if (Object.keys(stats).length > 0) {
 		await seedUserStats(user.uid, stats);
 	}
-	// Return user with non-null email assertion for convenience
-	return { ...user, email: user.email!, password };
+	return { ...user, email: user.email || email, password }; // Return password for login
 }
 
 test.describe("Group Leaderboard", () => {
