@@ -74,16 +74,18 @@ export function GroupMembersList({
 									)}
 								</div>
 								<div className="member-info">
-									<span className="member-name">{member.displayName}</span>
+									<div className="member-info-header">
+										<span className="member-name">{member.displayName}</span>
+										{member.id === group.ownerId && (
+											<span className="owner-badge">{t("groups.owner")}</span>
+										)}
+										{member.id === currentUser?.uid && (
+											<span className="you-badge">{t("groups.you")}</span>
+										)}
+									</div>
 									<span className="member-bird-count">
 										{t("groupMembers.birdCount", { count: birdCount })}
 									</span>
-									{member.id === group.ownerId && (
-										<span className="owner-badge">{t("groups.owner")}</span>
-									)}
-									{member.id === currentUser?.uid && (
-										<span className="you-badge">{t("groups.you")}</span>
-									)}
 								</div>
 							</Link>
 						</li>
