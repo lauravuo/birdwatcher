@@ -8,6 +8,27 @@ import {
 	seedUserStats,
 } from "./helpers/firestore-helpers";
 
+// Helper for creating user and seeding stats
+async function setupUserWithStats(
+	prefix: string,
+	name: string,
+	stats: Record<string, string[]> = {},
+) {
+	const email = `${prefix}@test.com`;
+	const password = "password123";
+	const user = await createTestUser(email, password, name);
+	await seedUserProfile({
+		id: user.uid,
+		displayName: name,
+		email: email,
+		photoURL: user.photoURL || "",
+	});
+	if (Object.keys(stats).length > 0) {
+		await seedUserStats(user.uid, stats);
+	}
+	return { ...user, email: user.email || email, password }; // Return password for login
+}
+
 test.describe("Group Leaderboard", () => {
 	test.beforeEach(async ({ page }) => {
 		await page.addInitScript(() => {
@@ -22,62 +43,17 @@ test.describe("Group Leaderboard", () => {
 		const currentYear = new Date().getFullYear();
 
 		// 1. Setup Data
-		// User A: 5 birds in Current Month -> Points: 1 (Month Win), Unique Year: 5
-		// User B: 2 birds in Current Month -> Points: 0, Unique Year: 2
-
-		// 1. Setup Data
-		// User A: 5 birds in Current Month -> Points: 1 (Month Win), Unique Year: 5
-		// User B: 2 birds in Current Month -> Points: 0, Unique Year: 2
-
-		const userA = await createTestUser(
-			"leaderA@test.com",
-			"password123",
-			"Alice",
-		);
-		await seedUserProfile({
-			id: userA.uid,
-			displayName: "Alice",
-			email: userA.email,
-			photoURL: userA.photoURL,
-		});
-		// Seed Alice Stats
-		await seedUserStats(userA.uid, {
-			// Current Year - Jan only
+		const userA = await setupUserWithStats("leaderA", "Alice", {
 			[`${currentYear}-01`]: ["bird1", "bird2", "bird3", "bird4", "bird5"], // 5 unique
-			// Previous Year (should be ignored for current year points/unique)
 			[`${currentYear - 1}-05`]: ["bird5", "bird6"],
 		});
 
-		const userB = await createTestUser(
-			"leaderB@test.com",
-			"password123",
-			"Bob",
-		);
-		await seedUserProfile({
-			id: userB.uid,
-			displayName: "Bob",
-			email: userB.email,
-			photoURL: userB.photoURL,
-		});
-		// User B: 2 birds in Current Month -> Points: 0, Unique Year: 2
-		await seedUserStats(userB.uid, {
-			[`${currentYear}-01`]: ["bird1", "bird2"],
+		const userB = await setupUserWithStats("leaderB", "Bob", {
+			[`${currentYear}-01`]: ["bird1", "bird2", "bird3"], // 3 unique
 		});
 
-		const userC = await createTestUser(
-			"leaderC@test.com",
-			"password123",
-			"Charlie",
-		);
-		await seedUserProfile({
-			id: userC.uid,
-			displayName: "Charlie",
-			email: userC.email,
-			photoURL: userC.photoURL,
-		});
-		// User C: 1 bird in Current Month -> Points: 0, Unique Year: 1
-		await seedUserStats(userC.uid, {
-			[`${currentYear}-01`]: ["bird1"],
+		const userC = await setupUserWithStats("leaderC", "Charlie", {
+			[`${currentYear}-01`]: ["bird1"], // 1 unique
 		});
 
 		// Create Group
@@ -86,12 +62,12 @@ test.describe("Group Leaderboard", () => {
 			name: "Competition Group",
 			joinCode,
 			ownerId: userA.uid,
-			memberIds: [userA.uid, userB.uid],
+			memberIds: [userA.uid, userB.uid, userC.uid],
 		});
 
 		// 2. Sign in and View
 		await page.goto("/");
-		await signInInBrowser(page, "leaderA@test.com", "password123");
+		await signInInBrowser(page, userA.email, userA.password);
 		await page.click(`text=Competition Group`);
 
 		// 3. Verify Sections
@@ -101,17 +77,28 @@ test.describe("Group Leaderboard", () => {
 		const pointsSection = page
 			.locator(".leaderboard-section")
 			.filter({ hasText: "Points Leaders" });
+
+		// Row 1: Alice (8 pts)
 		const pRow1 = pointsSection.locator(".leaderboard-item").nth(0);
 		await expect(pRow1).toContainText("Alice");
-		await expect(pRow1.locator(".points-value")).toHaveText("3");
+		await expect(pRow1.locator(".points-value")).toHaveText("8");
 		await expect(pRow1.locator(".points-label")).toHaveText("pts");
+
+		// Row 2: Bob (2 pts)
+		const pRow2 = pointsSection.locator(".leaderboard-item").nth(1);
+		await expect(pRow2).toContainText("Bob");
+		await expect(pRow2.locator(".points-value")).toHaveText("2");
+
+		// Row 3: Charlie (1 pt)
+		const pRow3 = pointsSection.locator(".leaderboard-item").nth(2);
+		await expect(pRow3).toContainText("Charlie");
+		await expect(pRow3.locator(".points-value")).toHaveText("1");
 
 		// B. Year Unique
 		await expect(
 			page.getByRole("heading", { name: `Top Birdwatchers (${currentYear})` }),
 		).toBeVisible();
-		// "Top Birdwatchers (YYYY)" vs "Top Birdwatchers (Month)"
-		// Let's rely on order or specific text with year
+
 		const yearUniqueTitle = `Top Birdwatchers (${currentYear})`;
 		const yearUniqueSection = page
 			.locator(".leaderboard-section")
@@ -129,7 +116,7 @@ test.describe("Group Leaderboard", () => {
 		const monthName = new Intl.DateTimeFormat("en-US", {
 			month: "long",
 		}).format(date);
-		// Capitalize just in case, though format usually does it.
+
 		const titleRegex = new RegExp(`Top Birdwatchers \\(${monthName}\\)`, "i");
 		const monthSection = page
 			.locator(".leaderboard-section")
@@ -139,7 +126,7 @@ test.describe("Group Leaderboard", () => {
 		await expect(monthSection).toBeVisible();
 		const mRow1 = monthSection.locator(".leaderboard-item").nth(0);
 		await expect(mRow1).toContainText("Alice");
-		await expect(mRow1.locator(".points-value")).toHaveText("5");
+		await expect(mRow1.locator(".points-value")).toHaveText("5"); // 5 unique birds in month
 	});
 
 	test("navigates to user view when clicking a leaderboard entry", async ({
@@ -147,19 +134,7 @@ test.describe("Group Leaderboard", () => {
 	}) => {
 		const currentYear = new Date().getFullYear();
 
-		const userA = await createTestUser(
-			"clicktest@test.com",
-			"password123",
-			"Clicker",
-		);
-		await seedUserProfile({
-			id: userA.uid,
-			displayName: "Clicker",
-			email: userA.email,
-			photoURL: userA.photoURL,
-		});
-		// Seed stats so they appear on leaderboard
-		await seedUserStats(userA.uid, {
+		const userA = await setupUserWithStats("clicktest", "Clicker", {
 			[`${currentYear}-01`]: ["bird1"],
 		});
 
@@ -174,7 +149,7 @@ test.describe("Group Leaderboard", () => {
 
 		// Sign in
 		await page.goto("/");
-		await signInInBrowser(page, "clicktest@test.com", "password123");
+		await signInInBrowser(page, userA.email, userA.password);
 		await page.click(`text=Click Group`);
 
 		// Wait for leaderboard and finding the user item
@@ -192,5 +167,80 @@ test.describe("Group Leaderboard", () => {
 		// Matching /groups/[groupId]/members/[userId]
 		await expect(page).toHaveURL(/\/groups\/[^/]+\/members\/[^/]+/);
 		await expect(page.getByRole("heading", { name: "Clicker" })).toBeVisible();
+	});
+
+	test("handles ties in monthly points correctly", async ({ page }) => {
+		const currentYear = new Date().getFullYear();
+
+		const userA = await setupUserWithStats("tieA", "TieA", {
+			[`${currentYear}-01`]: ["bird1", "bird2", "bird3", "bird4", "bird5"],
+		});
+
+		const userB = await setupUserWithStats("tieB", "TieB", {
+			[`${currentYear}-01`]: ["bird1", "bird2", "bird3", "bird4", "bird5"],
+		});
+
+		const userC = await setupUserWithStats("tieC", "TieC", {
+			[`${currentYear}-01`]: ["bird1", "bird2", "bird3"],
+		});
+
+		// Create Group
+		const joinCode = "tie-test";
+		await seedGroup({
+			name: "Tie Test Group",
+			joinCode,
+			ownerId: userA.uid,
+			memberIds: [userA.uid, userB.uid, userC.uid],
+		});
+
+		// Sign in and View
+		await page.goto("/");
+		await signInInBrowser(page, userA.email, userA.password);
+		await page.click(`text=Tie Test Group`);
+
+		// Verify Points Section
+		await expect(page.getByText(/Points Leaders/)).toBeVisible();
+		const pointsSection = page
+			.locator(".leaderboard-section")
+			.filter({ hasText: "Points Leaders" });
+
+		// TieA and TieB should both have 3 points (Tie for 1st) + Tie for Year Bonus (5 pts) = 8 pts
+		await expect(pointsSection.locator(".leaderboard-item")).toHaveCount(3);
+
+		// Check values
+		const tieA = pointsSection
+			.locator(".leaderboard-item")
+			.filter({ hasText: "TieA" });
+		await expect(tieA.locator(".points-value")).toHaveText("8");
+
+		const tieB = pointsSection
+			.locator(".leaderboard-item")
+			.filter({ hasText: "TieB" });
+		await expect(tieB.locator(".points-value")).toHaveText("8");
+
+		const tieC = pointsSection
+			.locator(".leaderboard-item")
+			.filter({ hasText: "TieC" });
+		await expect(tieC.locator(".points-value")).toHaveText("2");
+	});
+
+	test("displays empty state when no data", async ({ page }) => {
+		const userA = await setupUserWithStats("empty", "EmptyUser");
+
+		await seedGroup({
+			name: "Empty Group",
+			joinCode: "empty-test",
+			ownerId: userA.uid,
+			memberIds: [userA.uid],
+		});
+
+		await page.goto("/");
+		await signInInBrowser(page, userA.email, userA.password);
+		await page.click(`text=Empty Group`);
+
+		await expect(
+			page.getByText("No sightings found for this group."),
+		).toBeVisible();
+		await expect(page.locator(".leaderboard-section")).not.toBeVisible();
 	});
 });

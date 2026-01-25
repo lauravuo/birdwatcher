@@ -153,6 +153,9 @@ test.describe("Groups UI", () => {
 		await expect(page.locator(".member-name")).toContainText("GroupOwner");
 		await expect(page.locator(".owner-badge")).toContainText("Owner");
 
+		// Verify bird count is displayed (should be 0 birds for new member)
+		await expect(page.locator(".member-bird-count")).toContainText("0 birds");
+
 		// 4. Test Breadcrumb "Birdwatcher" (Home) removed
 		// Verify it is NOT visible
 		await expect(
