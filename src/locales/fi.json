@@ -467,6 +467,7 @@
 		"failedToLoad": "Tulostaulukon lataus epäonnistui.",
 		"yearPointsLeaders": "Pistepörssi ({{year}})",
 		"yearUniqueLeaders": "Ahkerimmat ({{year}})",
-		"monthUniqueLeaders": "Ahkerimmat ({{month}})"
+		"monthUniqueLeaders": "Ahkerimmat ({{month}})",
+		"groupTotal": "Lintuja yhteensä ({{year}})"
 	}
 }

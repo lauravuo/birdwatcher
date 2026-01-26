@@ -28,12 +28,14 @@ export function useLeaderboardStats(
 	const [monthlySections, setMonthlySections] = useState<LeaderboardSection[]>(
 		[],
 	);
+	const [groupTotalCount, setGroupTotalCount] = useState<number>(0);
 
 	const currentYear = new Date().getFullYear();
 
 	useEffect(() => {
 		const yearlyPointsTracker = new Map<string, number>(); // UserID -> Points
 		const yearUniqueMap = new Map<string, Set<string>>(); // UserID -> Set of Bird IDs
+		const groupUniqueSet = new Set<string>(); // Set of all unique Bird IDs in group
 		const monthlyUniqueMap = new Map<string, Map<string, Set<string>>>(); // MonthKey -> UserID -> Set
 
 		// Initialize maps
@@ -65,6 +67,7 @@ export function useLeaderboardStats(
 				const yearSet = yearUniqueMap.get(member.id);
 				birdIds.forEach((b) => {
 					yearSet?.add(b);
+					groupUniqueSet.add(b);
 				});
 
 				if (monthlyUniqueMap.has(dateKey)) {
@@ -199,6 +202,7 @@ export function useLeaderboardStats(
 			newMonthlySections.push({ title, entries });
 		}
 		setMonthlySections(newMonthlySections);
+		setGroupTotalCount(groupUniqueSet.size);
 	}, [group.memberIds, members, statsMap, currentYear, i18n.language]);
 
 	return {
@@ -206,5 +210,6 @@ export function useLeaderboardStats(
 		yearUniqueLeaders,
 		monthlySections,
 		currentYear,
+		groupTotalCount,
 	};
 }

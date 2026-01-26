@@ -18,8 +18,13 @@ export function GroupLeaderboard({
 	userStats: statsMap,
 }: GroupLeaderboardProps) {
 	const { t } = useTranslation();
-	const { yearPointsLeaders, yearUniqueLeaders, monthlySections, currentYear } =
-		useLeaderboardStats(group, members, statsMap);
+	const {
+		yearPointsLeaders,
+		yearUniqueLeaders,
+		monthlySections,
+		currentYear,
+		groupTotalCount,
+	} = useLeaderboardStats(group, members, statsMap);
 
 	const renderSection = (
 		title: string,
@@ -75,6 +80,29 @@ export function GroupLeaderboard({
 
 	return (
 		<div className="leaderboard-container">
+			{/* 0. Group Total */}
+			{groupTotalCount > 0 && (
+				<div className="leaderboard-section">
+					<h4 className="leaderboard-section-title">
+						{t("leaderboard.groupTotal", { year: currentYear })}
+					</h4>
+					<div className="leaderboard-list group-tab-card">
+						<div className="leaderboard-item" style={{ cursor: "default" }}>
+							<div className="leaderboard-rank">👥</div>
+							<div className="leaderboard-user">
+								<span className="user-name">{group.name}</span>
+							</div>
+							<div className="leaderboard-stats">
+								<div className="points">
+									<span className="points-value">{groupTotalCount}</span>
+									<span className="points-label">spp</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
+
 			{/* 1. Year Points */}
 			{yearPointsLeaders.length > 0 &&
 				renderSection(
