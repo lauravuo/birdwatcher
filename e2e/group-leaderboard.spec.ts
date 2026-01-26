@@ -49,7 +49,7 @@ test.describe("Group Leaderboard", () => {
 		});
 
 		const userB = await setupUserWithStats("leaderB", "Bob", {
-			[`${currentYear}-01`]: ["bird1", "bird2", "bird3"], // 3 unique
+			[`${currentYear}-01`]: ["bird1", "bird2", "bird3", "bird6"], // 4 unique (bird6 is new to group)
 		});
 
 		const userC = await setupUserWithStats("leaderC", "Charlie", {
@@ -71,6 +71,19 @@ test.describe("Group Leaderboard", () => {
 		await page.click(`text=Competition Group`);
 
 		// 3. Verify Sections
+
+		// 0. Group Total
+		await expect(
+			page.getByRole("heading", { name: `Group Total (${currentYear})` }),
+		).toBeVisible();
+		const groupTotalSection = page
+			.locator(".leaderboard-section")
+			.filter({ hasText: `Group Total (${currentYear})` });
+		await expect(groupTotalSection).toBeVisible();
+		const gRow = groupTotalSection.locator(".leaderboard-item");
+		await expect(gRow).toContainText("Competition Group");
+		await expect(gRow.locator(".points-value")).toHaveText("6"); // 1-5 from Alice, 6 from Bob = 6 total
+		await expect(gRow.locator(".points-label")).toHaveText("spp");
 
 		// A. Points Leaders
 		await expect(page.getByText(/Points Leaders/)).toBeVisible();
