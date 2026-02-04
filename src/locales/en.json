@@ -468,6 +468,8 @@
 		"yearPointsLeaders": "Points Leaders ({{year}})",
 		"yearUniqueLeaders": "Top Birdwatchers ({{year}})",
 		"monthUniqueLeaders": "Top Birdwatchers ({{month}})",
-		"groupTotal": "Group Total ({{year}})"
+		"groupTotal": "Group Total ({{year}})",
+		"showPastMonths": "Show Past Months",
+		"hidePastMonths": "Hide Past Months"
 	}
 }

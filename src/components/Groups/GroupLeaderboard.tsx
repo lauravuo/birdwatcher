@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import {
@@ -18,6 +19,7 @@ export function GroupLeaderboard({
 	userStats: statsMap,
 }: GroupLeaderboardProps) {
 	const { t } = useTranslation();
+	const [showPastMonths, setShowPastMonths] = useState(false);
 	const {
 		yearPointsLeaders,
 		yearUniqueLeaders,
@@ -120,15 +122,39 @@ export function GroupLeaderboard({
 				)}
 
 			{/* 3. Monthly Unique */}
-			{monthlySections.map((section) => (
-				<div key={section.title}>
-					{renderSection(
-						t("leaderboard.monthUniqueLeaders", { month: section.title }),
-						section.entries,
-						"spp",
-					)}
+			{monthlySections.map((section, index) => {
+				// Current month is the first section (index 0)
+				const isCurrentMonth = index === 0;
+				// Past months should be hidden unless showPastMonths is true
+				if (!isCurrentMonth && !showPastMonths) {
+					return null;
+				}
+				return (
+					<div key={section.title}>
+						{renderSection(
+							t("leaderboard.monthUniqueLeaders", { month: section.title }),
+							section.entries,
+							"spp",
+						)}
+					</div>
+				);
+			})}
+
+			{/* Show/Hide Past Months Button */}
+			{monthlySections.length > 1 && (
+				<div className="expander-container">
+					<button
+						type="button"
+						className="expander-button"
+						onClick={() => setShowPastMonths(!showPastMonths)}
+						data-testid="toggle-past-months"
+					>
+						{showPastMonths
+							? t("leaderboard.hidePastMonths")
+							: t("leaderboard.showPastMonths")}
+					</button>
 				</div>
-			))}
+			)}
 
 			{/* If absolutely empty */}
 			{yearPointsLeaders.length === 0 &&

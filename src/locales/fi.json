@@ -468,6 +468,8 @@
 		"yearPointsLeaders": "Pistepörssi ({{year}})",
 		"yearUniqueLeaders": "Ahkerimmat ({{year}})",
 		"monthUniqueLeaders": "Ahkerimmat ({{month}})",
-		"groupTotal": "Lintuja yhteensä ({{year}})"
+		"groupTotal": "Lintuja yhteensä ({{year}})",
+		"showPastMonths": "Näytä aiemmat kuukaudet",
+		"hidePastMonths": "Piilota aiemmat kuukaudet"
 	}
 }
