@@ -265,16 +265,17 @@ test.describe("Group Leaderboard", () => {
 		const pastMonthKey = String(
 			currentMonth > 1 ? currentMonth - 1 : 12,
 		).padStart(2, "0");
+		const pastYear = currentMonth > 1 ? currentYear : currentYear - 1;
 
 		// Create data for current month and past month
 		const userA = await setupUserWithStats("expandA", "ExpanderAlice", {
 			[`${currentYear}-${currentMonthKey}`]: ["bird1", "bird2", "bird3"],
-			[`${currentYear}-${pastMonthKey}`]: ["bird4", "bird5"],
+			[`${pastYear}-${pastMonthKey}`]: ["bird4", "bird5"],
 		});
 
 		const userB = await setupUserWithStats("expandB", "ExpanderBob", {
 			[`${currentYear}-${currentMonthKey}`]: ["bird1"],
-			[`${currentYear}-${pastMonthKey}`]: ["bird6", "bird7", "bird8"],
+			[`${pastYear}-${pastMonthKey}`]: ["bird6", "bird7", "bird8"],
 		});
 
 		// Create Group
