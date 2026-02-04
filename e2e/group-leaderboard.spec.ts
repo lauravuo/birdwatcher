@@ -41,19 +41,26 @@ test.describe("Group Leaderboard", () => {
 		page,
 	}) => {
 		const currentYear = new Date().getFullYear();
+		const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
 
 		// 1. Setup Data
 		const userA = await setupUserWithStats("leaderA", "Alice", {
-			[`${currentYear}-01`]: ["bird1", "bird2", "bird3", "bird4", "bird5"], // 5 unique
+			[`${currentYear}-${currentMonth}`]: [
+				"bird1",
+				"bird2",
+				"bird3",
+				"bird4",
+				"bird5",
+			], // 5 unique
 			[`${currentYear - 1}-05`]: ["bird5", "bird6"],
 		});
 
 		const userB = await setupUserWithStats("leaderB", "Bob", {
-			[`${currentYear}-01`]: ["bird1", "bird2", "bird3", "bird6"], // 4 unique (bird6 is new to group)
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3", "bird6"], // 4 unique (bird6 is new to group)
 		});
 
 		const userC = await setupUserWithStats("leaderC", "Charlie", {
-			[`${currentYear}-01`]: ["bird1"], // 1 unique
+			[`${currentYear}-${currentMonth}`]: ["bird1"], // 1 unique
 		});
 
 		// Create Group
@@ -146,9 +153,10 @@ test.describe("Group Leaderboard", () => {
 		page,
 	}) => {
 		const currentYear = new Date().getFullYear();
+		const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
 
 		const userA = await setupUserWithStats("clicktest", "Clicker", {
-			[`${currentYear}-01`]: ["bird1"],
+			[`${currentYear}-${currentMonth}`]: ["bird1"],
 		});
 
 		// Create Group
@@ -184,17 +192,30 @@ test.describe("Group Leaderboard", () => {
 
 	test("handles ties in monthly points correctly", async ({ page }) => {
 		const currentYear = new Date().getFullYear();
+		const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
 
 		const userA = await setupUserWithStats("tieA", "TieA", {
-			[`${currentYear}-01`]: ["bird1", "bird2", "bird3", "bird4", "bird5"],
+			[`${currentYear}-${currentMonth}`]: [
+				"bird1",
+				"bird2",
+				"bird3",
+				"bird4",
+				"bird5",
+			],
 		});
 
 		const userB = await setupUserWithStats("tieB", "TieB", {
-			[`${currentYear}-01`]: ["bird1", "bird2", "bird3", "bird4", "bird5"],
+			[`${currentYear}-${currentMonth}`]: [
+				"bird1",
+				"bird2",
+				"bird3",
+				"bird4",
+				"bird5",
+			],
 		});
 
 		const userC = await setupUserWithStats("tieC", "TieC", {
-			[`${currentYear}-01`]: ["bird1", "bird2", "bird3"],
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3"],
 		});
 
 		// Create Group
@@ -235,6 +256,87 @@ test.describe("Group Leaderboard", () => {
 			.locator(".leaderboard-item")
 			.filter({ hasText: "TieC" });
 		await expect(tieC.locator(".points-value")).toHaveText("2");
+	});
+
+	test("shows/hides past months with expander button", async ({ page }) => {
+		const currentYear = new Date().getFullYear();
+		const currentMonth = new Date().getMonth() + 1; // 1-indexed
+		const currentMonthKey = String(currentMonth).padStart(2, "0");
+		const pastMonthKey = String(
+			currentMonth > 1 ? currentMonth - 1 : 12,
+		).padStart(2, "0");
+
+		// Create data for current month and past month
+		const userA = await setupUserWithStats("expandA", "ExpanderAlice", {
+			[`${currentYear}-${currentMonthKey}`]: ["bird1", "bird2", "bird3"],
+			[`${currentYear}-${pastMonthKey}`]: ["bird4", "bird5"],
+		});
+
+		const userB = await setupUserWithStats("expandB", "ExpanderBob", {
+			[`${currentYear}-${currentMonthKey}`]: ["bird1"],
+			[`${currentYear}-${pastMonthKey}`]: ["bird6", "bird7", "bird8"],
+		});
+
+		// Create Group
+		const joinCode = "expander-test";
+		await seedGroup({
+			name: "Expander Test Group",
+			joinCode,
+			ownerId: userA.uid,
+			memberIds: [userA.uid, userB.uid],
+		});
+
+		// Sign in and View
+		await page.goto("/");
+		await signInInBrowser(page, userA.email, userA.password);
+		await page.click(`text=Expander Test Group`);
+
+		// Get current and past month names
+		const currentDate = new Date();
+		const currentMonthName = new Intl.DateTimeFormat("en-US", {
+			month: "long",
+		}).format(currentDate);
+
+		const pastDate = new Date(
+			currentYear,
+			currentMonth > 1 ? currentMonth - 2 : 11,
+		);
+		const pastMonthName = new Intl.DateTimeFormat("en-US", {
+			month: "long",
+		}).format(pastDate);
+
+		// Verify current month section is visible
+		const currentMonthTitle = new RegExp(
+			`Top Birdwatchers \\(${currentMonthName}\\)`,
+			"i",
+		);
+		await expect(page.getByText(currentMonthTitle)).toBeVisible();
+
+		// Verify past month section is NOT visible initially
+		const pastMonthTitle = new RegExp(
+			`Top Birdwatchers \\(${pastMonthName}\\)`,
+			"i",
+		);
+		await expect(page.getByText(pastMonthTitle)).not.toBeVisible();
+
+		// Verify expander button exists
+		const expanderButton = page.getByTestId("toggle-past-months");
+		await expect(expanderButton).toBeVisible();
+		await expect(expanderButton).toContainText("Show Past Months");
+
+		// Click to expand
+		await expanderButton.click();
+
+		// Verify past month section is now visible
+		await expect(page.getByText(pastMonthTitle)).toBeVisible();
+		await expect(expanderButton).toContainText("Hide Past Months");
+
+		// Click to collapse
+		await expanderButton.click();
+
+		// Verify past month section is hidden again
+		await expect(page.getByText(pastMonthTitle)).not.toBeVisible();
+		await expect(expanderButton).toContainText("Show Past Months");
 	});
 
 	test("displays empty state when no data", async ({ page }) => {
