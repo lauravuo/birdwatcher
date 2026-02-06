@@ -142,7 +142,6 @@ export function useLeaderboardStats(
 		// Build Leaderboard Sections (Helper)
 		const buildLeaderboard = (
 			getScore: (m: UserProfile) => number,
-			limit: number,
 		): LeaderboardEntry[] => {
 			const entries = members
 				.map((m) => ({
@@ -165,14 +164,14 @@ export function useLeaderboardStats(
 					entries[i].rank = i + 1;
 				}
 			}
-			return entries.slice(0, limit);
+			return entries;
 		};
 
 		setYearPointsLeaders(
-			buildLeaderboard((m) => yearlyPointsTracker.get(m.id) || 0, 3),
+			buildLeaderboard((m) => yearlyPointsTracker.get(m.id) || 0),
 		);
 		setYearUniqueLeaders(
-			buildLeaderboard((m) => yearUniqueMap.get(m.id)?.size || 0, 3),
+			buildLeaderboard((m) => yearUniqueMap.get(m.id)?.size || 0),
 		);
 
 		// Monthly Sections
@@ -189,7 +188,6 @@ export function useLeaderboardStats(
 
 			const entries = buildLeaderboard(
 				(m) => monthUserMap.get(m.id)?.size || 0,
-				3,
 			);
 
 			const [y, m] = monthKey.split("-");

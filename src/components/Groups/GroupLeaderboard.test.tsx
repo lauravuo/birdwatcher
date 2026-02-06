@@ -117,87 +117,78 @@ describe("GroupLeaderboard", () => {
 		);
 	};
 
-	it("renders current month section by default", () => {
+	it("renders current month in dropdown by default", () => {
 		renderComponent();
 
-		// Current month (February) should be visible
+		// Month selector should be visible
+		const monthSelector = screen.getByTestId("month-selector");
+		expect(monthSelector).toBeInTheDocument();
+
+		// Current month (February, index 0) should be selected
+		expect(monthSelector).toHaveValue("0");
+
+		// Current month section should be visible
 		expect(
 			screen.getByText(/Top Birdwatchers \(February\)/i),
 		).toBeInTheDocument();
-		// Alice appears in multiple sections, so we just verify the section exists
-		const aliceElements = screen.getAllByText("Alice");
-		expect(aliceElements.length).toBeGreaterThan(0);
 	});
 
-	it("hides past months by default", () => {
+	it("displays dropdown with all available months", () => {
 		renderComponent();
 
-		// Past month (January) should not be visible
+		const monthSelector = screen.getByTestId("month-selector");
+		const options = monthSelector.querySelectorAll("option");
+
+		// Should have 2 months (February and January)
+		expect(options).toHaveLength(2);
+		expect(options[0]).toHaveTextContent("February");
+		expect(options[1]).toHaveTextContent("January");
+	});
+
+	it("changes displayed month when dropdown selection changes", async () => {
+		renderComponent();
+
+		const monthSelector = screen.getByTestId(
+			"month-selector",
+		) as HTMLSelectElement;
+
+		// Initially showing February
 		expect(
-			screen.queryByText(/Top Birdwatchers \(January\)/i),
-		).not.toBeInTheDocument();
-		expect(screen.queryByText("Bob")).not.toBeInTheDocument();
-	});
+			screen.getByText(/Top Birdwatchers \(February\)/i),
+		).toBeInTheDocument();
+		expect(screen.queryByText(/Top Birdwatchers \(January\)/i)).toBeNull();
 
-	it("shows expander button when there are multiple months", () => {
-		renderComponent();
+		// Change to January
+		fireEvent.change(monthSelector, { target: { value: "1" } });
 
-		// Expander button should be present
-		const expanderButton = screen.getByTestId("toggle-past-months");
-		expect(expanderButton).toBeInTheDocument();
-		expect(expanderButton).toHaveTextContent("Show Past Months");
-	});
-
-	it("shows past months when expander is clicked", async () => {
-		renderComponent();
-
-		// Initially, past month should not be visible
-		expect(
-			screen.queryByText(/Top Birdwatchers \(January\)/i),
-		).not.toBeInTheDocument();
-
-		// Click the expander button
-		const expanderButton = screen.getByTestId("toggle-past-months");
-		fireEvent.click(expanderButton);
-
-		// Past month should now be visible
-		await waitFor(() => {
-			expect(
-				screen.getByText(/Top Birdwatchers \(January\)/i),
-			).toBeInTheDocument();
-			expect(screen.getByText("Bob")).toBeInTheDocument();
-		});
-
-		// Button text should change
-		expect(expanderButton).toHaveTextContent("Hide Past Months");
-	});
-
-	it("hides past months when expander is clicked again", async () => {
-		renderComponent();
-
-		// Click to expand
-		const expanderButton = screen.getByTestId("toggle-past-months");
-		fireEvent.click(expanderButton);
-
-		// Verify past month is visible
+		// Should now show January
 		await waitFor(() => {
 			expect(
 				screen.getByText(/Top Birdwatchers \(January\)/i),
 			).toBeInTheDocument();
 		});
 
-		// Click to collapse
-		fireEvent.click(expanderButton);
+		// February should not be in the title anymore (but might be in dropdown)
+		const februaryTitles = screen.queryAllByText(
+			/Top Birdwatchers \(February\)/i,
+		);
+		expect(februaryTitles).toHaveLength(0);
+	});
 
-		// Past month should be hidden again
-		await waitFor(() => {
-			expect(
-				screen.queryByText(/Top Birdwatchers \(January\)/i),
-			).not.toBeInTheDocument();
-		});
+	it("shows all members in standings", () => {
+		renderComponent();
 
-		// Button text should change back
-		expect(expanderButton).toHaveTextContent("Show Past Months");
+		// Both Alice and Bob should appear somewhere (in year or month sections)
+		// Note: Bob only appears in January data, so need to check dropdown options
+		const monthSelector = screen.getByTestId(
+			"month-selector",
+		) as HTMLSelectElement;
+
+		// Change to January to see Bob
+		fireEvent.change(monthSelector, { target: { value: "1" } });
+
+		// Now Bob should be visible
+		expect(screen.getByText("Bob")).toBeInTheDocument();
 	});
 
 	it("renders year points and unique leaders sections", () => {

@@ -19,7 +19,7 @@ export function GroupLeaderboard({
 	userStats: statsMap,
 }: GroupLeaderboardProps) {
 	const { t } = useTranslation();
-	const [showPastMonths, setShowPastMonths] = useState(false);
+	const [selectedMonthIndex, setSelectedMonthIndex] = useState(0);
 	const {
 		yearPointsLeaders,
 		yearUniqueLeaders,
@@ -122,37 +122,79 @@ export function GroupLeaderboard({
 				)}
 
 			{/* 3. Monthly Unique */}
-			{monthlySections.map((section, index) => {
-				// Current month is the first section (index 0)
-				const isCurrentMonth = index === 0;
-				// Past months should be hidden unless showPastMonths is true
-				if (!isCurrentMonth && !showPastMonths) {
-					return null;
-				}
-				return (
-					<div key={section.title}>
-						{renderSection(
-							t("leaderboard.monthUniqueLeaders", { month: section.title }),
-							section.entries,
-							"spp",
-						)}
+			{monthlySections.length > 0 && (
+				<div className="leaderboard-section">
+					<div className="month-selector-container">
+						<label htmlFor="month-selector" className="month-selector-label">
+							{t("leaderboard.selectMonth")}:
+						</label>
+						<select
+							id="month-selector"
+							className="month-selector"
+							value={selectedMonthIndex}
+							onChange={(e) =>
+								setSelectedMonthIndex(Number.parseInt(e.target.value, 10))
+							}
+							data-testid="month-selector"
+						>
+							{monthlySections.map((section, index) => (
+								<option key={section.title} value={index}>
+									{section.title}
+								</option>
+							))}
+						</select>
 					</div>
-				);
-			})}
-
-			{/* Show/Hide Past Months Button */}
-			{monthlySections.length > 1 && (
-				<div className="expander-container">
-					<button
-						type="button"
-						className="expander-button"
-						onClick={() => setShowPastMonths(!showPastMonths)}
-						data-testid="toggle-past-months"
-					>
-						{showPastMonths
-							? t("leaderboard.hidePastMonths")
-							: t("leaderboard.showPastMonths")}
-					</button>
+					{monthlySections[selectedMonthIndex] && (
+						<div>
+							<h4 className="leaderboard-section-title">
+								{t("leaderboard.monthUniqueLeaders", {
+									month: monthlySections[selectedMonthIndex].title,
+								})}
+							</h4>
+							{monthlySections[selectedMonthIndex].entries.length === 0 ? (
+								<div className="no-data">{t("userView.noSightings")}</div>
+							) : (
+								<div className="leaderboard-list group-tab-card">
+									{monthlySections[selectedMonthIndex].entries.map((entry) => (
+										<Link
+											to={`/groups/${group.id}/members/${entry.user.id}`}
+											key={entry.user.id}
+											className={`leaderboard-item rank-${entry.rank}`}
+											style={{ textDecoration: "none", color: "inherit" }}
+										>
+											<div className="leaderboard-rank">
+												{entry.rank === 1
+													? "🥇"
+													: entry.rank === 2
+														? "🥈"
+														: entry.rank === 3
+															? "🥉"
+															: `#${entry.rank}`}
+											</div>
+											<div className="leaderboard-user">
+												{entry.user.photoURL && (
+													<img
+														src={entry.user.photoURL}
+														alt={entry.user.displayName || "User"}
+														className="user-avatar-small"
+													/>
+												)}
+												<span className="user-name">
+													{entry.user.displayName || t("common.anonymous")}
+												</span>
+											</div>
+											<div className="leaderboard-stats">
+												<div className="points">
+													<span className="points-value">{entry.value}</span>
+													<span className="points-label">spp</span>
+												</div>
+											</div>
+										</Link>
+									))}
+								</div>
+							)}
+						</div>
+					)}
 				</div>
 			)}
 
