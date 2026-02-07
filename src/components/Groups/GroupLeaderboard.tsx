@@ -18,7 +18,7 @@ export function GroupLeaderboard({
 	members,
 	userStats: statsMap,
 }: GroupLeaderboardProps) {
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation();
 	const currentYear = new Date().getFullYear();
 	const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
 	const defaultMonth = `${currentYear}-${currentMonth}`;
@@ -105,11 +105,13 @@ export function GroupLeaderboard({
 							className="month-selector"
 							data-testid="month-selector"
 						>
-							{generateMonthOptions(currentYear).map((option) => (
-								<option key={option.value} value={option.value}>
-									{option.label}
-								</option>
-							))}
+							{generateMonthOptions(currentYear, i18n.language).map(
+								(option) => (
+									<option key={option.value} value={option.value}>
+										{option.label}
+									</option>
+								),
+							)}
 						</select>
 					</div>
 
@@ -178,6 +180,7 @@ export function GroupLeaderboard({
 // Helper function to generate month options
 function generateMonthOptions(
 	year: number,
+	language: string,
 ): { value: string; label: string }[] {
 	const options: { value: string; label: string }[] = [];
 	const currentMonth = new Date().getMonth();
@@ -185,7 +188,7 @@ function generateMonthOptions(
 	for (let m = 0; m <= currentMonth; m++) {
 		const monthKey = `${year}-${String(m + 1).padStart(2, "0")}`;
 		const date = new Date(year, m);
-		const monthName = new Intl.DateTimeFormat("en-US", {
+		const monthName = new Intl.DateTimeFormat(language, {
 			month: "long",
 		}).format(date);
 		options.push({
