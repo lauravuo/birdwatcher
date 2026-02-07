@@ -468,6 +468,8 @@
 		"yearPointsLeaders": "Pistepörssi ({{year}})",
 		"yearUniqueLeaders": "Ahkerimmat ({{year}})",
 		"monthUniqueLeaders": "Ahkerimmat ({{month}})",
-		"groupTotal": "Lintuja yhteensä ({{year}})"
+		"groupTotal": "Lintuja yhteensä ({{year}})",
+		"selectMonth": "Valitse kuukausi",
+		"noSightingsThisMonth": "Ei havaintoja tältä kuukaudelta"
 	}
 }

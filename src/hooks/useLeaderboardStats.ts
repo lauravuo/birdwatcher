@@ -13,6 +13,12 @@ export interface LeaderboardSection {
 	entries: LeaderboardEntry[];
 }
 
+export interface MonthlyData {
+	monthKey: string;
+	monthName: string;
+	entries: LeaderboardEntry[];
+}
+
 export function useLeaderboardStats(
 	group: Group,
 	members: UserProfile[],
@@ -28,6 +34,7 @@ export function useLeaderboardStats(
 	const [monthlySections, setMonthlySections] = useState<LeaderboardSection[]>(
 		[],
 	);
+	const [monthlyData, setMonthlyData] = useState<MonthlyData[]>([]);
 	const [groupTotalCount, setGroupTotalCount] = useState<number>(0);
 
 	const currentYear = new Date().getFullYear();
@@ -142,7 +149,7 @@ export function useLeaderboardStats(
 		// Build Leaderboard Sections (Helper)
 		const buildLeaderboard = (
 			getScore: (m: UserProfile) => number,
-			limit: number,
+			limit?: number,
 		): LeaderboardEntry[] => {
 			const entries = members
 				.map((m) => ({
@@ -165,7 +172,7 @@ export function useLeaderboardStats(
 					entries[i].rank = i + 1;
 				}
 			}
-			return entries.slice(0, limit);
+			return limit ? entries.slice(0, limit) : entries;
 		};
 
 		setYearPointsLeaders(
@@ -175,21 +182,15 @@ export function useLeaderboardStats(
 			buildLeaderboard((m) => yearUniqueMap.get(m.id)?.size || 0, 3),
 		);
 
-		// Monthly Sections
+		// Monthly Sections (for backward compatibility) and Monthly Data (for new month selector)
 		const newMonthlySections: LeaderboardSection[] = [];
+		const newMonthlyData: MonthlyData[] = [];
 		for (const monthKey of months) {
 			const monthUserMap = monthlyUniqueMap.get(monthKey);
 			if (!monthUserMap) continue;
 
-			let totalInMonth = 0;
-			monthUserMap.forEach((s) => {
-				totalInMonth += s.size;
-			});
-			if (totalInMonth === 0) continue;
-
 			const entries = buildLeaderboard(
 				(m) => monthUserMap.get(m.id)?.size || 0,
-				3,
 			);
 
 			const [y, m] = monthKey.split("-");
@@ -199,9 +200,21 @@ export function useLeaderboardStats(
 			}).format(date);
 			const title = monthName.charAt(0).toUpperCase() + monthName.slice(1);
 
-			newMonthlySections.push({ title, entries });
+			// Store all monthly data for the month selector
+			newMonthlyData.push({ monthKey, monthName: title, entries });
+
+			// Keep top 3 for backward compatibility sections (for year-level overview)
+			let totalInMonth = 0;
+			monthUserMap.forEach((s) => {
+				totalInMonth += s.size;
+			});
+			if (totalInMonth === 0) continue;
+
+			const topEntries = entries.slice(0, 3);
+			newMonthlySections.push({ title, entries: topEntries });
 		}
 		setMonthlySections(newMonthlySections);
+		setMonthlyData(newMonthlyData);
 		setGroupTotalCount(groupUniqueSet.size);
 	}, [group.memberIds, members, statsMap, currentYear, i18n.language]);
 
@@ -209,6 +222,7 @@ export function useLeaderboardStats(
 		yearPointsLeaders,
 		yearUniqueLeaders,
 		monthlySections,
+		monthlyData,
 		currentYear,
 		groupTotalCount,
 	};
