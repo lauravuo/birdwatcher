@@ -6,9 +6,5 @@ CODE_CHANGED=$(echo "$CHANGED_FILES" | grep -E '\.(ts?|tsx?|jsx?|css|html)$' || 
 
 if [ -n "$CODE_CHANGED" ]; then
   # Code files changed, run E2E tests
-  # Temporarily skip due to Java version requirement
-  # TODO: Re-enable once Java 21+ is available
-  echo "⚠️  Skipping E2E tests due to Java version requirement"
-  echo "    Please ensure E2E tests pass locally or in CI before merging"
-  # npm run test:e2e:emulator
+  npm run test:e2e:emulator
 fi
