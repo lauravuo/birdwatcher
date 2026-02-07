@@ -1,7 +1,7 @@
-import { expect, test } from "@playwright/test";
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
 import { signInInBrowser } from "./helpers/browser-auth";
 import { clearAllTestData, seedGroup } from "./helpers/firestore-helpers";
+import { expect, test } from "./helpers/fixtures";
 
 test.describe("Sightings", () => {
 	test.beforeEach(async ({ page }) => {

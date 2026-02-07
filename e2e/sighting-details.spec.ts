@@ -1,4 +1,3 @@
-import { expect, test } from "@playwright/test";
 import { createTestUser } from "./helpers/auth-helpers";
 import { signInInBrowser } from "./helpers/browser-auth";
 import {
@@ -6,6 +5,7 @@ import {
 	seedSighting,
 	seedUserProfile,
 } from "./helpers/firestore-helpers";
+import { expect, test } from "./helpers/fixtures";
 
 test.describe("Sighting Details", () => {
 	test.beforeEach(async ({ page }) => {

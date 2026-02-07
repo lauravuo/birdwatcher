@@ -1,8 +1,7 @@
-import { expect, test } from "@playwright/test";
 import type { User } from "firebase/auth";
-
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
 import { clearAllTestData, seedGroup } from "./helpers/firestore-helpers";
+import { expect, test } from "./helpers/fixtures";
 
 test.describe("Sighting Modification (Edit/Delete)", () => {
 	let testUser: User;

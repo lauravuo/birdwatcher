@@ -1,7 +1,8 @@
-import { expect, type Page, test } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
 import { signInInBrowser, signOutInBrowser } from "./helpers/browser-auth";
 import { clearAllTestData, getGroupByCode } from "./helpers/firestore-helpers";
+import { expect, test } from "./helpers/fixtures";
 
 test.describe("Groups UI", () => {
 	const createGroup = async (
