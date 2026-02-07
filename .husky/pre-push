@@ -1,9 +1,11 @@
 #!/usr/bin/env sh
 
-# Check if only .md files changed
+# Check if any code files changed (not just docs/config)
 CHANGED_FILES=$(git diff --name-only origin/copilot/set-up-copilot-instructions..HEAD)
-if echo "$CHANGED_FILES" | grep -qv '\.md$'; then
-  # Non-markdown files changed, run full tests
+CODE_CHANGED=$(echo "$CHANGED_FILES" | grep -E '\.(tsx?|jsx?|css|html)$' || true)
+
+if [ -n "$CODE_CHANGED" ]; then
+  # Code files changed, run E2E tests
   npm run test:e2e:emulator
 fi
 
