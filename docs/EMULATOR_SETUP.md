@@ -2,6 +2,23 @@
 
 This guide explains how to use the Firebase Emulator for local development and testing.
 
+## Quick Setup (Recommended)
+
+**For Copilot environments, run the setup script first:**
+
+```bash
+./setup-copilot-env.sh
+```
+
+This automated script will:
+- ✓ Install Java 21 if needed
+- ✓ Set Java 21 as the default version
+- ✓ Install Node.js dependencies
+- ✓ Verify Firebase emulator availability
+- ✓ Download emulator JARs (when network allows)
+
+After setup completes, you can start using the emulator immediately.
+
 ## Why Use the Emulator?
 
 The Firebase Emulator provides several advantages:

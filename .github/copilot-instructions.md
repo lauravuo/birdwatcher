@@ -100,6 +100,21 @@ test: add e2e tests for login flow
 
 ## Build and Development
 
+### Initial Setup for Copilot Environment
+
+**IMPORTANT**: Before starting development, run the setup script to ensure Java 21 and Firebase emulator are properly configured:
+
+```bash
+./setup-copilot-env.sh
+```
+
+This script will:
+- ✓ Install Java 21 if not present
+- ✓ Set Java 21 as the default version
+- ✓ Install Node.js dependencies
+- ✓ Verify Firebase emulator is available
+- ✓ Download Firebase emulator JARs (if needed)
+
 ### Common Commands
 - `npm run dev` - Start development server (production mode)
 - `npm run dev:emulator` - Start development server with Firebase Emulator (test data mode)
