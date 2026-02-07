@@ -8,7 +8,7 @@ Birdwatcher is a mobile-first web application for birdwatchers to track and shar
 - **Always use Conventional Commits format**
   - Examples: `feat:`, `fix:`, `chore:`, `docs:`, `test:`, `refactor:`, `style:`, `perf:`
   - Use lowercase for the scope (e.g., `feat(ui): add new button`)
-  - **Do not exceed 50 characters for the summary line**
+  - **Keep summary line under 72 characters**
   - Format: `<type>(<scope>): <subject>`
 
 ### Examples
@@ -16,7 +16,7 @@ Birdwatcher is a mobile-first web application for birdwatchers to track and shar
 feat: add user authentication
 fix: resolve memory leak in data fetching
 chore: update dependencies
-docs: update README with setup instructions
+docs: update README with setup info
 test: add e2e tests for login flow
 ```
 
