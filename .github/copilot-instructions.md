@@ -158,3 +158,4 @@ test: add e2e tests for login flow
 - Write tests for new features and bug fixes
 - CI runs on PRs: lint, unit tests, build, E2E tests
 - Deployment to Firebase Hosting on merge to main
+
