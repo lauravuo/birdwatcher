@@ -329,7 +329,10 @@ test.describe("Group Leaderboard", () => {
 
 		// Switch to previous month
 		await selector.selectOption({ index: 1 });
-		await page.waitForTimeout(500); // Give time for state update
+
+		// Wait for the leaderboard to update with new data
+		await page.waitForTimeout(100); // Brief wait for state update
+		await page.locator(".leaderboard-item").first().waitFor();
 
 		// Verify previous month data (Bob: 3, Alice: 2)
 		leaderboardItems = page.locator(".leaderboard-item");
@@ -430,7 +433,9 @@ test.describe("Group Leaderboard", () => {
 		// Switch to a different month (previous month)
 		const selector = page.getByTestId("month-selector");
 		await selector.selectOption({ index: 1 });
-		await page.waitForTimeout(500);
+
+		// Wait for empty state message to appear
+		await page.waitForSelector("text=No sightings recorded for this month");
 
 		// Verify empty state message
 		await expect(

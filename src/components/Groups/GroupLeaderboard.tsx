@@ -34,9 +34,7 @@ export function GroupLeaderboard({
 		useState(currentMonthIndex);
 
 	// Get the selected month's data
-	const selectedMonthData = monthlyData.find(
-		(_, index) => index === selectedMonthIndex,
-	);
+	const selectedMonthData = monthlyData[selectedMonthIndex];
 
 	const renderSection = (
 		title: string,

@@ -1,14 +1,14 @@
 #!/usr/bin/env sh
 
-# Temporarily skip E2E tests due to Java version requirement
-# TODO: Re-enable once Java 21+ is available
-exit 0
-
 # Check if any code files changed (not just docs/config)
 CHANGED_FILES=$(git diff --name-only @{upstream}..HEAD)
 CODE_CHANGED=$(echo "$CHANGED_FILES" | grep -E '\.(ts?|tsx?|jsx?|css|html)$' || true)
 
 if [ -n "$CODE_CHANGED" ]; then
   # Code files changed, run E2E tests
-  npm run test:e2e:emulator
+  # Temporarily skip due to Java version requirement
+  # TODO: Re-enable once Java 21+ is available
+  echo "⚠️  Skipping E2E tests due to Java version requirement"
+  echo "    Please ensure E2E tests pass locally or in CI before merging"
+  # npm run test:e2e:emulator
 fi
