@@ -331,10 +331,11 @@ test.describe("Group Leaderboard", () => {
 		await expect(page.getByTestId("month-selector")).toBeVisible();
 
 		// Verify all 5 members are shown (not just top 3)
+		// Monthly section is now the last section with "Top Birdwatchers"
 		const monthSection = page
 			.locator(".leaderboard-section")
 			.filter({ hasText: /Top Birdwatchers/ })
-			.first();
+			.last();
 
 		await expect(monthSection).toBeVisible();
 		await expect(monthSection.locator(".leaderboard-item")).toHaveCount(5);
@@ -498,10 +499,11 @@ test.describe("Group Leaderboard", () => {
 		await page.click(`text=Switch Month Group`);
 
 		// Current month should show Alice with 3, Bob with 1
+		// Monthly section is now the last section with "Top Birdwatchers"
 		let monthSection = page
 			.locator(".leaderboard-section")
 			.filter({ hasText: /Top Birdwatchers/ })
-			.first();
+			.last();
 
 		let items = monthSection.locator(".leaderboard-item");
 		await expect(items.nth(0)).toContainText("Alice");
@@ -515,7 +517,7 @@ test.describe("Group Leaderboard", () => {
 		monthSection = page
 			.locator(".leaderboard-section")
 			.filter({ hasText: /Top Birdwatchers/ })
-			.first();
+			.last();
 
 		items = monthSection.locator(".leaderboard-item");
 		await expect(items.nth(0)).toContainText("Bob");

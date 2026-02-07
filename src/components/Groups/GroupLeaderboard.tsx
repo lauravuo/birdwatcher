@@ -93,46 +93,6 @@ export function GroupLeaderboard({
 				<div className="empty-state">{t("groupSightings.noSightings")}</div>
 			) : (
 				<>
-					{/* Month Selector */}
-					<div className="month-selector-container">
-						<label htmlFor="month-select" className="month-selector-label">
-							{t("leaderboard.selectMonth")}:
-						</label>
-						<select
-							id="month-select"
-							value={selectedMonth}
-							onChange={(e) => setSelectedMonth(e.target.value)}
-							className="month-selector"
-							data-testid="month-selector"
-						>
-							{generateMonthOptions(currentYear, i18n.language).map(
-								(option) => (
-									<option key={option.value} value={option.value}>
-										{option.label}
-									</option>
-								),
-							)}
-						</select>
-					</div>
-
-					{/* Monthly Unique Section */}
-					{monthlySections.length === 0 ? (
-						<div className="empty-state">
-							{t("leaderboard.noSightingsForMonth")}
-						</div>
-					) : (
-						monthlySections.map((section) => (
-							<div key={section.title}>
-								{renderSection(
-									t("leaderboard.monthUniqueLeaders", { month: section.title }),
-									section.entries,
-									"spp",
-								)}
-							</div>
-						))
-					)}
-
-					{/* Show year stats below monthly stats */}
 					{/* 0. Group Total */}
 					{groupTotalCount > 0 && (
 						<div className="leaderboard-section">
@@ -171,6 +131,44 @@ export function GroupLeaderboard({
 							yearUniqueLeaders,
 							"spp",
 						)}
+
+					{/* 3. Monthly Unique Section - Month Selector and Stats */}
+					<div className="month-selector-container">
+						<label htmlFor="month-select" className="month-selector-label">
+							{t("leaderboard.selectMonth")}:
+						</label>
+						<select
+							id="month-select"
+							value={selectedMonth}
+							onChange={(e) => setSelectedMonth(e.target.value)}
+							className="month-selector"
+							data-testid="month-selector"
+						>
+							{generateMonthOptions(currentYear, i18n.language).map(
+								(option) => (
+									<option key={option.value} value={option.value}>
+										{option.label}
+									</option>
+								),
+							)}
+						</select>
+					</div>
+
+					{monthlySections.length === 0 ? (
+						<div className="empty-state">
+							{t("leaderboard.noSightingsForMonth")}
+						</div>
+					) : (
+						monthlySections.map((section) => (
+							<div key={section.title}>
+								{renderSection(
+									t("leaderboard.monthUniqueLeaders", { month: section.title }),
+									section.entries,
+									"spp",
+								)}
+							</div>
+						))
+					)}
 				</>
 			)}
 		</div>
