@@ -1,21 +1,42 @@
 name: "Copilot Setup Steps"
 
+# Automatically run the setup steps when they are changed to allow for easy validation, and
+# allow manual testing through the repository's "Actions" tab
 on:
-  workflow_call:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
 
 jobs:
+  # The job MUST be called `copilot-setup-steps` or it will not be picked up by Copilot.
   copilot-setup-steps:
     runs-on: ubuntu-latest
 
-    steps:
-      # Step 1: Set up Node.js with version 22 and enable caching for npm
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22
-          cache: 'npm' # Use caching for npm dependencies
+    # Set the permissions to the lowest permissions possible needed for your steps.
+    # Copilot will be given its own token for its operations.
+    permissions:
+      # If you want to clone the repository as part of your setup steps, for example to install dependencies, you'll need the `contents: read` permission. If you don't clone the repository in your setup steps, Copilot will do this for you automatically after the steps complete.
+      contents: read
 
-      # Step 2: Install Playwright browsers with caching and run npm ci
+    # You can define any steps you want, and they will run before the agent starts.
+    # If you do not check out your code, Copilot will do this for you.
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install JavaScript dependencies
+        run: npm ci
+
+      # Cache Playwright browsers
       - name: Cache Playwright browsers
         uses: actions/cache@v3
         with:
@@ -25,18 +46,15 @@ jobs:
             ${{ runner.os }}-playwright-
 
       - name: Install Node.js dependencies and Playwright
-        run: |
-          npm ci
-          npx playwright install
+        run: npx playwright install
 
-      # Step 3: Set up Java with version 21 or higher
+      # Set up Java with version 21 or higher
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '21'
 
-      # Step 4: Cache Firebase emulators
       - name: Cache Firebase emulators
         uses: actions/cache@v3
         with:
@@ -45,7 +63,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-firebase-emulators-
 
-      # Step 5: Download Firebase emulators to avoid firewall issues during work
+      # Download Firebase emulators to avoid firewall issues during work
       - name: Download Firebase emulators
         run: |
           npx firebase-tools setup:emulators:firestore
