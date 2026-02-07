@@ -7,18 +7,17 @@
 
 import { initializeApp } from "firebase/app";
 import {
-	getAuth,
 	connectAuthEmulator,
 	createUserWithEmailAndPassword,
+	getAuth,
 	signInWithEmailAndPassword,
 } from "firebase/auth";
 import {
-	getFirestore,
 	connectFirestoreEmulator,
-	collection,
 	doc,
-	setDoc,
+	getFirestore,
 	serverTimestamp,
+	setDoc,
 } from "firebase/firestore";
 
 // Initialize Firebase with emulator config

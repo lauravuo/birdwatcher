@@ -101,18 +101,61 @@ test: add e2e tests for login flow
 ## Build and Development
 
 ### Common Commands
-- `npm run dev` - Start development server
+- `npm run dev` - Start development server (production mode)
+- `npm run dev:emulator` - Start development server with Firebase Emulator (test data mode)
 - `npm run build` - Build for production (runs TypeScript compiler + Vite build)
 - `npm run lint` - Check code style
 - `npm run format` - Fix code style issues
 - `npm test` - Run unit tests in watch mode
 - `npm run test:all` - Run complete test suite
 - `npm run emulator:start` - Start Firebase emulator
+- `npm run emulator:seed` - Seed emulator with test data
+- `./start-dev-emulator.sh` - All-in-one: start emulator, seed data, and run dev server
 
 ### Environment Setup
 1. Copy `.env.example` to `.env`
 2. Configure Firebase credentials (see `docs/FIREBASE_SETUP.md`)
 3. For testing, use `.env.test` with emulator settings
+
+### Development with Firebase Emulator (Recommended for Testing & Screenshots)
+
+**Prerequisites:**
+- Java 21 or higher must be installed and set as default
+- Verify with: `java -version`
+- Set JAVA_HOME if needed: `export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64`
+
+**Quick Start with Emulator:**
+```bash
+# All-in-one script (starts emulator, seeds data, runs dev server)
+./start-dev-emulator.sh
+
+# Or manually:
+# 1. Start emulator (in one terminal)
+npm run emulator:start
+
+# 2. Seed test data (in another terminal)
+npm run emulator:seed
+
+# 3. Start dev server with emulator config
+npm run dev:emulator
+```
+
+**Test Users (after seeding):**
+- alice@example.com / password123 (5 birds current month, 2 previous)
+- bob@example.com / password123 (4 birds current month, 4 previous)
+- charlie@example.com / password123 (4 birds current month, 1 previous)
+- david@example.com / password123 (2 birds current month, 3 previous)
+- eve@example.com / password123 (1 bird current month, 0 previous)
+
+**Test Group:**
+- Name: "Birdwatchers United"
+- Join Code: `DEMO2024`
+
+This setup is ideal for:
+- Taking screenshots of features without real user data
+- Testing the application locally
+- Developing new features with realistic data
+- Verifying UI changes across different user scenarios
 
 ## Security Considerations
 - Never commit secrets or API keys
@@ -158,4 +201,25 @@ test: add e2e tests for login flow
 - Write tests for new features and bug fixes
 - CI runs on PRs: lint, unit tests, build, E2E tests
 - Deployment to Firebase Hosting on merge to main
+
+## Taking Screenshots for PRs
+
+When making UI changes, always provide screenshots to show the impact:
+
+**Setup for Screenshots:**
+1. Use the emulator mode to avoid exposing real user data
+2. Start with: `./start-dev-emulator.sh` or `npm run dev:emulator` (after starting emulator)
+3. Log in with one of the test users (e.g., alice@example.com / password123)
+4. Navigate to the feature you've changed
+5. Take screenshots showing:
+   - Normal state
+   - Edge cases (empty states, error states)
+   - Different user scenarios (if applicable)
+   - Mobile and desktop views (if responsive changes)
+
+**Screenshot Tips:**
+- Use browser dev tools to simulate different screen sizes
+- Capture the full context (not just a small portion)
+- Show meaningful data (the seeded test data provides good variety)
+- Annotate screenshots if needed to highlight specific changes
 
