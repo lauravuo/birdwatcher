@@ -41,6 +41,17 @@ When the emulator is running, access the UI at:
 
 ## CI/CD Testing
 
+### Copilot Setup Steps (`.github/workflows/copilot-setup-steps.yml`)
+This workflow is used by GitHub Copilot to set up the development environment:
+1. Sets up Node.js 22
+2. Installs Firebase Tools globally
+3. **Pre-downloads Firebase Emulators** (firestore, auth) - Critical for offline operation
+4. Installs project dependencies
+5. Sets up Java 21 (required for emulators)
+
+> [!IMPORTANT]
+> The pre-download step runs **before** firewall restrictions are applied, ensuring emulators are available for offline testing.
+
 ### Pull Request Checks (`.github/workflows/pr.yml`)
 Automatically runs on every PR:
 1. Lint check (`npm run lint`)
