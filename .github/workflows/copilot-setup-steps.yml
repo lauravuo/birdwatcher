@@ -1,0 +1,53 @@
+name: "Copilot Setup Steps"
+
+on:
+  workflow_call:
+
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Set up Node.js with version 22 and enable caching for npm
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: 'npm' # Use caching for npm dependencies
+
+      # Step 2: Install Playwright browsers with caching and run npm ci
+      - name: Cache Playwright browsers
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Node.js dependencies and Playwright
+        run: |
+          npm ci
+          npx playwright install
+
+      # Step 3: Set up Java with version 21 or higher
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      # Step 4: Cache Firebase emulators
+      - name: Cache Firebase emulators
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/firebase/emulators
+          key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('firebase.json') }}
+          restore-keys: |
+            ${{ runner.os }}-firebase-emulators-
+
+      # Step 5: Download Firebase emulators to avoid firewall issues during work
+      - name: Download Firebase emulators
+        run: |
+          npx firebase-tools setup:emulators:firestore
+          npx firebase-tools setup:emulators:ui
+        continue-on-error: false

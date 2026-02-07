@@ -332,7 +332,8 @@ test.describe("Groups UI", () => {
 
 		const now = new Date();
 		const year = now.getFullYear();
-		const month = String(now.getMonth() + 1).padStart(2, "0");
+		const monthIndex = now.getMonth(); // 0-based month index for select options
+		const month = String(monthIndex + 1).padStart(2, "0"); // 1-based month string for date formatting
 		const today = `${year}-${month}-15`;
 
 		// Previous Month/Year logic
@@ -410,7 +411,7 @@ test.describe("Groups UI", () => {
 		}
 
 		// Switch back to Month
-		await page.getByLabel("Month").selectOption(String(Number(month) - 1)); // Select original month index
+		await page.getByLabel("Month").selectOption(String(monthIndex)); // Select original month using 0-based index
 		await expect(page.getByLabel("Month")).toBeVisible();
 	});
 });
