@@ -1044,11 +1044,15 @@ h1 {
 	display: flex;
 	align-items: center;
 	gap: 1rem;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1rem;
 	padding: 1rem;
 	background: var(--bg-secondary);
 	border-radius: 8px;
 	border: 1px solid var(--border-color);
+}
+
+.leaderboard-section .month-selector-container {
+	margin-top: 1rem;
 }
 
 .month-selector-label {
