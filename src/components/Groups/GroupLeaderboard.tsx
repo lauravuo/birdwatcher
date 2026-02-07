@@ -86,82 +86,91 @@ export function GroupLeaderboard({
 
 	return (
 		<div className="leaderboard-container">
-			{/* Month Selector */}
-			<div className="month-selector-container">
-				<label htmlFor="month-select" className="month-selector-label">
-					{t("leaderboard.selectMonth")}:
-				</label>
-				<select
-					id="month-select"
-					value={selectedMonth}
-					onChange={(e) => setSelectedMonth(e.target.value)}
-					className="month-selector"
-					data-testid="month-selector"
-				>
-					{generateMonthOptions(currentYear).map((option) => (
-						<option key={option.value} value={option.value}>
-							{option.label}
-						</option>
-					))}
-				</select>
-			</div>
+			{/* If absolutely empty */}
+			{yearPointsLeaders.length === 0 &&
+			yearUniqueLeaders.length === 0 &&
+			monthlySections.length === 0 ? (
+				<div className="empty-state">{t("groupSightings.noSightings")}</div>
+			) : (
+				<>
+					{/* Month Selector */}
+					<div className="month-selector-container">
+						<label htmlFor="month-select" className="month-selector-label">
+							{t("leaderboard.selectMonth")}:
+						</label>
+						<select
+							id="month-select"
+							value={selectedMonth}
+							onChange={(e) => setSelectedMonth(e.target.value)}
+							className="month-selector"
+							data-testid="month-selector"
+						>
+							{generateMonthOptions(currentYear).map((option) => (
+								<option key={option.value} value={option.value}>
+									{option.label}
+								</option>
+							))}
+						</select>
+					</div>
 
-			{/* Monthly Unique Section */}
-			{monthlySections.map((section) => (
-				<div key={section.title}>
-					{section.entries.length === 0 ? (
+					{/* Monthly Unique Section */}
+					{monthlySections.length === 0 ? (
 						<div className="empty-state">
 							{t("leaderboard.noSightingsForMonth")}
 						</div>
 					) : (
-						renderSection(
-							t("leaderboard.monthUniqueLeaders", { month: section.title }),
-							section.entries,
-							"spp",
-						)
-					)}
-				</div>
-			))}
-
-			{/* Show year stats below monthly stats */}
-			{/* 0. Group Total */}
-			{groupTotalCount > 0 && (
-				<div className="leaderboard-section">
-					<h4 className="leaderboard-section-title">
-						{t("leaderboard.groupTotal", { year: currentYear })}
-					</h4>
-					<div className="leaderboard-list group-tab-card">
-						<div className="leaderboard-item" style={{ cursor: "default" }}>
-							<div className="leaderboard-rank">👥</div>
-							<div className="leaderboard-user">
-								<span className="user-name">{group.name}</span>
+						monthlySections.map((section) => (
+							<div key={section.title}>
+								{renderSection(
+									t("leaderboard.monthUniqueLeaders", { month: section.title }),
+									section.entries,
+									"spp",
+								)}
 							</div>
-							<div className="leaderboard-stats">
-								<div className="points">
-									<span className="points-value">{groupTotalCount}</span>
-									<span className="points-label">spp</span>
+						))
+					)}
+
+					{/* Show year stats below monthly stats */}
+					{/* 0. Group Total */}
+					{groupTotalCount > 0 && (
+						<div className="leaderboard-section">
+							<h4 className="leaderboard-section-title">
+								{t("leaderboard.groupTotal", { year: currentYear })}
+							</h4>
+							<div className="leaderboard-list group-tab-card">
+								<div className="leaderboard-item" style={{ cursor: "default" }}>
+									<div className="leaderboard-rank">👥</div>
+									<div className="leaderboard-user">
+										<span className="user-name">{group.name}</span>
+									</div>
+									<div className="leaderboard-stats">
+										<div className="points">
+											<span className="points-value">{groupTotalCount}</span>
+											<span className="points-label">spp</span>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
+					)}
+
+					{/* 1. Year Points */}
+					{yearPointsLeaders.length > 0 &&
+						renderSection(
+							t("leaderboard.yearPointsLeaders", { year: currentYear }),
+							yearPointsLeaders,
+							"pts",
+						)}
+
+					{/* 2. Year Unique */}
+					{yearUniqueLeaders.length > 0 &&
+						renderSection(
+							t("leaderboard.yearUniqueLeaders", { year: currentYear }),
+							yearUniqueLeaders,
+							"spp",
+						)}
+				</>
 			)}
-
-			{/* 1. Year Points */}
-			{yearPointsLeaders.length > 0 &&
-				renderSection(
-					t("leaderboard.yearPointsLeaders", { year: currentYear }),
-					yearPointsLeaders,
-					"pts",
-				)}
-
-			{/* 2. Year Unique */}
-			{yearUniqueLeaders.length > 0 &&
-				renderSection(
-					t("leaderboard.yearUniqueLeaders", { year: currentYear }),
-					yearUniqueLeaders,
-					"spp",
-				)}
 		</div>
 	);
 }
