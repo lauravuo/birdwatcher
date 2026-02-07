@@ -35,3 +35,18 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21+'
+
+      # Step 4: Cache Firebase emulators
+      - name: Cache Firebase emulators
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/firebase/emulators
+          key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('firebase.json') }}
+          restore-keys: |
+            ${{ runner.os }}-firebase-emulators-
+
+      # Step 5: Download Firebase emulators to avoid firewall issues during work
+      - name: Download Firebase emulators
+        run: |
+          npx firebase setup:emulators:firestore
+          npx firebase setup:emulators:ui
