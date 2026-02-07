@@ -1,1 +1,10 @@
-npm run test:e2e:emulator
+#!/usr/bin/env sh
+
+# Check if any code files changed (not just docs/config)
+CHANGED_FILES=$(git diff --name-only @{upstream}..HEAD)
+CODE_CHANGED=$(echo "$CHANGED_FILES" | grep -E '\.(ts?|tsx?|jsx?|css|html)$' || true)
+
+if [ -n "$CODE_CHANGED" ]; then
+  # Code files changed, run E2E tests
+  npm run test:e2e:emulator
+fi
