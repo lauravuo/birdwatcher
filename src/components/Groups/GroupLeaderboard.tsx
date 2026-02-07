@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import {
@@ -18,13 +19,18 @@ export function GroupLeaderboard({
 	userStats: statsMap,
 }: GroupLeaderboardProps) {
 	const { t } = useTranslation();
+	const currentYear = new Date().getFullYear();
+	const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
+	const defaultMonth = `${currentYear}-${currentMonth}`;
+
+	const [selectedMonth, setSelectedMonth] = useState<string>(defaultMonth);
+
 	const {
 		yearPointsLeaders,
 		yearUniqueLeaders,
 		monthlySections,
-		currentYear,
 		groupTotalCount,
-	} = useLeaderboardStats(group, members, statsMap);
+	} = useLeaderboardStats(group, members, statsMap, selectedMonth);
 
 	const renderSection = (
 		title: string,
@@ -80,6 +86,44 @@ export function GroupLeaderboard({
 
 	return (
 		<div className="leaderboard-container">
+			{/* Month Selector */}
+			<div className="month-selector-container">
+				<label htmlFor="month-select" className="month-selector-label">
+					{t("leaderboard.selectMonth")}:
+				</label>
+				<select
+					id="month-select"
+					value={selectedMonth}
+					onChange={(e) => setSelectedMonth(e.target.value)}
+					className="month-selector"
+					data-testid="month-selector"
+				>
+					{generateMonthOptions(currentYear).map((option) => (
+						<option key={option.value} value={option.value}>
+							{option.label}
+						</option>
+					))}
+				</select>
+			</div>
+
+			{/* Monthly Unique Section */}
+			{monthlySections.map((section) => (
+				<div key={section.title}>
+					{section.entries.length === 0 ? (
+						<div className="empty-state">
+							{t("leaderboard.noSightingsForMonth")}
+						</div>
+					) : (
+						renderSection(
+							t("leaderboard.monthUniqueLeaders", { month: section.title }),
+							section.entries,
+							"spp",
+						)
+					)}
+				</div>
+			))}
+
+			{/* Show year stats below monthly stats */}
 			{/* 0. Group Total */}
 			{groupTotalCount > 0 && (
 				<div className="leaderboard-section">
@@ -118,24 +162,28 @@ export function GroupLeaderboard({
 					yearUniqueLeaders,
 					"spp",
 				)}
-
-			{/* 3. Monthly Unique */}
-			{monthlySections.map((section) => (
-				<div key={section.title}>
-					{renderSection(
-						t("leaderboard.monthUniqueLeaders", { month: section.title }),
-						section.entries,
-						"spp",
-					)}
-				</div>
-			))}
-
-			{/* If absolutely empty */}
-			{yearPointsLeaders.length === 0 &&
-				yearUniqueLeaders.length === 0 &&
-				monthlySections.length === 0 && (
-					<div className="empty-state">{t("groupSightings.noSightings")}</div>
-				)}
 		</div>
 	);
+}
+
+// Helper function to generate month options
+function generateMonthOptions(
+	year: number,
+): { value: string; label: string }[] {
+	const options: { value: string; label: string }[] = [];
+	const currentMonth = new Date().getMonth();
+
+	for (let m = 0; m <= currentMonth; m++) {
+		const monthKey = `${year}-${String(m + 1).padStart(2, "0")}`;
+		const date = new Date(year, m);
+		const monthName = new Intl.DateTimeFormat("en-US", {
+			month: "long",
+		}).format(date);
+		options.push({
+			value: monthKey,
+			label: `${monthName} ${year}`,
+		});
+	}
+
+	return options.reverse(); // Most recent first
 }
