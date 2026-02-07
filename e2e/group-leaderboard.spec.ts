@@ -46,7 +46,13 @@ test.describe("Group Leaderboard", () => {
 
 		// 1. Setup Data
 		const userA = await setupUserWithStats("leaderA", "Alice", {
-			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3", "bird4", "bird5"], // 5 unique
+			[`${currentYear}-${currentMonth}`]: [
+				"bird1",
+				"bird2",
+				"bird3",
+				"bird4",
+				"bird5",
+			], // 5 unique
 			[`${currentYear - 1}-05`]: ["bird5", "bird6"],
 		});
 
@@ -192,11 +198,23 @@ test.describe("Group Leaderboard", () => {
 		const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
 
 		const userA = await setupUserWithStats("tieA", "TieA", {
-			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3", "bird4", "bird5"],
+			[`${currentYear}-${currentMonth}`]: [
+				"bird1",
+				"bird2",
+				"bird3",
+				"bird4",
+				"bird5",
+			],
 		});
 
 		const userB = await setupUserWithStats("tieB", "TieB", {
-			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3", "bird4", "bird5"],
+			[`${currentYear}-${currentMonth}`]: [
+				"bird1",
+				"bird2",
+				"bird3",
+				"bird4",
+				"bird5",
+			],
 		});
 
 		const userC = await setupUserWithStats("tieC", "TieC", {
