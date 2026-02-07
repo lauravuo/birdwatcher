@@ -189,14 +189,17 @@ export function useLeaderboardStats(
 					Number.MAX_SAFE_INTEGER,
 				);
 
-				const [y, m] = selectedMonth.split("-");
-				const date = new Date(parseInt(y, 10), parseInt(m, 10) - 1);
-				const monthName = new Intl.DateTimeFormat(i18n.language, {
-					month: "long",
-				}).format(date);
-				const title = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+				// Only add section if there are entries (non-empty month)
+				if (entries.length > 0) {
+					const [y, m] = selectedMonth.split("-");
+					const date = new Date(parseInt(y, 10), parseInt(m, 10) - 1);
+					const monthName = new Intl.DateTimeFormat(i18n.language, {
+						month: "long",
+					}).format(date);
+					const title = monthName.charAt(0).toUpperCase() + monthName.slice(1);
 
-				newMonthlySections.push({ title, entries });
+					newMonthlySections.push({ title, entries });
+				}
 			}
 		} else {
 			// Default behavior: show top 3 for all months
