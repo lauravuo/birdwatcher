@@ -17,6 +17,7 @@ export function useLeaderboardStats(
 	group: Group,
 	members: UserProfile[],
 	statsMap: Map<string, Record<string, string[]>>,
+	selectedMonth?: string, // Optional month filter in format "YYYY-MM"
 ) {
 	const { i18n } = useTranslation();
 	const [yearPointsLeaders, setYearPointsLeaders] = useState<
@@ -177,33 +178,66 @@ export function useLeaderboardStats(
 
 		// Monthly Sections
 		const newMonthlySections: LeaderboardSection[] = [];
-		for (const monthKey of months) {
-			const monthUserMap = monthlyUniqueMap.get(monthKey);
-			if (!monthUserMap) continue;
 
-			let totalInMonth = 0;
-			monthUserMap.forEach((s) => {
-				totalInMonth += s.size;
-			});
-			if (totalInMonth === 0) continue;
+		// If selectedMonth is provided, only show that month with all members
+		if (selectedMonth) {
+			const monthUserMap = monthlyUniqueMap.get(selectedMonth);
+			if (monthUserMap) {
+				// Show all members (no limit)
+				const entries = buildLeaderboard(
+					(m) => monthUserMap.get(m.id)?.size || 0,
+					Number.MAX_SAFE_INTEGER,
+				);
 
-			const entries = buildLeaderboard(
-				(m) => monthUserMap.get(m.id)?.size || 0,
-				3,
-			);
+				// Only add section if there are entries (non-empty month)
+				if (entries.length > 0) {
+					const [y, m] = selectedMonth.split("-");
+					const date = new Date(parseInt(y, 10), parseInt(m, 10) - 1);
+					const monthName = new Intl.DateTimeFormat(i18n.language, {
+						month: "long",
+					}).format(date);
+					const title = monthName.charAt(0).toUpperCase() + monthName.slice(1);
 
-			const [y, m] = monthKey.split("-");
-			const date = new Date(parseInt(y, 10), parseInt(m, 10) - 1);
-			const monthName = new Intl.DateTimeFormat(i18n.language, {
-				month: "long",
-			}).format(date);
-			const title = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+					newMonthlySections.push({ title, entries });
+				}
+			}
+		} else {
+			// Default behavior: show top 3 for all months
+			for (const monthKey of months) {
+				const monthUserMap = monthlyUniqueMap.get(monthKey);
+				if (!monthUserMap) continue;
 
-			newMonthlySections.push({ title, entries });
+				let totalInMonth = 0;
+				monthUserMap.forEach((s) => {
+					totalInMonth += s.size;
+				});
+				if (totalInMonth === 0) continue;
+
+				const entries = buildLeaderboard(
+					(m) => monthUserMap.get(m.id)?.size || 0,
+					3,
+				);
+
+				const [y, m] = monthKey.split("-");
+				const date = new Date(parseInt(y, 10), parseInt(m, 10) - 1);
+				const monthName = new Intl.DateTimeFormat(i18n.language, {
+					month: "long",
+				}).format(date);
+				const title = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+
+				newMonthlySections.push({ title, entries });
+			}
 		}
 		setMonthlySections(newMonthlySections);
 		setGroupTotalCount(groupUniqueSet.size);
-	}, [group.memberIds, members, statsMap, currentYear, i18n.language]);
+	}, [
+		group.memberIds,
+		members,
+		statsMap,
+		currentYear,
+		i18n.language,
+		selectedMonth,
+	]);
 
 	return {
 		yearPointsLeaders,
