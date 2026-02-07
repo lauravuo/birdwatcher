@@ -131,7 +131,10 @@ test.describe("Group Leaderboard", () => {
 		await expect(yRow1.locator(".points-value")).toHaveText("5"); // 5 spp
 		await expect(yRow1.locator(".points-label")).toHaveText("spp");
 
-		// C. Monthly Unique
+		// C. Monthly Unique with Month Selector
+		// Verify the month selector exists
+		await expect(page.getByTestId("month-selector")).toBeVisible();
+
 		// Find section for current month name
 		const date = new Date();
 		const monthName = new Intl.DateTimeFormat("en-US", {
@@ -148,6 +151,10 @@ test.describe("Group Leaderboard", () => {
 		const mRow1 = monthSection.locator(".leaderboard-item").nth(0);
 		await expect(mRow1).toContainText("Alice");
 		await expect(mRow1.locator(".points-value")).toHaveText("5"); // 5 unique birds in month
+
+		// Verify all 3 members are shown (not just top 3)
+		const allRows = monthSection.locator(".leaderboard-item");
+		await expect(allRows).toHaveCount(3);
 	});
 
 	test("navigates to user view when clicking a leaderboard entry", async ({
@@ -279,5 +286,163 @@ test.describe("Group Leaderboard", () => {
 			page.getByText("No sightings found for this group."),
 		).toBeVisible();
 		await expect(page.locator(".leaderboard-section")).not.toBeVisible();
+	});
+
+	test("month selector switches data correctly", async ({ page }) => {
+		const now = new Date();
+		const currentYear = now.getFullYear();
+		const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
+		const previousMonth = String(now.getMonth()).padStart(2, "0");
+
+		// Setup users with data in different months
+		const userA = await setupUserWithStats("selector1", "Alice", {
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3"],
+			[`${currentYear}-${previousMonth}`]: ["bird4", "bird5"],
+		});
+
+		const userB = await setupUserWithStats("selector2", "Bob", {
+			[`${currentYear}-${currentMonth}`]: ["bird1"],
+			[`${currentYear}-${previousMonth}`]: ["bird4", "bird5", "bird6"],
+		});
+
+		await seedGroup({
+			name: "Selector Group",
+			joinCode: "selector-test",
+			ownerId: userA.uid,
+			memberIds: [userA.uid, userB.uid],
+		});
+
+		await page.goto("/");
+		await signInInBrowser(page, userA.email, userA.password);
+		await page.click(`text=Selector Group`);
+
+		// Verify month selector exists and defaults to current month
+		const selector = page.getByTestId("month-selector");
+		await expect(selector).toBeVisible();
+
+		// Verify current month data (Alice: 3, Bob: 1)
+		let leaderboardItems = page.locator(".leaderboard-item");
+		await expect(leaderboardItems.nth(0)).toContainText("Alice");
+		await expect(leaderboardItems.nth(0).locator(".points-value")).toHaveText(
+			"3",
+		);
+
+		// Switch to previous month
+		await selector.selectOption({ index: 1 });
+		await page.waitForTimeout(500); // Give time for state update
+
+		// Verify previous month data (Bob: 3, Alice: 2)
+		leaderboardItems = page.locator(".leaderboard-item");
+		await expect(leaderboardItems.nth(0)).toContainText("Bob");
+		await expect(leaderboardItems.nth(0).locator(".points-value")).toHaveText(
+			"3",
+		);
+	});
+
+	test("displays all members sorted by count then name", async ({ page }) => {
+		const now = new Date();
+		const currentYear = now.getFullYear();
+		const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
+
+		// Create 5 users with different bird counts, including ties
+		const userA = await setupUserWithStats("sort1", "Alice", {
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3"],
+		});
+
+		const userB = await setupUserWithStats("sort2", "Bob", {
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3"],
+		});
+
+		const userC = await setupUserWithStats("sort3", "Charlie", {
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2"],
+		});
+
+		const userD = await setupUserWithStats("sort4", "David", {
+			[`${currentYear}-${currentMonth}`]: ["bird1"],
+		});
+
+		const userE = await setupUserWithStats("sort5", "Eve", {
+			[`${currentYear}-${currentMonth}`]: ["bird1"],
+		});
+
+		await seedGroup({
+			name: "Sort Test Group",
+			joinCode: "sort-test",
+			ownerId: userA.uid,
+			memberIds: [userA.uid, userB.uid, userC.uid, userD.uid, userE.uid],
+		});
+
+		await page.goto("/");
+		await signInInBrowser(page, userA.email, userA.password);
+		await page.click(`text=Sort Test Group`);
+
+		// Verify all 5 members are shown
+		const monthSection = page
+			.locator(".leaderboard-section")
+			.filter({ hasText: /Top Birdwatchers/ })
+			.last();
+		const items = monthSection.locator(".leaderboard-item");
+		await expect(items).toHaveCount(5);
+
+		// Verify sorting: by count descending, then by name alphabetically
+		// Alice (3) and Bob (3) tied, alphabetically Alice comes first
+		await expect(items.nth(0)).toContainText("Alice");
+		await expect(items.nth(0).locator(".points-value")).toHaveText("3");
+		await expect(items.nth(1)).toContainText("Bob");
+		await expect(items.nth(1).locator(".points-value")).toHaveText("3");
+
+		// Charlie (2)
+		await expect(items.nth(2)).toContainText("Charlie");
+		await expect(items.nth(2).locator(".points-value")).toHaveText("2");
+
+		// David (1) and Eve (1) tied, alphabetically David comes first
+		await expect(items.nth(3)).toContainText("David");
+		await expect(items.nth(3).locator(".points-value")).toHaveText("1");
+		await expect(items.nth(4)).toContainText("Eve");
+		await expect(items.nth(4).locator(".points-value")).toHaveText("1");
+	});
+
+	test("displays empty state for month with no sightings", async ({ page }) => {
+		const now = new Date();
+		const currentYear = now.getFullYear();
+		const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
+
+		// Create user with data only in current month
+		const userA = await setupUserWithStats("empty-month", "Alice", {
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2"],
+		});
+
+		await seedGroup({
+			name: "Empty Month Group",
+			joinCode: "empty-month-test",
+			ownerId: userA.uid,
+			memberIds: [userA.uid],
+		});
+
+		await page.goto("/");
+		await signInInBrowser(page, userA.email, userA.password);
+		await page.click(`text=Empty Month Group`);
+
+		// Verify current month has data
+		let items = page.locator(".leaderboard-item");
+		await expect(items.first()).toBeVisible();
+
+		// Switch to a different month (previous month)
+		const selector = page.getByTestId("month-selector");
+		await selector.selectOption({ index: 1 });
+		await page.waitForTimeout(500);
+
+		// Verify empty state message
+		await expect(
+			page.getByText("No sightings recorded for this month"),
+		).toBeVisible();
+
+		// Verify no leaderboard items in the monthly section
+		const monthSection = page
+			.locator(".leaderboard-section")
+			.filter({ hasText: /Top Birdwatchers/ })
+			.last();
+		items = monthSection.locator(".leaderboard-item");
+		await expect(items).toHaveCount(0);
 	});
 });
