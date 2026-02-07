@@ -40,20 +40,22 @@ test.describe("Group Leaderboard", () => {
 	test("displays leaderboard with correct sections and ranks", async ({
 		page,
 	}) => {
-		const currentYear = new Date().getFullYear();
+		const now = new Date();
+		const currentYear = now.getFullYear();
+		const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
 
 		// 1. Setup Data
 		const userA = await setupUserWithStats("leaderA", "Alice", {
-			[`${currentYear}-01`]: ["bird1", "bird2", "bird3", "bird4", "bird5"], // 5 unique
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3", "bird4", "bird5"], // 5 unique
 			[`${currentYear - 1}-05`]: ["bird5", "bird6"],
 		});
 
 		const userB = await setupUserWithStats("leaderB", "Bob", {
-			[`${currentYear}-01`]: ["bird1", "bird2", "bird3", "bird6"], // 4 unique (bird6 is new to group)
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3", "bird6"], // 4 unique (bird6 is new to group)
 		});
 
 		const userC = await setupUserWithStats("leaderC", "Charlie", {
-			[`${currentYear}-01`]: ["bird1"], // 1 unique
+			[`${currentYear}-${currentMonth}`]: ["bird1"], // 1 unique
 		});
 
 		// Create Group
@@ -145,10 +147,12 @@ test.describe("Group Leaderboard", () => {
 	test("navigates to user view when clicking a leaderboard entry", async ({
 		page,
 	}) => {
-		const currentYear = new Date().getFullYear();
+		const now = new Date();
+		const currentYear = now.getFullYear();
+		const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
 
 		const userA = await setupUserWithStats("clicktest", "Clicker", {
-			[`${currentYear}-01`]: ["bird1"],
+			[`${currentYear}-${currentMonth}`]: ["bird1"],
 		});
 
 		// Create Group
@@ -183,18 +187,20 @@ test.describe("Group Leaderboard", () => {
 	});
 
 	test("handles ties in monthly points correctly", async ({ page }) => {
-		const currentYear = new Date().getFullYear();
+		const now = new Date();
+		const currentYear = now.getFullYear();
+		const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
 
 		const userA = await setupUserWithStats("tieA", "TieA", {
-			[`${currentYear}-01`]: ["bird1", "bird2", "bird3", "bird4", "bird5"],
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3", "bird4", "bird5"],
 		});
 
 		const userB = await setupUserWithStats("tieB", "TieB", {
-			[`${currentYear}-01`]: ["bird1", "bird2", "bird3", "bird4", "bird5"],
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3", "bird4", "bird5"],
 		});
 
 		const userC = await setupUserWithStats("tieC", "TieC", {
-			[`${currentYear}-01`]: ["bird1", "bird2", "bird3"],
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3"],
 		});
 
 		// Create Group
