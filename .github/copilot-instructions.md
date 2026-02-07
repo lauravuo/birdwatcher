@@ -1,7 +1,24 @@
-# Copilot Instructions for Birdwatcher
+# GitHub Copilot Instructions for Birdwatcher Project
 
 ## Project Overview
 Birdwatcher is a mobile-first web application for birdwatchers to track and share their sightings within groups. Built with React, TypeScript, and Firebase.
+
+## Commit Message Standards
+
+- **Always use Conventional Commits format**
+  - Examples: `feat:`, `fix:`, `chore:`, `docs:`, `test:`, `refactor:`, `style:`, `perf:`
+  - Use lowercase for the scope (e.g., `feat(ui): add new button`)
+  - **Do not exceed 50 characters for the summary line**
+  - Format: `<type>(<scope>): <subject>`
+
+### Examples
+```
+feat: add user authentication
+fix: resolve memory leak in data fetching
+chore: update dependencies
+docs: update README with setup instructions
+test: add e2e tests for login flow
+```
 
 ## Tech Stack
 - **Frontend**: React 19 + Vite + TypeScript
@@ -109,16 +126,35 @@ Birdwatcher is a mobile-first web application for birdwatchers to track and shar
 - `docs/FIREBASE_SETUP.md` - Firebase configuration instructions
 - Update docs when making significant changes
 
-## Git Workflow
-- Husky pre-commit hooks are configured
-- Semantic versioning with semantic-release
+## Code Quality
+
+- **After making any logic changes, you MUST run the project's linting command**
+  - Run: `npm run lint`
+  - If linting fails, fix all errors before finalizing the task
+  - Use `npm run format` to auto-fix formatting issues
+
+- **Always run tests after making changes**
+  - Unit tests: `npm test`
+  - E2E tests: `npm run test:e2e` or `npm run test:e2e:emulator`
+
+## Development Workflow
+
+1. Create feature branch from main
+2. Make your code changes
+3. Write tests for new features and follow existing patterns
+4. Run `npm run format` to auto-fix formatting
+5. Run `npm run lint` to check for issues
+6. Run tests to verify functionality
+7. Commit using Conventional Commits format (see above)
+8. Run `npm run test:all` before pushing
+9. Push changes (pre-push hooks will run tests)
+10. Submit PR with clear description
+
+## Project-Specific Guidelines
+
+- Follow existing code patterns and naming conventions
+- Use tabs for indentation (configured in biome.json)
+- Use double quotes for strings in JavaScript/TypeScript
+- Write tests for new features and bug fixes
 - CI runs on PRs: lint, unit tests, build, E2E tests
 - Deployment to Firebase Hosting on merge to main
-
-## Making Changes
-1. Create feature branch from main
-2. Write tests for new features
-3. Follow existing code style and conventions
-4. Run `npm run format` to fix formatting
-5. Run `npm run test:all` before pushing
-6. Submit PR with clear description
