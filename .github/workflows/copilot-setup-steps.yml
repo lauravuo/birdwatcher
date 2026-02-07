@@ -29,12 +29,20 @@ jobs:
           npm ci
           npx playwright install
 
-      # Step 3: Set up Java with version 21 or higher
+      # Step 3: Set up Java with version 21 or higher and set as default
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '21'
+          
+      # Step 3b: Verify Java 21 is set as default and export JAVA_HOME
+      - name: Verify and set Java 21 as default
+        run: |
+          echo "JAVA_HOME=$JAVA_HOME" >> $GITHUB_ENV
+          echo "$JAVA_HOME/bin" >> $GITHUB_PATH
+          java -version
+          echo "Java 21 is now set as the default version"
 
       # Step 4: Cache Firebase emulators
       - name: Cache Firebase emulators
