@@ -13,7 +13,12 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Helper to save
 function saveBirds(data) {
-	fs.writeFileSync(birdsPath, JSON.stringify(data, null, "\t"));
+	// Convert array to Map/Object with id as key
+	const birdsMap = {};
+	data.forEach((bird) => {
+		birdsMap[bird.id] = bird;
+	});
+	fs.writeFileSync(birdsPath, JSON.stringify(birdsMap, null, "\t"));
 }
 
 const TARGET_WIDTH = 640;
@@ -120,14 +125,18 @@ async function main() {
 	console.log("Starting bird data fetch...");
 
 	const birdsData = JSON.parse(fs.readFileSync(birdsPath, "utf-8"));
+
+	// Convert Map/Object to array for processing
+	const birdsArray = Object.values(birdsData);
+
 	const localesData = JSON.parse(fs.readFileSync(localesPath, "utf-8"));
 	const birdTranslations = localesData.birds;
 
 	let updatedCount = 0;
 
 	// Process in batches/sequentially
-	for (let i = 0; i < birdsData.length; i++) {
-		const bird = birdsData[i];
+	for (let i = 0; i < birdsArray.length; i++) {
+		const bird = birdsArray[i];
 		let changed = false;
 
 		// 1. Fetch Basic Info if missing
@@ -210,13 +219,13 @@ async function main() {
 		if (changed) {
 			updatedCount++;
 			if (updatedCount % 10 === 0) {
-				saveBirds(birdsData);
+				saveBirds(birdsArray);
 				console.log(`Saved progress (${updatedCount} updated)...`);
 			}
 		}
 	}
 
-	saveBirds(birdsData);
+	saveBirds(birdsArray);
 	console.log(`\nFinished. Total updated: ${updatedCount}`);
 }
 

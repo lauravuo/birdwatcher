@@ -14,3 +14,14 @@ export interface Group {
 	memberIds: string[];
 	createdAt: number; // Timestamp
 }
+
+export interface Bird {
+	id: string;
+	wikiUrl?: string;
+	imageUrl?: string;
+	imageAuthor?: string;
+	imageLicense?: string;
+	imageLicenseUrl?: string;
+}
+
+export type BirdMap = Record<string, Bird>;

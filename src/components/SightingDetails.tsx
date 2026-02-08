@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import birds from "../data/birds.json";
+import birdsData from "../data/birds.json";
 import { deleteSighting, getSighting, getUserProfile } from "../lib/firestore";
-import type { UserProfile } from "../types";
+import type { BirdMap, UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
 import AddSighting from "./AddSighting";
+
+const birds = birdsData as BirdMap;
 
 export function SightingDetails() {
 	const { t, i18n } = useTranslation();
@@ -118,7 +120,7 @@ export function SightingDetails() {
 
 	const birdName = t(`birds.${sighting.birdId}`);
 	const isOwner = currentUser && currentUser.uid === sighting.userId;
-	const birdData = birds.find((b) => b.id === sighting.birdId);
+	const birdData = birds[sighting.birdId];
 
 	if (isEditing) {
 		return (
