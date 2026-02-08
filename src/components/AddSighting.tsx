@@ -3,9 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import birds from "../data/birds.json";
+import birdsData from "../data/birds.json";
 import { addSighting, updateSighting } from "../lib/firestore";
+import type { BirdMap } from "../types";
 import type { Sighting } from "../types/sighting";
+
+const birds = birdsData as BirdMap;
 
 const today = new Date().toISOString().slice(0, 10);
 const now = new Date();
@@ -64,11 +67,12 @@ export default function AddSighting({
 		}
 	}, [initialSighting, isEditing, t]);
 
-	const filteredBirds = birds
-		.filter((b) =>
-			t(`birds.${b.id}`).toLowerCase().includes(birdFilter.toLowerCase()),
+	const filteredBirds = Object.keys(birds)
+		.filter((id) =>
+			t(`birds.${id}`).toLowerCase().includes(birdFilter.toLowerCase()),
 		)
-		.slice(0, 20);
+		.slice(0, 20)
+		.map((id) => birds[id]);
 
 	const isFormValid =
 		selectedBird !== "" && date !== "" && observationType !== "";

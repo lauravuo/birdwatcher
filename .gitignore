@@ -25,3 +25,6 @@ dist-ssr
 *.sw?
 playwright-report/
 test-results/
+
+# Certificate files
+*.crt
