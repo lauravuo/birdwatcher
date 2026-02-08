@@ -99,21 +99,21 @@ test.describe("Group Leaderboard", () => {
 			.locator(".leaderboard-section")
 			.filter({ hasText: "Points Leaders" });
 
-		// Row 1: Alice (8 pts)
+		// Row 1: Alice (6 pts: 3 monthly + 3 yearly)
 		const pRow1 = pointsSection.locator(".leaderboard-item").nth(0);
 		await expect(pRow1).toContainText("Alice");
-		await expect(pRow1.locator(".points-value")).toHaveText("8");
+		await expect(pRow1.locator(".points-value")).toHaveText("6");
 		await expect(pRow1.locator(".points-label")).toHaveText("pts");
 
-		// Row 2: Bob (2 pts)
+		// Row 2: Bob (4 pts: 2 monthly + 2 yearly)
 		const pRow2 = pointsSection.locator(".leaderboard-item").nth(1);
 		await expect(pRow2).toContainText("Bob");
-		await expect(pRow2.locator(".points-value")).toHaveText("2");
+		await expect(pRow2.locator(".points-value")).toHaveText("4");
 
-		// Row 3: Charlie (1 pt)
+		// Row 3: Charlie (2 pts: 1 monthly + 1 yearly)
 		const pRow3 = pointsSection.locator(".leaderboard-item").nth(2);
 		await expect(pRow3).toContainText("Charlie");
-		await expect(pRow3.locator(".points-value")).toHaveText("1");
+		await expect(pRow3.locator(".points-value")).toHaveText("2");
 
 		// B. Year Unique
 		await expect(
@@ -241,19 +241,19 @@ test.describe("Group Leaderboard", () => {
 			.locator(".leaderboard-section")
 			.filter({ hasText: "Points Leaders" });
 
-		// TieA and TieB should both have 3 points (Tie for 1st) + Tie for Year Bonus (5 pts) = 8 pts
+		// TieA and TieB should both have 6 points (Tie for 1st monthly: 3pts + Tie for 1st yearly: 3pts = 6 pts)
 		await expect(pointsSection.locator(".leaderboard-item")).toHaveCount(3);
 
 		// Check values
 		const tieA = pointsSection
 			.locator(".leaderboard-item")
 			.filter({ hasText: "TieA" });
-		await expect(tieA.locator(".points-value")).toHaveText("8");
+		await expect(tieA.locator(".points-value")).toHaveText("6");
 
 		const tieB = pointsSection
 			.locator(".leaderboard-item")
 			.filter({ hasText: "TieB" });
-		await expect(tieB.locator(".points-value")).toHaveText("8");
+		await expect(tieB.locator(".points-value")).toHaveText("6");
 
 		const tieC = pointsSection
 			.locator(".leaderboard-item")
@@ -504,21 +504,28 @@ test.describe("Group Leaderboard", () => {
 		await signInInBrowser(page, userA.email, userA.password);
 		await page.click(`text=Year All Members Group`);
 
-		// Verify Points Leaders section shows only users with points (top 3 in any month get points)
-		// Since all data is in current month: Alice (1st=3pts+5bonus), Bob (2nd=2pts), Charlie (3rd=1pt)
-		// Diana and Eve don't get points as they're 4th and 5th
+		// Verify Points Leaders section shows all users with points
+		// With new logic, all 5 members get points based on rank
+		// Alice (1st=5 monthly + 5 yearly = 10), Bob (2nd=4+4=8), Charlie (3rd=3+3=6), Diana (4th=2+2=4), Eve (5th=1+1=2)
 		await expect(page.getByText(/Points Leaders/)).toBeVisible();
 		const pointsSection = page
 			.locator(".leaderboard-section")
 			.filter({ hasText: "Points Leaders" });
 
-		await expect(pointsSection.locator(".leaderboard-item")).toHaveCount(3);
+		await expect(pointsSection.locator(".leaderboard-item")).toHaveCount(5);
 
 		// Verify sorting (descending by points)
 		const pointItems = pointsSection.locator(".leaderboard-item");
 		await expect(pointItems.nth(0)).toContainText("Alice");
+		await expect(pointItems.nth(0).locator(".points-value")).toHaveText("10");
 		await expect(pointItems.nth(1)).toContainText("Bob");
+		await expect(pointItems.nth(1).locator(".points-value")).toHaveText("8");
 		await expect(pointItems.nth(2)).toContainText("Charlie");
+		await expect(pointItems.nth(2).locator(".points-value")).toHaveText("6");
+		await expect(pointItems.nth(3)).toContainText("Diana");
+		await expect(pointItems.nth(3).locator(".points-value")).toHaveText("4");
+		await expect(pointItems.nth(4)).toContainText("Eve");
+		await expect(pointItems.nth(4).locator(".points-value")).toHaveText("2");
 
 		// Verify Year Unique section shows all 5 members
 		const yearUniqueTitle = `Top Birdwatchers (${currentYear})`;

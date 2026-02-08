@@ -81,6 +81,7 @@ export function useLeaderboardStats(
 		});
 
 		// Calculate Monthly Points
+		// New logic: All members get points based on rank (N points for 1st, N-1 for 2nd, ..., 1 for last)
 		for (let m = 0; m < 12; m++) {
 			const monthKey = `${currentYear}-${String(m + 1).padStart(2, "0")}`;
 			const monthScores = members.map((member) => {
@@ -95,11 +96,16 @@ export function useLeaderboardStats(
 
 			activeScores.sort((a, b) => b.count - a.count);
 
+			// Points based on total group size (as per requirements)
+			const numMembers = group.memberIds.length;
 			let currentRank = 1;
 			let i = 0;
-			while (i < activeScores.length && currentRank <= 3) {
+
+			while (i < activeScores.length) {
 				const currentScore = activeScores[i].count;
 				const tiedUsers: string[] = [];
+
+				// Collect all users with the same score
 				while (
 					i < activeScores.length &&
 					activeScores[i].count === currentScore
@@ -108,7 +114,8 @@ export function useLeaderboardStats(
 					i++;
 				}
 
-				const pointsToAward = currentRank === 1 ? 3 : currentRank === 2 ? 2 : 1;
+				// Points based on rank: numMembers - currentRank + 1
+				const pointsToAward = numMembers - currentRank + 1;
 				tiedUsers.forEach((uid) => {
 					yearlyPointsTracker.set(
 						uid,
@@ -116,28 +123,52 @@ export function useLeaderboardStats(
 					);
 				});
 
-				currentRank++;
+				// Move to next rank (skip tied positions)
+				currentRank += tiedUsers.length;
 			}
 		}
 
-		// Calculate Year Unique Bonus
-		let maxYearlyUnique = 0;
-		const yearlyWinners: string[] = [];
-		members.forEach((member) => {
+		// Calculate Yearly Points
+		// New logic: All members get points based on yearly species count rank
+		const yearScores = members.map((member) => {
 			const count = yearUniqueMap.get(member.id)?.size || 0;
-			if (count > maxYearlyUnique) {
-				maxYearlyUnique = count;
-				yearlyWinners.length = 0;
-				yearlyWinners.push(member.id);
-			} else if (count === maxYearlyUnique && count > 0) {
-				yearlyWinners.push(member.id);
-			}
+			return { uid: member.id, count };
 		});
 
-		if (maxYearlyUnique > 0) {
-			yearlyWinners.forEach((uid) => {
-				yearlyPointsTracker.set(uid, (yearlyPointsTracker.get(uid) || 0) + 5);
-			});
+		const activeYearScores = yearScores.filter((s) => s.count > 0);
+		if (activeYearScores.length > 0) {
+			activeYearScores.sort((a, b) => b.count - a.count);
+
+			// Points based on total group size (as per requirements)
+			const numMembers = group.memberIds.length;
+			let currentRank = 1;
+			let i = 0;
+
+			while (i < activeYearScores.length) {
+				const currentScore = activeYearScores[i].count;
+				const tiedUsers: string[] = [];
+
+				// Collect all users with the same score
+				while (
+					i < activeYearScores.length &&
+					activeYearScores[i].count === currentScore
+				) {
+					tiedUsers.push(activeYearScores[i].uid);
+					i++;
+				}
+
+				// Points based on rank: numMembers - currentRank + 1
+				const pointsToAward = numMembers - currentRank + 1;
+				tiedUsers.forEach((uid) => {
+					yearlyPointsTracker.set(
+						uid,
+						(yearlyPointsTracker.get(uid) || 0) + pointsToAward,
+					);
+				});
+
+				// Move to next rank (skip tied positions)
+				currentRank += tiedUsers.length;
+			}
 		}
 
 		// Build Leaderboard Sections (Helper)
