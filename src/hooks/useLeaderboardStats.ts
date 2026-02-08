@@ -172,13 +172,13 @@ export function useLeaderboardStats(
 		setYearPointsLeaders(
 			buildLeaderboard(
 				(m) => yearlyPointsTracker.get(m.id) || 0,
-				Number.MAX_SAFE_INTEGER,
+				members.length,
 			),
 		);
 		setYearUniqueLeaders(
 			buildLeaderboard(
 				(m) => yearUniqueMap.get(m.id)?.size || 0,
-				Number.MAX_SAFE_INTEGER,
+				members.length,
 			),
 		);
 
@@ -192,7 +192,7 @@ export function useLeaderboardStats(
 				// Show all members (no limit)
 				const entries = buildLeaderboard(
 					(m) => monthUserMap.get(m.id)?.size || 0,
-					Number.MAX_SAFE_INTEGER,
+					members.length,
 				);
 
 				// Only add section if there are entries (non-empty month)
