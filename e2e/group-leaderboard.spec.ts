@@ -504,21 +504,21 @@ test.describe("Group Leaderboard", () => {
 		await signInInBrowser(page, userA.email, userA.password);
 		await page.click(`text=Year All Members Group`);
 
-		// Verify Points Leaders section shows all 5 members
+		// Verify Points Leaders section shows only users with points (top 3 in any month get points)
+		// Since all data is in current month: Alice (1st=3pts+5bonus), Bob (2nd=2pts), Charlie (3rd=1pt)
+		// Diana and Eve don't get points as they're 4th and 5th
 		await expect(page.getByText(/Points Leaders/)).toBeVisible();
 		const pointsSection = page
 			.locator(".leaderboard-section")
 			.filter({ hasText: "Points Leaders" });
 
-		await expect(pointsSection.locator(".leaderboard-item")).toHaveCount(5);
+		await expect(pointsSection.locator(".leaderboard-item")).toHaveCount(3);
 
 		// Verify sorting (descending by points)
 		const pointItems = pointsSection.locator(".leaderboard-item");
 		await expect(pointItems.nth(0)).toContainText("Alice");
 		await expect(pointItems.nth(1)).toContainText("Bob");
 		await expect(pointItems.nth(2)).toContainText("Charlie");
-		await expect(pointItems.nth(3)).toContainText("Diana");
-		await expect(pointItems.nth(4)).toContainText("Eve");
 
 		// Verify Year Unique section shows all 5 members
 		const yearUniqueTitle = `Top Birdwatchers (${currentYear})`;
