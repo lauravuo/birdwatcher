@@ -96,7 +96,8 @@ export function useLeaderboardStats(
 
 			activeScores.sort((a, b) => b.count - a.count);
 
-			const numMembers = group.memberIds.length;
+			// Points based on number of active participants, not total group size
+			const numActiveMembers = activeScores.length;
 			let currentRank = 1;
 			let i = 0;
 
@@ -113,8 +114,8 @@ export function useLeaderboardStats(
 					i++;
 				}
 
-				// Points based on rank: numMembers - currentRank + 1
-				const pointsToAward = numMembers - currentRank + 1;
+				// Points based on rank: numActiveMembers - currentRank + 1
+				const pointsToAward = numActiveMembers - currentRank + 1;
 				tiedUsers.forEach((uid) => {
 					yearlyPointsTracker.set(
 						uid,
@@ -138,7 +139,8 @@ export function useLeaderboardStats(
 		if (activeYearScores.length > 0) {
 			activeYearScores.sort((a, b) => b.count - a.count);
 
-			const numMembers = group.memberIds.length;
+			// Points based on number of active participants, not total group size
+			const numActiveMembers = activeYearScores.length;
 			let currentRank = 1;
 			let i = 0;
 
@@ -155,8 +157,8 @@ export function useLeaderboardStats(
 					i++;
 				}
 
-				// Points based on rank: numMembers - currentRank + 1
-				const pointsToAward = numMembers - currentRank + 1;
+				// Points based on rank: numActiveMembers - currentRank + 1
+				const pointsToAward = numActiveMembers - currentRank + 1;
 				tiedUsers.forEach((uid) => {
 					yearlyPointsTracker.set(
 						uid,
