@@ -458,6 +458,91 @@ test.describe("Group Leaderboard", () => {
 		}
 	});
 
+	test("displays all members in yearly stats sections", async ({ page }) => {
+		const now = new Date();
+		const currentYear = now.getFullYear();
+		const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
+
+		// Setup 5 users with different bird counts for yearly stats
+		const userA = await setupUserWithStats("yearA", "Alice", {
+			[`${currentYear}-${currentMonth}`]: [
+				"bird1",
+				"bird2",
+				"bird3",
+				"bird4",
+				"bird5",
+			],
+		});
+
+		const userB = await setupUserWithStats("yearB", "Bob", {
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3", "bird4"],
+		});
+
+		const userC = await setupUserWithStats("yearC", "Charlie", {
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2", "bird3"],
+		});
+
+		const userD = await setupUserWithStats("yearD", "Diana", {
+			[`${currentYear}-${currentMonth}`]: ["bird1", "bird2"],
+		});
+
+		const userE = await setupUserWithStats("yearE", "Eve", {
+			[`${currentYear}-${currentMonth}`]: ["bird1"],
+		});
+
+		// Create Group
+		const joinCode = "year-all-members-test";
+		await seedGroup({
+			name: "Year All Members Group",
+			joinCode,
+			ownerId: userA.uid,
+			memberIds: [userA.uid, userB.uid, userC.uid, userD.uid, userE.uid],
+		});
+
+		// Sign in and View
+		await page.goto("/");
+		await signInInBrowser(page, userA.email, userA.password);
+		await page.click(`text=Year All Members Group`);
+
+		// Verify Points Leaders section shows all 5 members
+		await expect(page.getByText(/Points Leaders/)).toBeVisible();
+		const pointsSection = page
+			.locator(".leaderboard-section")
+			.filter({ hasText: "Points Leaders" });
+
+		await expect(pointsSection.locator(".leaderboard-item")).toHaveCount(5);
+
+		// Verify sorting (descending by points)
+		const pointItems = pointsSection.locator(".leaderboard-item");
+		await expect(pointItems.nth(0)).toContainText("Alice");
+		await expect(pointItems.nth(1)).toContainText("Bob");
+		await expect(pointItems.nth(2)).toContainText("Charlie");
+		await expect(pointItems.nth(3)).toContainText("Diana");
+		await expect(pointItems.nth(4)).toContainText("Eve");
+
+		// Verify Year Unique section shows all 5 members
+		const yearUniqueTitle = `Top Birdwatchers (${currentYear})`;
+		const yearUniqueSection = page
+			.locator(".leaderboard-section")
+			.filter({ hasText: yearUniqueTitle })
+			.first();
+		await expect(yearUniqueSection).toBeVisible();
+		await expect(yearUniqueSection.locator(".leaderboard-item")).toHaveCount(5);
+
+		// Verify sorting (descending by unique bird count)
+		const yearItems = yearUniqueSection.locator(".leaderboard-item");
+		await expect(yearItems.nth(0)).toContainText("Alice");
+		await expect(yearItems.nth(0).locator(".points-value")).toHaveText("5");
+		await expect(yearItems.nth(1)).toContainText("Bob");
+		await expect(yearItems.nth(1).locator(".points-value")).toHaveText("4");
+		await expect(yearItems.nth(2)).toContainText("Charlie");
+		await expect(yearItems.nth(2).locator(".points-value")).toHaveText("3");
+		await expect(yearItems.nth(3)).toContainText("Diana");
+		await expect(yearItems.nth(3).locator(".points-value")).toHaveText("2");
+		await expect(yearItems.nth(4)).toContainText("Eve");
+		await expect(yearItems.nth(4).locator(".points-value")).toHaveText("1");
+	});
+
 	test("switches month data correctly when dropdown changes", async ({
 		page,
 	}) => {

@@ -466,8 +466,8 @@
 		"monthlyWinner": "Kuukauden voittaja ({{count}})",
 		"failedToLoad": "Tulostaulukon lataus epäonnistui.",
 		"yearPointsLeaders": "Pistepörssi ({{year}})",
-		"yearUniqueLeaders": "Ahkerimmat ({{year}})",
-		"monthUniqueLeaders": "Ahkerimmat ({{month}})",
+		"yearUniqueLeaders": "Lintujen määrä ({{year}})",
+		"monthUniqueLeaders": "Lintujen määrä ({{month}})",
 		"groupTotal": "Lintuja yhteensä ({{year}})",
 		"selectMonth": "Valitse kuukausi",
 		"noSightingsForMonth": "Ei havaintoja tälle kuukaudelle."

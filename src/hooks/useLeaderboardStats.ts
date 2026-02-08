@@ -170,10 +170,16 @@ export function useLeaderboardStats(
 		};
 
 		setYearPointsLeaders(
-			buildLeaderboard((m) => yearlyPointsTracker.get(m.id) || 0, 3),
+			buildLeaderboard(
+				(m) => yearlyPointsTracker.get(m.id) || 0,
+				Number.MAX_SAFE_INTEGER,
+			),
 		);
 		setYearUniqueLeaders(
-			buildLeaderboard((m) => yearUniqueMap.get(m.id)?.size || 0, 3),
+			buildLeaderboard(
+				(m) => yearUniqueMap.get(m.id)?.size || 0,
+				Number.MAX_SAFE_INTEGER,
+			),
 		);
 
 		// Monthly Sections
