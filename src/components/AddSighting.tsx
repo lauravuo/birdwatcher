@@ -67,11 +67,12 @@ export default function AddSighting({
 		}
 	}, [initialSighting, isEditing, t]);
 
-	const filteredBirds = Object.values(birds)
-		.filter((b) =>
-			t(`birds.${b.id}`).toLowerCase().includes(birdFilter.toLowerCase()),
+	const filteredBirds = Object.keys(birds)
+		.filter((id) =>
+			t(`birds.${id}`).toLowerCase().includes(birdFilter.toLowerCase()),
 		)
-		.slice(0, 20);
+		.slice(0, 20)
+		.map((id) => birds[id]);
 
 	const isFormValid =
 		selectedBird !== "" && date !== "" && observationType !== "";
