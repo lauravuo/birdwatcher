@@ -1,4 +1,3 @@
-import { expect, test } from "@playwright/test";
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
 import { signInInBrowser } from "./helpers/browser-auth";
 import {
@@ -8,6 +7,7 @@ import {
 	seedUserProfile,
 	seedUserStats,
 } from "./helpers/firestore-helpers";
+import { expect, test } from "./helpers/fixtures";
 
 test.describe("User View Pagination", () => {
 	test.beforeEach(async ({ page }) => {

@@ -69,3 +69,23 @@ jobs:
           npx firebase-tools setup:emulators:firestore
           npx firebase-tools setup:emulators:ui
         continue-on-error: false
+
+      - name: Trust Dicebear Certificate in Chromium
+        run: |
+          # 1. Install NSS tools (needed for Chromium's cert database)
+          sudo apt-get update
+          sudo apt-get install -y libnss3-tools
+
+          # 2. Extract the certificate from Dicebear directly
+          if ! openssl s_client -showcerts -connect api.dicebear.com:443 </dev/null 2>&1 | openssl x509 -outform PEM > dicebear.crt; then
+            echo "Failed to extract certificate from api.dicebear.com"
+            exit 1
+          fi
+
+          # 3. Initialize and add to Chromium's NSS database
+          mkdir -p $HOME/.pki/nssdb
+          certutil -d sql:$HOME/.pki/nssdb -N --empty-password
+          certutil -d sql:$HOME/.pki/nssdb -A -t "CT,," -n "Dicebear-API" -i dicebear.crt
+
+          # 4. Also tell Node.js to trust it for any API calls in your tests
+          echo "NODE_EXTRA_CA_CERTS=$(pwd)/dicebear.crt" >> $GITHUB_ENV

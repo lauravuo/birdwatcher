@@ -1,4 +1,3 @@
-import { expect, test } from "@playwright/test";
 import type { User } from "firebase/auth";
 import {
 	addSighting,
@@ -15,6 +14,7 @@ import {
 	seedUserProfile,
 	seedUserStats,
 } from "./helpers/firestore-helpers";
+import { expect, test } from "./helpers/fixtures";
 
 test.describe("User View", () => {
 	const logTypes: string[] = [];
