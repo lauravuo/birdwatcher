@@ -67,21 +67,12 @@ export default function AddSighting({
 		}
 	}, [initialSighting, isEditing, t]);
 
-	const filteredBirds = (() => {
-		const lowerFilter = birdFilter.toLowerCase();
-
-		// First, check if there's a direct ID match in the map
-		const directMatch = birds[birdFilter.toLowerCase()];
-		if (directMatch) {
-			return [directMatch];
-		}
-
-		// Otherwise, filter through all keys
-		return Object.keys(birds)
-			.filter((id) => t(`birds.${id}`).toLowerCase().includes(lowerFilter))
-			.slice(0, 20)
-			.map((id) => birds[id]);
-	})();
+	const filteredBirds = Object.keys(birds)
+		.filter((id) =>
+			t(`birds.${id}`).toLowerCase().includes(birdFilter.toLowerCase()),
+		)
+		.slice(0, 20)
+		.map((id) => birds[id]);
 
 	const isFormValid =
 		selectedBird !== "" && date !== "" && observationType !== "";
