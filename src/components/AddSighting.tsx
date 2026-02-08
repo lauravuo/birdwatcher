@@ -71,7 +71,7 @@ export default function AddSighting({
 		.filter((id) =>
 			t(`birds.${id}`).toLowerCase().includes(birdFilter.toLowerCase()),
 		)
-		.slice(0, 20)
+		.slice(0, 150)
 		.map((id) => birds[id]);
 
 	const isFormValid =
