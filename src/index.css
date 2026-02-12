@@ -1,40 +1,79 @@
 :root {
-	/* Nature/Dark Theme Palette */
-	--bg-primary: #1a1b1e;
-	/* Deep dark grey/blue/green hint */
-	--bg-secondary: #25262b;
-	/* Slightly lighter for cards */
-	--bg-tertiary: #2c2e33;
-	/* Inputs and list items */
-	--bg-hover: #373a40;
-	/* Hover states */
+	/* Pride/Eurovision Vibrant Theme Palette */
+	--bg-primary: #0a0014;
+	/* Deep cosmic purple - Grand Final stage darkness */
+	--bg-secondary: #1a0f2e;
+	/* Rich purple for cards */
+	--bg-tertiary: #2d1b47;
+	/* Deeper purple for inputs and list items */
+	--bg-hover: #3d2759;
+	/* Vibrant purple hover states */
 
-	--text-primary: #e6e6e6;
-	/* High contrast reading text */
-	--text-secondary: #a0a0a0;
-	/* Metadata/secondary text */
-	--text-dim: #6c7079;
-	/* Placeholder/disabled */
+	--text-primary: #ffffff;
+	/* Pure white for maximum contrast */
+	--text-secondary: #e0d4ff;
+	/* Light lavender for metadata */
+	--text-dim: #9d8dc7;
+	/* Muted purple for placeholders */
 
-	--accent-primary: #4dabf7;
-	/* Soft Blue for actions */
-	--accent-hover: #339af0;
-	--accent-secondary: #51cf66;
-	/* Nature green for success/highlight */
+	/* Pride Rainbow Spectrum */
+	--pride-red: #e40303;
+	--pride-orange: #ff8c00;
+	--pride-yellow: #ffed00;
+	--pride-green: #008026;
+	--pride-blue: #24408e;
+	--pride-purple: #732982;
 
-	--border-color: #373a40;
-	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
-	--shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+	/* Eurovision Maximalist Accents */
+	--accent-primary: #ff1493;
+	/* Hot pink for actions */
+	--accent-hover: #ff00ff;
+	/* Electric magenta */
+	--accent-secondary: #00ffff;
+	/* Neon cyan for highlights */
+	--accent-gold: #ffd700;
+	/* Holographic gold */
+	--accent-silver: #c0c0c0;
+	/* Metallic silver */
 
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	--border-color: #4a3366;
+	--shadow-sm: 0 1px 2px rgba(255, 20, 147, 0.3);
+	--shadow-md: 0 4px 6px rgba(255, 20, 147, 0.4);
+	--shadow-lg: 0 10px 15px rgba(255, 0, 255, 0.5);
+	--shadow-glow: 0 0 20px rgba(255, 20, 147, 0.6);
+
+	/* Eurovision Stage Gradients */
+	--gradient-pride: linear-gradient(
+		135deg,
+		var(--pride-red) 0%,
+		var(--pride-orange) 16.66%,
+		var(--pride-yellow) 33.33%,
+		var(--pride-green) 50%,
+		var(--pride-blue) 66.66%,
+		var(--pride-purple) 83.33%,
+		var(--pride-red) 100%
+	);
+	--gradient-hot: linear-gradient(135deg, #ff1493 0%, #ff00ff 50%, #00ffff 100%);
+	--gradient-shimmer: linear-gradient(
+		90deg,
+		transparent 0%,
+		rgba(255, 255, 255, 0.3) 50%,
+		transparent 100%
+	);
+
+	font-family: "Montserrat", "Archivo Black", system-ui, sans-serif;
 	line-height: 1.6;
 	font-weight: 400;
 
 	color-scheme: dark;
-	/* Force dark mode preference for form controls */
 	color: var(--text-primary);
 	background-color: var(--bg-primary);
+	background-image: radial-gradient(
+		circle at 20% 50%,
+		rgba(255, 20, 147, 0.15) 0%,
+		transparent 50%
+	),
+	radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.15) 0%, transparent 50%);
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -74,25 +113,110 @@ h5,
 h6 {
 	color: var(--text-primary);
 	line-height: 1.2;
+	font-family: "Archivo Black", "Montserrat", system-ui, sans-serif;
+	font-weight: 900;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+/* Eurovision Stage Animations */
+@keyframes pulse {
+	0%,
+	100% {
+		transform: scale(1);
+		box-shadow: var(--shadow-md);
+	}
+	50% {
+		transform: scale(1.02);
+		box-shadow: var(--shadow-glow);
+	}
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: -200% 0;
+	}
+	100% {
+		background-position: 200% 0;
+	}
+}
+
+@keyframes rainbow-border {
+	0% {
+		border-color: var(--pride-red);
+	}
+	16.66% {
+		border-color: var(--pride-orange);
+	}
+	33.33% {
+		border-color: var(--pride-yellow);
+	}
+	50% {
+		border-color: var(--pride-green);
+	}
+	66.66% {
+		border-color: var(--pride-blue);
+	}
+	83.33% {
+		border-color: var(--pride-purple);
+	}
+	100% {
+		border-color: var(--pride-red);
+	}
+}
+
+@keyframes glow {
+	0%,
+	100% {
+		box-shadow: 0 0 10px rgba(255, 20, 147, 0.5);
+	}
+	50% {
+		box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
+	}
 }
 
 button {
 	border-radius: 8px;
-	border: 1px solid transparent;
+	border: 2px solid transparent;
 	padding: 0.6em 1.2em;
 	font-size: 1em;
-	font-weight: 500;
+	font-weight: 700;
 	font-family: inherit;
-	background-color: var(--bg-tertiary);
-	/* Consistent button bg */
+	background: var(--gradient-hot);
+	background-size: 200% 200%;
 	color: var(--text-primary);
 	cursor: pointer;
-	transition: all 0.25s;
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+button::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: var(--gradient-shimmer);
+	transition: left 0.5s ease;
 }
 
 button:hover {
-	background-color: var(--bg-hover);
-	border-color: var(--accent-primary);
+	background-position: 100% 50%;
+	border-color: var(--accent-secondary);
+	box-shadow: var(--shadow-glow);
+	transform: translateY(-2px);
+}
+
+button:hover::before {
+	left: 100%;
+}
+
+button:active {
+	transform: translateY(0) scale(0.98);
 }
 
 button:focus,
@@ -108,10 +232,12 @@ button:focus-visible {
 }
 
 .sighting-card-large {
-	background-color: var(--bg-secondary);
+	background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
 	border-radius: 12px;
 	padding: 2rem;
 	box-shadow: var(--shadow-md);
+	border: 2px solid var(--accent-primary);
+	animation: pulse 3s ease-in-out infinite;
 }
 
 .sighting-header-large {
@@ -130,13 +256,18 @@ button:focus-visible {
 }
 
 .sighting-type-badge {
-	background-color: var(--bg-tertiary);
-	color: var(--accent-secondary);
+	background: var(--gradient-pride);
+	background-size: 200% 200%;
+	animation: shimmer 3s linear infinite;
+	color: var(--text-primary);
 	padding: 0.5rem 1rem;
 	border-radius: 20px;
 	font-size: 0.9rem;
-	font-weight: 600;
-	border: 1px solid var(--border-color);
+	font-weight: 700;
+	border: 2px solid var(--accent-gold);
+	text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
 }
 
 .sighting-grid {
