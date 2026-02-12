@@ -6,7 +6,11 @@
 }
 
 header {
-	background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+	background: linear-gradient(
+		135deg,
+		var(--bg-secondary) 0%,
+		var(--bg-tertiary) 100%
+	);
 	color: var(--text-primary);
 	padding: 1rem 2rem;
 	display: flex;
@@ -55,7 +59,11 @@ h1 {
 	max-width: 800px;
 	margin: 2rem auto;
 	padding: 2.5rem;
-	background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+	background: linear-gradient(
+		135deg,
+		var(--bg-secondary) 0%,
+		var(--bg-tertiary) 100%
+	);
 	border-radius: 12px;
 	box-shadow: var(--shadow-lg);
 	border: 2px solid var(--accent-primary);
@@ -72,7 +80,7 @@ h1 {
 	height: 200%;
 	background: var(--gradient-shimmer);
 	background-size: 200% 200%;
-	animation: shimmer 4s linear infinite;
+	
 	opacity: 0.1;
 	pointer-events: none;
 }
@@ -149,7 +157,11 @@ h1 {
 	align-items: center;
 	gap: 1rem;
 	padding: 1.25rem;
-	background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+	background: linear-gradient(
+		135deg,
+		var(--bg-tertiary) 0%,
+		var(--bg-secondary) 100%
+	);
 	border: 2px solid var(--border-color);
 	border-radius: 10px;
 	color: inherit;
@@ -173,7 +185,11 @@ h1 {
 }
 
 .member-item-button:hover {
-	background: linear-gradient(135deg, var(--bg-hover) 0%, var(--bg-tertiary) 100%);
+	background: linear-gradient(
+		135deg,
+		var(--bg-hover) 0%,
+		var(--bg-tertiary) 100%
+	);
 	border-color: var(--accent-primary);
 	transform: translateY(-4px) scale(1.02);
 	box-shadow: var(--shadow-glow);
@@ -237,7 +253,7 @@ h1 {
 	font-weight: 600;
 	background: var(--gradient-hot);
 	background-size: 200% 200%;
-	animation: shimmer 3s linear infinite;
+	
 	color: white;
 	padding: 0.15rem 0.4rem;
 	border-radius: 4px;
@@ -252,7 +268,7 @@ h1 {
 	font-weight: 600;
 	background: var(--gradient-pride);
 	background-size: 200% 200%;
-	animation: shimmer 3s linear infinite;
+	
 	color: white;
 	padding: 0.15rem 0.4rem;
 	border-radius: 4px;
@@ -292,7 +308,11 @@ h1 {
 	width: 100%;
 	text-align: left;
 	padding: 1rem;
-	background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+	background: linear-gradient(
+		135deg,
+		var(--bg-tertiary) 0%,
+		var(--bg-secondary) 100%
+	);
 	border: 2px solid var(--border-color);
 	border-radius: 8px;
 	color: inherit;
@@ -318,7 +338,11 @@ h1 {
 }
 
 .group-button:hover {
-	background: linear-gradient(135deg, var(--bg-hover) 0%, var(--bg-tertiary) 100%);
+	background: linear-gradient(
+		135deg,
+		var(--bg-hover) 0%,
+		var(--bg-tertiary) 100%
+	);
 	border-color: var(--accent-primary);
 	transform: translateX(4px);
 	box-shadow: var(--shadow-glow);
@@ -345,7 +369,11 @@ h1 {
 
 .sighting-item {
 	padding: 1.25rem;
-	background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+	background: linear-gradient(
+		135deg,
+		var(--bg-tertiary) 0%,
+		var(--bg-secondary) 100%
+	);
 	border-radius: 8px;
 	border: 2px solid var(--border-color);
 	transition: all 0.3s ease;
@@ -370,7 +398,6 @@ h1 {
 	border-color: var(--accent-primary);
 	transform: translateY(-4px);
 	box-shadow: var(--shadow-glow);
-	animation: pulse 2s ease-in-out infinite;
 }
 
 .sighting-item:hover::before {
@@ -421,7 +448,7 @@ h1 {
 	padding: 0.25rem 0.5rem;
 	background: var(--gradient-hot);
 	background-size: 200% 200%;
-	animation: shimmer 3s linear infinite;
+	
 	color: white;
 	border-radius: 4px;
 	font-size: 0.85em;
@@ -527,7 +554,6 @@ h1 {
 	transition: all 0.3s ease;
 	line-height: 1;
 	padding: 0;
-	animation: glow 2s ease-in-out infinite;
 }
 
 .add-sighting-button:hover {
@@ -919,7 +945,11 @@ h1 {
 /* Breadcrumbs */
 .breadcrumbs {
 	padding: 1rem 2rem;
-	background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+	background: linear-gradient(
+		135deg,
+		var(--bg-tertiary) 0%,
+		var(--bg-secondary) 100%
+	);
 	border-bottom: 2px solid;
 	border-image: var(--gradient-pride) 1;
 	box-shadow: var(--shadow-md);
@@ -1046,7 +1076,11 @@ h1 {
 	display: flex;
 	align-items: center;
 	padding: 0.75rem 1rem;
-	background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+	background: linear-gradient(
+		135deg,
+		var(--bg-tertiary) 0%,
+		var(--bg-secondary) 100%
+	);
 	border-radius: 8px;
 	border: 2px solid var(--border-color);
 	transition: all 0.3s ease;
@@ -1090,7 +1124,7 @@ h1 {
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-size: 200% 200%;
-	animation: shimmer 3s linear infinite;
+	
 	font-size: 1.4rem;
 	text-shadow: none;
 	filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
@@ -1241,7 +1275,7 @@ h1 {
 	height: 3px;
 	background: var(--gradient-hot);
 	background-size: 200% 200%;
-	animation: shimmer 2s linear infinite;
+	
 	box-shadow: 0 0 10px rgba(255, 20, 147, 0.8);
 }
 
