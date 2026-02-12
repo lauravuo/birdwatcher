@@ -1119,15 +1119,10 @@ h1 {
 }
 
 .rank-1 .leaderboard-rank {
-	background: var(--gradient-pride);
-	background-clip: text;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-size: 200% 200%;
-
+	color: #ffd700;
 	font-size: 1.4rem;
-	text-shadow: none;
-	filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
+	font-weight: 900;
+	text-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 0 20px rgba(255, 0, 255, 0.4);
 }
 
 .rank-2 .leaderboard-rank {
