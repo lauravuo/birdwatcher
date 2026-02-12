@@ -1122,7 +1122,9 @@ h1 {
 	color: #ffd700;
 	font-size: 1.4rem;
 	font-weight: 900;
-	text-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 0 20px rgba(255, 0, 255, 0.4);
+	text-shadow:
+		0 0 10px rgba(255, 215, 0, 0.6),
+		0 0 20px rgba(255, 0, 255, 0.4);
 }
 
 .rank-2 .leaderboard-rank {
