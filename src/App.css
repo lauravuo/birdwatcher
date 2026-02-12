@@ -80,7 +80,7 @@ h1 {
 	height: 200%;
 	background: var(--gradient-shimmer);
 	background-size: 200% 200%;
-	
+
 	opacity: 0.1;
 	pointer-events: none;
 }
@@ -253,7 +253,7 @@ h1 {
 	font-weight: 600;
 	background: var(--gradient-hot);
 	background-size: 200% 200%;
-	
+
 	color: white;
 	padding: 0.15rem 0.4rem;
 	border-radius: 4px;
@@ -268,7 +268,7 @@ h1 {
 	font-weight: 600;
 	background: var(--gradient-pride);
 	background-size: 200% 200%;
-	
+
 	color: white;
 	padding: 0.15rem 0.4rem;
 	border-radius: 4px;
@@ -448,7 +448,7 @@ h1 {
 	padding: 0.25rem 0.5rem;
 	background: var(--gradient-hot);
 	background-size: 200% 200%;
-	
+
 	color: white;
 	border-radius: 4px;
 	font-size: 0.85em;
@@ -1124,7 +1124,7 @@ h1 {
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-size: 200% 200%;
-	
+
 	font-size: 1.4rem;
 	text-shadow: none;
 	filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
@@ -1275,7 +1275,7 @@ h1 {
 	height: 3px;
 	background: var(--gradient-hot);
 	background-size: 200% 200%;
-	
+
 	box-shadow: 0 0 10px rgba(255, 20, 147, 0.8);
 }
 
