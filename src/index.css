@@ -44,7 +44,8 @@
 	--shadow-sm: 0 2px 8px rgba(255, 47, 224, 0.3);
 	--shadow-md: 0 8px 16px rgba(255, 47, 224, 0.4);
 	--shadow-lg: 0 16px 32px rgba(255, 47, 224, 0.5);
-	--shadow-rainbow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 47, 224, 0.3);
+	--shadow-rainbow:
+		0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 47, 224, 0.3);
 
 	/* Gradient Definitions */
 	--gradient-primary: linear-gradient(135deg, #ff2fe0, #d500f9, #2979ff);
@@ -111,11 +112,14 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: "Montserrat", sans-serif;
+	font-family:
+		system-ui, -apple-system, "Segoe UI", "Roboto", "Ubuntu", "Cantarell",
+		sans-serif;
 	color: var(--text-primary);
 	line-height: 1.2;
 	font-weight: 700;
 	text-shadow: 0 0 10px rgba(255, 47, 224, 0.3);
+	letter-spacing: -0.02em;
 }
 
 button {
@@ -377,57 +381,61 @@ button:focus-visible {
    =================================== */
 
 @keyframes shimmer {
-0% {
-transform: translateX(-100%);
-}
-100% {
-transform: translateX(100%);
-}
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
 }
 
 @keyframes pulse-glow {
-0%,
-100% {
-box-shadow: 0 0 10px rgba(255, 47, 224, 0.3), 0 0 20px rgba(255, 47, 224, 0.2);
-}
-50% {
-box-shadow: 0 0 20px rgba(255, 47, 224, 0.6), 0 0 40px rgba(255, 47, 224, 0.4);
-}
+	0%,
+	100% {
+		box-shadow:
+			0 0 10px rgba(255, 47, 224, 0.3),
+			0 0 20px rgba(255, 47, 224, 0.2);
+	}
+	50% {
+		box-shadow:
+			0 0 20px rgba(255, 47, 224, 0.6),
+			0 0 40px rgba(255, 47, 224, 0.4);
+	}
 }
 
 @keyframes rainbow-border {
-0% {
-border-color: var(--pride-red);
-}
-14% {
-border-color: var(--pride-orange);
-}
-28% {
-border-color: var(--pride-yellow);
-}
-42% {
-border-color: var(--pride-green);
-}
-57% {
-border-color: var(--pride-cyan);
-}
-71% {
-border-color: var(--pride-blue);
-}
-85% {
-border-color: var(--pride-purple);
-}
-100% {
-border-color: var(--pride-pink);
-}
+	0% {
+		border-color: var(--pride-red);
+	}
+	14% {
+		border-color: var(--pride-orange);
+	}
+	28% {
+		border-color: var(--pride-yellow);
+	}
+	42% {
+		border-color: var(--pride-green);
+	}
+	57% {
+		border-color: var(--pride-cyan);
+	}
+	71% {
+		border-color: var(--pride-blue);
+	}
+	85% {
+		border-color: var(--pride-purple);
+	}
+	100% {
+		border-color: var(--pride-pink);
+	}
 }
 
 @keyframes float {
-0%,
-100% {
-transform: translateY(0);
-}
-50% {
-transform: translateY(-5px);
-}
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-5px);
+	}
 }
