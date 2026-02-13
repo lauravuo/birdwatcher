@@ -1,31 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap");
+
 :root {
-	/* Nature/Dark Theme Palette */
-	--bg-primary: #1a1b1e;
-	/* Deep dark grey/blue/green hint */
-	--bg-secondary: #25262b;
-	/* Slightly lighter for cards */
-	--bg-tertiary: #2c2e33;
-	/* Inputs and list items */
-	--bg-hover: #373a40;
-	/* Hover states */
+	/* Pride & Eurovision Vibrant Theme Palette */
+	--bg-primary: #0a0015;
+	/* Deep cosmic purple/black */
+	--bg-secondary: #1a0033;
+	/* Rich purple for cards */
+	--bg-tertiary: #2d0051;
+	/* Deep violet for inputs */
+	--bg-hover: #44006b;
+	/* Magenta hover states */
 
-	--text-primary: #e6e6e6;
-	/* High contrast reading text */
-	--text-secondary: #a0a0a0;
-	/* Metadata/secondary text */
-	--text-dim: #6c7079;
-	/* Placeholder/disabled */
+	--text-primary: #ffffff;
+	/* Pure white for maximum contrast */
+	--text-secondary: #e0b3ff;
+	/* Light lavender for metadata */
+	--text-dim: #9d6bb8;
+	/* Muted purple for placeholders */
 
-	--accent-primary: #4dabf7;
-	/* Soft Blue for actions */
-	--accent-hover: #339af0;
-	--accent-secondary: #51cf66;
-	/* Nature green for success/highlight */
+	/* Pride Rainbow Colors */
+	--pride-red: #ff1744;
+	--pride-orange: #ff6d00;
+	--pride-yellow: #ffd600;
+	--pride-green: #00e676;
+	--pride-cyan: #00e5ff;
+	--pride-blue: #2979ff;
+	--pride-purple: #d500f9;
+	--pride-pink: #f50057;
 
-	--border-color: #373a40;
-	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
-	--shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+	/* Accent Colors */
+	--accent-primary: #ff2fe0;
+	/* Neon pink for primary actions */
+	--accent-hover: #ff69f5;
+	--accent-secondary: #00ffff;
+	/* Electric cyan for highlights */
+	--accent-gold: #ffd700;
+	/* Holographic gold */
+	--accent-silver: #e8e8e8;
+	/* Holographic silver */
+
+	--border-color: #9d6bb8;
+	--border-glow: rgba(255, 47, 224, 0.5);
+	--shadow-sm: 0 2px 8px rgba(255, 47, 224, 0.3);
+	--shadow-md: 0 8px 16px rgba(255, 47, 224, 0.4);
+	--shadow-lg: 0 16px 32px rgba(255, 47, 224, 0.5);
+	--shadow-rainbow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 47, 224, 0.3);
+
+	/* Gradient Definitions */
+	--gradient-primary: linear-gradient(135deg, #ff2fe0, #d500f9, #2979ff);
+	--gradient-rainbow: linear-gradient(
+		90deg,
+		#ff1744 0%,
+		#ff6d00 14%,
+		#ffd600 28%,
+		#00e676 42%,
+		#00e5ff 57%,
+		#2979ff 71%,
+		#d500f9 85%,
+		#ff2fe0 100%
+	);
+	--gradient-shimmer: linear-gradient(
+		120deg,
+		rgba(255, 255, 255, 0) 0%,
+		rgba(255, 255, 255, 0.8) 50%,
+		rgba(255, 255, 255, 0) 100%
+	);
 
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	line-height: 1.6;
@@ -72,27 +111,51 @@ h3,
 h4,
 h5,
 h6 {
+	font-family: "Montserrat", sans-serif;
 	color: var(--text-primary);
 	line-height: 1.2;
+	font-weight: 700;
+	text-shadow: 0 0 10px rgba(255, 47, 224, 0.3);
 }
 
 button {
 	border-radius: 8px;
-	border: 1px solid transparent;
+	border: 2px solid transparent;
 	padding: 0.6em 1.2em;
 	font-size: 1em;
-	font-weight: 500;
+	font-weight: 600;
 	font-family: inherit;
-	background-color: var(--bg-tertiary);
-	/* Consistent button bg */
+	background: var(--gradient-primary);
+	background-size: 200% 200%;
 	color: var(--text-primary);
 	cursor: pointer;
-	transition: all 0.25s;
+	transition: all 0.3s;
+	position: relative;
+	overflow: hidden;
+	box-shadow: var(--shadow-sm);
+}
+
+button::before {
+	content: "";
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: var(--gradient-shimmer);
+	transform: rotate(45deg) translateX(-100%);
+	transition: transform 0.6s;
 }
 
 button:hover {
-	background-color: var(--bg-hover);
-	border-color: var(--accent-primary);
+	background-position: 100% 0;
+	border-color: var(--accent-secondary);
+	box-shadow: var(--shadow-rainbow);
+	transform: translateY(-2px);
+}
+
+button:hover::before {
+	transform: rotate(45deg) translateX(100%);
 }
 
 button:focus,
@@ -307,4 +370,64 @@ button:focus-visible {
 	display: flex;
 	align-items: center;
 	gap: 0.25rem;
+}
+
+/* ===================================
+   PRIDE & EUROVISION ANIMATIONS
+   =================================== */
+
+@keyframes shimmer {
+0% {
+transform: translateX(-100%);
+}
+100% {
+transform: translateX(100%);
+}
+}
+
+@keyframes pulse-glow {
+0%,
+100% {
+box-shadow: 0 0 10px rgba(255, 47, 224, 0.3), 0 0 20px rgba(255, 47, 224, 0.2);
+}
+50% {
+box-shadow: 0 0 20px rgba(255, 47, 224, 0.6), 0 0 40px rgba(255, 47, 224, 0.4);
+}
+}
+
+@keyframes rainbow-border {
+0% {
+border-color: var(--pride-red);
+}
+14% {
+border-color: var(--pride-orange);
+}
+28% {
+border-color: var(--pride-yellow);
+}
+42% {
+border-color: var(--pride-green);
+}
+57% {
+border-color: var(--pride-cyan);
+}
+71% {
+border-color: var(--pride-blue);
+}
+85% {
+border-color: var(--pride-purple);
+}
+100% {
+border-color: var(--pride-pink);
+}
+}
+
+@keyframes float {
+0%,
+100% {
+transform: translateY(0);
+}
+50% {
+transform: translateY(-5px);
+}
 }
