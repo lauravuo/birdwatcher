@@ -281,26 +281,39 @@ npx playwright test --headed --debug e2e/sightings.spec.ts
    - Different states (empty state, loading, error, success)
    - Different user roles/permissions if applicable
 
-#### 6. Use playwright-browser Tool for Screenshots
+#### 6. Take Screenshots Using Available Tools
 
-When implementing this process, use the `playwright-browser_take_screenshot` tool:
+When implementing this process, you have access to browser automation tools for taking screenshots:
 
+**Using Playwright directly in a script:**
 ```typescript
-// Example usage in your workflow
-await page.goto('http://localhost:5173');
-await page.getByRole('button', { name: 'Sign In' }).click();
-// ... navigate to the feature you changed ...
-await playwright-browser_take_screenshot({
-  filename: 'feature-initial-state.png',
-  fullPage: true
-});
+// Create a temporary Playwright script (e.g., /tmp/take-screenshots.ts)
+import { test } from '@playwright/test';
 
-// After interaction
-await page.getByRole('button', { name: 'Add Sighting' }).click();
-await playwright-browser_take_screenshot({
-  filename: 'feature-dialog-open.png'
+test('capture screenshots', async ({ page }) => {
+  await page.goto('http://localhost:5173');
+  
+  // Navigate to the feature you changed
+  await page.getByRole('button', { name: 'Sign In' }).click();
+  // ... perform any needed interactions ...
+  
+  // Take screenshot
+  await page.screenshot({ 
+    path: 'feature-initial-state.png',
+    fullPage: true 
+  });
+
+  // After interaction
+  await page.getByRole('button', { name: 'Add Sighting' }).click();
+  await page.screenshot({ 
+    path: 'feature-dialog-open.png' 
+  });
 });
 ```
+
+Then run: `npx playwright test /tmp/take-screenshots.ts --headed`
+
+**Or use browser automation tools available to you** to navigate and capture screenshots systematically.
 
 #### 7. Screenshot Best Practices
 
