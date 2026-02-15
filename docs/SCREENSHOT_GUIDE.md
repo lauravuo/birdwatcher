@@ -150,7 +150,9 @@ test('capture screenshots', async ({ page }) => {
 });
 ```
 
-Then run: `npx playwright test /tmp/take-screenshots.ts --headed`
+```
+
+Then run: `npm run test:e2e -- /tmp/take-screenshots.ts --headed`
 
 **Or use browser automation tools available to you** to navigate and capture screenshots systematically.
 
@@ -251,12 +253,27 @@ sleep 5  # Wait for Vite to start
 # Create a temporary script: /tmp/screenshot-script.ts
 
 # 5. Run the script with Playwright
-npx playwright test /tmp/screenshot-script.ts --headed
+npm run test:e2e -- /tmp/screenshot-script.ts --headed --project=chromium
 
 # 6. Cleanup (graceful shutdown)
 kill $DEV_SERVER_PID  # Stop dev server by PID
 lsof -ti:8080,9099,4000 | xargs kill  # Stop emulator by port
 ```
+
+### 7. Screenshot Best Practices
+
+- **Use Deterministic IDs for Seeding**: When capturing details pages (e.g., `/groups/:id/sightings/:id`), do not rely on auto-generated IDs. Use `setDoc` with a known string ID so you can construct the URL reliably.
+  ```typescript
+  // Bad: Random ID
+  // await seedSighting({ ... }); 
+  
+  // Good: Known ID
+  await setDoc(doc(db, 'sightings', 'fixed-sighting-id'), { 
+    id: 'fixed-sighting-id', 
+    ...sightingData 
+  });
+  await page.goto('/groups/g-123/sightings/fixed-sighting-id');
+  ```
 
 ## Troubleshooting
 
@@ -277,3 +294,10 @@ lsof -ti:8080,9099,4000 | xargs kill  # Stop emulator by port
 - Ensure dev server is fully loaded before taking screenshots
 - Wait for async data to load (use appropriate waits in Playwright)
 - Check that you're on the correct URL
+
+**"Auth API Key not valid" Error**
+- Ensure your `.env.test` has a valid-looking `VITE_FIREBASE_API_KEY`. simple strings like "demo-key" might fail client-side validation in some SDK versions. Use something like `AIzaSyDOCS_EXAMPLE_API_KEY`.
+
+**Environment Variables missing in Test**
+- Do not run `npx playwright test` directly if you rely on `.env.test`.
+- Use `npm run test:e2e -- <your-file>` instead, which sets up `dotenv`.

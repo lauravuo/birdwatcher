@@ -28,3 +28,5 @@ test-results/
 
 # Certificate files
 *.crt
+
+.temp/
