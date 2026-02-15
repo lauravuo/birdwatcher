@@ -1,40 +1,63 @@
 :root {
-	/* Nature/Dark Theme Palette */
-	--bg-primary: #1a1b1e;
-	/* Deep dark grey/blue/green hint */
-	--bg-secondary: #25262b;
-	/* Slightly lighter for cards */
-	--bg-tertiary: #2c2e33;
-	/* Inputs and list items */
-	--bg-hover: #373a40;
-	/* Hover states */
+	/* Pride & Eurovision Maximalist Theme Palette */
+	--bg-primary: #0a0a0f;
+	/* Deep cosmic black for maximum contrast */
+	--bg-secondary: #1a1a2e;
+	/* Rich midnight blue for cards */
+	--bg-tertiary: #16213e;
+	/* Electric dark blue for inputs */
+	--bg-hover: #2e3f6e;
+	/* Bright hover with purple tint */
 
-	--text-primary: #e6e6e6;
-	/* High contrast reading text */
-	--text-secondary: #a0a0a0;
-	/* Metadata/secondary text */
-	--text-dim: #6c7079;
-	/* Placeholder/disabled */
+	--text-primary: #ffffff;
+	/* Pure white for maximum readability */
+	--text-secondary: #d4d4d8;
+	/* Light metallic silver */
+	--text-dim: #a1a1aa;
+	/* Muted silver */
 
-	--accent-primary: #4dabf7;
-	/* Soft Blue for actions */
-	--accent-hover: #339af0;
-	--accent-secondary: #51cf66;
-	/* Nature green for success/highlight */
+	/* Pride Rainbow Spectrum */
+	--pride-red: #e4003a;
+	--pride-orange: #ff8c00;
+	--pride-yellow: #ffd700;
+	--pride-green: #00d96e;
+	--pride-blue: #0099ff;
+	--pride-purple: #a855f7;
+	--pride-pink: #ff006e;
 
-	--border-color: #373a40;
-	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
-	--shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+	/* Eurovision Neon & Holographic Colors */
+	--accent-primary: #ff006e;
+	/* Vibrant neon pink */
+	--accent-hover: #d81b60;
+	/* Hot pink hover */
+	--accent-secondary: #a855f7;
+	/* Electric purple */
+	--accent-tertiary: #0099ff;
+	/* Bright cyan */
+	--accent-gold: #ffd700;
+	/* Gold for highlights */
+	--accent-holographic: linear-gradient(
+		135deg,
+		#ff006e 0%,
+		#a855f7 25%,
+		#0099ff 50%,
+		#00d96e 75%,
+		#ffd700 100%
+	);
 
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	--border-color: #2e3f6e;
+	--shadow-sm: 0 2px 8px rgba(255, 0, 110, 0.3);
+	--shadow-md: 0 6px 16px rgba(168, 85, 247, 0.4);
+	--shadow-lg: 0 12px 24px rgba(0, 153, 255, 0.5);
+	--shadow-glow: 0 0 20px rgba(255, 215, 0, 0.6);
+
+	font-family: "Montserrat", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	line-height: 1.6;
 	font-weight: 400;
 
 	color-scheme: dark;
-	/* Force dark mode preference for form controls */
 	color: var(--text-primary);
-	background-color: var(--bg-primary);
+	background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -63,7 +86,8 @@ body {
 	margin: 0;
 	min-width: 320px;
 	min-height: 100vh;
-	background-color: var(--bg-primary);
+	background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+	background-attachment: fixed;
 }
 
 h1,
@@ -74,25 +98,72 @@ h5,
 h6 {
 	color: var(--text-primary);
 	line-height: 1.2;
+	font-family: "Montserrat", sans-serif;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	text-transform: uppercase;
+	background: var(--accent-holographic);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-shadow: 0 0 20px rgba(255, 0, 110, 0.3);
 }
 
 button {
-	border-radius: 8px;
-	border: 1px solid transparent;
+	border-radius: 12px;
+	border: 2px solid transparent;
 	padding: 0.6em 1.2em;
 	font-size: 1em;
-	font-weight: 500;
-	font-family: inherit;
-	background-color: var(--bg-tertiary);
-	/* Consistent button bg */
+	font-weight: 600;
+	font-family: "Montserrat", sans-serif;
+	background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
 	color: var(--text-primary);
 	cursor: pointer;
-	transition: all 0.25s;
+	transition: all 0.3s ease;
+	box-shadow: var(--shadow-sm);
+	position: relative;
+	overflow: hidden;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+button::before {
+	content: "";
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: linear-gradient(
+		45deg,
+		transparent,
+		rgba(255, 255, 255, 0.3),
+		transparent
+	);
+	transform: rotate(45deg);
+	transition: all 0.5s;
+	opacity: 0;
 }
 
 button:hover {
-	background-color: var(--bg-hover);
-	border-color: var(--accent-primary);
+	background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-tertiary) 100%);
+	border-color: var(--accent-gold);
+	transform: translateY(-2px) scale(1.02);
+	box-shadow: var(--shadow-md);
+}
+
+button:hover::before {
+	opacity: 1;
+	animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+	0% {
+		transform: translateX(-100%) translateY(-100%) rotate(45deg);
+	}
+	100% {
+		transform: translateX(100%) translateY(100%) rotate(45deg);
+	}
 }
 
 button:focus,
@@ -108,10 +179,26 @@ button:focus-visible {
 }
 
 .sighting-card-large {
-	background-color: var(--bg-secondary);
-	border-radius: 12px;
+	background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+	border-radius: 16px;
 	padding: 2rem;
 	box-shadow: var(--shadow-md);
+	border: 2px solid transparent;
+	background-image: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%),
+		var(--accent-holographic);
+	background-origin: border-box;
+	background-clip: padding-box, border-box;
+	animation: subtlePulse 3s ease-in-out infinite;
+}
+
+@keyframes subtlePulse {
+	0%,
+	100% {
+		box-shadow: var(--shadow-md);
+	}
+	50% {
+		box-shadow: var(--shadow-lg);
+	}
 }
 
 .sighting-header-large {
@@ -130,13 +217,16 @@ button:focus-visible {
 }
 
 .sighting-type-badge {
-	background-color: var(--bg-tertiary);
-	color: var(--accent-secondary);
+	background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-tertiary) 100%);
+	color: var(--text-primary);
 	padding: 0.5rem 1rem;
 	border-radius: 20px;
 	font-size: 0.9rem;
-	font-weight: 600;
-	border: 1px solid var(--border-color);
+	font-weight: 700;
+	border: 2px solid var(--accent-gold);
+	box-shadow: var(--shadow-sm);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
 }
 
 .sighting-grid {
@@ -168,9 +258,10 @@ button:focus-visible {
 	gap: 1rem;
 	margin-bottom: 2rem;
 	padding: 1rem;
-	background: var(--bg-secondary);
-	border-radius: 12px;
-	border: 1px solid var(--border-color);
+	background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+	border-radius: 16px;
+	border: 2px solid var(--accent-primary);
+	box-shadow: var(--shadow-md);
 }
 
 .filters-content {
