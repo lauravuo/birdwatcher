@@ -11,15 +11,31 @@ export async function signInInBrowser(
 ) {
 	await page.evaluate(
 		async ({ email, password }) => {
-			// @ts-expect-error
-			if (!window.auth || !window.signInWithEmail) {
-				throw new Error(
-					"window.auth or window.signInWithEmail not found. Is VITE_USE_EMULATOR=true set?",
-				);
-			}
+			try {
+				// @ts-expect-error
+				if (!window.auth || !window.signInWithEmail) {
+					throw new Error(
+						"window.auth or window.signInWithEmail not found. Is VITE_USE_EMULATOR=true set?",
+					);
+				}
 
-			// @ts-expect-error
-			await window.signInWithEmail(window.auth, email, password);
+				// @ts-expect-error
+				await window.signInWithEmail(window.auth, email, password);
+
+				// Wait for auth state to update
+				await new Promise((resolve) => {
+					// @ts-expect-error
+					const unsubscribe = window.auth.onAuthStateChanged((user) => {
+						if (user) {
+							unsubscribe();
+							resolve(user);
+						}
+					});
+				});
+			} catch (e) {
+				console.error("signInInBrowser error:", e);
+				throw e;
+			}
 		},
 		{ email, password },
 	);
