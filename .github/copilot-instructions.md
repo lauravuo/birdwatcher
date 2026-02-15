@@ -326,11 +326,16 @@ Then run: `npx playwright test /tmp/take-screenshots.ts --headed`
 #### 8. Clean Up After Screenshots
 
 ```bash
-# Stop development server (Ctrl+C in terminal)
+# Stop development server (Ctrl+C in terminal where it's running)
+# Or if running in background, find and stop by port:
+lsof -ti:5173 | xargs kill
 
-# Stop Firebase emulator
-# Use Ctrl+C in the emulator terminal, or:
-lsof -ti:8080,9099,4000 | xargs kill -9
+# Stop Firebase emulator (Ctrl+C in its terminal)
+# Or if running in background:
+lsof -ti:8080,9099,4000 | xargs kill
+
+# If processes don't stop gracefully, use force kill:
+# lsof -ti:8080,9099,4000,5173 | xargs kill -9
 
 # Restore your .env file if needed
 # (Don't commit .env changes)
@@ -358,8 +363,9 @@ Take screenshots for ANY of these changes:
 Here's a complete example for adding a new button to a form:
 
 ```bash
-# 1. Start emulator
+# 1. Start emulator (use async bash with detach for background)
 npm run emulator:start &
+EMULATOR_PID=$!
 sleep 15  # Wait for emulator to start
 
 # 2. Setup environment
@@ -367,6 +373,7 @@ cp .env.test .env
 
 # 3. Start dev server in background
 npm run dev &
+DEV_SERVER_PID=$!
 sleep 5  # Wait for Vite to start
 
 # 4. Use Playwright to seed and screenshot
@@ -375,9 +382,9 @@ sleep 5  # Wait for Vite to start
 # 5. Run the script with Playwright
 npx playwright test /tmp/screenshot-script.ts --headed
 
-# 6. Cleanup
-killall node  # Stop dev server
-lsof -ti:8080,9099,4000 | xargs kill -9  # Stop emulator
+# 6. Cleanup (graceful shutdown)
+kill $DEV_SERVER_PID  # Stop dev server by PID
+lsof -ti:8080,9099,4000 | xargs kill  # Stop emulator by port
 ```
 
 ### Troubleshooting
