@@ -14,102 +14,67 @@ When implementing UI changes, **ALWAYS** take multiple screenshots to attach to 
 
 ## Step-by-Step Screenshot Process
 
-### 1. Start the Firebase Emulator
+### 1. Automated Setup (Recommended)
+
+Run the preparation script which starts emulators, seeds data, and launches the dev server:
+
 ```bash
-# Start emulator in background (detached mode)
+./scripts/prepare-screenshot-env.sh
+```
+
+The script will output the test user credentials and keep the environment running.
+
+- **User**: owner@example.com
+- **Password**: password123
+- **Group**: Bird Watchers Helsinki
+
+### 2. Manual Setup (Alternative)
+
+If you need custom control:
+
+#### 1. Start the Firebase Emulator
+```bash
+# Start emulator in background
 npm run emulator:start
 ```
 
-Wait for the emulator to fully start (usually 10-20 seconds). You should see:
-```
-✔  All emulators ready! View status and logs at http://localhost:4000
-```
-
-### 2. Configure Environment for Emulator
+#### 2. Configure Environment
 ```bash
-# Create a temporary .env file for screenshots
 cp .env.test .env
 ```
 
-This ensures the dev server connects to the emulator instead of production.
-
-### 3. Start Development Server
+#### 3. Start Development Server
 ```bash
-# In a new terminal/session, start the dev server
 npm run dev
 ```
 
-Wait for Vite to start. You should see:
-```
-VITE ready in XXX ms
-➜  Local:   http://localhost:5173/
-```
+#### 4. Seed Test Data manually...
 
-### 4. Seed Test Data
-
-Follow the patterns from existing E2E tests in the `e2e/helpers/` directory:
-
-**Example: Seed a complete test scenario**
-```typescript
-// Create a script or use browser console at http://localhost:5173
-
-// Import helpers (use browser console with exposed window.auth and window.db)
-import { createTestUser } from './e2e/helpers/auth-helpers';
-import { seedGroup, seedSightings, seedUserProfile } from './e2e/helpers/firestore-helpers';
-
-// Create test user
-const user = await createTestUser('test@example.com', 'password123', 'Test User');
-
-// Seed user profile
-await seedUserProfile({
-  id: user.uid,
-  displayName: 'Test User',
-  email: 'test@example.com',
-  photoURL: null
-});
-
-// Seed a group
-const groupId = await seedGroup({
-  name: 'Bird Watchers Group',
-  joinCode: 'birdwatchers',
-  ownerId: user.uid,
-  memberIds: [user.uid]
-});
-
-// Seed sightings
-await seedSightings([
-  {
-    bird: 'Turdus merula',
-    birdName: 'Mustarastas',
-    date: '2026-02-15',
-    time: '10:30',
-    groupId: groupId,
-    userId: user.uid,
-    userName: 'Test User',
-    observationType: 'visual',
-    locationName: 'Helsinki Central Park',
-    notes: 'Beautiful singing bird',
-    createdAt: Date.now()
-  },
-  // Add more sightings as needed for different scenarios
-]);
-```
-
-**Alternative: Use Playwright's test setup**
-```bash
-# Run a single E2E test to seed data without assertions
-# Modify a test temporarily to stop before assertions
-npx playwright test --headed --debug e2e/sightings.spec.ts
-```
-
-**Manual seeding via Emulator UI**
-- Navigate to http://localhost:4000
-- Use the Firestore UI to manually add documents
-- Use the Auth UI to create test users
 
 ### 5. Navigate and Take Screenshots
 
 1. Open browser to http://localhost:5173
+2. Log in with the test user credentials
+3. Navigate to the desired views
+
+## 6. Troubleshooting
+
+### Authentication Issues (Network Error / Auth Emulator Failed)
+If you see `Firebase: Error (auth/network-request-failed)` or the Auth emulator doesn't start:
+
+1.  **Check Java**: Firebase emulators require Java. Run `java -version`.
+2.  **Check Ports**: Ensure ports 9099 (Auth) and 8080 (Firestore) are free.
+    ```bash
+    lsof -i :9099
+    lsof -i :8080
+    ```
+3.  **Project ID**: The script uses `--project demo-test`. Ensure your `.env` or local config doesn't conflict.
+4.  **Local vs System Firebase**: The script uses `npx firebase` to use the local project version. If you have a global version (check `firebase --version`), it might be outdated (e.g., v7.x lacks Auth emulator). Always use `npx firebase` or the provided script.
+
+### Seeding Errors (PERMISSION_DENIED)
+If you see `PERMISSION_DENIED` during seeding:
+- The seeding script must run in a specific order: Owner -> Members -> Group -> Sightings.
+- Ensure the script is using the `seed-screenshot-data.spec.ts` which handles authentication for each user creation step.
 2. Sign in with test credentials (if needed)
 3. Navigate to relevant pages showing your changes
 4. **Take multiple screenshots capturing:**
