@@ -1,303 +1,103 @@
-# Taking Screenshots for UI Changes
-
-When implementing UI changes, **ALWAYS** take multiple screenshots to attach to the pull request. This helps reviewers understand the visual impact of your changes.
-
-## Prerequisites
-
-1. **Use Firebase Emulator with Development Server**
-   - The development server must connect to the Firebase emulator (not production)
-   - This ensures a safe, isolated environment for testing
-
-2. **Set up environment for emulator**
-   - Use `.env.test` configuration which sets `VITE_USE_EMULATOR=true`
-   - Emulator uses ports: 9099 (Auth), 8080 (Firestore), 4000 (Emulator UI)
-
-## Step-by-Step Screenshot Process
-
-### 1. Start the Firebase Emulator
-```bash
-# Start emulator in background (detached mode)
-npm run emulator:start
-```
-
-Wait for the emulator to fully start (usually 10-20 seconds). You should see:
-```
-✔  All emulators ready! View status and logs at http://localhost:4000
-```
-
-### 2. Configure Environment for Emulator
-```bash
-# Create a temporary .env file for screenshots
-cp .env.test .env
-```
-
-This ensures the dev server connects to the emulator instead of production.
-
-### 3. Start Development Server
-```bash
-# In a new terminal/session, start the dev server
-npm run dev
-```
-
-Wait for Vite to start. You should see:
-```
-VITE ready in XXX ms
-➜  Local:   http://localhost:5173/
-```
-
-### 4. Seed Test Data
-
-Follow the patterns from existing E2E tests in the `e2e/helpers/` directory:
-
-**Example: Seed a complete test scenario**
-```typescript
-// Create a script or use browser console at http://localhost:5173
-
-// Import helpers (use browser console with exposed window.auth and window.db)
-import { createTestUser } from './e2e/helpers/auth-helpers';
-import { seedGroup, seedSightings, seedUserProfile } from './e2e/helpers/firestore-helpers';
-
-// Create test user
-const user = await createTestUser('test@example.com', 'password123', 'Test User');
-
-// Seed user profile
-await seedUserProfile({
-  id: user.uid,
-  displayName: 'Test User',
-  email: 'test@example.com',
-  photoURL: null
-});
-
-// Seed a group
-const groupId = await seedGroup({
-  name: 'Bird Watchers Group',
-  joinCode: 'birdwatchers',
-  ownerId: user.uid,
-  memberIds: [user.uid]
-});
-
-// Seed sightings
-await seedSightings([
-  {
-    bird: 'Turdus merula',
-    birdName: 'Mustarastas',
-    date: '2026-02-15',
-    time: '10:30',
-    groupId: groupId,
-    userId: user.uid,
-    userName: 'Test User',
-    observationType: 'visual',
-    locationName: 'Helsinki Central Park',
-    notes: 'Beautiful singing bird',
-    createdAt: Date.now()
-  },
-  // Add more sightings as needed for different scenarios
-]);
-```
-
-**Alternative: Use Playwright's test setup**
-```bash
-# Run a single E2E test to seed data without assertions
-# Modify a test temporarily to stop before assertions
-npx playwright test --headed --debug e2e/sightings.spec.ts
-```
-
-**Manual seeding via Emulator UI**
-- Navigate to http://localhost:4000
-- Use the Firestore UI to manually add documents
-- Use the Auth UI to create test users
-
-### 5. Navigate and Take Screenshots
-
-1. Open browser to http://localhost:5173
-2. Sign in with test credentials (if needed)
-3. Navigate to relevant pages showing your changes
-4. **Take multiple screenshots capturing:**
-   - Initial state / before interaction
-   - During interaction (if applicable)
-   - Final state / after changes
-   - Different screen sizes (mobile, tablet, desktop) if relevant
-   - Different states (empty state, loading, error, success)
-   - Different user roles/permissions if applicable
-
-### 6. Take Screenshots Using Available Tools
-
-When implementing this process, you have access to browser automation tools for taking screenshots:
-
-**Using Playwright directly in a script:**
-```typescript
-// Create a temporary Playwright script (e.g., /tmp/take-screenshots.ts)
-import { test } from '@playwright/test';
-
-test('capture screenshots', async ({ page }) => {
-  await page.goto('http://localhost:5173');
-  
-  // Navigate to the feature you changed
-  await page.getByRole('button', { name: 'Sign In' }).click();
-  // ... perform any needed interactions ...
-  
-  // Take screenshot
-  await page.screenshot({ 
-    path: 'feature-initial-state.png',
-    fullPage: true 
-  });
-
-  // After interaction
-  await page.getByRole('button', { name: 'Add Sighting' }).click();
-  await page.screenshot({ 
-    path: 'feature-dialog-open.png' 
-  });
-});
-```
-
-```
-
-Then run: `npm run test:e2e -- /tmp/take-screenshots.ts --headed`
-
-**Or use browser automation tools available to you** to navigate and capture screenshots systematically.
-
-### 7. Screenshot Best Practices
-
-- **Name screenshots descriptively**: `add-sighting-form.png`, `group-leaderboard-mobile.png`
-- **Capture full page when needed**: Use `fullPage: true` for long pages
-- **Show context**: Include navigation, breadcrumbs, headers to show where in the app the feature is
-- **Multiple angles**: Different viewport sizes, states, and user perspectives
-- **Before/After**: If changing existing UI, show both old and new states (use git checkout to show old)
-
-- **Use `page.setViewportSize({ width: 1280, height: 720 })`** (or similar) to ensure consistent dimensions.
-
-### Authenticated Screenshots
-
-To take screenshots of the logged-in view:
-
-1.  **Use Helpers:** Import `createTestUser` and `signInInBrowser` from `e2e/helpers`.
-2.  **Set Locale:** Force a specific locale (e.g., English) to ensure consistent text assertions.
-3.  **Wait for UI:** Ensure the dashboard or specific elements (like "Your Groups") are visible before capturing.
-
-```typescript
-import { test, expect } from '@playwright/test';
-import { createTestUser, getTestUserCredentials } from './helpers/auth-helpers';
-import { signInInBrowser } from './helpers/browser-auth';
-
-test('capture authenticated screenshot', async ({ page }) => {
-  // force English
-  await page.addInitScript(() => { localStorage.setItem("language", "en"); });
-
-  const { email, password } = getTestUserCredentials();
-  await createTestUser(email, password); // ensure user exists
-
-  await page.goto('/');
-  await expect(page.getByRole('button', { name: /Sign in with Google/i })).toBeVisible();
-
-  await signInInBrowser(page, email, password);
-  await expect(page.getByRole('heading', { name: 'Your Groups' })).toBeVisible();
-
-  await page.screenshot({ path: 'authenticated-screenshot.png', fullPage: true });
-});
-```
-
-### 8. Clean Up After Screenshots
-
-```bash
-# Stop development server (Ctrl+C in terminal where it's running)
-# Or if running in background, find and stop by port:
-lsof -ti:5173 | xargs kill
-
-# Stop Firebase emulator (Ctrl+C in its terminal)
-# Or if running in background:
-lsof -ti:8080,9099,4000 | xargs kill
-
-# If processes don't stop gracefully, use force kill:
-# lsof -ti:8080,9099,4000,5173 | xargs kill -9
-
-# Restore your .env file if needed
-# (Don't commit .env changes)
-git checkout .env  # if you had a different .env before
-```
-
-## When to Take Screenshots
-
-Take screenshots for ANY of these changes:
-- ✅ New UI components or features
-- ✅ Changes to existing component styling/layout
-- ✅ Responsive design changes
-- ✅ Navigation or routing changes
-- ✅ Form changes (new fields, validation, layout)
-- ✅ Changes to lists, tables, or data display
-- ✅ Modal dialogs or overlays
-- ✅ Error states or loading states
-- ✅ Accessibility improvements (show before/after)
-- ❌ Backend-only changes (no UI impact)
-- ❌ Pure refactoring with no visual changes
-- ❌ Configuration or build changes
-
-## Example Screenshot Workflow
-
-Here's a complete example for adding a new button to a form:
-
-```bash
-# 1. Start emulator (use async bash with detach for background)
-npm run emulator:start &
-EMULATOR_PID=$!
-sleep 15  # Wait for emulator to start
-
-# 2. Setup environment
-cp .env.test .env
-
-# 3. Start dev server in background
-npm run dev &
-DEV_SERVER_PID=$!
-sleep 5  # Wait for Vite to start
-
-# 4. Use Playwright to seed and screenshot
-# Create a temporary script: /tmp/screenshot-script.ts
-
-# 5. Run the script with Playwright
-npm run test:e2e -- /tmp/screenshot-script.ts --headed --project=chromium
-
-# 6. Cleanup (graceful shutdown)
-kill $DEV_SERVER_PID  # Stop dev server by PID
-lsof -ti:8080,9099,4000 | xargs kill  # Stop emulator by port
-```
-
-### 7. Screenshot Best Practices
-
-- **Use Deterministic IDs for Seeding**: When capturing details pages (e.g., `/groups/:id/sightings/:id`), do not rely on auto-generated IDs. Use `setDoc` with a known string ID so you can construct the URL reliably.
-  ```typescript
-  // Bad: Random ID
-  // await seedSighting({ ... }); 
-  
-  // Good: Known ID
-  await setDoc(doc(db, 'sightings', 'fixed-sighting-id'), { 
-    id: 'fixed-sighting-id', 
-    ...sightingData 
-  });
-  await page.goto('/groups/g-123/sightings/fixed-sighting-id');
-  ```
-
-## Troubleshooting
-
-**Emulator won't start**
-- Check if ports 8080, 9099, 4000 are already in use
-- Run: `npm run clean:emulators` to kill existing processes
-
-**Dev server can't connect to emulator**
-- Verify `VITE_USE_EMULATOR=true` in your .env
-- Check that emulator is running: visit http://localhost:4000
-
-**Data not appearing**
-- Check browser console for errors
-- Verify Firestore security rules allow your test user to read/write
-- Check emulator UI at http://localhost:4000 to see if data exists
-
-**Screenshots are blank or wrong content**
-- Ensure dev server is fully loaded before taking screenshots
-- Wait for async data to load (use appropriate waits in Playwright)
-- Check that you're on the correct URL
-
-**"Auth API Key not valid" Error**
-- Ensure your `.env.test` has a valid-looking `VITE_FIREBASE_API_KEY`. simple strings like "demo-key" might fail client-side validation in some SDK versions. Use something like `AIzaSyDOCS_EXAMPLE_API_KEY`.
-
-**Environment Variables missing in Test**
-- Do not run `npx playwright test` directly if you rely on `.env.test`.
-- Use `npm run test:e2e -- <your-file>` instead, which sets up `dotenv`.
+# Agent Protocol: Taking UI Screenshots
+
+**Context**: You (the AI Agent) are responsible for taking ALL UI screenshots.
+
+## 1. Environment Preparation
+
+Before taking any screenshots, you **MUST** ensure the environment is ready.
+
+1.  **Check for running environment**:
+    *   Look for a running process of `./scripts/prepare-screenshot-env.sh`.
+    *   Check if `http://localhost:5173` is accessible.
+
+2.  **Start Environment (if not running)**:
+    *   Run: `./scripts/prepare-screenshot-env.sh`
+    *   Wait for "Environment Ready!" message.
+    *   **Important**: This script starts the Firebase Emulators, Seeds Data, and starts the Vite Dev Server.
+
+## 2. Playwright MCP Usage
+
+You **MUST** use the `playwright` MCP server tools for all screenshot tasks.
+
+### Core Tools
+| Tool | Purpose |
+| :--- | :--- |
+| `mcp_playwright_browser_navigate` | Go to a URL (e.g., `http://localhost:5173`). |
+| `mcp_playwright_browser_evaluate` | Run JS in the browser (CRITICAL for login). |
+| `mcp_playwright_browser_take_screenshot` | Capture the screenshot. |
+| `mcp_playwright_browser_resize` | Set viewport size. |
+
+### Configuration Constants
+*   **Base URL**: `http://localhost:5173`
+*   **User**: `owner@example.com`
+*   **Password**: `password123`
+
+## 3. Workflow: Capture Screenshots
+
+Follow this EXACT sequence to ensure success.
+
+### Step 1: Initialize Browser
+1.  **Navigate** to the app:
+    ```json
+    { "url": "http://localhost:5173" }
+    ```
+2.  **Set Viewport** (Default Desktop):
+    ```json
+    { "width": 1280, "height": 720 }
+    ```
+
+### Step 2: Authenticate (Programmatic)
+**DO NOT** fill out the login form manually. It can be flaky. Instead, inject the login state directly using the exposed emulator helpers.
+
+1.  **Execute Login Script**:
+    Call `mcp_playwright_browser_evaluate` with:
+    ```javascript
+    async () => {
+      // confirm window.signInWithEmail exists (exposed by firebase.ts in emulator mode)
+      if (window.signInWithEmail) {
+        await window.signInWithEmail(window.auth, 'owner@example.com', 'password123');
+        return "Logged in successfully";
+      }
+      return "Error: window.signInWithEmail not found";
+    }
+    ```
+2.  **Navigate to Target**:
+    Navigate explicitly to your target page (e.g., `http://localhost:5173/groups/<GROUP_ID>`).
+    *   **Note**: Navigating to `/sightings` directly may redirect to the home page if no group is selected. It is often safer to navigate to the group URL found in the seed logs (e.g., `http://localhost:5173/groups/LM2xzba9z2JbdJFz7G3X`).
+
+### Step 3: Capture
+1.  **Wait for Content**:
+    Use `mcp_playwright_browser_wait_for` to ensure specific elements (like a sighting card or list) are visible.
+2.  **Clean UI (Optional)**:
+    If needed, use `mcp_playwright_browser_evaluate` to hide toast messages or debug overlays.
+3.  **Take Screenshot**:
+    ```json
+    {
+      "fullPage": true,
+      "filename": ".temp/my-screenshot.png",
+      "type": "png"
+    }
+    ```
+
+## 4. Viewport Standards
+
+Unless otherwise specified by the user, capture these viewports:
+
+*   **Desktop**: `1280x720`
+*   **Mobile**: `375x667` (iPhone SE equivalent)
+
+## 5. Troubleshooting
+
+*   **"Error: window.signInWithEmail not found"**:
+    *   Ensure the environment script was run with `VITE_USE_EMULATOR=true`.
+    *   Refresh the page (`mcp_playwright_browser_navigate`) and try again.
+*   **White Screen / Loading Forever**:
+    *   The dev server might be rebuilding. Wait 5 seconds and reload.
+    *   Check terminal output for build errors.
+*   **Auth Error**:
+    *   Restart `./scripts/prepare-screenshot-env.sh` to reset the emulator state.
+*   **"Opening in existing browser session"**:
+    *   This means a Chrome process is locking the user data directory.
+    *   Run `pkill -f "Google Chrome"` (macOS) to kill conflicting processes.
+    *   Retry the MCP browser launch.
+
