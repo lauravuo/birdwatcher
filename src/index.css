@@ -1,33 +1,54 @@
 :root {
-	/* Nature/Dark Theme Palette */
-	--bg-primary: #1a1b1e;
-	/* Deep dark grey/blue/green hint */
-	--bg-secondary: #25262b;
-	/* Slightly lighter for cards */
-	--bg-tertiary: #2c2e33;
+	/* Pride / Eurovision Theme Palette */
+	--bg-primary: #0d0a1e;
+	/* Deep cosmic dark */
+	--bg-secondary: #1a1040;
+	/* Rich purple-dark for cards */
+	--bg-tertiary: #231654;
 	/* Inputs and list items */
-	--bg-hover: #373a40;
+	--bg-hover: #2d1d6e;
 	/* Hover states */
 
-	--text-primary: #e6e6e6;
-	/* High contrast reading text */
-	--text-secondary: #a0a0a0;
-	/* Metadata/secondary text */
-	--text-dim: #6c7079;
+	--text-primary: #ffffff;
+	/* High contrast white */
+	--text-secondary: #c8b8ff;
+	/* Soft lavender for metadata */
+	--text-dim: #8070b0;
 	/* Placeholder/disabled */
 
-	--accent-primary: #4dabf7;
-	/* Soft Blue for actions */
-	--accent-hover: #339af0;
-	--accent-secondary: #51cf66;
-	/* Nature green for success/highlight */
+	--accent-primary: #e0006e;
+	/* Neon deep-pink for actions (WCAG AA compliant with white text) */
+	--accent-hover: #b8005a;
+	--accent-secondary: #a855f7;
+	/* Electric purple for highlights */
 
-	--border-color: #373a40;
-	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
-	--shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+	/* Pride Rainbow */
+	--rainbow-red: #ff2244;
+	--rainbow-orange: #ff8c00;
+	--rainbow-yellow: #ffd700;
+	--rainbow-green: #00cc66;
+	--rainbow-blue: #0088ff;
+	--rainbow-violet: #9933ff;
 
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	/* Gradient presets */
+	--gradient-pride: linear-gradient(
+		135deg,
+		#ff2244,
+		#ff8c00,
+		#ffd700,
+		#00cc66,
+		#0088ff,
+		#9933ff
+	);
+	--gradient-neon: linear-gradient(135deg, #e0006e, #a855f7, #0088ff);
+	--gradient-button: linear-gradient(135deg, #e0006e 0%, #a855f7 100%);
+
+	--border-color: #4a2d8c;
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 8px rgba(168, 85, 247, 0.1);
+	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4), 0 0 16px rgba(168, 85, 247, 0.15);
+	--shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4), 0 0 30px rgba(168, 85, 247, 0.2);
+
+	font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
 	line-height: 1.6;
 	font-weight: 400;
 
@@ -40,6 +61,43 @@
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Animations ───────────────────────────────────────── */
+@keyframes pride-shimmer {
+	0% {
+		background-position: -200% center;
+	}
+	100% {
+		background-position: 200% center;
+	}
+}
+
+@keyframes pride-glow-pulse {
+	0%,
+	100% {
+		box-shadow:
+			0 0 6px rgba(224, 0, 110, 0.3),
+			0 0 12px rgba(168, 85, 247, 0.2);
+	}
+	50% {
+		box-shadow:
+			0 0 12px rgba(224, 0, 110, 0.5),
+			0 0 24px rgba(168, 85, 247, 0.4),
+			0 0 36px rgba(0, 136, 255, 0.2);
+	}
+}
+
+@keyframes gradient-shift {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
 *,
@@ -72,8 +130,11 @@ h3,
 h4,
 h5,
 h6 {
+	font-family: "Montserrat", "Inter", system-ui, sans-serif;
+	font-weight: 800;
 	color: var(--text-primary);
 	line-height: 1.2;
+	letter-spacing: -0.02em;
 }
 
 button {
@@ -81,18 +142,25 @@ button {
 	border: 1px solid transparent;
 	padding: 0.6em 1.2em;
 	font-size: 1em;
-	font-weight: 500;
+	font-weight: 600;
 	font-family: inherit;
 	background-color: var(--bg-tertiary);
-	/* Consistent button bg */
 	color: var(--text-primary);
 	cursor: pointer;
-	transition: all 0.25s;
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
 }
 
 button:hover {
-	background-color: var(--bg-hover);
-	border-color: var(--accent-primary);
+	background: var(--gradient-button);
+	background-size: 200% 200%;
+	animation: gradient-shift 2s ease infinite;
+	border-color: transparent;
+	box-shadow:
+		0 4px 15px rgba(224, 0, 110, 0.4),
+		0 0 20px rgba(168, 85, 247, 0.3);
+	transform: translateY(-1px);
 }
 
 button:focus,
@@ -130,13 +198,13 @@ button:focus-visible {
 }
 
 .sighting-type-badge {
-	background-color: var(--bg-tertiary);
-	color: var(--accent-secondary);
+	background: var(--gradient-button);
+	color: white;
 	padding: 0.5rem 1rem;
 	border-radius: 20px;
 	font-size: 0.9rem;
-	font-weight: 600;
-	border: 1px solid var(--border-color);
+	font-weight: 700;
+	border: none;
 }
 
 .sighting-grid {
