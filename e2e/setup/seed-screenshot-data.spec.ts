@@ -61,6 +61,7 @@ const generateSightingsForUser = (
 				locationName: "Helsinki",
 				notes: "Seeded for screenshots",
 				createdAt: date.getTime(),
+				// biome-ignore lint/suspicious/noExplicitAny: seeded dataset without pre-existing IDs
 			} as any);
 		}
 	}

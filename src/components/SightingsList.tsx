@@ -1,7 +1,54 @@
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
-import type { UserProfile } from "../types";
+import birdsData from "../data/birds.json";
+import type { BirdMap, UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
+
+const birds = birdsData as BirdMap;
+
+const VisualIcon = () => (
+	<svg
+		width="14"
+		height="14"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2.5"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		role="img"
+		aria-label="Visual observation"
+	>
+		<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+		<circle cx="12" cy="12" r="3" />
+	</svg>
+);
+
+const AudialIcon = () => (
+	<svg
+		width="14"
+		height="14"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2.5"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		role="img"
+		aria-label="Audial observation"
+	>
+		<path d="M11 5L6 9H2v6h4l5 4V5z" />
+		<path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+		<path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+	</svg>
+);
+
+const BothIcon = () => (
+	<div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+		<VisualIcon />
+		<AudialIcon />
+	</div>
+);
 
 interface SightingsListProps {
 	sightings: Sighting[];
@@ -53,11 +100,11 @@ export function SightingsList({
 		return <p className="no-sightings">{t("userView.noSightings")}</p>;
 	}
 
-	const getVideoIcon = (type: string) => {
-		if (type === "visual") return "👁️ "; // visual
-		if (type === "audial") return "👂 ";
-		if (type === "both") return "👁️👂 ";
-		return "👁️ "; // fallback
+	const getObservationIcon = (type: string) => {
+		if (type === "visual") return <VisualIcon />;
+		if (type === "audial") return <AudialIcon />;
+		if (type === "both") return <BothIcon />;
+		return <VisualIcon />; // fallback
 	};
 
 	return (
@@ -75,31 +122,53 @@ export function SightingsList({
 							<Link
 								to={`/groups/${groupId}/members/${sighting.userId}/sightings/${sighting.id}`}
 								className="sighting-item-link"
-								style={{
-									textDecoration: "none",
-									color: "inherit",
-									display: "block",
-								}}
 							>
-								<div className="sighting-header">
-									<span className="bird-name">{birdName}</span>
-									<span className="sighting-date">
-										{formatDate(sighting.date, sighting.time)}
-									</span>
+								{/* Background Image Container */}
+								{birds[sighting.birdId]?.imageUrl ? (
+									<img
+										src={birds[sighting.birdId]?.imageUrl}
+										alt=""
+										className="sighting-bg"
+										loading="lazy"
+									/>
+								) : (
+									<div className="sighting-bg" />
+								)}
+
+								{/* Top Metadata */}
+								<div className="sighting-meta-top">
+									<div className="sighting-meta-top-right">
+										<span
+											className="sighting-date"
+											title={getObservationTypeLabel(sighting.type)}
+										>
+											{getObservationIcon(sighting.type)}
+											<span>{formatDate(sighting.date)}</span>
+										</span>
+									</div>
 								</div>
 
-								<div className="sighting-meta">
-									<span className="observation-type">
-										{getVideoIcon(sighting.type)}
-										{getObservationTypeLabel(sighting.type)}
-									</span>
-									{showMemberName && members && (
-										<span className="sighting-user">
-											👤{" "}
-											{members.get(sighting.userId)?.displayName ||
-												t("common.anonymous")}
-										</span>
-									)}
+								{/* Bottom Metadata */}
+								<div className="sighting-meta-bottom">
+									<h3 className="sighting-bird-name">{birdName}</h3>
+									{showMemberName &&
+										members &&
+										members.get(sighting.userId) && (
+											<div className="sighting-user-avatar">
+												{members.get(sighting.userId)?.photoURL ? (
+													<img
+														src={
+															members.get(sighting.userId)?.photoURL ||
+															undefined
+														}
+														alt={members.get(sighting.userId)?.displayName}
+														className="avatar-img"
+													/>
+												) : (
+													<span className="avatar-fallback">👤</span>
+												)}
+											</div>
+										)}
 								</div>
 							</Link>
 						</li>
