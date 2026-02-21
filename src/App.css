@@ -281,13 +281,19 @@ h1 {
 	list-style: none;
 	padding: 0;
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+	grid-template-columns: repeat(
+			auto-fill,
+			minmax(min(160px, calc(50% - 0.5rem)), 1fr)
+		);
 	gap: 1rem;
 }
 
 @media (min-width: 768px) {
 	.sightings-list {
-		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		grid-template-columns: repeat(
+				auto-fill,
+				minmax(min(200px, calc(50% - 0.5rem)), 1fr)
+			);
 	}
 }
 
