@@ -59,7 +59,7 @@ sleep 5
 echo "🌱 Seeding test data..."
 # Run the playwright setup script using the project that handles setup
 # We use dotenv to ensure test process has env vars
-npx dotenv -e .env -- npx playwright test e2e/setup/seed-screenshot-data.spec.ts --project=chromium
+RUN_SEED_SCRIPT=1 npx dotenv -e .env -- npx playwright test e2e/setup/seed-screenshot-data.spec.ts --project=chromium
 
 echo ""
 echo "✅ Environment Ready!"
