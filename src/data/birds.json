@@ -279,7 +279,7 @@
 	"hippiainen": {
 		"id": "hippiainen",
 		"wikiUrl": "https://fi.wikipedia.org/wiki/Hippi%C3%A4inen",
-		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/%D0%97%D0%BE%D0%BB%D0%BE%D1%82%D0%BE%D0%BC%D1%83%D1%88%D0%BA%D0%B0_%D0%B6%D0%BE%D0%B2%D1%82%D0%BE%D1%87%D1%83%D0%B1%D0%B0_%28%D0%B0%D0%BD%D0%B3%D0%BB._Goldcrest%3B_%D0%BB%D0%B0%D1%82._Regulus_regulus%29.jpg/640px-%D0%97%D0%BE%D0%BB%D0%BE%D1%82%D0%BE%D0%BC%D1%83%D1%88%D0%BA%D0%B0_%D0%B6%D0%BE%D0%B2%D1%82%D0%BE%D1%87%D1%83%D0%B1%D0%B0_%28%D0%B0%D0%BD%D0%B3%D0%BB._Goldcrest%3B_%D0%BB%D0%B0%D1%82._Regulus_regulus%29.jpg",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/%D0%97%D0%BE%D0%BB%D0%BE%D1%82%D0%BE%D0%BC%D1%83%D1%88%D0%BA%D0%B0_%D0%B6%D0%BE%D0%B2%D1%82%D0%BE%D1%87%D1%83%D0%B1%D0%B0_%28%D0%B0%D0%BD%D0%B3%D0%BB._Goldcrest%3B_%D0%BB%D0%B0%D1%82._Regulus_regulus%29.jpg/960px-%D0%97%D0%BE%D0%BB%D0%BE%D1%82%D0%BE%D0%BC%D1%83%D1%88%D0%BA%D0%B0_%D0%B6%D0%BE%D0%B2%D1%82%D0%BE%D1%87%D1%83%D0%B1%D0%B0_%28%D0%B0%D0%BD%D0%B3%D0%BB._Goldcrest%3B_%D0%BB%D0%B0%D1%82._Regulus_regulus%29.jpg",
 		"imageAuthor": "Eugene Stolyarov",
 		"imageLicense": "CC BY-SA 4.0",
 		"imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
@@ -303,7 +303,7 @@
 	"huuhkaja": {
 		"id": "huuhkaja",
 		"wikiUrl": "https://fi.wikipedia.org/wiki/Huuhkaja",
-		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Bubo_bubo_sibiricus_-_01.JPG/640px-Bubo_bubo_sibiricus_-_01.JPG",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Bubo_bubo_sibiricus_-_01.JPG/960px-Bubo_bubo_sibiricus_-_01.JPG",
 		"imageAuthor": "Carlos Delgado",
 		"imageLicense": "CC BY-SA 4.0",
 		"imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
@@ -588,7 +588,7 @@
 	"keltasirkku": {
 		"id": "keltasirkku",
 		"wikiUrl": "https://fi.wikipedia.org/wiki/Keltasirkku",
-		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Emberiza_citrinella.jpg/640px-Emberiza_citrinella.jpg",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/73/Emberiza_citrinella.jpg",
 		"imageAuthor": "Andreas Trepte",
 		"imageLicense": "CC BY-SA 2.5",
 		"imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.5"
@@ -1505,7 +1505,7 @@
 	"peukaloinen": {
 		"id": "peukaloinen",
 		"wikiUrl": "https://fi.wikipedia.org/wiki/Peukaloinen",
-		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Ein_neugieriger_Zaunk%C3%B6nig.jpg/640px-Ein_neugieriger_Zaunk%C3%B6nig.jpg",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Ein_neugieriger_Zaunk%C3%B6nig.jpg/960px-Ein_neugieriger_Zaunk%C3%B6nig.jpg",
 		"imageAuthor": "Joefrei",
 		"imageLicense": "CC BY-SA 3.0",
 		"imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
@@ -1802,7 +1802,7 @@
 	"puukiipija": {
 		"id": "puukiipija",
 		"wikiUrl": "https://fi.wikipedia.org/wiki/Puukiipij%C3%A4",
-		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Treecreeper_%2851174963230%29.jpg/640px-Treecreeper_%2851174963230%29.jpg",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Treecreeper_%2851174963230%29.jpg/960px-Treecreeper_%2851174963230%29.jpg",
 		"imageAuthor": "hedera.baltica from Wrocław, Poland",
 		"imageLicense": "CC BY-SA 2.0",
 		"imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
@@ -2308,7 +2308,7 @@
 	"toyhtotiainen": {
 		"id": "toyhtotiainen",
 		"wikiUrl": "https://fi.wikipedia.org/wiki/T%C3%B6yht%C3%B6tiainen",
-		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Lophophanes_cristatus_-Aviemore%2C_Scotland-8_%282%29.jpg/640px-Lophophanes_cristatus_-Aviemore%2C_Scotland-8_%282%29.jpg",
+		"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/90/Lophophanes_cristatus_-Aviemore%2C_Scotland-8_%282%29.jpg",
 		"imageAuthor": "Mark Medcalf",
 		"imageLicense": "CC BY 2.0",
 		"imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0"
