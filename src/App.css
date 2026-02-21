@@ -306,6 +306,7 @@ h1 {
 	border: 1px solid var(--border-color);
 	transition: all 0.2s;
 	box-shadow: var(--shadow-sm);
+	container-type: inline-size;
 }
 
 .sighting-item:hover {
@@ -381,8 +382,8 @@ div.sighting-bg {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 44px;
-	height: 44px;
+	width: clamp(28px, 11cqw, 44px);
+	height: clamp(28px, 11cqw, 44px);
 	border-radius: 50%;
 	background: var(--bg-secondary);
 	border: 1.5px solid white;
@@ -406,7 +407,7 @@ div.sighting-bg {
 	display: flex;
 	align-items: center;
 	gap: 0.35rem;
-	font-size: 0.75rem;
+	font-size: clamp(0.6rem, 4cqw, 0.75rem);
 	font-weight: 500;
 	color: white;
 	background: rgba(0, 0, 0, 0.5);
@@ -431,7 +432,7 @@ div.sighting-bg {
 
 .sighting-bird-name {
 	margin: 0;
-	font-size: 1rem;
+	font-size: clamp(0.65rem, 5cqw, 1rem);
 	font-weight: 600;
 	color: white;
 	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
