@@ -103,7 +103,7 @@ test.describe("Sighting Details", () => {
 		// Safest is to wait for something we know.
 		// Other tests used "Harakka" for "harakka".
 		await expect(
-			page.locator(".sighting-item-link").getByText("Harakka"),
+			page.locator(".sighting-card-link").getByText("Harakka"),
 		).toBeVisible();
 
 		// 2. hidden/visible check
@@ -112,7 +112,7 @@ test.describe("Sighting Details", () => {
 		await expect(page.getByText("A strictly secret note")).not.toBeVisible();
 
 		// 3. Click Item
-		await page.locator(".sighting-item-link").click();
+		await page.locator(".sighting-card-link").click();
 
 		// 4. Verify Detail View
 		await expect(page).toHaveURL(/\/groups\/.*\/sightings\/.*/);

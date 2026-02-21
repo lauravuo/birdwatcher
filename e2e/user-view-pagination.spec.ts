@@ -96,13 +96,13 @@ test.describe("User View Pagination", () => {
 		// 6. Verify initial load (Should see top 20, newest first)
 		// Newest is s-24 (Bird: bird-24)
 		await expect(
-			page.locator(".sightings-list").getByText("bird-24"),
+			page.locator(".sightings-grid").getByText("bird-24"),
 		).toBeVisible({ timeout: 10000 });
 
 		// Verify oldest on page 1 (bird-5) is visible (since 24 down to 5 is 20 items)
 		// 24, 23, ..., 5
 		await expect(
-			page.locator(".sightings-list").getByText("bird-5"),
+			page.locator(".sightings-grid").getByText("bird-5"),
 		).toBeVisible();
 
 		// Check proper loading of first page
@@ -114,11 +114,11 @@ test.describe("User View Pagination", () => {
 		// 8. Verify older sightings loaded
 		// bird-4 should now be visible (it was the 21st item from top, so on page 2)
 		await expect(
-			page.locator(".sightings-list").getByText("bird-4"),
+			page.locator(".sightings-grid").getByText("bird-4"),
 		).toBeVisible();
 		// bird-0 should be visible
 		await expect(
-			page.locator(".sightings-list").getByText("bird-0"),
+			page.locator(".sightings-grid").getByText("bird-0"),
 		).toBeVisible();
 
 		// Button should disappear because we received fewer than 20 items (5 items)
@@ -203,10 +203,10 @@ test.describe("User View Pagination", () => {
 
 		// 6. Verify sightings are loaded
 		await expect(
-			page.locator(".sightings-list").getByText("bird-4"),
+			page.locator(".sightings-grid").getByText("bird-4"),
 		).toBeVisible({ timeout: 10000 });
 		await expect(
-			page.locator(".sightings-list").getByText("bird-0"),
+			page.locator(".sightings-grid").getByText("bird-0"),
 		).toBeVisible();
 
 		// 7. Click Load More should NOT be visible

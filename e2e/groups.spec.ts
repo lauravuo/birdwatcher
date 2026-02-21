@@ -377,11 +377,11 @@ test.describe("Groups UI", () => {
 
 		// Default: Month View
 		await expect(
-			page.locator(".sightings-list").getByText("Harakka").first(),
+			page.locator(".sightings-grid").getByText("Harakka").first(),
 		).toBeVisible();
 		if (month !== prevMonth) {
 			await expect(
-				page.locator(".sightings-list").getByText("Varis"),
+				page.locator(".sightings-grid").getByText("Varis"),
 			).toBeHidden();
 		}
 
@@ -396,18 +396,18 @@ test.describe("Groups UI", () => {
 		// In Year view, if prevDate is same year, we see both.
 		if (prevYear === year) {
 			await expect(
-				page.locator(".sightings-list").getByText("Harakka").first(),
+				page.locator(".sightings-grid").getByText("Harakka").first(),
 			).toBeVisible();
 			await expect(
-				page.locator(".sightings-list").getByText("Varis").first(),
+				page.locator(".sightings-grid").getByText("Varis").first(),
 			).toBeVisible();
 		} else {
 			// Different year
 			await expect(
-				page.locator(".sightings-list").getByText("Harakka").first(),
+				page.locator(".sightings-grid").getByText("Harakka").first(),
 			).toBeVisible();
 			await expect(
-				page.locator(".sightings-list").getByText("Varis"),
+				page.locator(".sightings-grid").getByText("Varis"),
 			).toBeHidden();
 		}
 
