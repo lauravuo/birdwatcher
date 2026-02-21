@@ -80,9 +80,10 @@ export async function clearAllTestData(): Promise<void> {
 	try {
 		await fetch(url, { method: "DELETE" });
 	} catch (error) {
-		console.error("Failed to clear Firestore data via REST API:", error);
-		// Fallback or throw
-		throw error;
+		console.warn(
+			"Could not clear Firestore data (emulator may not be running):",
+			error,
+		);
 	}
 }
 
