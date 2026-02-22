@@ -56,42 +56,40 @@ export function GroupMembersList({
 			<h3>
 				{t("groupMembers.membersCount")} ({members.length})
 			</h3>
-			<div className="group-tab-card">
-				<ul className="members-list">
-					{sortedMembers.map(({ member, birdCount }) => (
-						<li key={member.id} className="member-item">
-							<Link
-								to={`/groups/${group.id}/members/${member.id}`}
-								className="member-item-button"
-							>
-								<div className="member-avatar">
-									{member.photoURL ? (
-										<img src={member.photoURL} alt={member.displayName} />
-									) : (
-										<div className="avatar-placeholder">
-											{member.displayName.charAt(0).toUpperCase()}
-										</div>
+			<ul className="members-list">
+				{sortedMembers.map(({ member, birdCount }) => (
+					<li key={member.id} className="member-item">
+						<Link
+							to={`/groups/${group.id}/members/${member.id}`}
+							className="member-item-button"
+						>
+							<div className="member-avatar">
+								{member.photoURL ? (
+									<img src={member.photoURL} alt={member.displayName} />
+								) : (
+									<div className="avatar-placeholder">
+										{member.displayName.charAt(0).toUpperCase()}
+									</div>
+								)}
+							</div>
+							<div className="member-info">
+								<div className="member-info-header">
+									<span className="member-name">{member.displayName}</span>
+									{member.id === group.ownerId && (
+										<span className="owner-badge">{t("groups.owner")}</span>
+									)}
+									{member.id === currentUser?.uid && (
+										<span className="you-badge">{t("groups.you")}</span>
 									)}
 								</div>
-								<div className="member-info">
-									<div className="member-info-header">
-										<span className="member-name">{member.displayName}</span>
-										{member.id === group.ownerId && (
-											<span className="owner-badge">{t("groups.owner")}</span>
-										)}
-										{member.id === currentUser?.uid && (
-											<span className="you-badge">{t("groups.you")}</span>
-										)}
-									</div>
-									<span className="member-bird-count">
-										{t("groupMembers.birdCount", { count: birdCount })}
-									</span>
-								</div>
-							</Link>
-						</li>
-					))}
-				</ul>
-			</div>
+								<span className="member-bird-count">
+									{t("groupMembers.birdCount", { count: birdCount })}
+								</span>
+							</div>
+						</Link>
+					</li>
+				))}
+			</ul>
 		</div>
 	);
 }

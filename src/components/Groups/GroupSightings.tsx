@@ -183,35 +183,32 @@ export function GroupSightings({ group }: GroupSightingsProps) {
 				{t("groupSightings.title")} ({sightings.length})
 				<span className="active-filter-label"> - {filterLabel}</span>
 			</h3>
+			<SightingsFilter
+				years={availableYears}
+				selectedYear={selectedYear}
+				setSelectedYear={setSelectedYear}
+				months={availableMonths}
+				selectedMonth={selectedMonth}
+				setSelectedMonth={setSelectedMonth}
+				species={availableSpecies}
+				selectedSpecies={selectedSpecies}
+				setSelectedSpecies={setSelectedSpecies}
+			/>
 
-			<div className="group-tab-card">
-				<SightingsFilter
-					years={availableYears}
-					selectedYear={selectedYear}
-					setSelectedYear={setSelectedYear}
-					months={availableMonths}
-					selectedMonth={selectedMonth}
-					setSelectedMonth={setSelectedMonth}
-					species={availableSpecies}
-					selectedSpecies={selectedSpecies}
-					setSelectedSpecies={setSelectedSpecies}
+			{loading ? (
+				<div>{t("groupSightings.loading")}</div>
+			) : error ? (
+				<div className="error-message">{error}</div>
+			) : (
+				<SightingsList
+					sightings={sightings}
+					hasMore={hasMore}
+					loadingMore={loadingMore}
+					onLoadMore={() => fetchData(false)}
+					showMemberName={true}
+					members={members}
 				/>
-
-				{loading ? (
-					<div>{t("groupSightings.loading")}</div>
-				) : error ? (
-					<div className="error-message">{error}</div>
-				) : (
-					<SightingsList
-						sightings={sightings}
-						hasMore={hasMore}
-						loadingMore={loadingMore}
-						onLoadMore={() => fetchData(false)}
-						showMemberName={true}
-						members={members}
-					/>
-				)}
-			</div>
+			)}
 		</div>
 	);
 }
