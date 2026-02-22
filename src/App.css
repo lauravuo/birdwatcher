@@ -65,9 +65,10 @@ h1 {
 		padding: 1rem;
 	}
 
-	.card {
+	.card,
+	.group-tab-card {
 		margin: 0;
-		padding: 1.5rem;
+		padding: 1rem;
 		border-radius: 0;
 		border-left: none;
 		border-right: none;
@@ -382,8 +383,8 @@ div.sighting-bg {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: clamp(28px, 11cqw, 44px);
-	height: clamp(28px, 11cqw, 44px);
+	width: 32px;
+	height: 32px;
 	border-radius: 50%;
 	background: var(--bg-secondary);
 	border: 1.5px solid white;
@@ -407,7 +408,7 @@ div.sighting-bg {
 	display: flex;
 	align-items: center;
 	gap: 0.35rem;
-	font-size: clamp(0.6rem, 4cqw, 0.75rem);
+	font-size: 0.8rem;
 	font-weight: 500;
 	color: white;
 	background: rgba(0, 0, 0, 0.5);
@@ -432,16 +433,59 @@ div.sighting-bg {
 
 .sighting-bird-name {
 	margin: 0;
-	font-size: clamp(0.65rem, 5cqw, 1rem);
+	font-size: 1rem;
 	font-weight: 600;
 	color: white;
 	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	line-clamp: 2;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
-	line-height: 1.2;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	hyphens: auto;
+	flex: 1;
+	min-width: 0;
+	line-height: 1.25;
+}
+
+/* Sighting Item Responsive Container Queries */
+@container (max-width: 280px) {
+	.sighting-meta-top,
+	.sighting-meta-bottom {
+		padding: 0.5rem;
+	}
+
+	.sighting-user-avatar {
+		width: 26px;
+		height: 26px;
+	}
+
+	.sighting-date {
+		font-size: 0.7rem;
+		padding: 0.25rem 0.4rem;
+	}
+
+	.sighting-meta-bottom .sighting-bird-name {
+		font-size: 0.95rem;
+	}
+}
+
+@container (max-width: 200px) {
+	.sighting-meta-top,
+	.sighting-meta-bottom {
+		padding: 0.35rem;
+	}
+
+	.sighting-user-avatar {
+		width: 20px;
+		height: 20px;
+	}
+
+	.sighting-date {
+		font-size: 0.6rem;
+		padding: 0.2rem 0.35rem;
+	}
+
+	.sighting-meta-bottom .sighting-bird-name {
+		font-size: 0.85rem;
+	}
 }
 
 /* Bird Image */
@@ -1002,15 +1046,6 @@ div.sighting-bg {
 }
 
 /* Leaderboard */
-/* Shared Card Styling for Tab Content */
-.group-tab-card {
-	background: var(--bg-secondary);
-	border-radius: 12px;
-	border: 1px solid var(--border-color);
-	box-shadow: var(--shadow-sm);
-	padding: 1.5rem;
-}
-
 /* Leaderboard, Sightings, Members Containers (Header wrapper) */
 .leaderboard-container,
 .group-sightings-container,

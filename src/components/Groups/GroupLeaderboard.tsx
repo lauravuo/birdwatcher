@@ -42,7 +42,7 @@ export function GroupLeaderboard({
 			{entries.length === 0 ? (
 				<div className="no-data">{t("userView.noSightings")}</div>
 			) : (
-				<div className="leaderboard-list group-tab-card">
+				<div className="leaderboard-list">
 					{entries.map((entry) => (
 						<Link
 							to={`/groups/${group.id}/members/${entry.user.id}`}
@@ -99,7 +99,7 @@ export function GroupLeaderboard({
 							<h4 className="leaderboard-section-title">
 								{t("leaderboard.groupTotal", { year: currentYear })}
 							</h4>
-							<div className="leaderboard-list group-tab-card">
+							<div className="leaderboard-list">
 								<div className="leaderboard-item" style={{ cursor: "default" }}>
 									<div className="leaderboard-rank">👥</div>
 									<div className="leaderboard-user">
@@ -202,7 +202,7 @@ export function GroupLeaderboard({
 										)}
 									</select>
 								</div>
-								<div className="leaderboard-list group-tab-card">
+								<div className="leaderboard-list">
 									{section.entries.map((entry) => (
 										<Link
 											to={`/groups/${group.id}/members/${entry.user.id}`}
