@@ -23,6 +23,20 @@ function saveBirds(data) {
 
 const TARGET_WIDTH = 640;
 
+// Check if URL is from Wikimedia reliably
+function isWikimediaUrl(url) {
+	if (!url) return false;
+	try {
+		const parsed = new URL(url);
+		return (
+			parsed.hostname === "wikimedia.org" ||
+			parsed.hostname.endsWith(".wikimedia.org")
+		);
+	} catch (_e) {
+		return false;
+	}
+}
+
 // Extract filename for API query
 function getWikimediaFilename(url) {
 	if (!url) return null;
@@ -167,7 +181,7 @@ async function main() {
 		}
 
 		// 2. Refresh Image URL and Attribution from Wikimedia API
-		if (imageUrl && imageUrl.includes("wikimedia.org")) {
+		if (isWikimediaUrl(imageUrl)) {
 			const filename = getWikimediaFilename(imageUrl);
 			if (filename) {
 				await sleep(150); // Small delay to avoid 429 Too Many Requests
