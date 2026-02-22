@@ -5,7 +5,8 @@ npm run build
 npm test -- --run
 
 # Check if any code files changed in src/ or e2e/ directories
-CHANGED_FILES=$(git diff --name-only @{upstream}..HEAD)
+UPSTREAM_BRANCH=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo "origin/main")
+CHANGED_FILES=$(git diff --name-only "$UPSTREAM_BRANCH"..HEAD)
 CODE_CHANGED=$(echo "$CHANGED_FILES" | grep -E '^(src|e2e)/.*\.(ts?|tsx?|jsx?|css|html)$' || true)
 
 if [ -n "$CODE_CHANGED" ]; then
