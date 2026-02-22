@@ -23,31 +23,6 @@ function saveBirds(data) {
 
 const TARGET_WIDTH = 640;
 
-function getResizedUrl(url, width = TARGET_WIDTH) {
-	if (!url) return null;
-
-	// CodeQL Fix: Secure URL check
-	try {
-		const u = new URL(url);
-		if (u.hostname !== "upload.wikimedia.org") return url;
-	} catch (_e) {
-		return url;
-	}
-
-	if (url.includes("/thumb/")) {
-		return url.replace(/\/(\d+)px-/, `/${width}px-`);
-	}
-
-	const parts = url.split("/commons/");
-	if (parts.length === 2) {
-		const pathAfterCommons = parts[1];
-		const filename = pathAfterCommons.split("/").pop();
-		return `${parts[0]}/commons/thumb/${pathAfterCommons}/${width}px-${filename}`;
-	}
-
-	return url;
-}
-
 // Extract filename for API query
 function getWikimediaFilename(url) {
 	if (!url) return null;
@@ -90,11 +65,10 @@ function stripHtml(text) {
 	return result.trim();
 }
 
-async function fetchAttribution(filename) {
+async function fetchWikimediaImageInfo(filename, width = TARGET_WIDTH) {
 	if (!filename) return null;
 
-	// API: https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata&titles=File:Filename&format=json
-	const apiUrl = `https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata&titles=File:${encodeURIComponent(filename)}&format=json`;
+	const apiUrl = `https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=${width}&titles=File:${encodeURIComponent(filename)}&format=json`;
 
 	try {
 		const res = await fetch(apiUrl, {
@@ -107,16 +81,19 @@ async function fetchAttribution(filename) {
 		const pageId = Object.keys(pages)[0];
 		if (pageId === "-1") return null;
 
-		const metadata = pages[pageId]?.imageinfo?.[0]?.extmetadata;
-		if (!metadata) return null;
+		const imageinfo = pages[pageId]?.imageinfo?.[0];
+		if (!imageinfo) return null;
+
+		const metadata = imageinfo.extmetadata || {};
 
 		return {
+			thumbUrl: imageinfo.thumburl || imageinfo.url,
 			author: stripHtml(metadata.Artist?.value) || "Unknown",
 			license: metadata.LicenseShortName?.value || "Unknown",
 			licenseUrl: metadata.LicenseUrl?.value,
 		};
 	} catch (e) {
-		console.warn(`Failed to fetch attribution for ${filename}`, e);
+		console.warn(`Failed to fetch image info for ${filename}`, e);
 		return null;
 	}
 }
@@ -189,29 +166,27 @@ async function main() {
 			}
 		}
 
-		// 2. Resize Image if needed
-		if (imageUrl) {
-			const resized = getResizedUrl(imageUrl);
-			if (resized && resized !== imageUrl) {
-				imageUrl = resized;
-				bird.imageUrl = imageUrl;
-				changed = true;
-			}
-		}
-
-		// 3. Fetch Attribution if missing (and we have an image)
-		if (imageUrl && (!bird.imageAuthor || !bird.imageLicense)) {
+		// 2. Refresh Image URL and Attribution from Wikimedia API
+		if (imageUrl && imageUrl.includes("wikimedia.org")) {
 			const filename = getWikimediaFilename(imageUrl);
 			if (filename) {
-				await sleep(500); // Small delay for API
-				// console.log(`Fetching attribution for ${filename}...`);
-				const attribution = await fetchAttribution(filename);
-				if (attribution) {
-					bird.imageAuthor = attribution.author;
-					bird.imageLicense = attribution.license;
-					bird.imageLicenseUrl = attribution.licenseUrl;
-					changed = true;
-					// console.log(`  -> ${attribution.author}, ${attribution.license}`);
+				await sleep(150); // Small delay to avoid 429 Too Many Requests
+				const info = await fetchWikimediaImageInfo(filename);
+				if (info) {
+					if (bird.imageUrl !== info.thumbUrl) {
+						bird.imageUrl = info.thumbUrl;
+						changed = true;
+					}
+					if (
+						bird.imageAuthor !== info.author ||
+						bird.imageLicense !== info.license ||
+						bird.imageLicenseUrl !== info.licenseUrl
+					) {
+						bird.imageAuthor = info.author;
+						bird.imageLicense = info.license;
+						bird.imageLicenseUrl = info.licenseUrl;
+						changed = true;
+					}
 				}
 			}
 		}
