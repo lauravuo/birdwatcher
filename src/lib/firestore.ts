@@ -1,4 +1,5 @@
 import {
+	arrayRemove,
 	arrayUnion,
 	collection,
 	doc,
@@ -219,6 +220,18 @@ export const getGroupMembers = async (
 	const q = query(collection(db, "users"), where("id", "in", memberIds));
 	const snapshot = await getDocs(q);
 	return snapshot.docs.map((d) => d.data() as UserProfile);
+};
+
+export const removeUserFromGroup = async (
+	groupId: string,
+	userIdToRemove: string,
+): Promise<void> => {
+	const groupRef = doc(db, "groups", groupId);
+	await import("firebase/firestore").then(async (fs) => {
+		await fs.updateDoc(groupRef, {
+			memberIds: arrayRemove(userIdToRemove),
+		});
+	});
 };
 
 export const getUserProfile = async (

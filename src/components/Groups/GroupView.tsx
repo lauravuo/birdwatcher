@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { db } from "../../lib/firebase";
-import { getGroupMembers, getUsersStats } from "../../lib/firestore";
+import {
+	getGroupMembers,
+	getUsersStats,
+	removeUserFromGroup,
+} from "../../lib/firestore";
 import type { Group, UserProfile } from "../../types";
 import { GroupLeaderboard } from "./GroupLeaderboard";
 import { GroupMembersList } from "./GroupMembersList";
@@ -24,6 +28,21 @@ export function GroupView() {
 	);
 
 	const currentYear = new Date().getFullYear();
+
+	const handleRemoveMember = async (userIdToRemove: string) => {
+		if (!group) return;
+		try {
+			await removeUserFromGroup(group.id, userIdToRemove);
+			setGroup({
+				...group,
+				memberIds: group.memberIds.filter((id) => id !== userIdToRemove),
+			});
+			setMembers(members.filter((m) => m.id !== userIdToRemove));
+		} catch (err) {
+			console.error("Failed to remove member:", err);
+			throw err; // Re-throw to be handled by the component
+		}
+	};
 
 	// Fetch Group, Members, and Stats
 	useEffect(() => {
@@ -125,6 +144,7 @@ export function GroupView() {
 						group={group}
 						members={members}
 						userStats={userStats}
+						onRemoveMember={handleRemoveMember}
 					/>
 				)}
 			</div>

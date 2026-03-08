@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -8,6 +8,7 @@ interface GroupMembersListProps {
 	group: Group;
 	members: UserProfile[];
 	userStats: Map<string, Record<string, string[]>>;
+	onRemoveMember?: (userId: string) => Promise<void>;
 }
 
 interface MemberWithBirdCount {
@@ -19,9 +20,37 @@ export function GroupMembersList({
 	group,
 	members,
 	userStats,
+	onRemoveMember,
 }: GroupMembersListProps) {
 	const { t } = useTranslation();
 	const { currentUser } = useAuth();
+	const [removingId, setRemovingId] = useState<string | null>(null);
+
+	const handleRemoveClick = async (
+		e: React.MouseEvent,
+		member: UserProfile,
+	) => {
+		e.preventDefault();
+		e.stopPropagation();
+
+		if (!onRemoveMember || removingId) return;
+
+		if (
+			window.confirm(
+				t("groupMembers.confirmRemove", { name: member.displayName }),
+			)
+		) {
+			try {
+				setRemovingId(member.id);
+				await onRemoveMember(member.id);
+				alert(t("groupMembers.removeSuccess"));
+			} catch (_err) {
+				alert(t("groupMembers.removeError"));
+			} finally {
+				setRemovingId(null);
+			}
+		}
+	};
 
 	// Calculate bird counts and sort members
 	const sortedMembers = useMemo(() => {
@@ -87,6 +116,19 @@ export function GroupMembersList({
 								</span>
 							</div>
 						</Link>
+						{currentUser?.uid === group.ownerId &&
+							member.id !== group.ownerId && (
+								<button
+									type="button"
+									className="remove-member-button"
+									onClick={(e) => handleRemoveClick(e, member)}
+									disabled={removingId === member.id}
+								>
+									{removingId === member.id
+										? t("common.loading")
+										: t("groupMembers.removeUser")}
+								</button>
+							)}
 					</li>
 				))}
 			</ul>
