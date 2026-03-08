@@ -66,7 +66,11 @@
 		"backButton": "← Takaisin",
 		"membersCount": "Jäsenet",
 		"birdCount": "{{count}} lintua",
-		"birdCount_one": "{{count}} lintu"
+		"birdCount_one": "{{count}} lintu",
+		"removeUser": "Poista",
+		"confirmRemove": "Haluatko varmasti poistaa käyttäjän {{name}} ryhmästä?",
+		"removeSuccess": "Käyttäjä poistettu onnistuneesti",
+		"removeError": "Käyttäjän poistaminen epäonnistui. Yritä uudelleen."
 	},
 	"groupView": {
 		"tabs": {

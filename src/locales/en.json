@@ -66,7 +66,11 @@
 		"backButton": "← Back",
 		"membersCount": "Members",
 		"birdCount": "{{count}} birds",
-		"birdCount_one": "{{count}} bird"
+		"birdCount_one": "{{count}} bird",
+		"removeUser": "Remove",
+		"confirmRemove": "Are you sure you want to remove {{name}} from the group?",
+		"removeSuccess": "User removed successfully",
+		"removeError": "Failed to remove user. Please try again."
 	},
 	"groupSightings": {
 		"title": "Group Sightings",

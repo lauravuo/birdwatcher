@@ -304,6 +304,85 @@ test.describe("Groups UI", () => {
 		await expect(page.locator(".filters-content")).not.toBeVisible();
 	});
 
+	test("owner can remove a member from the group", async ({ page }) => {
+		const groupName = "Removal Group";
+		const ownerEmail = "owner-removal@birdwatcher.test";
+		const ownerPassword = "password123";
+		const memberEmail = "member-removal@birdwatcher.test";
+		const memberPassword = "password456";
+
+		// 1. Owner creates a group
+		await createTestUser(ownerEmail, ownerPassword, "RemovalOwner");
+		const { signInInBrowser, signOutInBrowser } = await import(
+			"./helpers/browser-auth"
+		);
+
+		await signOutInBrowser(page);
+		await signInInBrowser(page, ownerEmail, ownerPassword);
+		await expect(page.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
+
+		await page.getByLabel("Group Name:").fill(groupName);
+		await page.getByRole("button", { name: "Create Group" }).click();
+		await expect(page.getByText(groupName)).toBeVisible({ timeout: 10000 });
+
+		// Extract join code
+		const groupLink = page.getByRole("link", { name: new RegExp(groupName) });
+		const text = await groupLink.innerText();
+		const match = text.match(/\(([^)]+)\)/);
+		if (!match) throw new Error("Could not extract join code");
+		const joinCode = match[1];
+
+		// 2. Member joins the group
+		await signOutInBrowser(page);
+		await createTestUser(memberEmail, memberPassword, "RemovalMember");
+		await signInInBrowser(page, memberEmail, memberPassword);
+		await page.goto(`/?group=${joinCode}`);
+		await expect(page).not.toHaveURL(/group=/, { timeout: 10000 });
+
+		// 3. Owner logs back in to remove the member
+		await signOutInBrowser(page);
+		await signInInBrowser(page, ownerEmail, ownerPassword);
+		await page.goto("/");
+		await page.getByRole("link", { name: new RegExp(groupName) }).click();
+
+		// Navigate to Members tab
+		await page.getByRole("button", { name: "Members" }).click();
+		await expect(page.getByText(/Members \(2\)/)).toBeVisible();
+
+		// Ensure Owner sees Remove button for Member but not for themselves
+		const memberListItem = page
+			.locator(".member-item")
+			.filter({ hasText: "RemovalMember" });
+		const ownerListItem = page
+			.locator(".member-item")
+			.filter({ hasText: "RemovalOwner" });
+
+		await expect(
+			memberListItem.locator("button.remove-member-button"),
+		).toBeVisible();
+		await expect(
+			ownerListItem.locator("button.remove-member-button"),
+		).not.toBeVisible();
+
+		// Handle confirmation dialog
+		page.once("dialog", (dialog) => dialog.accept());
+
+		// Click Remove
+		await memberListItem.locator("button.remove-member-button").click();
+
+		// Verify removal from the UI list instantly
+		await expect(page.getByText(/Members \(1\)/)).toBeVisible();
+		await expect(
+			page.locator(".member-name").filter({ hasText: "RemovalMember" }),
+		).not.toBeVisible();
+
+		// 4. Verify Leaderboard also doesn't show the user anymore
+		await page.getByRole("button", { name: "Stats" }).click();
+		await expect(
+			page.locator(".leaderboard-list").getByText("RemovalMember"),
+		).not.toBeVisible();
+	});
+
 	test("toggles between month and year view in group", async ({ page }) => {
 		const groupName = "Mode Group";
 		await createGroup(page, groupName);
