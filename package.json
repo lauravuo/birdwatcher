@@ -31,10 +31,10 @@
 	},
 	"dependencies": {
 		"firebase": "^12.10.0",
-		"i18next": "^25.8.14",
+		"i18next": "^25.8.18",
 		"react": "^19.2.4",
 		"react-dom": "^19.2.4",
-		"react-i18next": "^16.5.5",
+		"react-i18next": "^16.5.8",
 		"react-router-dom": "^7.13.1"
 	},
 	"devDependencies": {
@@ -43,17 +43,17 @@
 		"@testing-library/dom": "^10.4.1",
 		"@testing-library/jest-dom": "^6.9.1",
 		"@testing-library/react": "^16.3.2",
-		"@types/node": "^25.3.3",
+		"@types/node": "^25.5.0",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
-		"@vitejs/plugin-react": "^5.1.4",
+		"@vitejs/plugin-react": "^6.0.0",
 		"dotenv-cli": "^11.0.0",
-		"firebase-tools": "^15.8.0",
+		"firebase-tools": "^15.9.1",
 		"happy-dom": "^20.8.3",
 		"husky": "^9.1.7",
-		"lint-staged": "^16.3.2",
+		"lint-staged": "^16.3.3",
 		"typescript": "~5.9.3",
-		"vite": "^7.3.1",
-		"vitest": "4.0.18"
+		"vite": "^8.0.0",
+		"vitest": "4.1.0"
 	}
 }
