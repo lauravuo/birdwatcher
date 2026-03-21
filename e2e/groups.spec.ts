@@ -4,6 +4,7 @@ import {
 	getGroupByCode,
 	seedGroup,
 	seedSightings,
+	seedUserProfile,
 } from "./helpers/firestore-helpers";
 import { expect, test } from "./helpers/fixtures";
 
@@ -115,11 +116,18 @@ test.describe("Groups UI / Management", () => {
 		user,
 	}) => {
 		const groupName = `Click Group ${crypto.randomUUID().substring(0, 4)}`;
+		const otherUserId = `other-${crypto.randomUUID().substring(0, 4)}`;
+		await seedUserProfile({
+			id: otherUserId,
+			displayName: "Other User",
+			email: "other@test.test",
+			photoURL: null,
+		});
 		// Add ownerId: user.uid so the user is treated as the OWNER and does NOT auto-redirect!
 		await seedGroup({
 			name: groupName,
 			ownerId: user.uid,
-			memberIds: [user.uid, "other-user"],
+			memberIds: [user.uid, otherUserId],
 		});
 
 		// Reload to fetch groups
@@ -196,6 +204,12 @@ test.describe("Groups UI / Management", () => {
 			"pass123",
 			"RemovalMember",
 		);
+		await seedUserProfile({
+			id: memberUser.uid,
+			displayName: "RemovalMember",
+			email: memberEmail,
+			photoURL: null,
+		});
 
 		await seedGroup({
 			name: groupName,
