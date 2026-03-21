@@ -15,7 +15,12 @@ vi.mock("firebase/firestore", async () => {
 		addDoc: vi.fn(),
 		runTransaction: vi.fn(async (_db, updateFunction) => {
 			const mockTransaction = {
-				get: vi.fn(),
+				get: vi.fn().mockResolvedValue({
+					exists: () => true,
+					data: () => ({ groupIds: ["group-1", "group-2"] }),
+					id: "mock-user-id",
+					ref: { id: "mock-user-id" },
+				}),
 				set: vi.fn(),
 				update: vi.fn(),
 			};

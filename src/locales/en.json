@@ -473,6 +473,7 @@
 		"yearUniqueLeaders": "Top Birdwatchers ({{year}})",
 		"monthUniqueLeaders": "Top Birdwatchers ({{month}})",
 		"groupTotal": "Group Total ({{year}})",
+		"latestFirsts": "Latest First Sightings ({{year}})",
 		"selectMonth": "Select Month",
 		"noSightingsForMonth": "No sightings recorded for this month."
 	}

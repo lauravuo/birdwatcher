@@ -30,3 +30,4 @@ test-results/
 *.crt
 
 .temp/
+.envrc

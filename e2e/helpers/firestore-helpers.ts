@@ -162,6 +162,18 @@ export async function seedUserStats(
 }
 
 /**
+ * Seed group yearly stats in Firestore
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function seedGroupYearlyStats(
+	groupId: string,
+	year: number,
+	data: any,
+): Promise<void> {
+	await setDoc(doc(db, "group_yearly_stats", `${groupId}_${year}`), data);
+}
+
+/**
  * Seed a single sighting in Firestore
  */
 export async function seedSighting(

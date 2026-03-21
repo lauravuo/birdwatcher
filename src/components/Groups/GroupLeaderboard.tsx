@@ -6,6 +6,7 @@ import {
 	useLeaderboardStats,
 } from "../../hooks/useLeaderboardStats";
 import type { Group, UserProfile } from "../../types";
+import { GroupFirstSightings } from "./GroupFirstSightings";
 
 interface GroupLeaderboardProps {
 	group: Group;
@@ -115,6 +116,13 @@ export function GroupLeaderboard({
 							</div>
 						</div>
 					)}
+
+					{/* First Sightings Component added right under group total */}
+					<GroupFirstSightings
+						group={group}
+						members={members}
+						year={currentYear}
+					/>
 
 					{/* 1. Year Points */}
 					{yearPointsLeaders.length > 0 &&

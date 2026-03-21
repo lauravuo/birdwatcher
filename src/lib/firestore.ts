@@ -197,6 +197,9 @@ export const joinGroup = async (
 		);
 	});
 
+	// Recalculate group stats in the background
+	recalculateGroupStats(groupId).catch(console.error);
+
 	return groupId;
 };
 
@@ -232,6 +235,9 @@ export const removeUserFromGroup = async (
 			memberIds: arrayRemove(userIdToRemove),
 		});
 	});
+
+	// Recalculate group stats in the background
+	recalculateGroupStats(groupId).catch(console.error);
 };
 
 export const getUserProfile = async (
@@ -282,6 +288,62 @@ export async function addSighting(
 			},
 			{ merge: true },
 		);
+
+		// Group stats updating
+		const userRef = doc(db, "users", sighting.userId);
+		const userDoc = await transaction.get(userRef);
+		if (userDoc.exists()) {
+			const groupIds = userDoc.data().groupIds || [];
+			for (const groupId of groupIds) {
+				const groupStatsRef = doc(
+					db,
+					"group_yearly_stats",
+					`${groupId}_${year}`,
+				);
+				const groupStatsDoc = await transaction.get(groupStatsRef);
+				let seenBirds: string[] = [];
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				let latestFirsts: any[] = [];
+
+				if (groupStatsDoc.exists()) {
+					const data = groupStatsDoc.data();
+					seenBirds = data.seenBirds || [];
+					latestFirsts = data.latestFirsts || [];
+				}
+
+				if (!seenBirds.includes(sighting.birdId)) {
+					seenBirds.push(sighting.birdId);
+
+					latestFirsts.push({
+						birdId: sighting.birdId,
+						sightingId: sightingRef.id,
+						userId: sighting.userId,
+						date: sighting.date,
+						createdAt: timestamp,
+					});
+
+					latestFirsts.sort((a, b) => {
+						if (a.date !== b.date) return b.date.localeCompare(a.date);
+						return b.createdAt - a.createdAt;
+					});
+
+					if (latestFirsts.length > 5) {
+						latestFirsts = latestFirsts.slice(0, 5);
+					}
+
+					transaction.set(
+						groupStatsRef,
+						{
+							groupId,
+							year,
+							seenBirds,
+							latestFirsts,
+						},
+						{ merge: true },
+					);
+				}
+			}
+		}
 	});
 
 	return sightingRef.id;
@@ -293,6 +355,12 @@ export async function deleteSighting(sightingId: string, userId: string) {
 	});
 	// Recalculate stats to ensure consistency (e.g. if this was unique bird for month)
 	await recalculateUserStats(userId);
+	const user = await getUserProfile(userId);
+	if (user?.groupIds) {
+		user.groupIds.forEach((groupId) => {
+			recalculateGroupStats(groupId).catch(console.error);
+		});
+	}
 }
 
 export async function updateSighting(
@@ -311,6 +379,12 @@ export async function updateSighting(
 	});
 
 	await recalculateUserStats(sighting.userId);
+	const user = await getUserProfile(sighting.userId);
+	if (user?.groupIds) {
+		user.groupIds.forEach((groupId) => {
+			recalculateGroupStats(groupId).catch(console.error);
+		});
+	}
 }
 
 export const getGroupSightings = async (
@@ -511,6 +585,101 @@ export const recalculateUserStats = async (userId: string): Promise<void> => {
 					stats,
 				},
 				{ merge: true },
+			),
+		);
+	}
+};
+
+export const recalculateGroupStats = async (
+	groupId: string,
+	year?: number,
+): Promise<void> => {
+	const groupRef = doc(db, "groups", groupId);
+	const groupDoc = await getDoc(groupRef);
+	if (!groupDoc.exists()) return;
+
+	const memberIds = groupDoc.data()?.memberIds || [];
+	if (memberIds.length === 0) {
+		if (year) {
+			const docRef = doc(db, "group_yearly_stats", `${groupId}_${year}`);
+			await import("firebase/firestore").then((fs) => fs.deleteDoc(docRef));
+		}
+		return;
+	}
+
+	let sightings: (Sighting & { id: string })[] = [];
+	const batchSize = 10;
+	for (let i = 0; i < memberIds.length; i += batchSize) {
+		const batch = memberIds.slice(i, i + batchSize);
+		if (batch.length === 0) continue;
+
+		const constraints: QueryConstraint[] = [where("userId", "in", batch)];
+		const q = query(collection(db, "sightings"), ...constraints);
+		const snapshot = await getDocs(q);
+
+		sightings = sightings.concat(
+			snapshot.docs.map((d) => ({ id: d.id, ...(d.data() as any) })),
+		);
+	}
+
+	// Sort chronologically ascending to find the literal "first" discovery
+	sightings.sort((a, b) => {
+		if (a.date !== b.date) return a.date.localeCompare(b.date);
+		return a.createdAt - b.createdAt;
+	});
+
+	const statsByYear: Record<
+		string,
+		{ seenBirds: string[]; latestFirsts: any[] }
+	> = {};
+	if (year) {
+		statsByYear[year.toString()] = { seenBirds: [], latestFirsts: [] };
+	}
+
+	for (const sighting of sightings) {
+		const date = new Date(sighting.date);
+		const sightingYear = date.getFullYear().toString();
+		if (year && sightingYear !== year.toString()) continue;
+
+		if (!statsByYear[sightingYear]) {
+			statsByYear[sightingYear] = { seenBirds: [], latestFirsts: [] };
+		}
+
+		const stats = statsByYear[sightingYear];
+		if (!stats.seenBirds.includes(sighting.birdId)) {
+			stats.seenBirds.push(sighting.birdId);
+			stats.latestFirsts.push({
+				birdId: sighting.birdId,
+				sightingId: sighting.id,
+				userId: sighting.userId,
+				date: sighting.date,
+				createdAt: sighting.createdAt,
+			});
+		}
+	}
+
+	for (const [y, stats] of Object.entries(statsByYear)) {
+		// Sort latestFirsts explicitly descending to show most recent firsts
+		stats.latestFirsts.sort((a, b) => {
+			if (a.date !== b.date) return b.date.localeCompare(a.date);
+			return b.createdAt - a.createdAt;
+		});
+
+		if (stats.latestFirsts.length > 5) {
+			stats.latestFirsts = stats.latestFirsts.slice(0, 5);
+		}
+
+		const docRef = doc(db, "group_yearly_stats", `${groupId}_${y}`);
+		await import("firebase/firestore").then((fs) =>
+			fs.setDoc(
+				docRef,
+				{
+					groupId,
+					year: Number(y),
+					seenBirds: stats.seenBirds,
+					latestFirsts: stats.latestFirsts,
+				},
+				{ merge: false }, // We don't merge, we replace to ensure correctness
 			),
 		);
 	}
