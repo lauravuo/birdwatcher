@@ -116,18 +116,19 @@ test.describe("Groups UI / Management", () => {
 		user,
 	}) => {
 		const groupName = `Click Group ${crypto.randomUUID().substring(0, 4)}`;
-		const otherUserId = `other-${crypto.randomUUID().substring(0, 4)}`;
+		const otherEmail = `other-${crypto.randomUUID().substring(0, 4)}@test.test`;
+		const otherUser = await createTestUser(otherEmail, "pass123", "Other User");
 		await seedUserProfile({
-			id: otherUserId,
+			id: otherUser.uid,
 			displayName: "Other User",
-			email: "other@test.test",
+			email: otherEmail,
 			photoURL: null,
 		});
 		// Add ownerId: user.uid so the user is treated as the OWNER and does NOT auto-redirect!
 		await seedGroup({
 			name: groupName,
 			ownerId: user.uid,
-			memberIds: [user.uid, otherUserId],
+			memberIds: [user.uid, otherUser.uid],
 		});
 
 		// Reload to fetch groups
