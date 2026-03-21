@@ -21,6 +21,51 @@ trigger: always_on
 * **E2E Helpers**: When writing E2E tests, use the existing helpers in `e2e/helpers/` for authentication and data seeding to ensure tests are isolated and reliable.
 * **Environment**: Ensure `.env.test` is used when running E2E tests.
 
+### Firebase Emulator — How to Run E2E Tests
+
+**ALWAYS follow these steps exactly. Deviating causes port conflicts and emulator startup failures.**
+
+#### Step 1 — Kill any orphaned emulator processes FIRST
+
+Before starting any E2E test run, always clean up stale emulator processes and PID files:
+
+```bash
+npm run clean:emulators
+```
+
+This kills processes on ports 8080, 9099, 4000, 4400 and removes `.firebase/emulators.pid`.
+
+#### Step 2 — Run E2E tests via the managed script
+
+Use the single script that starts the emulator, runs the tests, and shuts it down automatically:
+
+```bash
+npm run test:e2e:emulator
+```
+
+This is equivalent to:
+```bash
+firebase emulators:exec --only auth,firestore --project demo-test "npm run test:e2e"
+```
+
+`emulators:exec` manages the full emulator lifecycle — it starts emulators, waits for them to be ready, runs the test command, then shuts them down. **Do NOT manually run `npm run emulator:start` before this.**
+
+#### Step 3 — If startup still fails
+
+If `test:e2e:emulator` fails with port-in-use or connection errors:
+
+1. Run `npm run clean:emulators` again
+2. Wait 3–5 seconds for ports to fully release
+3. Retry `npm run test:e2e:emulator`
+
+If it continues to fail, check with `lsof -ti:8080,9099` to identify blocking processes.
+
+#### DO NOT do these things
+
+* ❌ Do NOT run `npm run emulator:start` and then `npm run test:e2e` in the same script — they conflict.
+* ❌ Do NOT assume the emulator is already running and call `npm run test:e2e` directly (unless you manually verified emulators are up).
+* ❌ Do NOT skip `npm run clean:emulators` when a previous run may have left processes behind.
+
 ## Internationalization (i18n)
 
 * **Use `t()`**: All user-facing text must be wrapped in the `t()` function from `useTranslation`.

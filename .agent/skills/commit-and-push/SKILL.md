@@ -113,18 +113,34 @@ The pre-push hook runs E2E tests via the Firebase Emulator if code files (`.ts`,
 npm run test:e2e:emulator
 ```
 
+**IMPORTANT — Before running E2E tests (or retrying after failure), always kill stale emulator processes first:**
+
+```bash
+npm run clean:emulators
+```
+
+This kills any process on ports 8080, 9099, 4000, 4400 and removes `.firebase/emulators.pid`. Skipping this is the #1 cause of emulator startup failures.
+
+#### Rules for the emulator
+
+* ✅ Always run `npm run clean:emulators` before `npm run test:e2e:emulator`
+* ✅ `test:e2e:emulator` manages the full emulator lifecycle automatically via `emulators:exec`
+* ❌ Do NOT run `npm run emulator:start` before `test:e2e:emulator` — they will conflict on ports
+* ❌ Do NOT run `npm run test:e2e` directly without an emulator already running
+
 If the push fails due to E2E test failures:
 
-- Review the Playwright test output to identify the failing test(s).
-- Fix the issue in the source code or test files.
-- Stage and commit the fix (a new commit — don't amend unless it's trivial):
+1. Run `npm run clean:emulators` to reset port state
+2. Review the Playwright test output to identify the failing test(s).
+3. Fix the issue in the source code or test files.
+4. Stage and commit the fix (a new commit — don't amend unless it's trivial):
   ```bash
   git add -A
   git commit -m "fix: resolve e2e test failure in <test-name>"
   ```
-- Retry the push:
+5. Retry the push:
   ```bash
-  git push -u origin <branch-name>
+  npm run clean:emulators && git push -u origin <branch-name>
   ```
 
 Repeat until the push succeeds.

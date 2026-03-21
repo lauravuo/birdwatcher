@@ -10,6 +10,8 @@ CHANGED_FILES=$(git diff --name-only "$UPSTREAM_BRANCH"..HEAD)
 CODE_CHANGED=$(echo "$CHANGED_FILES" | grep -E '^(src|e2e)/.*\.(ts?|tsx?|jsx?|css|html)$' || true)
 
 if [ -n "$CODE_CHANGED" ]; then
-  # Code files changed, run E2E tests
+  # Code files changed, run E2E tests.
+  # Always clean up stale emulator processes first to avoid port conflicts.
+  npm run clean:emulators
   npm run test:e2e:emulator
 fi
