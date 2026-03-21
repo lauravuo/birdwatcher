@@ -37,12 +37,17 @@ service cloud.firestore {
 
 
     // New Schema: Yearly User Stats
-    // ID format: {userId}_{year}
     match /user_yearly_stats/{statId} {
       allow read: if request.auth != null;
       allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
       allow update: if request.auth != null && resource.data.userId == request.auth.uid && request.resource.data.userId == request.auth.uid;
       allow delete: if request.auth != null && resource.data.userId == request.auth.uid;
+    }
+    
+    // Group Stats Materialized View
+    // ID format: {groupId}_{year}
+    match /group_yearly_stats/{statId} {
+      allow read, write: if request.auth != null;
     }
   }
 }
