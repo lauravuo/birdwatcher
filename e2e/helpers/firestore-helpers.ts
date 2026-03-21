@@ -46,9 +46,9 @@ export async function seedSightings(
 /**
  * Seed a test group in Firestore
  */
-export async function seedGroup(data: {
-	name: string;
-	joinCode: string;
+export async function seedGroup(data?: {
+	name?: string;
+	joinCode?: string;
 	ownerId?: string;
 	memberIds?: string[];
 }): Promise<string> {
@@ -58,10 +58,10 @@ export async function seedGroup(data: {
 
 	const group: Group = {
 		id: groupId,
-		name: data.name,
-		joinCode: data.joinCode.toLowerCase().trim(),
-		ownerId: data.ownerId || "test-user-123",
-		memberIds: data.memberIds || ["test-user-123"],
+		name: data?.name || `Test Group ${groupId.substring(0, 4)}`,
+		joinCode: (data?.joinCode || `join-${Math.random().toString(36).substring(2, 8)}`).toLowerCase().trim(),
+		ownerId: data?.ownerId || "test-user-123",
+		memberIds: data?.memberIds ? data.memberIds : data?.ownerId ? [data.ownerId] : ["test-user-123"],
 		createdAt: Date.now(),
 	};
 

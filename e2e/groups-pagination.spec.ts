@@ -13,7 +13,6 @@ test.describe("Group Sightings Pagination", () => {
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");
 		});
-		await clearAllTestData();
 	});
 
 	// Helper to get today's date in YYYY-MM-DD format

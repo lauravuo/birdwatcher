@@ -147,7 +147,7 @@ export function GroupList() {
 					{groups.map((group) => (
 						<li key={group.id} className="group-item">
 							<Link to={`/groups/${group.id}`} className="group-button">
-								<strong>{group.name}</strong> <small>({group.joinCode})</small>
+								<strong>{group.name}</strong> <small data-testid="join-code">({group.joinCode})</small>
 							</Link>
 						</li>
 					))}

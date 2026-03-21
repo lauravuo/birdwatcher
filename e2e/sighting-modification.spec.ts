@@ -1,127 +1,117 @@
-import type { User } from "firebase/auth";
-import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
-import { clearAllTestData, seedGroup } from "./helpers/firestore-helpers";
 import { expect, test } from "./helpers/fixtures";
+import { seedGroup, seedSightings } from "./helpers/firestore-helpers";
+import crypto from "crypto";
 
 test.describe("Sighting Modification (Edit/Delete)", () => {
-	let testUser: User;
-	const groupName = "Edit Test Group";
-	const joinCode = "edit-test-123";
-
 	// Increase timeout for this suite
 	test.setTimeout(60000);
 
-	test.beforeEach(async ({ page }) => {
-		// Set language to English for tests (before any navigation)
-		await page.addInitScript(() => {
-			localStorage.setItem("language", "en");
-		});
-
-		await clearAllTestData();
-		const credentials = getTestUserCredentials();
-		testUser = await createTestUser(credentials.email, credentials.password);
-
-		// Seed initial group
+	test("can edit an existing sighting", async ({ authenticatedPage, user }) => {
+		const groupName = `Edit Test ${crypto.randomUUID().substring(0, 4)}`;
+		const joinCode = `edit-${crypto.randomUUID().substring(0, 4)}`;
+		
 		await seedGroup({
 			name: groupName,
-			joinCode: joinCode,
-			ownerId: testUser.uid,
-			memberIds: [testUser.uid],
+			joinCode,
+			ownerId: user.uid,
+			memberIds: [user.uid],
 		});
 
-		// Login using helper
-		await page.goto("/");
-		const { signInInBrowser } = await import("./helpers/browser-auth");
-		await signInInBrowser(page, credentials.email, credentials.password);
+		await authenticatedPage.goto(`/?group=${joinCode}`);
+		await expect(authenticatedPage.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
+		await authenticatedPage.getByRole("link", { name: new RegExp(joinCode) }).click();
 
-		await expect(page.getByText(groupName)).toBeVisible({ timeout: 15000 });
-		await page.getByText(groupName).click();
-	});
-
-	test("can edit an existing sighting", async ({ page }) => {
-		// 1. Add a sighting
+		// Add a sighting via UI
 		const { addSighting } = await import("./helpers/actions");
 		const birdName = "Harakka"; // Magpie
 		const today = new Date().toISOString().slice(0, 10);
-		await addSighting(page, birdName, today);
+		await addSighting(authenticatedPage, birdName, today);
 
 		// We are now at User View which shows the sightings list
-		await expect(page.getByTestId("user-view-heading")).toBeVisible();
+		await expect(authenticatedPage.getByTestId("user-view-heading")).toBeVisible();
 
-		// Wait for sighting in list (Group View)
+		// Wait for sighting in list
 		await expect(
-			page.getByTestId("sighting-item").filter({ hasText: birdName }),
+			authenticatedPage.getByTestId("sighting-item").filter({ hasText: birdName }),
 		).toBeVisible();
 
 		// 2. Click the sighting to go to details
-		await page
+		await authenticatedPage
 			.getByTestId("sighting-item")
 			.filter({ hasText: birdName })
 			.first()
 			.click();
 
 		// 3. Click Edit
-		await page.getByRole("button", { name: "Edit" }).click();
+		await authenticatedPage.getByRole("button", { name: "Edit" }).click();
 
 		// 4. Change Bird and Notes
 		const newBirdName = "Varis"; // Crow
-		// Clear and fill new bird
-		// Note: The helper fills, but here we edit. Manual steps needed or new helper.
-		// Manual steps for EDIT:
-		const birdInput = page.getByTestId("bird-input");
+		const birdInput = authenticatedPage.getByTestId("bird-input");
 		await birdInput.click();
 		await birdInput.clear(); // Clear existing
 		await birdInput.fill(newBirdName);
 
 		// Select from dropdown
-		await page
+		await authenticatedPage
 			.locator(".bird-dropdown .bird-option")
 			.filter({ hasText: newBirdName })
 			.first()
 			.click();
 
 		const newNotes = "Updated notes via E2E";
-		await page.locator("#notes").fill(newNotes);
+		await authenticatedPage.locator("#notes").fill(newNotes);
 
 		// 5. Submit
-		await page.getByRole("button", { name: "Save" }).click();
+		await authenticatedPage.getByRole("button", { name: "Save" }).click();
 
 		// 6. Verify changes in details view
 		await expect(
-			page.getByRole("heading", { name: newBirdName }),
+			authenticatedPage.getByRole("heading", { name: newBirdName }),
 		).toBeVisible();
-		await expect(page.getByText(newNotes)).toBeVisible();
+		await expect(authenticatedPage.getByText(newNotes)).toBeVisible();
 	});
 
-	test("can delete an existing sighting", async ({ page }) => {
+	test("can delete an existing sighting", async ({ authenticatedPage, user }) => {
+		const groupName = `Del Test ${crypto.randomUUID().substring(0, 4)}`;
+		const joinCode = `del-${crypto.randomUUID().substring(0, 4)}`;
+		
+		await seedGroup({
+			name: groupName,
+			joinCode,
+			ownerId: user.uid,
+			memberIds: [user.uid],
+		});
+
+		await authenticatedPage.goto(`/?group=${joinCode}`);
+		await expect(authenticatedPage.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
+		await authenticatedPage.getByRole("link", { name: new RegExp(joinCode) }).click();
+		
 		// 1. Add a sighting
 		const { addSighting } = await import("./helpers/actions");
 		const birdName = "Talitiainen"; // Great Tit
 		const today = new Date().toISOString().slice(0, 10);
-		await addSighting(page, birdName, today);
+		await addSighting(authenticatedPage, birdName, today);
 
-		// We are now at User View which shows the sightings list
-		await expect(page.getByTestId("user-view-heading")).toBeVisible();
-
-		// Wait for sighting in list
+		await expect(authenticatedPage.getByTestId("user-view-heading")).toBeVisible();
 		await expect(
-			page.getByTestId("sighting-item").filter({ hasText: birdName }),
+			authenticatedPage.getByTestId("sighting-item").filter({ hasText: birdName }),
 		).toBeVisible();
 
 		// 2. Click sighting
-		await page
+		await authenticatedPage
 			.getByTestId("sighting-item")
 			.filter({ hasText: birdName })
 			.first()
 			.click();
 
 		// 3. Delete
-		page.on("dialog", (dialog) => dialog.accept()); // Accept confirm dialog
-		await page.getByRole("button", { name: "Delete" }).click();
+		authenticatedPage.on("dialog", (dialog) => dialog.accept()); // Accept confirm dialog
+		await authenticatedPage.getByRole("button", { name: "Delete" }).click();
 
 		// 4. Verify redirected back check that sighting is GONE
 		await expect(
-			page.getByTestId("sighting-item").filter({ hasText: birdName }),
+			authenticatedPage.getByTestId("sighting-item").filter({ hasText: birdName }),
 		).not.toBeVisible();
 	});
 });

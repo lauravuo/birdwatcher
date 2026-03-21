@@ -15,7 +15,6 @@ test.describe("User View Pagination", () => {
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");
 		});
-		await clearAllTestData();
 	});
 
 	test("loads more sightings when clicking Load More button in User View", async ({

@@ -35,7 +35,6 @@ test.describe("User View", () => {
 			logTypes.push(msg.type());
 		});
 
-		await clearAllTestData();
 		const credentials = getTestUserCredentials();
 		// Create user and capture the result which contains the UID
 		testUser = await createTestUser(

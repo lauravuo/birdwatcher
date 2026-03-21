@@ -81,9 +81,10 @@ export async function signOutTestUser() {
  * Get a consistent test user for E2E tests
  */
 export function getTestUserCredentials() {
+	const id = Math.random().toString(36).substring(2, 8);
 	return {
-		email: "test@birdwatcher.test",
-		password: "testpassword123",
-		displayName: "Test User",
+		email: `test-${id}@birdwatcher.test`,
+		password: `testpassword123`,
+		displayName: `Test User ${id}`,
 	};
 }

@@ -13,7 +13,6 @@ test.describe("Group Members", () => {
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");
 		});
-		await clearAllTestData();
 	});
 
 	test("displays members sorted by bird count (descending) with secondary alphabetical sorting", async ({

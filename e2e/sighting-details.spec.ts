@@ -9,7 +9,6 @@ import { expect, test } from "./helpers/fixtures";
 
 test.describe("Sighting Details", () => {
 	test.beforeEach(async ({ page }) => {
-		await clearAllTestData();
 		// Set language to English for tests
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");

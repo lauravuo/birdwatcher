@@ -34,7 +34,6 @@ test.describe("Group Leaderboard", () => {
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");
 		});
-		await clearAllTestData();
 	});
 
 	test("displays leaderboard with correct sections and ranks", async ({
