@@ -1,6 +1,6 @@
+import crypto from "node:crypto";
+import { seedGroup } from "./helpers/firestore-helpers";
 import { expect, test } from "./helpers/fixtures";
-import { seedGroup, seedSightings } from "./helpers/firestore-helpers";
-import crypto from "crypto";
 
 test.describe("Sighting Modification (Edit/Delete)", () => {
 	// Increase timeout for this suite
@@ -9,7 +9,7 @@ test.describe("Sighting Modification (Edit/Delete)", () => {
 	test("can edit an existing sighting", async ({ authenticatedPage, user }) => {
 		const groupName = `Edit Test ${crypto.randomUUID().substring(0, 4)}`;
 		const joinCode = `edit-${crypto.randomUUID().substring(0, 4)}`;
-		
+
 		await seedGroup({
 			name: groupName,
 			joinCode,
@@ -18,8 +18,12 @@ test.describe("Sighting Modification (Edit/Delete)", () => {
 		});
 
 		await authenticatedPage.goto(`/?group=${joinCode}`);
-		await expect(authenticatedPage.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
-		await authenticatedPage.getByRole("link", { name: new RegExp(joinCode) }).click();
+		await expect(authenticatedPage.getByText("Your Groups")).toBeVisible({
+			timeout: 10000,
+		});
+		await authenticatedPage
+			.getByRole("link", { name: new RegExp(joinCode) })
+			.click();
 
 		// Add a sighting via UI
 		const { addSighting } = await import("./helpers/actions");
@@ -28,11 +32,15 @@ test.describe("Sighting Modification (Edit/Delete)", () => {
 		await addSighting(authenticatedPage, birdName, today);
 
 		// We are now at User View which shows the sightings list
-		await expect(authenticatedPage.getByTestId("user-view-heading")).toBeVisible();
+		await expect(
+			authenticatedPage.getByTestId("user-view-heading"),
+		).toBeVisible();
 
 		// Wait for sighting in list
 		await expect(
-			authenticatedPage.getByTestId("sighting-item").filter({ hasText: birdName }),
+			authenticatedPage
+				.getByTestId("sighting-item")
+				.filter({ hasText: birdName }),
 		).toBeVisible();
 
 		// 2. Click the sighting to go to details
@@ -72,10 +80,13 @@ test.describe("Sighting Modification (Edit/Delete)", () => {
 		await expect(authenticatedPage.getByText(newNotes)).toBeVisible();
 	});
 
-	test("can delete an existing sighting", async ({ authenticatedPage, user }) => {
+	test("can delete an existing sighting", async ({
+		authenticatedPage,
+		user,
+	}) => {
 		const groupName = `Del Test ${crypto.randomUUID().substring(0, 4)}`;
 		const joinCode = `del-${crypto.randomUUID().substring(0, 4)}`;
-		
+
 		await seedGroup({
 			name: groupName,
 			joinCode,
@@ -84,18 +95,26 @@ test.describe("Sighting Modification (Edit/Delete)", () => {
 		});
 
 		await authenticatedPage.goto(`/?group=${joinCode}`);
-		await expect(authenticatedPage.getByText("Your Groups")).toBeVisible({ timeout: 10000 });
-		await authenticatedPage.getByRole("link", { name: new RegExp(joinCode) }).click();
-		
+		await expect(authenticatedPage.getByText("Your Groups")).toBeVisible({
+			timeout: 10000,
+		});
+		await authenticatedPage
+			.getByRole("link", { name: new RegExp(joinCode) })
+			.click();
+
 		// 1. Add a sighting
 		const { addSighting } = await import("./helpers/actions");
 		const birdName = "Talitiainen"; // Great Tit
 		const today = new Date().toISOString().slice(0, 10);
 		await addSighting(authenticatedPage, birdName, today);
 
-		await expect(authenticatedPage.getByTestId("user-view-heading")).toBeVisible();
 		await expect(
-			authenticatedPage.getByTestId("sighting-item").filter({ hasText: birdName }),
+			authenticatedPage.getByTestId("user-view-heading"),
+		).toBeVisible();
+		await expect(
+			authenticatedPage
+				.getByTestId("sighting-item")
+				.filter({ hasText: birdName }),
 		).toBeVisible();
 
 		// 2. Click sighting
@@ -111,7 +130,9 @@ test.describe("Sighting Modification (Edit/Delete)", () => {
 
 		// 4. Verify redirected back check that sighting is GONE
 		await expect(
-			authenticatedPage.getByTestId("sighting-item").filter({ hasText: birdName }),
+			authenticatedPage
+				.getByTestId("sighting-item")
+				.filter({ hasText: birdName }),
 		).not.toBeVisible();
 	});
 });

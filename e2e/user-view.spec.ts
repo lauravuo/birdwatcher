@@ -8,7 +8,6 @@ import {
 } from "./helpers/actions";
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
 import {
-	clearAllTestData,
 	seedGroup,
 	seedSightings,
 	seedUserProfile,

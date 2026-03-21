@@ -1,10 +1,6 @@
 import { createTestUser } from "./helpers/auth-helpers";
 import { signInInBrowser } from "./helpers/browser-auth";
-import {
-	clearAllTestData,
-	seedSighting,
-	seedUserProfile,
-} from "./helpers/firestore-helpers";
+import { seedSighting, seedUserProfile } from "./helpers/firestore-helpers";
 import { expect, test } from "./helpers/fixtures";
 
 test.describe("Sighting Details", () => {

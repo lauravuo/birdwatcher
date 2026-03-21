@@ -1,10 +1,6 @@
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
 import { signInInBrowser } from "./helpers/browser-auth";
-import {
-	clearAllTestData,
-	seedGroup,
-	seedSightings,
-} from "./helpers/firestore-helpers";
+import { seedGroup, seedSightings } from "./helpers/firestore-helpers";
 import { expect, test } from "./helpers/fixtures";
 
 test.describe("Group Sightings Pagination", () => {

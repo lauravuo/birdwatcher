@@ -1,7 +1,6 @@
 import { createTestUser } from "./helpers/auth-helpers";
 import { signInInBrowser } from "./helpers/browser-auth";
 import {
-	clearAllTestData,
 	seedGroup,
 	seedUserProfile,
 	seedUserStats,

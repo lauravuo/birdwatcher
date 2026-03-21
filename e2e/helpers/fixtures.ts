@@ -1,7 +1,7 @@
+import crypto from "node:crypto";
 import { test as base, type Page } from "@playwright/test";
 import { createTestUser } from "./auth-helpers";
 import { signInInBrowser } from "./browser-auth";
-import crypto from "crypto";
 
 export type TestUser = {
 	uid: string;
@@ -34,7 +34,8 @@ export const test = base.extend<{
 		// Use the page with request failure logging enabled
 		await use(page);
 	},
-	
+
+	// biome-ignore lint/correctness/noEmptyPattern: Playwright requires first param
 	user: async ({}, use) => {
 		// 1. Generate unique random credentials for this test
 		const id = crypto.randomUUID();
@@ -44,13 +45,13 @@ export const test = base.extend<{
 
 		// 2. Create in Firebase Auth (Node context)
 		const firebaseUser = await createTestUser(email, password, displayName);
-		
+
 		// 3. Provide user info to the test
-		await use({ 
-			uid: firebaseUser.uid, 
-			email, 
-			password, 
-			displayName 
+		await use({
+			uid: firebaseUser.uid,
+			email,
+			password,
+			displayName,
 		});
 	},
 
@@ -58,10 +59,10 @@ export const test = base.extend<{
 		// 1. Navigate and sign in (Browser context)
 		await page.goto("/");
 		await signInInBrowser(page, user.email, user.password);
-		
+
 		// 2. Provide the authenticated page to the test
 		await use(page);
-	}
+	},
 });
 
 export { expect } from "@playwright/test";
