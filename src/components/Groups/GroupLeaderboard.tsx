@@ -85,11 +85,17 @@ export function GroupLeaderboard({
 		</div>
 	);
 
+	const hasLeaderboardData =
+		yearPointsLeaders.length > 0 ||
+		yearUniqueLeaders.length > 0 ||
+		monthlySections.length > 0;
+
 	return (
 		<div className="leaderboard-container">
-			{yearPointsLeaders.length === 0 &&
-			yearUniqueLeaders.length === 0 &&
-			monthlySections.length === 0 ? (
+			{/* 1. Latest Birds - always rendered when data exists */}
+			<GroupFirstSightings group={group} members={members} year={currentYear} />
+
+			{!hasLeaderboardData ? (
 				<div className="empty-state">{t("groupSightings.noSightings")}</div>
 			) : (
 				<>
@@ -116,13 +122,6 @@ export function GroupLeaderboard({
 						</div>
 					)}
 
-					{/* 1. Latest Birds */}
-					<GroupFirstSightings
-						group={group}
-						members={members}
-						year={currentYear}
-					/>
-
 					{/* 2. Year Points */}
 					{yearPointsLeaders.length > 0 &&
 						renderSection(
@@ -131,7 +130,7 @@ export function GroupLeaderboard({
 							"pts",
 						)}
 
-					{/* 2. Year Unique */}
+					{/* 3. Year Unique */}
 					{yearUniqueLeaders.length > 0 &&
 						renderSection(
 							t("leaderboard.yearUniqueLeaders", { year: currentYear }),
@@ -139,7 +138,7 @@ export function GroupLeaderboard({
 							"spp",
 						)}
 
-					{/* 3. Monthly Unique Section - Heading, Month Selector, and Stats */}
+					{/* 4. Monthly Unique Section */}
 					{monthlySections.length === 0 ? (
 						<>
 							<div className="leaderboard-section">
