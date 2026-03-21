@@ -390,11 +390,12 @@ test.describe("Groups UI / Management", () => {
 			authenticatedPage.locator(".breadcrumbs").getByText(groupName),
 		).toBeVisible({ timeout: 10000 });
 
+		// Navigate to Stats tab first
+		await authenticatedPage.getByRole("button", { name: "Stats" }).click();
+
 		// The First Sightings section is rendered under the group total.
-		// "Latest First Sightings" is the English string.
-		await expect(
-			authenticatedPage.getByText(/Latest First Sightings/i),
-		).toBeVisible();
+		// "Latest Birds" is the new English string.
+		await expect(authenticatedPage.getByText(/Latest Birds/i)).toBeVisible();
 
 		// The bird name "Varis" should be visible
 		const birdThumbnail = authenticatedPage
@@ -405,15 +406,7 @@ test.describe("Groups UI / Management", () => {
 		// Click thumbnail to navigate
 		await birdThumbnail.click();
 
-		// Verify navigation to sighting details
-		// (The id in the mock is mock-sighting-first, but we seeded a different ID in seedSightings!
-		// Wait, seedSightings generates its own ID if we don't pass an ID? No, seedSightings(Omit<Sighting, "id">[]) generates random doc IDs!).
-		// That means clicking the thumbnail will navigate to `/sightings/mock-sighting-first`.
-		// Since we didn't specify the ID when seeding the actual sighting, the actual doc doesn't align with mock-sighting-first.
-		// That's fine! Getting a 404/not found page still proves URL navigation worked, OR we can fix seedSightings to take our mock id?
-		// e2e/helpers/firestore-helpers: `seedSightings(sightings: Omit<Sighting, "id">[])` takes `Omit<"id">` but we can't set it.
-		// Let's just verify the URL changed.
-
+		// Verify URL navigated to the sighting detail page
 		await expect(authenticatedPage).toHaveURL(
 			new RegExp(`/sightings/${mockSightingId}`),
 		);
