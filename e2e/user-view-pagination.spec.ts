@@ -1,7 +1,6 @@
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
 import { signInInBrowser } from "./helpers/browser-auth";
 import {
-	clearAllTestData,
 	seedGroup,
 	seedSightings,
 	seedUserProfile,
@@ -15,7 +14,6 @@ test.describe("User View Pagination", () => {
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");
 		});
-		await clearAllTestData();
 	});
 
 	test("loads more sightings when clicking Load More button in User View", async ({

@@ -1,7 +1,6 @@
 import { createTestUser } from "./helpers/auth-helpers";
 import { signInInBrowser } from "./helpers/browser-auth";
 import {
-	clearAllTestData,
 	seedGroup,
 	seedUserProfile,
 	seedUserStats,
@@ -34,7 +33,6 @@ test.describe("Group Leaderboard", () => {
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");
 		});
-		await clearAllTestData();
 	});
 
 	test("displays leaderboard with correct sections and ranks", async ({

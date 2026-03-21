@@ -8,7 +8,6 @@ import {
 } from "./helpers/actions";
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
 import {
-	clearAllTestData,
 	seedGroup,
 	seedSightings,
 	seedUserProfile,
@@ -35,7 +34,6 @@ test.describe("User View", () => {
 			logTypes.push(msg.type());
 		});
 
-		await clearAllTestData();
 		const credentials = getTestUserCredentials();
 		// Create user and capture the result which contains the UID
 		testUser = await createTestUser(

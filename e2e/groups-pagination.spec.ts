@@ -1,10 +1,6 @@
 import { createTestUser, getTestUserCredentials } from "./helpers/auth-helpers";
 import { signInInBrowser } from "./helpers/browser-auth";
-import {
-	clearAllTestData,
-	seedGroup,
-	seedSightings,
-} from "./helpers/firestore-helpers";
+import { seedGroup, seedSightings } from "./helpers/firestore-helpers";
 import { expect, test } from "./helpers/fixtures";
 
 test.describe("Group Sightings Pagination", () => {
@@ -13,7 +9,6 @@ test.describe("Group Sightings Pagination", () => {
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");
 		});
-		await clearAllTestData();
 	});
 
 	// Helper to get today's date in YYYY-MM-DD format

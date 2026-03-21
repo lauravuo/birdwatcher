@@ -1,7 +1,6 @@
 import { createTestUser } from "./helpers/auth-helpers";
 import { signInInBrowser } from "./helpers/browser-auth";
 import {
-	clearAllTestData,
 	seedGroup,
 	seedUserProfile,
 	seedUserStats,
@@ -13,7 +12,6 @@ test.describe("Group Members", () => {
 		await page.addInitScript(() => {
 			localStorage.setItem("language", "en");
 		});
-		await clearAllTestData();
 	});
 
 	test("displays members sorted by bird count (descending) with secondary alphabetical sorting", async ({
