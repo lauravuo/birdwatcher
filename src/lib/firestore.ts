@@ -2,6 +2,8 @@ import {
 	arrayRemove,
 	arrayUnion,
 	collection,
+	type DocumentReference,
+	type DocumentSnapshot,
 	doc,
 	documentId,
 	getDoc,
@@ -16,11 +18,14 @@ import {
 	where,
 } from "firebase/firestore";
 
-import type { Group, UserProfile } from "../types";
+import type {
+	Group,
+	GroupFirstSighting,
+	GroupYearlyStats,
+	UserProfile,
+} from "../types";
 import type { Sighting } from "../types/sighting";
 import { db } from "./firebase";
-
-// ... (existing code) ...
 
 // --- User Stats Service ---
 
@@ -279,8 +284,11 @@ export async function addSighting(
 		const userDoc = await transaction.get(userRef);
 
 		const groupIds = userDoc.exists() ? userDoc.data().groupIds || [] : [];
-		const groupStatsDocs: { groupId: string; groupStatsRef: any; doc: any }[] =
-			[];
+		const groupStatsDocs: {
+			groupId: string;
+			groupStatsRef: DocumentReference;
+			doc: DocumentSnapshot;
+		}[] = [];
 
 		for (const groupId of groupIds) {
 			const groupStatsRef = doc(db, "group_yearly_stats", `${groupId}_${year}`);
@@ -311,11 +319,10 @@ export async function addSighting(
 			doc: groupStatsDoc,
 		} of groupStatsDocs) {
 			let seenBirds: string[] = [];
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			let latestFirsts: any[] = [];
+			let latestFirsts: GroupFirstSighting[] = [];
 
 			if (groupStatsDoc.exists()) {
-				const data = groupStatsDoc.data();
+				const data = groupStatsDoc.data() as GroupYearlyStats;
 				seenBirds = data.seenBirds || [];
 				latestFirsts = data.latestFirsts || [];
 			}
@@ -626,7 +633,7 @@ export const recalculateGroupStats = async (
 		const snapshot = await getDocs(q);
 
 		sightings = sightings.concat(
-			snapshot.docs.map((d) => ({ id: d.id, ...(d.data() as any) })),
+			snapshot.docs.map((d) => ({ id: d.id, ...(d.data() as Sighting) })),
 		);
 	}
 
@@ -638,7 +645,7 @@ export const recalculateGroupStats = async (
 
 	const statsByYear: Record<
 		string,
-		{ seenBirds: string[]; latestFirsts: any[] }
+		{ seenBirds: string[]; latestFirsts: GroupFirstSighting[] }
 	> = {};
 	if (year) {
 		statsByYear[year.toString()] = { seenBirds: [], latestFirsts: [] };

@@ -1,4 +1,6 @@
 import crypto from "node:crypto";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../src/lib/firebase";
 import { createTestUser } from "./helpers/auth-helpers";
 import {
 	getGroupByCode,
@@ -334,25 +336,34 @@ test.describe("Groups UI / Management", () => {
 		authenticatedPage,
 		user,
 	}) => {
-		const groupName = `Firsts Group`;
+		const groupName = "Firsts Group";
 		const groupId = await seedGroup({ name: groupName, memberIds: [user.uid] });
+
+		// Explicitly seed the user profile with the groupId
+		await seedUserProfile({
+			id: user.uid,
+			displayName: user.displayName,
+			email: user.email,
+			photoURL: null,
+			groupIds: [groupId],
+		});
 
 		const today = new Date();
 		const year = today.getFullYear();
 		const dateStr = today.toISOString().split("T")[0];
 
 		const mockSightingId = "mock-sighting-first";
-		// Add the original sighting so we can actually navigate to it
-		await seedSightings([
-			{
-				userId: user.uid,
-				birdId: "varis",
-				date: dateStr,
-				time: "12:00",
-				type: "visual",
-				createdAt: Date.now(),
-			},
-		]);
+		// Add the original sighting with the SAME ID we use in stats
+		const ref = doc(db, "sightings", mockSightingId);
+		await setDoc(ref, {
+			id: mockSightingId,
+			userId: user.uid,
+			birdId: "varis",
+			date: dateStr,
+			time: "12:00",
+			type: "visual",
+			createdAt: Date.now(),
+		});
 
 		// Seed the pre-computed materialized view
 		await seedGroupYearlyStats(groupId, year, {
@@ -370,7 +381,8 @@ test.describe("Groups UI / Management", () => {
 			],
 		});
 
-		await authenticatedPage.reload();
+		// Navigate directly to the group view
+		await authenticatedPage.goto(`/groups/${groupId}`);
 
 		// It should redirect to the group view (because it's the only group)
 		// Or if not redirecting, we just click the group

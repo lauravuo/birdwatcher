@@ -2,7 +2,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { db } from "../../lib/firebase";
-import type { Group, UserProfile } from "../../types";
+import type { Group, GroupYearlyStats, UserProfile } from "../../types";
 import type { Sighting } from "../../types/sighting";
 import { SightingsList } from "../SightingsList";
 
@@ -27,21 +27,16 @@ export function GroupFirstSightings({
 			docRef,
 			(snapshot) => {
 				if (snapshot.exists()) {
-					const data = snapshot.data();
+					const data = snapshot.data() as GroupYearlyStats;
 					const latestFirsts = data.latestFirsts || [];
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-					const mockSightings: Sighting[] = latestFirsts.map((first: any) => ({
+					const mockSightings: Sighting[] = latestFirsts.map((first) => ({
 						id: first.sightingId,
 						birdId: first.birdId,
-						userId: first.userId,
 						date: first.date,
-						createdAt: first.createdAt,
-						// Required fields with mock data suitable for SightingsList
-						time: "00:00",
+						time: "12:00", // Placeholder for UI
 						type: "visual",
-						latitude: 0,
-						longitude: 0,
-						locationName: "",
+						userId: first.userId,
+						createdAt: first.createdAt,
 					}));
 					setSightings(mockSightings);
 				} else {
@@ -50,7 +45,7 @@ export function GroupFirstSightings({
 				setLoading(false);
 			},
 			(err) => {
-				console.error("Failed to load group first sightings", err);
+				console.error("📡 GroupFirstSightings: error", err);
 				setLoading(false);
 			},
 		);
