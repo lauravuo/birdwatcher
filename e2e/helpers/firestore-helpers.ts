@@ -7,7 +7,7 @@ import {
 	where,
 } from "firebase/firestore";
 import { db } from "../../src/lib/firebase";
-import type { Group } from "../../src/types";
+import type { Group, GroupYearlyStats } from "../../src/types";
 import type { Sighting } from "../../src/types/sighting";
 
 /**
@@ -18,13 +18,14 @@ export async function seedUserProfile(user: {
 	displayName: string | null;
 	email: string | null;
 	photoURL: string | null;
+	groupIds?: string[];
 }): Promise<void> {
 	await setDoc(doc(db, "users", user.id), {
 		id: user.id,
 		displayName: user.displayName || "Anonymous",
 		email: user.email || "",
 		photoURL: user.photoURL || null,
-		groupIds: [],
+		groupIds: user.groupIds || [],
 		createdAt: Date.now(),
 	});
 }
@@ -159,6 +160,18 @@ export async function seedUserStats(
 			);
 		}),
 	);
+}
+
+/**
+ * Seed group yearly stats in Firestore
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function seedGroupYearlyStats(
+	groupId: string,
+	year: number,
+	data: GroupYearlyStats,
+): Promise<void> {
+	await setDoc(doc(db, "group_yearly_stats", `${groupId}_${year}`), data);
 }
 
 /**

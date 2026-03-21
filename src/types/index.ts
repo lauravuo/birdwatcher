@@ -25,3 +25,18 @@ export interface Bird {
 }
 
 export type BirdMap = Record<string, Bird>;
+
+export interface GroupFirstSighting {
+	birdId: string;
+	sightingId: string;
+	userId: string;
+	date: string;
+	createdAt: number;
+}
+
+export interface GroupYearlyStats {
+	groupId: string;
+	year: number;
+	seenBirds: string[];
+	latestFirsts: GroupFirstSighting[];
+}

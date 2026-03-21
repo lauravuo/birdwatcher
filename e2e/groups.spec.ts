@@ -1,8 +1,11 @@
 import crypto from "node:crypto";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../src/lib/firebase";
 import { createTestUser } from "./helpers/auth-helpers";
 import {
 	getGroupByCode,
 	seedGroup,
+	seedGroupYearlyStats,
 	seedSightings,
 	seedUserProfile,
 } from "./helpers/firestore-helpers";
@@ -327,5 +330,85 @@ test.describe("Groups UI / Management", () => {
 		await expect(
 			authenticatedPage.locator(".sightings-list").getByText("Harakka").first(),
 		).toBeVisible();
+	});
+
+	test("displays latest first sightings and navigates to details", async ({
+		authenticatedPage,
+		user,
+	}) => {
+		const groupName = "Firsts Group";
+		const groupId = await seedGroup({ name: groupName, memberIds: [user.uid] });
+
+		// Explicitly seed the user profile with the groupId
+		await seedUserProfile({
+			id: user.uid,
+			displayName: user.displayName,
+			email: user.email,
+			photoURL: null,
+			groupIds: [groupId],
+		});
+
+		const today = new Date();
+		const year = today.getFullYear();
+		const dateStr = today.toISOString().split("T")[0];
+
+		const mockSightingId = "mock-sighting-first";
+		// Add the original sighting with the SAME ID we use in stats
+		const ref = doc(db, "sightings", mockSightingId);
+		await setDoc(ref, {
+			id: mockSightingId,
+			userId: user.uid,
+			birdId: "varis",
+			date: dateStr,
+			time: "12:00",
+			type: "visual",
+			createdAt: Date.now(),
+		});
+
+		// Seed the pre-computed materialized view
+		await seedGroupYearlyStats(groupId, year, {
+			groupId,
+			year,
+			seenBirds: ["varis"],
+			latestFirsts: [
+				{
+					birdId: "varis",
+					sightingId: mockSightingId,
+					userId: user.uid,
+					date: dateStr,
+					createdAt: Date.now(),
+				},
+			],
+		});
+
+		// Navigate directly to the group view
+		await authenticatedPage.goto(`/groups/${groupId}`);
+
+		// It should redirect to the group view (because it's the only group)
+		// Or if not redirecting, we just click the group
+		await expect(
+			authenticatedPage.locator(".breadcrumbs").getByText(groupName),
+		).toBeVisible({ timeout: 10000 });
+
+		// Navigate to Stats tab first
+		await authenticatedPage.getByRole("button", { name: "Stats" }).click();
+
+		// The First Sightings section is rendered under the group total.
+		// "Latest Birds" is the new English string.
+		await expect(authenticatedPage.getByText(/Latest Birds/i)).toBeVisible();
+
+		// The bird name "Varis" should be visible
+		const birdThumbnail = authenticatedPage
+			.locator(".sightings-list")
+			.getByText("Varis");
+		await expect(birdThumbnail).toBeVisible();
+
+		// Click thumbnail to navigate
+		await birdThumbnail.click();
+
+		// Verify URL navigated to the sighting detail page
+		await expect(authenticatedPage).toHaveURL(
+			new RegExp(`/sightings/${mockSightingId}`),
+		);
 	});
 });

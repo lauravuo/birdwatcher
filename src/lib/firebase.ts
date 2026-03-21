@@ -40,10 +40,10 @@ export const googleProvider = new GoogleAuthProvider();
 
 // Connect to emulators if in test mode
 if (getEnvVar("VITE_USE_EMULATOR") === "true") {
-	connectAuthEmulator(auth, "http://localhost:9099", {
+	connectAuthEmulator(auth, "http://127.0.0.1:9099", {
 		disableWarnings: true,
 	});
-	connectFirestoreEmulator(db, "localhost", 8080);
+	connectFirestoreEmulator(db, "127.0.0.1", 8080);
 	console.log(
 		`🔧 Connected to Firebase Emulators at localhost (Project: ${firebaseConfig.projectId})`,
 	);

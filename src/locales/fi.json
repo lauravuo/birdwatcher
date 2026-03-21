@@ -473,6 +473,7 @@
 		"yearUniqueLeaders": "Lintujen määrä ({{year}})",
 		"monthUniqueLeaders": "Lintujen määrä ({{month}})",
 		"groupTotal": "Lintuja yhteensä ({{year}})",
+		"latestFirsts": "Uusimmat linnut",
 		"selectMonth": "Valitse kuukausi",
 		"noSightingsForMonth": "Ei havaintoja tälle kuukaudelle."
 	}
