@@ -274,6 +274,21 @@ export async function addSighting(
 	const yearMonth = `${year}-${String(statsDate.getMonth() + 1).padStart(2, "0")}`;
 
 	await runTransaction(db, async (transaction) => {
+		// 1. ALL READS MUST COME FIRST IN CLIENT SDK
+		const userRef = doc(db, "users", sighting.userId);
+		const userDoc = await transaction.get(userRef);
+
+		const groupIds = userDoc.exists() ? userDoc.data().groupIds || [] : [];
+		const groupStatsDocs: { groupId: string; groupStatsRef: any; doc: any }[] =
+			[];
+
+		for (const groupId of groupIds) {
+			const groupStatsRef = doc(db, "group_yearly_stats", `${groupId}_${year}`);
+			const groupStatsDoc = await transaction.get(groupStatsRef);
+			groupStatsDocs.push({ groupId, groupStatsRef, doc: groupStatsDoc });
+		}
+
+		// 2. NOW WE CAN PERFORM WRITES
 		transaction.set(sightingRef, sightingData);
 
 		const statsRef = doc(db, "user_yearly_stats", `${sighting.userId}_${year}`);
@@ -289,59 +304,52 @@ export async function addSighting(
 			{ merge: true },
 		);
 
-		// Group stats updating
-		const userRef = doc(db, "users", sighting.userId);
-		const userDoc = await transaction.get(userRef);
-		if (userDoc.exists()) {
-			const groupIds = userDoc.data().groupIds || [];
-			for (const groupId of groupIds) {
-				const groupStatsRef = doc(
-					db,
-					"group_yearly_stats",
-					`${groupId}_${year}`,
+		// 3. Update Group Stats for each group the user is in
+		for (const {
+			groupId,
+			groupStatsRef,
+			doc: groupStatsDoc,
+		} of groupStatsDocs) {
+			let seenBirds: string[] = [];
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			let latestFirsts: any[] = [];
+
+			if (groupStatsDoc.exists()) {
+				const data = groupStatsDoc.data();
+				seenBirds = data.seenBirds || [];
+				latestFirsts = data.latestFirsts || [];
+			}
+
+			if (!seenBirds.includes(sighting.birdId)) {
+				seenBirds.push(sighting.birdId);
+
+				latestFirsts.push({
+					birdId: sighting.birdId,
+					sightingId: sightingRef.id,
+					userId: sighting.userId,
+					date: sighting.date,
+					createdAt: timestamp,
+				});
+
+				latestFirsts.sort((a, b) => {
+					if (a.date !== b.date) return b.date.localeCompare(a.date);
+					return b.createdAt - a.createdAt;
+				});
+
+				if (latestFirsts.length > 5) {
+					latestFirsts = latestFirsts.slice(0, 5);
+				}
+
+				transaction.set(
+					groupStatsRef,
+					{
+						groupId,
+						year,
+						seenBirds,
+						latestFirsts,
+					},
+					{ merge: true },
 				);
-				const groupStatsDoc = await transaction.get(groupStatsRef);
-				let seenBirds: string[] = [];
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				let latestFirsts: any[] = [];
-
-				if (groupStatsDoc.exists()) {
-					const data = groupStatsDoc.data();
-					seenBirds = data.seenBirds || [];
-					latestFirsts = data.latestFirsts || [];
-				}
-
-				if (!seenBirds.includes(sighting.birdId)) {
-					seenBirds.push(sighting.birdId);
-
-					latestFirsts.push({
-						birdId: sighting.birdId,
-						sightingId: sightingRef.id,
-						userId: sighting.userId,
-						date: sighting.date,
-						createdAt: timestamp,
-					});
-
-					latestFirsts.sort((a, b) => {
-						if (a.date !== b.date) return b.date.localeCompare(a.date);
-						return b.createdAt - a.createdAt;
-					});
-
-					if (latestFirsts.length > 5) {
-						latestFirsts = latestFirsts.slice(0, 5);
-					}
-
-					transaction.set(
-						groupStatsRef,
-						{
-							groupId,
-							year,
-							seenBirds,
-							latestFirsts,
-						},
-						{ merge: true },
-					);
-				}
 			}
 		}
 	});
