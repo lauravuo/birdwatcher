@@ -87,14 +87,6 @@ export function GroupLeaderboard({
 
 	return (
 		<div className="leaderboard-container">
-			{/* Latest First Sightings added at the top or under group total? 
-			    User said "under group total", so I'll keep it there but ensure it renders. */}
-
-			{/* If absolutely empty - we now include GroupFirstSightings in "not empty" check 
-			    OR just render it separately. */}
-
-			<GroupFirstSightings group={group} members={members} year={currentYear} />
-
 			{yearPointsLeaders.length === 0 &&
 			yearUniqueLeaders.length === 0 &&
 			monthlySections.length === 0 ? (
@@ -124,7 +116,14 @@ export function GroupLeaderboard({
 						</div>
 					)}
 
-					{/* 1. Year Points */}
+					{/* 1. Latest Birds */}
+					<GroupFirstSightings
+						group={group}
+						members={members}
+						year={currentYear}
+					/>
+
+					{/* 2. Year Points */}
 					{yearPointsLeaders.length > 0 &&
 						renderSection(
 							t("leaderboard.yearPointsLeaders", { year: currentYear }),

@@ -69,7 +69,7 @@ export function GroupFirstSightings({
 	return (
 		<div className="leaderboard-section">
 			<h4 className="leaderboard-section-title">
-				{t("leaderboard.latestFirsts", { year })}
+				{t("leaderboard.latestFirsts")}
 			</h4>
 			<SightingsList
 				sightings={sightings}
