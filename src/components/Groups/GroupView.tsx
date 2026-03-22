@@ -111,6 +111,9 @@ export function GroupView() {
 
 	return (
 		<div className="group-view-container">
+			<div className="group-header">
+				<h2>{group.name}</h2>
+			</div>
 			<div className="tabs-container">
 				<button
 					type="button"

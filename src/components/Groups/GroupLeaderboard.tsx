@@ -34,7 +34,7 @@ export function GroupLeaderboard({
 		unitLabel: string,
 	) => (
 		<div className="leaderboard-section">
-			<h4 className="leaderboard-section-title">{title}</h4>
+			<h3 className="leaderboard-section-title">{title}</h3>
 			{entries.length === 0 ? (
 				<div className="no-data">{t("userView.noSightings")}</div>
 			) : (
@@ -99,6 +99,8 @@ export function GroupLeaderboard({
 							"pts",
 						)}
 
+					{yearUniqueLeaders.length > 0 && <hr className="section-divider" />}
+
 					{/* 3. Year Unique */}
 					{yearUniqueLeaders.length > 0 &&
 						renderSection(
@@ -107,17 +109,19 @@ export function GroupLeaderboard({
 							"spp",
 						)}
 
+					{monthlySections.length > 0 && <hr className="section-divider" />}
+
 					{/* 4. Monthly Unique Section */}
 					{monthlySections.length === 0 ? (
 						<>
 							<div className="leaderboard-section">
-								<h4 className="leaderboard-section-title">
+								<h3 className="leaderboard-section-title">
 									{t("leaderboard.monthUniqueLeaders", {
 										month: new Intl.DateTimeFormat(i18n.language, {
 											month: "long",
 										}).format(new Date(currentYear, new Date().getMonth())),
 									})}
-								</h4>
+								</h3>
 								<div className="month-selector-container">
 									<label
 										htmlFor="month-select"
@@ -147,73 +151,76 @@ export function GroupLeaderboard({
 							</div>
 						</>
 					) : (
-						monthlySections.map((section) => (
-							<div key={section.title} className="leaderboard-section">
-								<h4 className="leaderboard-section-title">
-									{t("leaderboard.monthUniqueLeaders", {
-										month: section.title,
-									})}
-								</h4>
-								<div className="month-selector-container">
-									<label
-										htmlFor="month-select"
-										className="month-selector-label"
-									>
-										{t("leaderboard.selectMonth")}:
-									</label>
-									<select
-										id="month-select"
-										value={selectedMonth}
-										onChange={(e) => setSelectedMonth(e.target.value)}
-										className="month-selector"
-										data-testid="month-selector"
-									>
-										{generateMonthOptions(currentYear, i18n.language).map(
-											(option) => (
-												<option key={option.value} value={option.value}>
-													{option.label}
-												</option>
-											),
-										)}
-									</select>
-								</div>
-								<div className="leaderboard-list">
-									{section.entries.map((entry) => (
-										<Link
-											to={`/groups/${group.id}/members/${entry.user.id}`}
-											key={entry.user.id}
-											className={`leaderboard-item rank-${entry.rank}`}
-											style={{ textDecoration: "none", color: "inherit" }}
+						monthlySections.map((section, index) => (
+							<div key={section.title}>
+								{index > 0 && <hr className="section-divider" />}
+								<div className="leaderboard-section">
+									<h3 className="leaderboard-section-title">
+										{t("leaderboard.monthUniqueLeaders", {
+											month: section.title,
+										})}
+									</h3>
+									<div className="month-selector-container">
+										<label
+											htmlFor="month-select"
+											className="month-selector-label"
 										>
-											<div className="leaderboard-rank">
-												{entry.rank === 1
-													? "🥇"
-													: entry.rank === 2
-														? "🥈"
-														: entry.rank === 3
-															? "🥉"
-															: `#${entry.rank}`}
-											</div>
-											<div className="leaderboard-user">
-												{entry.user.photoURL && (
-													<img
-														src={entry.user.photoURL}
-														alt={entry.user.displayName || "User"}
-														className="user-avatar-small"
-													/>
-												)}
-												<span className="user-name">
-													{entry.user.displayName || t("common.anonymous")}
-												</span>
-											</div>
-											<div className="leaderboard-stats">
-												<div className="points">
-													<span className="points-value">{entry.value}</span>
-													<span className="points-label">spp</span>
+											{t("leaderboard.selectMonth")}:
+										</label>
+										<select
+											id="month-select"
+											value={selectedMonth}
+											onChange={(e) => setSelectedMonth(e.target.value)}
+											className="month-selector"
+											data-testid="month-selector"
+										>
+											{generateMonthOptions(currentYear, i18n.language).map(
+												(option) => (
+													<option key={option.value} value={option.value}>
+														{option.label}
+													</option>
+												),
+											)}
+										</select>
+									</div>
+									<div className="leaderboard-list">
+										{section.entries.map((entry) => (
+											<Link
+												to={`/groups/${group.id}/members/${entry.user.id}`}
+												key={entry.user.id}
+												className={`leaderboard-item rank-${entry.rank}`}
+												style={{ textDecoration: "none", color: "inherit" }}
+											>
+												<div className="leaderboard-rank">
+													{entry.rank === 1
+														? "🥇"
+														: entry.rank === 2
+															? "🥈"
+															: entry.rank === 3
+																? "🥉"
+																: `#${entry.rank}`}
 												</div>
-											</div>
-										</Link>
-									))}
+												<div className="leaderboard-user">
+													{entry.user.photoURL && (
+														<img
+															src={entry.user.photoURL}
+															alt={entry.user.displayName || "User"}
+															className="user-avatar-small"
+														/>
+													)}
+													<span className="user-name">
+														{entry.user.displayName || t("common.anonymous")}
+													</span>
+												</div>
+												<div className="leaderboard-stats">
+													<div className="points">
+														<span className="points-value">{entry.value}</span>
+														<span className="points-label">spp</span>
+													</div>
+												</div>
+											</Link>
+										))}
+									</div>
 								</div>
 							</div>
 						))

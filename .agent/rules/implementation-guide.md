@@ -84,3 +84,11 @@ If it continues to fail, check with `lsof -ti:8080,9099` to identify blocking pr
 
 * **Biome**: Run `npm run format` and `npm run lint` regularly. The project uses Biome, so avoid Prettier/ESLint configurations if they conflict.
 * **Constants**: Avoid using "magic numbers" in the code. If a value (like a limit, a count, or a configuration parameter) is likely to be changed or used in multiple places, define it as a constant in `src/constants.ts` (for application-wide constants) or within the relevant component/service.
+
+## Heading Hierarchy
+
+* **Maintain Hierarchy**: Always follow a logical heading hierarchy (H1 -> H2 -> H3 -> H4). 
+    * `h1`: Application title (usually in Header)
+    * `h2`: Page or main view title (e.g., Group Name, "Your Groups")
+    * `h3`: Major sections within a page or tab
+    * `h4`: Sub-sections or individual cards within a major section
