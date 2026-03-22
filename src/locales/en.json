@@ -82,7 +82,8 @@
 	},
 	"groupView": {
 		"tabs": {
-			"stats": "Stats",
+			"summary": "Summary",
+			"leaderboard": "Leaderboard",
 			"sightings": "Sightings",
 			"members": "Members"
 		}
