@@ -6,20 +6,17 @@ import {
 	useLeaderboardStats,
 } from "../../hooks/useLeaderboardStats";
 import type { Group, UserProfile } from "../../types";
-import { GroupFirstSightings } from "./GroupFirstSightings";
 
 interface GroupLeaderboardProps {
 	group: Group;
 	members: UserProfile[];
 	userStats: Map<string, Record<string, string[]>>;
-	onTabChange?: (tab: "stats" | "sightings" | "members") => void;
 }
 
 export function GroupLeaderboard({
 	group,
 	members,
 	userStats: statsMap,
-	onTabChange,
 }: GroupLeaderboardProps) {
 	const { t, i18n } = useTranslation();
 	const currentYear = new Date().getFullYear();
@@ -28,12 +25,8 @@ export function GroupLeaderboard({
 
 	const [selectedMonth, setSelectedMonth] = useState<string>(defaultMonth);
 
-	const {
-		yearPointsLeaders,
-		yearUniqueLeaders,
-		monthlySections,
-		groupTotalCount,
-	} = useLeaderboardStats(group, members, statsMap, selectedMonth);
+	const { yearPointsLeaders, yearUniqueLeaders, monthlySections } =
+		useLeaderboardStats(group, members, statsMap, selectedMonth);
 
 	const renderSection = (
 		title: string,
@@ -94,53 +87,10 @@ export function GroupLeaderboard({
 
 	return (
 		<div className="leaderboard-container">
-			{/* 1. Latest Birds - always rendered when data exists */}
-			<GroupFirstSightings group={group} members={members} year={currentYear} />
-
 			{!hasLeaderboardData ? (
 				<div className="empty-state">{t("groupSightings.noSightings")}</div>
 			) : (
 				<>
-					{/* 0. Group Total */}
-					{groupTotalCount > 0 && (
-						<div className="leaderboard-section">
-							<h4 className="leaderboard-section-title">
-								{t("leaderboard.groupTotal", { year: currentYear })}
-							</h4>
-							<div className="leaderboard-list">
-								<button
-									type="button"
-									className="leaderboard-item"
-									style={{
-										cursor: onTabChange ? "pointer" : "default",
-										width: "100%",
-										textAlign: "left",
-										background: "var(--bg-tertiary)",
-										color: "inherit",
-										fontFamily: "inherit",
-										fontSize: "inherit",
-										border: "1px solid var(--border-color)",
-										padding: "0.75rem 1rem",
-									}}
-									onClick={() => onTabChange?.("sightings")}
-									disabled={!onTabChange}
-									data-testid="group-total-click"
-								>
-									<div className="leaderboard-rank">👥</div>
-									<div className="leaderboard-user">
-										<span className="user-name">{group.name}</span>
-									</div>
-									<div className="leaderboard-stats">
-										<div className="points">
-											<span className="points-value">{groupTotalCount}</span>
-											<span className="points-label">spp</span>
-										</div>
-									</div>
-								</button>
-							</div>
-						</div>
-					)}
-
 					{/* 2. Year Points */}
 					{yearPointsLeaders.length > 0 &&
 						renderSection(

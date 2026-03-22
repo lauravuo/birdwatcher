@@ -390,8 +390,8 @@ test.describe("Groups UI / Management", () => {
 			authenticatedPage.locator(".breadcrumbs").getByText(groupName),
 		).toBeVisible({ timeout: 10000 });
 
-		// Navigate to Stats tab first
-		await authenticatedPage.getByRole("button", { name: "Stats" }).click();
+		// Navigate to Summary tab first
+		await authenticatedPage.getByRole("button", { name: "Summary" }).click();
 
 		// The First Sightings section is rendered under the group total.
 		// "Latest Birds" is the new English string.

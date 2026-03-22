@@ -74,7 +74,8 @@
 	},
 	"groupView": {
 		"tabs": {
-			"stats": "Tilastot",
+			"summary": "Yhteenveto",
+			"leaderboard": "Tulostaulu",
 			"sightings": "Havainnot",
 			"members": "Jäsenet"
 		}

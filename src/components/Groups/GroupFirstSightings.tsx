@@ -38,7 +38,7 @@ export function GroupFirstSightings({
 						userId: first.userId,
 						createdAt: first.createdAt,
 					}));
-					setSightings(mockSightings);
+					setSightings(mockSightings.slice(0, 10));
 				} else {
 					setSightings([]);
 				}
@@ -68,9 +68,9 @@ export function GroupFirstSightings({
 
 	return (
 		<div className="leaderboard-section">
-			<h4 className="leaderboard-section-title">
+			<h3 className="leaderboard-section-title">
 				{t("leaderboard.latestFirsts")}
-			</h4>
+			</h3>
 			<SightingsList
 				sightings={sightings}
 				hasMore={false}

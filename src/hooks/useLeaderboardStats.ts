@@ -39,6 +39,8 @@ export function useLeaderboardStats(
 		const groupUniqueSet = new Set<string>(); // Set of all unique Bird IDs in group
 		const monthlyUniqueMap = new Map<string, Map<string, Set<string>>>(); // MonthKey -> UserID -> Set
 
+		if (!group.memberIds) return;
+
 		// Initialize maps
 		group.memberIds.forEach((uid) => {
 			yearlyPointsTracker.set(uid, 0);

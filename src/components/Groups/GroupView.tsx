@@ -2,6 +2,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import { useLeaderboardStats } from "../../hooks/useLeaderboardStats";
 import { db } from "../../lib/firebase";
 import {
 	getGroupMembers,
@@ -12,6 +13,7 @@ import type { Group, UserProfile } from "../../types";
 import { GroupLeaderboard } from "./GroupLeaderboard";
 import { GroupMembersList } from "./GroupMembersList";
 import { GroupSightings } from "./GroupSightings";
+import { GroupSummary } from "./GroupSummary";
 
 export function GroupView() {
 	const { t } = useTranslation();
@@ -23,11 +25,17 @@ export function GroupView() {
 	>(new Map());
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
-	const [activeTab, setActiveTab] = useState<"stats" | "sightings" | "members">(
-		"stats",
-	);
+	const [activeTab, setActiveTab] = useState<
+		"summary" | "leaderboard" | "sightings" | "members"
+	>("summary");
 
 	const currentYear = new Date().getFullYear();
+
+	const { groupTotalCount } = useLeaderboardStats(
+		group || ({} as Group),
+		members,
+		userStats,
+	);
 
 	const handleRemoveMember = async (userIdToRemove: string) => {
 		if (!group) return;
@@ -106,11 +114,19 @@ export function GroupView() {
 			<div className="tabs-container">
 				<button
 					type="button"
-					className={`tab-button ${activeTab === "stats" ? "active" : ""}`}
-					onClick={() => setActiveTab("stats")}
-					data-testid="tab-stats"
+					className={`tab-button ${activeTab === "summary" ? "active" : ""}`}
+					onClick={() => setActiveTab("summary")}
+					data-testid="tab-summary"
 				>
-					{t("groupView.tabs.stats")}
+					{t("groupView.tabs.summary")}
+				</button>
+				<button
+					type="button"
+					className={`tab-button ${activeTab === "leaderboard" ? "active" : ""}`}
+					onClick={() => setActiveTab("leaderboard")}
+					data-testid="tab-leaderboard"
+				>
+					{t("groupView.tabs.leaderboard")}
 				</button>
 				<button
 					type="button"
@@ -131,12 +147,19 @@ export function GroupView() {
 			</div>
 
 			<div className="tab-content">
-				{activeTab === "stats" && (
+				{activeTab === "summary" && (
+					<GroupSummary
+						group={group}
+						members={members}
+						groupTotalCount={groupTotalCount}
+						onTabChange={setActiveTab}
+					/>
+				)}
+				{activeTab === "leaderboard" && (
 					<GroupLeaderboard
 						group={group}
 						members={members}
 						userStats={userStats}
-						onTabChange={setActiveTab}
 					/>
 				)}
 				{activeTab === "sightings" && <GroupSightings group={group} />}

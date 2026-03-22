@@ -78,6 +78,9 @@ test.describe("Group Leaderboard", () => {
 
 		// 3. Verify Sections
 
+		// --- Summary Tab (Default) ---
+		await expect(page.getByTestId("tab-summary")).toHaveClass(/active/);
+
 		// 0. Group Total
 		await expect(
 			page.getByRole("heading", { name: `Group Total (${currentYear})` }),
@@ -90,6 +93,10 @@ test.describe("Group Leaderboard", () => {
 		await expect(gRow).toContainText("Competition Group");
 		await expect(gRow.locator(".points-value")).toHaveText("6"); // 1-5 from Alice, 6 from Bob = 6 total
 		await expect(gRow.locator(".points-label")).toHaveText("spp");
+
+		// --- Switch to Leaderboard Tab ---
+		await page.click('[data-testid="tab-leaderboard"]');
+		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
 
 		// A. Points Leaders
 		await expect(page.getByText(/Points Leaders/)).toBeVisible();
@@ -173,6 +180,10 @@ test.describe("Group Leaderboard", () => {
 		await signInInBrowser(page, userA.email, userA.password);
 		await page.click(`text=Click Group`);
 
+		// Switch to Leaderboard Tab
+		await page.click('[data-testid="tab-leaderboard"]');
+		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
+
 		// Wait for leaderboard and finding the user item
 		await expect(page.getByText(/Points Leaders/)).toBeVisible();
 		const userItem = page
@@ -233,6 +244,10 @@ test.describe("Group Leaderboard", () => {
 		await signInInBrowser(page, userA.email, userA.password);
 		await page.click(`text=Tie Test Group`);
 
+		// Switch to Leaderboard Tab
+		await page.click('[data-testid="tab-leaderboard"]');
+		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
+
 		// Verify Points Section
 		await expect(page.getByText(/Points Leaders/)).toBeVisible();
 		const pointsSection = page
@@ -274,9 +289,11 @@ test.describe("Group Leaderboard", () => {
 		await page.click(`text=Empty Group`);
 
 		await expect(
+			page.getByRole("heading", { name: /Group Total/ }),
+		).toBeVisible();
+		await expect(
 			page.getByText("No sightings found for this group."),
 		).toBeVisible();
-		await expect(page.locator(".leaderboard-section")).not.toBeVisible();
 	});
 
 	test("displays month selector with full member list", async ({ page }) => {
@@ -324,6 +341,10 @@ test.describe("Group Leaderboard", () => {
 		await page.goto("/");
 		await signInInBrowser(page, userA.email, userA.password);
 		await page.click(`text=Month Selector Group`);
+
+		// Switch to Leaderboard Tab
+		await page.click('[data-testid="tab-leaderboard"]');
+		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
 
 		// Verify Month Selector is visible
 		await expect(page.getByTestId("month-selector")).toBeVisible();
@@ -386,6 +407,10 @@ test.describe("Group Leaderboard", () => {
 		await signInInBrowser(page, userA.email, userA.password);
 		await page.click(`text=Tie Month Group`);
 
+		// Switch to Leaderboard Tab
+		await page.click('[data-testid="tab-leaderboard"]');
+		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
+
 		// Verify all members are shown
 		const monthSection = page
 			.locator(".leaderboard-section")
@@ -429,6 +454,10 @@ test.describe("Group Leaderboard", () => {
 		await page.goto("/");
 		await signInInBrowser(page, userA.email, userA.password);
 		await page.click(`text=Empty Month Group`);
+
+		// Switch to Leaderboard Tab
+		await page.click('[data-testid="tab-leaderboard"]');
+		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
 
 		// Month selector should still be visible
 		await expect(page.getByTestId("month-selector")).toBeVisible();
@@ -501,6 +530,10 @@ test.describe("Group Leaderboard", () => {
 		await page.goto("/");
 		await signInInBrowser(page, userA.email, userA.password);
 		await page.click(`text=Year All Members Group`);
+
+		// Switch to Leaderboard Tab
+		await page.click('[data-testid="tab-leaderboard"]');
+		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
 
 		// Verify Points Leaders section shows all users with points
 		// With new logic, all 5 members get points based on rank
@@ -584,6 +617,10 @@ test.describe("Group Leaderboard", () => {
 		await page.goto("/");
 		await signInInBrowser(page, userA.email, userA.password);
 		await page.click(`text=Switch Month Group`);
+
+		// Switch to Leaderboard Tab
+		await page.click('[data-testid="tab-leaderboard"]');
+		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
 
 		// Current month should show Alice with 3, Bob with 1
 		// Monthly section is now the last section with "Top Birdwatchers"
