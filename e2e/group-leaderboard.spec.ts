@@ -555,10 +555,7 @@ test.describe("Group Leaderboard", () => {
 		const currentYear = now.getFullYear();
 
 		// Only run if we're past January (so we have multiple months)
-		if (now.getMonth() === 0) {
-			// Skip test in January as we only have one month
-			return;
-		}
+		test.skip(now.getMonth() === 0, "Only one month available in January");
 
 		const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
 		const previousMonth = String(now.getMonth()).padStart(2, "0");
@@ -654,9 +651,10 @@ test.describe("Group Leaderboard", () => {
 		const sightingsTab = page.getByTestId("tab-sightings");
 		await expect(sightingsTab).toHaveClass(/active/);
 
-		// GroupSightings should be visible (it shows "Sightings" or similar heading if there's a heading inside)
-		// Let's check for the empty state or actual sightings in that tab
-		// Based on GroupSightings code (which I haven't seen yet but can infer)
-		await expect(page.getByText("Navigator")).toBeVisible(); // The user who spotted bird1 should be in the list
+		// No actual sighting documents are seeded (only user_yearly_stats), so the
+		// sightings list shows the empty state from SightingsList.
+		await expect(
+			page.getByText("No sightings found for this period"),
+		).toBeVisible();
 	});
 });

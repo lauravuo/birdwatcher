@@ -97,14 +97,14 @@ export async function clearAllTestData(): Promise<void> {
 }
 
 /**
- * Clear all groups - depreciated search for specialized clear
+ * @deprecated Use clearAllTestData instead.
  */
 export async function clearGroups(): Promise<void> {
 	await clearAllTestData();
 }
 
 /**
- * Clear all users - depreciated search for specialized clear
+ * @deprecated Use clearAllTestData instead.
  */
 export async function clearUsers(): Promise<void> {
 	await clearAllTestData();
