@@ -91,10 +91,10 @@ test.describe("Groups UI / Management", () => {
 		// Navigate with join code to test the joining flow
 		await authenticatedPage.goto(`/?group=${joinCode}`);
 
-		// Wait for auto-join redirect
-		await expect(authenticatedPage).not.toHaveURL(/group=/, { timeout: 10000 });
+		// Wait for auto-join redirect to the group page
+		await expect(authenticatedPage).toHaveURL(/\/groups\//, { timeout: 10000 });
 
-		// Verify it redirects directly to group view because it's their only group
+		// Verify it redirects directly to group view
 		await expect(
 			authenticatedPage.locator(".breadcrumbs").getByText(/Test Group/),
 		).toBeVisible({ timeout: 10000 });

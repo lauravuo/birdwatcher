@@ -1,4 +1,11 @@
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import {
+	collection,
+	doc,
+	getDoc,
+	onSnapshot,
+	query,
+	where,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -79,9 +86,16 @@ export function GroupList() {
 				email: currentUser.email,
 				photoURL: currentUser.photoURL,
 			})
-				.then(() => {
+				.then(async (groupId) => {
 					// Clear the param from URL
 					setSearchParams({});
+
+					// Check if we should redirect (only if not owner, matches onSnapshot logic)
+					const groupRef = doc(db, "groups", groupId);
+					const snap = await getDoc(groupRef);
+					if (snap.exists() && snap.data().ownerId !== currentUser.uid) {
+						navigate(`/groups/${groupId}`);
+					}
 				})
 				.catch((err) => {
 					console.error("Auto-join failed:", err);
@@ -92,7 +106,7 @@ export function GroupList() {
 					);
 				});
 		}
-	}, [currentUser, t, searchParams, setSearchParams]);
+	}, [currentUser, t, searchParams, setSearchParams, navigate]);
 
 	const handleCreate = async (e: React.FormEvent) => {
 		e.preventDefault();
