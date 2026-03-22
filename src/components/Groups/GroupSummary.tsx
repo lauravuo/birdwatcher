@@ -64,6 +64,8 @@ export function GroupSummary({
 				)}
 			</div>
 
+			<hr className="section-divider" />
+
 			<GroupFirstSightings group={group} members={members} year={currentYear} />
 		</div>
 	);

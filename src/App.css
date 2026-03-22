@@ -111,6 +111,13 @@ h1 {
 	border-color: transparent;
 }
 
+.section-divider {
+	border: 0;
+	border-top: 1px solid var(--border-color);
+	margin: 2rem 0;
+	opacity: 0.6;
+}
+
 .join-code {
 	color: var(--text-secondary);
 	font-family: monospace;
