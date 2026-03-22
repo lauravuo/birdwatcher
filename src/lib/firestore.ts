@@ -17,7 +17,7 @@ import {
 	startAfter,
 	where,
 } from "firebase/firestore";
-
+import { LATEST_FIRSTS_COUNT } from "../constants";
 import type {
 	Group,
 	GroupFirstSighting,
@@ -343,8 +343,8 @@ export async function addSighting(
 					return b.createdAt - a.createdAt;
 				});
 
-				if (latestFirsts.length > 5) {
-					latestFirsts = latestFirsts.slice(0, 5);
+				if (latestFirsts.length > LATEST_FIRSTS_COUNT) {
+					latestFirsts = latestFirsts.slice(0, LATEST_FIRSTS_COUNT);
 				}
 
 				transaction.set(
@@ -680,8 +680,8 @@ export const recalculateGroupStats = async (
 			return b.createdAt - a.createdAt;
 		});
 
-		if (stats.latestFirsts.length > 5) {
-			stats.latestFirsts = stats.latestFirsts.slice(0, 5);
+		if (stats.latestFirsts.length > LATEST_FIRSTS_COUNT) {
+			stats.latestFirsts = stats.latestFirsts.slice(0, LATEST_FIRSTS_COUNT);
 		}
 
 		const docRef = doc(db, "group_yearly_stats", `${groupId}_${y}`);

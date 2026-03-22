@@ -1,6 +1,7 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { LATEST_FIRSTS_COUNT } from "../../constants";
 import { db } from "../../lib/firebase";
 import type { Group, GroupYearlyStats, UserProfile } from "../../types";
 import type { Sighting } from "../../types/sighting";
@@ -38,7 +39,7 @@ export function GroupFirstSightings({
 						userId: first.userId,
 						createdAt: first.createdAt,
 					}));
-					setSightings(mockSightings.slice(0, 10));
+					setSightings(mockSightings.slice(0, LATEST_FIRSTS_COUNT));
 				} else {
 					setSightings([]);
 				}
