@@ -12,6 +12,7 @@ vi.mock("firebase/firestore", async () => {
 		where: vi.fn(),
 		orderBy: vi.fn(),
 		getDocs: vi.fn(),
+		getDoc: vi.fn().mockResolvedValue({ exists: () => false }),
 		addDoc: vi.fn(),
 		runTransaction: vi.fn(async (_db, updateFunction) => {
 			const mockTransaction = {
