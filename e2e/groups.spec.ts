@@ -145,7 +145,7 @@ test.describe("Groups UI / Management", () => {
 		await groupItem.click();
 
 		// Click Members tab
-		await authenticatedPage.getByRole("button", { name: "Members" }).click();
+		await authenticatedPage.getByTestId("tab-members").click();
 		await expect(authenticatedPage.getByText(/Members \(2\)/)).toBeVisible();
 
 		// Verify current user is in the list
@@ -230,7 +230,7 @@ test.describe("Groups UI / Management", () => {
 		await expect(groupItem).toBeVisible({ timeout: 10000 });
 		await groupItem.click();
 
-		await authenticatedPage.getByRole("button", { name: "Members" }).click();
+		await authenticatedPage.getByTestId("tab-members").click();
 		await expect(authenticatedPage.getByText(/Members \(2\)/)).toBeVisible();
 
 		// Find member item and verify owner can see remove button
