@@ -20,6 +20,10 @@ trigger: always_on
 * **Use Emulators**: Always use the Firebase Emulator Suite for development and testing. Never test against the production database.
 * **E2E Helpers**: When writing E2E tests, use the existing helpers in `e2e/helpers/` for authentication and data seeding to ensure tests are isolated and reliable.
 * **Environment**: Ensure `.env.test` is used when running E2E tests.
+* **Test Resilience**: 
+    * Prefer `data-testid` selectors over `getByRole` or `getByText` for common navigation elements (tabs, main action buttons).
+    * Relying on accessible names (e.g., `getByRole("button", { name: "Members" })`) can lead to "strict mode violation" errors if multiple elements share similar labels as the UI evolves.
+    * Always provide a unique `data-testid` for new interactive components to ensure tests remain stable.
 
 ### Firebase Emulator — How to Run E2E Tests
 
