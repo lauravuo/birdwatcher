@@ -12,12 +12,14 @@ interface GroupLeaderboardProps {
 	group: Group;
 	members: UserProfile[];
 	userStats: Map<string, Record<string, string[]>>;
+	onTabChange?: (tab: "stats" | "sightings" | "members") => void;
 }
 
 export function GroupLeaderboard({
 	group,
 	members,
 	userStats: statsMap,
+	onTabChange,
 }: GroupLeaderboardProps) {
 	const { t, i18n } = useTranslation();
 	const currentYear = new Date().getFullYear();
@@ -106,7 +108,24 @@ export function GroupLeaderboard({
 								{t("leaderboard.groupTotal", { year: currentYear })}
 							</h4>
 							<div className="leaderboard-list">
-								<div className="leaderboard-item" style={{ cursor: "default" }}>
+								<button
+									type="button"
+									className="leaderboard-item"
+									style={{
+										cursor: onTabChange ? "pointer" : "default",
+										width: "100%",
+										textAlign: "left",
+										background: "var(--bg-tertiary)",
+										color: "inherit",
+										fontFamily: "inherit",
+										fontSize: "inherit",
+										border: "1px solid var(--border-color)",
+										padding: "0.75rem 1rem",
+									}}
+									onClick={() => onTabChange?.("sightings")}
+									disabled={!onTabChange}
+									data-testid="group-total-click"
+								>
 									<div className="leaderboard-rank">👥</div>
 									<div className="leaderboard-user">
 										<span className="user-name">{group.name}</span>
@@ -117,7 +136,7 @@ export function GroupLeaderboard({
 											<span className="points-label">spp</span>
 										</div>
 									</div>
-								</div>
+								</button>
 							</div>
 						</div>
 					)}

@@ -76,7 +76,7 @@ test.describe("User View Pagination", () => {
 		await page.getByRole("link", { name: new RegExp(groupName) }).click();
 
 		// 4. Navigate to User View (Click own profile in members list)
-		await page.getByRole("button", { name: "Members" }).click();
+		await page.getByTestId("tab-members").click();
 		await page
 			.locator(".member-item")
 			.filter({ hasText: "UserPaginationTester" })
@@ -184,7 +184,7 @@ test.describe("User View Pagination", () => {
 		await page.getByRole("link", { name: new RegExp(groupName) }).click();
 
 		// 4. Navigate to User View
-		await page.getByRole("button", { name: "Members" }).click();
+		await page.getByTestId("tab-members").click();
 		await page
 			.locator(".member-item")
 			.filter({ hasText: "UserPaginationTesterSmall" })

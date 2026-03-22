@@ -555,10 +555,7 @@ test.describe("Group Leaderboard", () => {
 		const currentYear = now.getFullYear();
 
 		// Only run if we're past January (so we have multiple months)
-		if (now.getMonth() === 0) {
-			// Skip test in January as we only have one month
-			return;
-		}
+		test.skip(now.getMonth() === 0, "Only one month available in January");
 
 		const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
 		const previousMonth = String(now.getMonth()).padStart(2, "0");
@@ -612,5 +609,52 @@ test.describe("Group Leaderboard", () => {
 		items = monthSection.locator(".leaderboard-item");
 		await expect(items.nth(0)).toContainText("Bob");
 		await expect(items.nth(0).locator(".points-value")).toHaveText("3");
+	});
+
+	test("navigates to sightings tab when clicking group total", async ({
+		page,
+	}) => {
+		const now = new Date();
+		const currentYear = now.getFullYear();
+		const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
+
+		const userA = await setupUserWithStats("navtest", "Navigator", {
+			[`${currentYear}-${currentMonth}`]: ["bird1"],
+		});
+
+		// Create Group
+		const joinCode = "nav-test";
+		await seedGroup({
+			name: "Navigation Group",
+			joinCode,
+			ownerId: userA.uid,
+			memberIds: [userA.uid],
+		});
+
+		// Sign in
+		await page.goto("/");
+		await signInInBrowser(page, userA.email, userA.password);
+		await page.click(`text=Navigation Group`);
+
+		// Wait for leaderboard
+		await expect(
+			page.getByRole("heading", { name: `Group Total (${currentYear})` }),
+		).toBeVisible();
+
+		// Click the group total
+		const groupTotal = page.getByTestId("group-total-click");
+		await expect(groupTotal).toBeVisible();
+		await groupTotal.click();
+
+		// Verify navigation to sightings tab
+		// The sightings tab button should be active
+		const sightingsTab = page.getByTestId("tab-sightings");
+		await expect(sightingsTab).toHaveClass(/active/);
+
+		// No actual sighting documents are seeded (only user_yearly_stats), so the
+		// sightings list shows the empty state from SightingsList.
+		await expect(
+			page.getByText("No sightings found for this period"),
+		).toBeVisible();
 	});
 });

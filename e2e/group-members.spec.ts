@@ -79,7 +79,7 @@ test.describe("Group Members", () => {
 		await page.click("text=Members Test Group");
 
 		// Click Members tab
-		await page.getByRole("button", { name: "Members" }).click();
+		await page.getByTestId("tab-members").click();
 
 		// Wait for members list to be visible
 		await expect(page.getByText(/Members \(3\)/)).toBeVisible();
@@ -174,7 +174,7 @@ test.describe("Group Members", () => {
 		await page.click("text=Alpha Test Group");
 
 		// Click Members tab
-		await page.getByRole("button", { name: "Members" }).click();
+		await page.getByTestId("tab-members").click();
 
 		// Wait for members list
 		await expect(page.getByText(/Members \(3\)/)).toBeVisible();
@@ -243,7 +243,7 @@ test.describe("Group Members", () => {
 		await page.click("text=Badge Test Group");
 
 		// Click Members tab
-		await page.getByRole("button", { name: "Members" }).click();
+		await page.getByTestId("tab-members").click();
 
 		// Wait for members list
 		await expect(page.getByText(/Members \(2\)/)).toBeVisible();

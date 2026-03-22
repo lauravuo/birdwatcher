@@ -136,6 +136,7 @@ export function GroupView() {
 						group={group}
 						members={members}
 						userStats={userStats}
+						onTabChange={setActiveTab}
 					/>
 				)}
 				{activeTab === "sightings" && <GroupSightings group={group} />}
