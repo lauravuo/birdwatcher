@@ -83,3 +83,4 @@ If it continues to fail, check with `lsof -ti:8080,9099` to identify blocking pr
 ## Code Quality
 
 * **Biome**: Run `npm run format` and `npm run lint` regularly. The project uses Biome, so avoid Prettier/ESLint configurations if they conflict.
+* **Constants**: Avoid using "magic numbers" in the code. If a value (like a limit, a count, or a configuration parameter) is likely to be changed or used in multiple places, define it as a constant in `src/constants.ts` (for application-wide constants) or within the relevant component/service.
