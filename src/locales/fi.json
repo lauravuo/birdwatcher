@@ -436,6 +436,7 @@
 		"visual": "Näkö",
 		"audial": "Ääni",
 		"both": "Molemmat",
+		"notSpecified": "Ei ilmoitettu",
 		"location": "Sijainti",
 		"getCurrentLocation": "Hae nykyinen sijainti",
 		"gettingLocation": "Haetaan sijaintia...",

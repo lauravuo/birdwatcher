@@ -444,6 +444,7 @@
 		"visual": "Visual",
 		"audial": "Audial",
 		"both": "Both",
+		"notSpecified": "Not specified",
 		"location": "Location",
 		"getCurrentLocation": "Get Current Location",
 		"gettingLocation": "Getting location...",
