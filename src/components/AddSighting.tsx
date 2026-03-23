@@ -59,7 +59,7 @@ export default function AddSighting({
 			setBirdFilter(t(`birds.${initialSighting.birdId}`));
 			setDate(initialSighting.date);
 			setTime(initialSighting.time || currentTime);
-			setObservationType(initialSighting.type);
+			setObservationType(initialSighting.type || "audial");
 			setLatitude(initialSighting.latitude);
 			setLongitude(initialSighting.longitude);
 			setLocationName(initialSighting.locationName || "");
