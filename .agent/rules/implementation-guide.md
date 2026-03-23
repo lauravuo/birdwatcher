@@ -10,10 +10,15 @@ trigger: always_on
 
 * before task is finalized npm run test:all should pass
 
-## Commiting
+## Commiting & PR Workflow
 
-* use conventional commit style
-* always do changes via PR, not directly to main branch
+* **Conventional Commits**: Use conventional commit style for all messages.
+* **PRs Only**: Always perform changes via a Pull Request (PR), never directly to the `main` branch.
+* **Post-Implementation Steps**:
+    1.  **Draft PR**: Create the PR as a "draft" initially.
+    2.  **Monitor CI**: Use the GitHub CLI (`gh pr checks --watch`) to monitor the status of CI jobs.
+    3.  **Ready for Review**: Only mark the PR as "Ready for Review" once all CI checks have passed successfully.
+    4.  **Clean Code**: Before finalizing, ensure all temporary comments, debug logs, or unfinished code have been removed.
 
 ## Firebase & Testing
 
@@ -79,6 +84,7 @@ If it continues to fail, check with `lsof -ti:8080,9099` to identify blocking pr
 
 * **Mobile-First**: Design for mobile screens first, then use media queries for larger screens.
 * **Vanilla CSS**: Continue using vanilla CSS with the existing nature-inspired theme variables defined in `index.css`/`App.css`.
+* **Mobile Layout Optimization**: Be proactive in hiding non-essential desktop-first sections (like redundant headers) in mobile views to improve focus and reduce clutter.
 
 ## Code Quality
 
