@@ -209,7 +209,9 @@ export function SightingDetails() {
 				<div className="sighting-header-large">
 					<h2>{birdName}</h2>
 					<span className="sighting-type-badge">
-						{getObservationTypeLabel(sighting.type)}
+						{sighting.type
+							? getObservationTypeLabel(sighting.type)
+							: t("addSighting.notSpecified")}
 					</span>
 				</div>
 

@@ -390,8 +390,8 @@ div.sighting-bg {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 32px;
-	height: 32px;
+	width: 40px;
+	height: 40px;
 	border-radius: 50%;
 	background: var(--bg-secondary);
 	border: 1.5px solid white;
@@ -460,8 +460,8 @@ div.sighting-bg {
 	}
 
 	.sighting-user-avatar {
-		width: 26px;
-		height: 26px;
+		width: 32px;
+		height: 32px;
 	}
 
 	.sighting-date {
@@ -481,8 +481,8 @@ div.sighting-bg {
 	}
 
 	.sighting-user-avatar {
-		width: 20px;
-		height: 20px;
+		width: 24px;
+		height: 24px;
 	}
 
 	.sighting-date {

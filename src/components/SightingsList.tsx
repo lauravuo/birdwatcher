@@ -100,11 +100,11 @@ export function SightingsList({
 		return <p className="no-sightings">{t("userView.noSightings")}</p>;
 	}
 
-	const getObservationIcon = (type: string) => {
+	const getObservationIcon = (type?: string) => {
 		if (type === "visual") return <VisualIcon />;
 		if (type === "audial") return <AudialIcon />;
 		if (type === "both") return <BothIcon />;
-		return <VisualIcon />; // fallback
+		return null;
 	};
 
 	return (
@@ -140,7 +140,11 @@ export function SightingsList({
 									<div className="sighting-meta-top-right">
 										<span
 											className="sighting-date"
-											title={getObservationTypeLabel(sighting.type)}
+											title={
+												sighting.type
+													? getObservationTypeLabel(sighting.type)
+													: undefined
+											}
 										>
 											{getObservationIcon(sighting.type)}
 											<span>{formatDate(sighting.date)}</span>

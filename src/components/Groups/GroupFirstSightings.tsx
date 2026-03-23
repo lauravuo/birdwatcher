@@ -35,7 +35,6 @@ export function GroupFirstSightings({
 						birdId: first.birdId,
 						date: first.date,
 						time: "12:00", // Placeholder for UI
-						type: "visual",
 						userId: first.userId,
 						createdAt: first.createdAt,
 					}));
