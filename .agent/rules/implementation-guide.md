@@ -13,6 +13,8 @@ trigger: always_on
 ## Commiting & PR Workflow
 
 * **Conventional Commits**: Use conventional commit style for all messages.
+    - **Trigger Release**: Use `feat:` for new features or `fix:` for bug fixes (including UI/Layout fixes) that should be deployed immediately.
+    - **Don't Trigger**: Use `chore:`, `style:`, `docs:`, `test:`, or `refactor:` for internal changes that do not need to trigger a new application release.
 * **PRs Only**: Always perform changes via a Pull Request (PR), never directly to the `main` branch.
 * **Post-Implementation Steps**:
     1.  **Draft PR**: Create the PR as a "draft" initially.
