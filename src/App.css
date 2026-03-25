@@ -60,17 +60,9 @@ h1 {
 }
 
 @media (max-width: 600px) {
-	header {
-		padding: 0.5rem 1rem;
-	}
-
-	header h1 {
-		display: none;
-	}
-
+	header,
 	.breadcrumbs {
-		padding: 0.5rem 1rem;
-		font-size: 0.85rem;
+		padding: 1rem;
 	}
 
 	.card,
@@ -404,7 +396,7 @@ div.sighting-bg {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 40%;
+	width: 32%;
 	aspect-ratio: 1 / 1;
 	max-width: 64px;
 	min-width: 40px;
@@ -476,7 +468,7 @@ div.sighting-bg {
 	}
 
 	.sighting-user-avatar {
-		width: 40%;
+		width: 32%;
 		max-width: 54px;
 	}
 
