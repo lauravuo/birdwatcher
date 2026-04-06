@@ -1,16 +1,5 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import enTranslation from "./locales/en.json";
-import fiTranslation from "./locales/fi.json";
-
-const resources = {
-	en: {
-		translation: enTranslation,
-	},
-	fi: {
-		translation: fiTranslation,
-	},
-};
 
 // Get language from localStorage or use Finnish as default
 const getInitialLanguage = () => {
@@ -21,13 +10,30 @@ const getInitialLanguage = () => {
 	return "fi";
 };
 
+// Initial setup with empty resources - we will load them as needed
 i18n.use(initReactI18next).init({
-	resources,
+	resources: {},
 	lng: getInitialLanguage(),
 	fallbackLng: "fi",
 	interpolation: {
 		escapeValue: false,
 	},
+});
+
+// Helper to load and add resource bundle
+const loadResources = async (lng: string) => {
+	if (!i18n.hasResourceBundle(lng, "translation")) {
+		const data = await import(`./locales/${lng}.json`);
+		i18n.addResourceBundle(lng, "translation", data.default || data);
+	}
+};
+
+// Initialize with current language
+loadResources(getInitialLanguage());
+
+// Hook into language change to load new resources
+i18n.on("languageChanged", (lng) => {
+	loadResources(lng);
 });
 
 export default i18n;

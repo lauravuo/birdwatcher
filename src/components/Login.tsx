@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
 
-export function Login() {
+export default function Login() {
 	const { login } = useAuth();
 	const { t } = useTranslation();
 

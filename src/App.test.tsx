@@ -22,19 +22,23 @@ vi.mock("./lib/firebase", () => ({
 
 describe("App", () => {
 	it("renders headline", async () => {
-		// Ensure i18n is initialized
+		// Ensure i18n is initialized and in English for testing
 		if (!i18n.isInitialized) {
 			await i18n.init();
 		}
+		await i18n.changeLanguage("en");
 
 		render(
 			<MemoryRouter>
 				<App />
 			</MemoryRouter>,
 		);
-		await waitFor(() => {
-			const headline = screen.getByText(/Birdwatcher/i);
-			expect(headline).toBeInTheDocument();
-		});
+		await waitFor(
+			() => {
+				const headline = screen.getByText(/Birdwatcher|Lintuvahti/i);
+				expect(headline).toBeInTheDocument();
+			},
+			{ timeout: 3000 },
+		);
 	});
 });

@@ -1,7 +1,8 @@
 {
 	"app": {
 		"title": "Lintuvahti",
-		"logout": "Kirjaudu ulos"
+		"logout": "Kirjaudu ulos",
+		"loading_message": "Tarkkaillaan lintuja..."
 	},
 	"common": {
 		"loadMore": "Lataa lisää",
