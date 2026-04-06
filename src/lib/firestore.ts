@@ -251,7 +251,7 @@ export const getUserProfile = async (
 ): Promise<UserProfile | null> => {
 	const docRef = doc(db, "users", userId);
 	const snapshot = await getDoc(docRef);
-	if (snapshot.exists()) {
+	if (snapshot && snapshot.exists()) {
 		return snapshot.data() as UserProfile;
 	}
 	return null;
@@ -530,7 +530,7 @@ export const getSighting = async (
 	const docRef = doc(db, "sightings", sightingId);
 	const snapshot = await getDoc(docRef);
 
-	if (snapshot.exists()) {
+	if (snapshot && snapshot.exists()) {
 		return { id: snapshot.id, ...snapshot.data() } as Sighting;
 	}
 	return null;
@@ -606,7 +606,7 @@ export const recalculateGroupStats = async (
 ): Promise<void> => {
 	const groupRef = doc(db, "groups", groupId);
 	const groupDoc = await getDoc(groupRef);
-	if (!groupDoc.exists()) return;
+	if (!groupDoc || !groupDoc.exists()) return;
 
 	const memberIds = groupDoc.data()?.memberIds || [];
 	if (memberIds.length === 0) {

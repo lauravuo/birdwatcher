@@ -7,18 +7,16 @@ export default defineConfig({
 	build: {
 		rollupOptions: {
 			output: {
-				manualChunks: {
-					firebase: ["firebase/app", "firebase/auth", "firebase/firestore"],
-					vendor: [
-						"react",
-						"react-dom",
-						"react-router-dom",
-						"react-i18next",
-						"i18next",
-					],
+				manualChunks(id) {
+					if (id.includes("firebase")) {
+						return "firebase";
+					}
+					if (id.includes("node_modules")) {
+						return "vendor";
+					}
 				},
 			},
 		},
-		chunkSizeWarningLimit: 600,
+		chunkSizeWarningLimit: 1000,
 	},
 });
