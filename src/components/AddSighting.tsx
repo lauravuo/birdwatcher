@@ -3,12 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import birdsData from "../data/birds.json";
+import { getBirds } from "../lib/birds";
 import { addSighting, updateSighting } from "../lib/firestore";
 import type { BirdMap } from "../types";
 import type { Sighting } from "../types/sighting";
-
-const birds = birdsData as BirdMap;
 
 const today = new Date().toISOString().slice(0, 10);
 const now = new Date();
@@ -51,10 +49,15 @@ export default function AddSighting({
 	const inputRef = useRef<HTMLInputElement>(null);
 	const dropdownRef = useRef<HTMLUListElement>(null);
 	const [submitting, setSubmitting] = useState(false);
+	const [birds, setBirds] = useState<BirdMap | null>(null);
+
+	useEffect(() => {
+		getBirds().then(setBirds);
+	}, []);
 
 	// Prefill state for editing
 	useEffect(() => {
-		if (initialSighting && isEditing) {
+		if (initialSighting && isEditing && birds) {
 			setSelectedBird(initialSighting.birdId);
 			setBirdFilter(t(`birds.${initialSighting.birdId}`));
 			setDate(initialSighting.date);
@@ -65,17 +68,7 @@ export default function AddSighting({
 			setLocationName(initialSighting.locationName || "");
 			setNotes(initialSighting.notes || "");
 		}
-	}, [initialSighting, isEditing, t]);
-
-	const filteredBirds = Object.keys(birds)
-		.filter((id) =>
-			t(`birds.${id}`).toLowerCase().includes(birdFilter.toLowerCase()),
-		)
-		.slice(0, 20)
-		.map((id) => birds[id]);
-
-	const isFormValid =
-		selectedBird !== "" && date !== "" && observationType !== "";
+	}, [initialSighting, isEditing, t, birds]);
 
 	// Close dropdown when clicking outside
 	useEffect(() => {
@@ -93,6 +86,18 @@ export default function AddSighting({
 		document.addEventListener("mousedown", handleClickOutside);
 		return () => document.removeEventListener("mousedown", handleClickOutside);
 	}, []);
+
+	if (!birds) return null;
+
+	const filteredBirds = Object.keys(birds)
+		.filter((id) =>
+			t(`birds.${id}`).toLowerCase().includes(birdFilter.toLowerCase()),
+		)
+		.slice(0, 20)
+		.map((id) => birds[id]);
+
+	const isFormValid =
+		selectedBird !== "" && date !== "" && observationType !== "";
 
 	const handleInputFocus = () => {
 		setIsDropdownOpen(true);

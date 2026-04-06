@@ -1,7 +1,8 @@
 {
 	"app": {
 		"title": "Birdwatcher",
-		"logout": "Logout"
+		"logout": "Logout",
+		"loading_message": "Observing birds..."
 	},
 	"common": {
 		"loadMore": "Load More",

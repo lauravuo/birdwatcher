@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import AddSighting from "./AddSighting";
+import { Loading } from "./Loading";
+
+// Lazy-load the form component as it's only shown on click
+const AddSighting = lazy(() => import("./AddSighting"));
 
 export default function AddSightingButton({
 	activeGroupId,
@@ -65,10 +68,12 @@ export default function AddSightingButton({
 							if (e.key === "Escape") setOpen(false);
 						}}
 					>
-						<AddSighting
-							activeGroupId={activeGroupId}
-							onSubmit={handleSubmit}
-						/>
+						<Suspense fallback={<Loading />}>
+							<AddSighting
+								activeGroupId={activeGroupId}
+								onSubmit={handleSubmit}
+							/>
+						</Suspense>
 					</div>
 				</div>
 			)}

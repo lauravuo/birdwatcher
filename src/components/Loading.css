@@ -1,0 +1,85 @@
+.loading-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 4rem 2rem;
+	width: 100%;
+	min-height: 200px;
+}
+
+.loading-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+.bird-loader {
+	position: relative;
+	width: 60px;
+	height: 40px;
+	background-color: var(--primary-color, #2d5a27);
+	border-radius: 30px 30px 10px 10px;
+	animation: bird-float 1.5s ease-in-out infinite;
+}
+
+.bird-body::before {
+	content: "";
+	position: absolute;
+	left: -15px;
+	top: 5px;
+	width: 25px;
+	height: 25px;
+	background-color: var(--primary-color, #2d5a27);
+	border-radius: 50%;
+}
+
+.bird-body::after {
+	content: "";
+	position: absolute;
+	right: -10px;
+	top: 15px;
+	width: 20px;
+	height: 10px;
+	background-color: var(--primary-color, #2d5a27);
+	border-radius: 0 50% 50% 0;
+	transform: rotate(15deg);
+}
+
+.bird-wing {
+	position: absolute;
+	left: 20px;
+	top: 5px;
+	width: 30px;
+	height: 20px;
+	background-color: var(--secondary-color, #a8c69f);
+	border-radius: 0 0 30px 30px;
+	transform-origin: top;
+	animation: wing-flap 0.5s ease-in-out infinite alternate;
+}
+
+.loading-text {
+	color: var(--text-muted, #666);
+	font-size: 1.1rem;
+	font-weight: 500;
+	letter-spacing: 0.05rem;
+}
+
+@keyframes bird-float {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-10px);
+	}
+}
+
+@keyframes wing-flap {
+	from {
+		transform: rotateX(0);
+	}
+	to {
+		transform: rotateX(60deg);
+	}
+}

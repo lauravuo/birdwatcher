@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import birdsData from "../data/birds.json";
+import { getBirds } from "../lib/birds";
 import { deleteSighting, getSighting, getUserProfile } from "../lib/firestore";
 import type { BirdMap, UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
 import AddSighting from "./AddSighting";
-
-const birds = birdsData as BirdMap;
 
 export function SightingDetails() {
 	const { t, i18n } = useTranslation();
@@ -18,6 +16,11 @@ export function SightingDetails() {
 	}>();
 	const { currentUser } = useAuth();
 	const navigate = useNavigate();
+	const [birds, setBirds] = useState<BirdMap | null>(null);
+
+	useEffect(() => {
+		getBirds().then(setBirds);
+	}, []);
 
 	const [sighting, setSighting] = useState<Sighting | null>(null);
 	const [user, setUser] = useState<UserProfile | null>(null);
@@ -26,7 +29,7 @@ export function SightingDetails() {
 	const [isEditing, setIsEditing] = useState(false);
 
 	useEffect(() => {
-		if (!sightingId) return;
+		if (!sightingId || !birds) return;
 
 		let isMounted = true;
 
@@ -64,7 +67,9 @@ export function SightingDetails() {
 		return () => {
 			isMounted = false;
 		};
-	}, [sightingId, t]);
+	}, [sightingId, t, birds]);
+
+	if (!birds) return null;
 
 	const formatDate = (dateString: string, timeString?: string) => {
 		const date = new Date(`${dateString}T00:00:00`);

@@ -1,10 +1,9 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
-import birdsData from "../data/birds.json";
+import { getBirds } from "../lib/birds";
 import type { BirdMap, UserProfile } from "../types";
 import type { Sighting } from "../types/sighting";
-
-const birds = birdsData as BirdMap;
 
 const VisualIcon = () => (
 	<svg
@@ -69,6 +68,13 @@ export function SightingsList({
 }: SightingsListProps) {
 	const { t, i18n } = useTranslation();
 	const { groupId } = useParams<{ groupId: string }>();
+	const [birds, setBirds] = useState<BirdMap | null>(null);
+
+	useEffect(() => {
+		getBirds().then(setBirds);
+	}, []);
+
+	if (!birds) return null;
 
 	const formatDate = (dateString: string, timeString?: string) => {
 		const date = new Date(`${dateString}T00:00:00`);

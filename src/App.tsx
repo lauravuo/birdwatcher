@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import {
 	Link,
@@ -9,14 +10,31 @@ import {
 } from "react-router-dom";
 import AddSightingButton from "./components/AddSightingButton";
 import { Breadcrumbs } from "./components/Breadcrumbs";
-import { GroupList } from "./components/Groups/GroupList";
-import { GroupView } from "./components/Groups/GroupView";
-import { Login } from "./components/Login";
-import { SightingDetails } from "./components/SightingDetails";
-import { UserView } from "./components/UserView";
+import { Loading } from "./components/Loading";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { useUserGroups } from "./hooks/useUserGroups";
 import "./App.css";
+
+// Lazy-load route components
+const Login = lazy(() => import("./components/Login"));
+const GroupList = lazy(() =>
+	import("./components/Groups/GroupList").then((m) => ({
+		default: m.GroupList,
+	})),
+);
+const GroupView = lazy(() =>
+	import("./components/Groups/GroupView").then((m) => ({
+		default: m.GroupView,
+	})),
+);
+const UserView = lazy(() =>
+	import("./components/UserView").then((m) => ({ default: m.UserView })),
+);
+const SightingDetails = lazy(() =>
+	import("./components/SightingDetails").then((m) => ({
+		default: m.SightingDetails,
+	})),
+);
 
 function AuthenticatedApp() {
 	const { currentUser, logout } = useAuth();
@@ -25,7 +43,11 @@ function AuthenticatedApp() {
 	const { groups } = useUserGroups();
 
 	if (!currentUser) {
-		return <Login />;
+		return (
+			<Suspense fallback={<Loading />}>
+				<Login />
+			</Suspense>
+		);
 	}
 
 	// Try to get groupId from current path
@@ -68,19 +90,21 @@ function AuthenticatedApp() {
 			<Breadcrumbs />
 			<main>
 				<div className="card">
-					<Routes>
-						<Route path="/" element={<GroupList />} />
-						<Route path="/groups/:groupId" element={<GroupView />} />
-						<Route
-							path="/groups/:groupId/members/:userId"
-							element={<UserView />}
-						/>
-						<Route
-							path="/groups/:groupId/members/:userId/sightings/:sightingId"
-							element={<SightingDetails />}
-						/>
-						<Route path="*" element={<Navigate to="/" replace />} />
-					</Routes>
+					<Suspense fallback={<Loading />}>
+						<Routes>
+							<Route path="/" element={<GroupList />} />
+							<Route path="/groups/:groupId" element={<GroupView />} />
+							<Route
+								path="/groups/:groupId/members/:userId"
+								element={<UserView />}
+							/>
+							<Route
+								path="/groups/:groupId/members/:userId/sightings/:sightingId"
+								element={<SightingDetails />}
+							/>
+							<Route path="*" element={<Navigate to="/" replace />} />
+						</Routes>
+					</Suspense>
 				</div>
 				{groups.length > 0 && activeGroupId && (
 					<AddSightingButton activeGroupId={activeGroupId} />
