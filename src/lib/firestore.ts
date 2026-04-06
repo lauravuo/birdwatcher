@@ -4,6 +4,7 @@ import {
 	collection,
 	type DocumentReference,
 	type DocumentSnapshot,
+	deleteDoc,
 	doc,
 	documentId,
 	getDoc,
@@ -14,7 +15,9 @@ import {
 	type QueryDocumentSnapshot,
 	query,
 	runTransaction,
+	setDoc,
 	startAfter,
+	updateDoc,
 	where,
 } from "firebase/firestore";
 import { LATEST_FIRSTS_COUNT } from "../constants";
@@ -235,10 +238,8 @@ export const removeUserFromGroup = async (
 	userIdToRemove: string,
 ): Promise<void> => {
 	const groupRef = doc(db, "groups", groupId);
-	await import("firebase/firestore").then(async (fs) => {
-		await fs.updateDoc(groupRef, {
-			memberIds: arrayRemove(userIdToRemove),
-		});
+	await updateDoc(groupRef, {
+		memberIds: arrayRemove(userIdToRemove),
 	});
 
 	// Recalculate group stats in the background
@@ -365,9 +366,7 @@ export async function addSighting(
 }
 
 export async function deleteSighting(sightingId: string, userId: string) {
-	await import("firebase/firestore").then(async (fs) => {
-		await fs.deleteDoc(doc(db, "sightings", sightingId));
-	});
+	await deleteDoc(doc(db, "sightings", sightingId));
 	// Recalculate stats to ensure consistency (e.g. if this was unique bird for month)
 	await recalculateUserStats(userId);
 	const user = await getUserProfile(userId);
@@ -389,9 +388,7 @@ export async function updateSighting(
 		Object.entries(sighting).filter(([_, value]) => value !== undefined),
 	);
 
-	await import("firebase/firestore").then(async (fs) => {
-		await fs.updateDoc(sightingRef, cleanSighting);
-	});
+	await updateDoc(sightingRef, cleanSighting);
 
 	await recalculateUserStats(sighting.userId);
 	const user = await getUserProfile(sighting.userId);
@@ -591,16 +588,14 @@ export const recalculateUserStats = async (userId: string): Promise<void> => {
 	// Since this is a maintenance task, individual awaits are fine.
 	for (const [year, stats] of Object.entries(statsByYear)) {
 		const docRef = doc(db, "user_yearly_stats", `${userId}_${year}`);
-		await import("firebase/firestore").then((fs) =>
-			fs.setDoc(
-				docRef,
-				{
-					userId,
-					year: Number(year),
-					stats,
-				},
-				{ merge: true },
-			),
+		await setDoc(
+			docRef,
+			{
+				userId,
+				year: Number(year),
+				stats,
+			},
+			{ merge: true },
 		);
 	}
 };
@@ -617,7 +612,7 @@ export const recalculateGroupStats = async (
 	if (memberIds.length === 0) {
 		if (year) {
 			const docRef = doc(db, "group_yearly_stats", `${groupId}_${year}`);
-			await import("firebase/firestore").then((fs) => fs.deleteDoc(docRef));
+			await deleteDoc(docRef);
 		}
 		return;
 	}
@@ -685,17 +680,15 @@ export const recalculateGroupStats = async (
 		}
 
 		const docRef = doc(db, "group_yearly_stats", `${groupId}_${y}`);
-		await import("firebase/firestore").then((fs) =>
-			fs.setDoc(
-				docRef,
-				{
-					groupId,
-					year: Number(y),
-					seenBirds: stats.seenBirds,
-					latestFirsts: stats.latestFirsts,
-				},
-				{ merge: false }, // We don't merge, we replace to ensure correctness
-			),
+		await setDoc(
+			docRef,
+			{
+				groupId,
+				year: Number(y),
+				seenBirds: stats.seenBirds,
+				latestFirsts: stats.latestFirsts,
+			},
+			{ merge: false }, // We don't merge, we replace to ensure correctness
 		);
 	}
 };
