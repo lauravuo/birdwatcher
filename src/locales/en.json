@@ -478,6 +478,11 @@
 		"groupTotal": "Group Total ({{year}})",
 		"latestFirsts": "Latest Birds",
 		"selectMonth": "Select Month",
-		"noSightingsForMonth": "No sightings recorded for this month."
+		"noSightingsForMonth": "No sightings recorded for this month.",
+		"tabs": {
+			"yearPoints": "Points",
+			"yearUnique": "Species",
+			"monthUnique": "Monthly"
+		}
 	}
 }
