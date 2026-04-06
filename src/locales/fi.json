@@ -478,6 +478,11 @@
 		"groupTotal": "Lintuja yhteensä ({{year}})",
 		"latestFirsts": "Uusimmat linnut",
 		"selectMonth": "Valitse kuukausi",
-		"noSightingsForMonth": "Ei havaintoja tälle kuukaudelle."
+		"noSightingsForMonth": "Ei havaintoja tälle kuukaudelle.",
+		"tabs": {
+			"yearPoints": "Pisteet",
+			"yearUnique": "Lajit",
+			"monthUnique": "Kuukausi"
+		}
 	}
 }

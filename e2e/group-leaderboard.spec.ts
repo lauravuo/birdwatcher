@@ -98,7 +98,10 @@ test.describe("Group Leaderboard", () => {
 		await page.click('[data-testid="tab-leaderboard"]');
 		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
 
-		// A. Points Leaders
+		// A. Points Leaders (Default sub-tab)
+		await expect(page.getByTestId("leaderboard-tab-points")).toHaveClass(
+			/active/,
+		);
 		await expect(page.getByText(/Points Leaders/)).toBeVisible();
 		const pointsSection = page
 			.locator(".leaderboard-section")
@@ -120,7 +123,11 @@ test.describe("Group Leaderboard", () => {
 		await expect(pRow3).toContainText("Charlie");
 		await expect(pRow3.locator(".points-value")).toHaveText("2");
 
-		// B. Year Unique
+		// B. Year Unique (Species Tab)
+		await page.click('[data-testid="leaderboard-tab-species"]');
+		await expect(page.getByTestId("leaderboard-tab-species")).toHaveClass(
+			/active/,
+		);
 		await expect(
 			page.getByRole("heading", { name: `Top Birdwatchers (${currentYear})` }),
 		).toBeVisible();
@@ -137,6 +144,10 @@ test.describe("Group Leaderboard", () => {
 		await expect(yRow1.locator(".points-label")).toHaveText("spp");
 
 		// C. Monthly Unique
+		await page.click('[data-testid="leaderboard-tab-monthly"]');
+		await expect(page.getByTestId("leaderboard-tab-monthly")).toHaveClass(
+			/active/,
+		);
 		// Find section for current month name
 		const date = new Date();
 		const monthName = new Intl.DateTimeFormat("en-US", {
@@ -346,11 +357,17 @@ test.describe("Group Leaderboard", () => {
 		await page.click('[data-testid="tab-leaderboard"]');
 		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
 
+		// Switch to Monthly Tab
+		await page.click('[data-testid="leaderboard-tab-monthly"]');
+		await expect(page.getByTestId("leaderboard-tab-monthly")).toHaveClass(
+			/active/,
+		);
+
 		// Verify Month Selector is visible
 		await expect(page.getByTestId("month-selector")).toBeVisible();
 
 		// Verify all 5 members are shown (not just top 3)
-		// Monthly section is now the last section with "Top Birdwatchers"
+		// Monthly section is now the only section in the Monthly tab
 		const monthSection = page
 			.locator(".leaderboard-section")
 			.filter({ hasText: /Top Birdwatchers/ })
@@ -411,6 +428,9 @@ test.describe("Group Leaderboard", () => {
 		await page.click('[data-testid="tab-leaderboard"]');
 		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
 
+		// Switch to Monthly Tab
+		await page.click('[data-testid="leaderboard-tab-monthly"]');
+
 		// Verify all members are shown
 		const monthSection = page
 			.locator(".leaderboard-section")
@@ -458,6 +478,9 @@ test.describe("Group Leaderboard", () => {
 		// Switch to Leaderboard Tab
 		await page.click('[data-testid="tab-leaderboard"]');
 		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
+
+		// Switch to Monthly Tab
+		await page.click('[data-testid="leaderboard-tab-monthly"]');
 
 		// Month selector should still be visible
 		await expect(page.getByTestId("month-selector")).toBeVisible();
@@ -536,8 +559,10 @@ test.describe("Group Leaderboard", () => {
 		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
 
 		// Verify Points Leaders section shows all users with points
-		// With new logic, all 5 members get points based on rank
-		// Alice (1st=5 monthly + 5 yearly = 10), Bob (2nd=4+4=8), Charlie (3rd=3+3=6), Diana (4th=2+2=4), Eve (5th=1+1=2)
+		// Points tab is active by default
+		await expect(page.getByTestId("leaderboard-tab-points")).toHaveClass(
+			/active/,
+		);
 		await expect(page.getByText(/Points Leaders/)).toBeVisible();
 		const pointsSection = page
 			.locator(".leaderboard-section")
@@ -559,6 +584,7 @@ test.describe("Group Leaderboard", () => {
 		await expect(pointItems.nth(4).locator(".points-value")).toHaveText("2");
 
 		// Verify Year Unique section shows all 5 members
+		await page.click('[data-testid="leaderboard-tab-species"]');
 		const yearUniqueTitle = `Top Birdwatchers (${currentYear})`;
 		const yearUniqueSection = page
 			.locator(".leaderboard-section")
@@ -621,6 +647,9 @@ test.describe("Group Leaderboard", () => {
 		// Switch to Leaderboard Tab
 		await page.click('[data-testid="tab-leaderboard"]');
 		await expect(page.getByTestId("tab-leaderboard")).toHaveClass(/active/);
+
+		// Switch to Monthly Tab
+		await page.click('[data-testid="leaderboard-tab-monthly"]');
 
 		// Current month should show Alice with 3, Bob with 1
 		// Monthly section is now the last section with "Top Birdwatchers"
