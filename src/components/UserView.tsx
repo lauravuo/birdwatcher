@@ -215,7 +215,7 @@ export function UserView() {
 			<div className="user-view-header">
 				{/* Removed Back button as Breadcrumbs handle navigation */}
 
-				<div className="user-profile-summary">
+				<div className="user-info">
 					{user.photoURL && (
 						<img
 							src={user.photoURL}
