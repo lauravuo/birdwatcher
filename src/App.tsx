@@ -35,6 +35,9 @@ const SightingDetails = lazy(() =>
 		default: m.SightingDetails,
 	})),
 );
+const UserCompare = lazy(() =>
+	import("./components/UserCompare").then((m) => ({ default: m.UserCompare })),
+);
 
 function AuthenticatedApp() {
 	const { currentUser, logout } = useAuth();
@@ -101,6 +104,10 @@ function AuthenticatedApp() {
 							<Route
 								path="/groups/:groupId/members/:userId/sightings/:sightingId"
 								element={<SightingDetails />}
+							/>
+							<Route
+								path="/groups/:groupId/members/:userId/compare"
+								element={<UserCompare />}
 							/>
 							<Route path="*" element={<Navigate to="/" replace />} />
 						</Routes>

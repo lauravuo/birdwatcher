@@ -251,7 +251,7 @@ export const getUserProfile = async (
 ): Promise<UserProfile | null> => {
 	const docRef = doc(db, "users", userId);
 	const snapshot = await getDoc(docRef);
-	if (snapshot && snapshot.exists()) {
+	if (snapshot?.exists()) {
 		return snapshot.data() as UserProfile;
 	}
 	return null;
@@ -530,7 +530,7 @@ export const getSighting = async (
 	const docRef = doc(db, "sightings", sightingId);
 	const snapshot = await getDoc(docRef);
 
-	if (snapshot && snapshot.exists()) {
+	if (snapshot?.exists()) {
 		return { id: snapshot.id, ...snapshot.data() } as Sighting;
 	}
 	return null;

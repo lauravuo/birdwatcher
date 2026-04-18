@@ -1,7 +1,7 @@
 import type { QueryDocumentSnapshot } from "firebase/firestore";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useAvailableSpecies } from "../hooks/useAvailableSpecies";
 import {
@@ -18,7 +18,7 @@ import { UserStats } from "./UserStats";
 
 export function UserView() {
 	const { t, i18n } = useTranslation();
-	const { userId } = useParams<{ userId: string }>();
+	const { groupId, userId } = useParams<{ groupId: string; userId: string }>();
 	const { currentUser } = useAuth();
 
 	const [user, setUser] = useState<UserProfile | null>(null);
@@ -223,12 +223,22 @@ export function UserView() {
 							className="user-avatar-large"
 						/>
 					)}
-					<h2 data-testid="user-view-heading">
-						{user.displayName}
-						{userId === currentUser?.uid && (
-							<span className="you-badge">{t("groups.you")}</span>
-						)}
-					</h2>
+					<div className="user-profile-info">
+						<h2 data-testid="user-view-heading">
+							{user.displayName}
+							{userId === currentUser?.uid && (
+								<span className="you-badge">{t("groups.you")}</span>
+							)}
+						</h2>
+						<div className="user-actions">
+							<Link
+								to={`/groups/${groupId}/members/${userId}/compare`}
+								className="secondary-button"
+							>
+								{t("userView.compare")}
+							</Link>
+						</div>
+					</div>
 				</div>
 				<UserStats stats={stats} />
 			</div>
