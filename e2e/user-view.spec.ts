@@ -171,8 +171,12 @@ test.describe("User View", () => {
 		// Setup: Seed a group with another user and their sightings
 		// Tester (testUser) is ALREADY created in BeforeEach.
 		// We need to create User B.
-		const emailB = "userb@example.com";
-		const userB = await createTestUser(emailB, "password123", "UserB");
+		const credentialsB = getTestUserCredentials();
+		const userB = await createTestUser(
+			credentialsB.email,
+			credentialsB.password,
+			"UserB",
+		);
 		await seedUserProfile({
 			id: userB.uid,
 			displayName: userB.displayName,

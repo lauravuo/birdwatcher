@@ -85,12 +85,16 @@ test.describe("User Comparison", () => {
 		});
 
 		// 2. Create User B and seed its stats (this will switch Node auth to User B)
-		const emailB = "userb@example.com";
-		userB = await createTestUser(emailB, "password123", "UserB");
+		const credentialsB = getTestUserCredentials();
+		userB = await createTestUser(
+			credentialsB.email,
+			credentialsB.password,
+			"UserB",
+		);
 		await seedUserProfile({
 			id: userB.uid,
 			displayName: "UserB",
-			email: emailB,
+			email: credentialsB.email,
 			photoURL: null,
 		});
 
