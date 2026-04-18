@@ -173,14 +173,15 @@ test.describe("User View", () => {
 		// We need to create User B.
 		const emailB = "userb@example.com";
 		const userB = await createTestUser(emailB, "password123", "UserB");
-
-		// Ensure User B has profile
 		await seedUserProfile({
 			id: userB.uid,
 			displayName: userB.displayName,
 			email: userB.email,
 			photoURL: userB.photoURL,
 		});
+
+		// Seed stats for User B while Node is authenticated as User B
+		await seedUserStats(userB.uid, { "2024-03": ["harakka"] });
 
 		const groupName = "Shared Group";
 		const joinCode = "shared-group-1";
@@ -205,9 +206,6 @@ test.describe("User View", () => {
 				createdAt: Date.now(),
 			},
 		]);
-
-		// Seed stats
-		await seedUserStats(userB.uid, { "2024-03": ["harakka"] });
 
 		// Test Flow:
 		// 1. Go to Group

@@ -234,6 +234,7 @@ export function UserView() {
 							<Link
 								to={`/groups/${groupId}/members/${userId}/compare`}
 								className="secondary-button"
+								data-testid="compare-button"
 							>
 								{t("userView.compare")}
 							</Link>

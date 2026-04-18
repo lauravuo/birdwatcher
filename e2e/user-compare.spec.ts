@@ -57,7 +57,7 @@ test.describe("User Comparison", () => {
 		await navigateToUserView(page);
 
 		// Click Compare button
-		await page.getByRole("link", { name: "Compare" }).click();
+		await page.getByTestId("compare-button").click();
 		await expect(page).toHaveURL(/\/compare/);
 
 		// Select Year 2024 and Month January
@@ -113,7 +113,7 @@ test.describe("User Comparison", () => {
 		await page.locator(".member-item").filter({ hasText: "UserB" }).click();
 
 		// Click Compare
-		await page.getByRole("link", { name: "Compare" }).click();
+		await page.getByTestId("compare-button").click();
 
 		await page.locator("#compare-year").selectOption("2024");
 		await page.locator("#compare-month").selectOption(""); // Any/Whole year
