@@ -24,6 +24,12 @@ test.describe("User Comparison", () => {
 			credentials.password,
 			"Tester",
 		);
+		await seedUserProfile({
+			id: testUser.uid,
+			displayName: "Tester",
+			email: credentials.email,
+			photoURL: null,
+		});
 
 		await page.goto("/");
 		const { signInInBrowser } = await import("./helpers/browser-auth");
@@ -32,18 +38,19 @@ test.describe("User Comparison", () => {
 	});
 
 	test("performs self-comparison correctly", async ({ page }) => {
-		// Seed stats: 2024 has Varis and Sinisorsa. Jan has only Sinisorsa.
-		// So Varis is missing in Jan.
-		await seedUserStats(testUser.uid, {
-			"2024": ["sinisorsa", "varis"],
-			"2024-01": ["sinisorsa"],
-		});
-
 		// Ensure user is in a group
 		await seedGroup({
 			name: "Compare Group",
 			ownerId: testUser.uid,
 			memberIds: [testUser.uid],
+		});
+
+		// Seed stats: 2024 has Varis and Sinisorsa. Jan has only Sinisorsa.
+		// So Varis is missing in Jan.
+		// NOTE: testUser is authenticated in Node from beforeEach
+		await seedUserStats(testUser.uid, {
+			"2024": ["sinisorsa", "varis"],
+			"2024-01": ["sinisorsa"],
 		});
 
 		await page.reload();
@@ -71,6 +78,13 @@ test.describe("User Comparison", () => {
 	});
 
 	test("performs cross-user comparison correctly", async ({ page }) => {
+		// 1. Seed stats for testUser while authenticated as testUser?
+		// Wait, Node is currently authenticated as testUser from beforeEach.
+		await seedUserStats(testUser.uid, {
+			"2024": ["sinisorsa", "varis"],
+		});
+
+		// 2. Create User B and seed its stats (this will switch Node auth to User B)
 		const emailB = "userb@example.com";
 		userB = await createTestUser(emailB, "password123", "UserB");
 		await seedUserProfile({
@@ -80,20 +94,16 @@ test.describe("User Comparison", () => {
 			photoURL: null,
 		});
 
+		// Them: Varis, Telkkä.
+		await seedUserStats(userB.uid, {
+			"2024": ["varis", "telkka"],
+		});
+
 		const groupName = "Shared Group";
 		await seedGroup({
 			name: groupName,
 			ownerId: testUser.uid,
 			memberIds: [testUser.uid, userB.uid],
-		});
-
-		// Me: Sinisorsa, Varis. Them: Varis, Telkkä.
-		// Result: You have (Sinisorsa), They have (Telkkä), Both (Varis).
-		await seedUserStats(testUser.uid, {
-			"2024": ["sinisorsa", "varis"],
-		});
-		await seedUserStats(userB.uid, {
-			"2024": ["varis", "telkka"],
 		});
 
 		await page.reload();
