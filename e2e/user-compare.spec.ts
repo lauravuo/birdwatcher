@@ -110,7 +110,7 @@ test.describe("User Comparison", () => {
 
 		// Verify lists are present correctly
 		const listContainer = page.locator(".compare-results");
-		
+
 		// Order: I have, They have, Both have
 		const sectionTitles = listContainer.locator("h4");
 		await expect(sectionTitles.nth(0)).toContainText("You have, they don't");

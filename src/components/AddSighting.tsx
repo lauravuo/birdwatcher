@@ -183,7 +183,7 @@ export default function AddSighting({
 		};
 
 		try {
-			if (isEditing && initialSighting && initialSighting.id) {
+			if (isEditing && initialSighting?.id) {
 				await updateSighting(initialSighting.id, sightingData);
 			} else {
 				await addSighting(sightingData);

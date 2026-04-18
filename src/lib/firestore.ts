@@ -606,7 +606,7 @@ export const recalculateGroupStats = async (
 ): Promise<void> => {
 	const groupRef = doc(db, "groups", groupId);
 	const groupDoc = await getDoc(groupRef);
-	if (!groupDoc || !groupDoc.exists()) return;
+	if (!groupDoc?.exists()) return;
 
 	const memberIds = groupDoc.data()?.memberIds || [];
 	if (memberIds.length === 0) {
