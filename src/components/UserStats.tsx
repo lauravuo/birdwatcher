@@ -35,17 +35,23 @@ export function UserStats({ stats }: UserStatsProps) {
 				<div className="stat-label">
 					{currentMonthLabel} {currentYear}
 				</div>
-				<div className="stat-value">{monthUnique}</div>
+				<div className="stat-value" data-testid="stat-month">
+					{monthUnique}
+				</div>
 			</div>
 			<div className="stat-item">
 				<div className="stat-label">
 					{t("common.year")} {currentYear}
 				</div>
-				<div className="stat-value">{yearUnique}</div>
+				<div className="stat-value" data-testid="stat-year">
+					{yearUnique}
+				</div>
 			</div>
 			<div className="stat-item">
 				<div className="stat-label">{t("common.total")}</div>
-				<div className="stat-value">{allTimeUnique}</div>
+				<div className="stat-value" data-testid="stat-total">
+					{allTimeUnique}
+				</div>
 			</div>
 		</div>
 	);

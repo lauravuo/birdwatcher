@@ -230,8 +230,8 @@ test.describe("User View", () => {
 		// Current year is based on run time, so "Yearly" might be 0 if currentYear != 2024.
 		// But "Total" should be 1.
 		await expect(page.getByText(/Total/i)).toBeVisible();
-		// We expect "1" to be visible in stats
-		await expect(page.locator(".stat-value").getByText("1")).toBeVisible();
+		// We expect "1" to be visible in total stats
+		await expect(page.getByTestId("stat-total")).toHaveText("1");
 
 		// 5. Check Data (March 2024)
 		// Open filters
