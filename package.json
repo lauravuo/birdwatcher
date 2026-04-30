@@ -31,10 +31,10 @@
 	},
 	"dependencies": {
 		"firebase": "^12.12.1",
-		"i18next": "^26.0.7",
+		"i18next": "^26.0.8",
 		"react": "^19.2.5",
 		"react-dom": "^19.2.5",
-		"react-i18next": "^17.0.4",
+		"react-i18next": "^17.0.6",
 		"react-router-dom": "^7.14.2"
 	},
 	"devDependencies": {
@@ -48,7 +48,7 @@
 		"@types/react-dom": "^19.2.3",
 		"@vitejs/plugin-react": "^6.0.1",
 		"dotenv-cli": "^11.0.0",
-		"firebase-tools": "^15.15.0",
+		"firebase-tools": "^15.16.0",
 		"happy-dom": "^20.9.0",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.4.0",
