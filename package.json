@@ -34,11 +34,11 @@
 		"i18next": "^26.3.6",
 		"react": "^19.2.7",
 		"react-dom": "^19.2.7",
-		"react-i18next": "^17.0.9",
+		"react-i18next": "^17.0.10",
 		"react-router-dom": "^7.18.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.3",
+		"@biomejs/biome": "2.5.4",
 		"@playwright/test": "^1.61.1",
 		"@testing-library/dom": "^10.4.1",
 		"@testing-library/jest-dom": "^6.9.1",
@@ -48,12 +48,12 @@
 		"@types/react-dom": "^19.2.3",
 		"@vitejs/plugin-react": "^6.0.3",
 		"dotenv-cli": "^11.0.0",
-		"firebase-tools": "^15.22.4",
+		"firebase-tools": "^15.24.0",
 		"happy-dom": "^20.10.6",
 		"husky": "^9.1.7",
 		"lint-staged": "^17.0.8",
 		"typescript": "~7.0.2",
-		"vite": "^8.1.4",
+		"vite": "^8.1.5",
 		"vitest": "4.1.10"
 	}
 }
