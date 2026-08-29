@@ -171,16 +171,21 @@ test.describe("User View", () => {
 		// Setup: Seed a group with another user and their sightings
 		// Tester (testUser) is ALREADY created in BeforeEach.
 		// We need to create User B.
-		const emailB = "userb@example.com";
-		const userB = await createTestUser(emailB, "password123", "UserB");
-
-		// Ensure User B has profile
+		const credentialsB = getTestUserCredentials();
+		const userB = await createTestUser(
+			credentialsB.email,
+			credentialsB.password,
+			"UserB",
+		);
 		await seedUserProfile({
 			id: userB.uid,
 			displayName: userB.displayName,
 			email: userB.email,
 			photoURL: userB.photoURL,
 		});
+
+		// Seed stats for User B while Node is authenticated as User B
+		await seedUserStats(userB.uid, { "2024-03": ["harakka"] });
 
 		const groupName = "Shared Group";
 		const joinCode = "shared-group-1";
@@ -206,9 +211,6 @@ test.describe("User View", () => {
 			},
 		]);
 
-		// Seed stats
-		await seedUserStats(userB.uid, { "2024-03": ["harakka"] });
-
 		// Test Flow:
 		// 1. Go to Group
 		await page.reload(); // Reload to fetch seeded group which wasn't there at initial load
@@ -232,8 +234,8 @@ test.describe("User View", () => {
 		// Current year is based on run time, so "Yearly" might be 0 if currentYear != 2024.
 		// But "Total" should be 1.
 		await expect(page.getByText(/Total/i)).toBeVisible();
-		// We expect "1" to be visible in stats
-		await expect(page.locator(".stat-value").getByText("1")).toBeVisible();
+		// We expect "1" to be visible in total stats
+		await expect(page.getByTestId("stat-total")).toHaveText("1");
 
 		// 5. Check Data (March 2024)
 		// Open filters

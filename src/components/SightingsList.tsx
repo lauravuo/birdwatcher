@@ -161,24 +161,21 @@ export function SightingsList({
 								{/* Bottom Metadata */}
 								<div className="sighting-meta-bottom">
 									<h3 className="sighting-bird-name">{birdName}</h3>
-									{showMemberName &&
-										members &&
-										members.get(sighting.userId) && (
-											<div className="sighting-user-avatar">
-												{members.get(sighting.userId)?.photoURL ? (
-													<img
-														src={
-															members.get(sighting.userId)?.photoURL ||
-															undefined
-														}
-														alt={members.get(sighting.userId)?.displayName}
-														className="avatar-img"
-													/>
-												) : (
-													<span className="avatar-fallback">👤</span>
-												)}
-											</div>
-										)}
+									{showMemberName && members?.get(sighting.userId) && (
+										<div className="sighting-user-avatar">
+											{members.get(sighting.userId)?.photoURL ? (
+												<img
+													src={
+														members.get(sighting.userId)?.photoURL || undefined
+													}
+													alt={members.get(sighting.userId)?.displayName}
+													className="avatar-img"
+												/>
+											) : (
+												<span className="avatar-fallback">👤</span>
+											)}
+										</div>
+									)}
 								</div>
 							</Link>
 						</li>

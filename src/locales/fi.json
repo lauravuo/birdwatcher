@@ -29,7 +29,20 @@
 	"userView": {
 		"sightings": "Havainnot",
 		"noSightings": "Ei havaintoja tälle ajanjaksolle",
-		"failedToLoad": "Havaintojen lataaminen epäonnistui"
+		"failedToLoad": "Havaintojen lataaminen epäonnistui",
+		"compare": "Vertaile"
+	},
+	"compare": {
+		"title": "Vertaile",
+		"titleSelf": "Vertaile koko vuoteen",
+		"titleOther": "Vertaile käyttäjän {{name}} kanssa",
+		"missingThisMonth": "Puuttuvat tässä kuussa",
+		"seenThisMonth": "Nähdyt tässä kuussa",
+		"youHaveTheyDont": "Sinulla on, heillä ei",
+		"theyHaveYouDont": "Heillä on, sinulla ei",
+		"bothHave": "Molemmat ovat nähneet",
+		"selectMonthPrompt": "Valitse kuukausi vertaillaksesi koko vuoteen.",
+		"noBirds": "Ei lintuja tässä kategoriassa."
 	},
 	"login": {
 		"title": "Lintuvahti",

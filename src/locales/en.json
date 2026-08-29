@@ -29,7 +29,20 @@
 	"userView": {
 		"sightings": "Sightings",
 		"noSightings": "No sightings found for this period",
-		"failedToLoad": "Failed to load sightings"
+		"failedToLoad": "Failed to load sightings",
+		"compare": "Compare"
+	},
+	"compare": {
+		"title": "Compare",
+		"titleSelf": "Compare to Whole Year",
+		"titleOther": "Compare with {{name}}",
+		"missingThisMonth": "Missing this month",
+		"seenThisMonth": "Seen this month",
+		"youHaveTheyDont": "You have, they don't",
+		"theyHaveYouDont": "They have, you don't",
+		"bothHave": "Both have",
+		"selectMonthPrompt": "Please select a month to compare with the whole year.",
+		"noBirds": "No birds found in this category."
 	},
 	"login": {
 		"title": "Birdwatcher",
