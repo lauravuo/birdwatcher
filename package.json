@@ -30,30 +30,30 @@
 		]
 	},
 	"dependencies": {
-		"firebase": "^12.19.0",
-		"i18next": "^26.4.2",
+		"firebase": "^13.0.0",
+		"i18next": "^26.4.4",
 		"react": "^19.3.0",
 		"react-dom": "^19.3.0",
-		"react-i18next": "^17.0.15",
+		"react-i18next": "^17.0.16",
 		"react-router-dom": "^7.18.4"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.15",
-		"@playwright/test": "^1.63.0",
+		"@playwright/test": "^1.64.0",
 		"@testing-library/dom": "^10.4.2",
 		"@testing-library/jest-dom": "^7.0.1",
 		"@testing-library/react": "^16.3.3",
-		"@types/node": "^26.6.4",
+		"@types/node": "^26.6.5",
 		"@types/react": "^19.3.0",
 		"@types/react-dom": "^19.3.0",
 		"@vitejs/plugin-react": "^6.1.2",
 		"dotenv-cli": "^11.0.0",
-		"firebase-tools": "^15.32.1",
-		"happy-dom": "^20.14.5",
+		"firebase-tools": "^15.33.0",
+		"happy-dom": "^21.0.1",
 		"husky": "^9.1.7",
 		"lint-staged": "^17.6.0",
 		"typescript": "~7.0.2",
-		"vite": "^8.3.2",
-		"vitest": "5.0.3"
+		"vite": "^8.3.4",
+		"vitest": "5.0.4"
 	}
 }
