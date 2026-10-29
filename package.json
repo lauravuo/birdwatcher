@@ -30,15 +30,15 @@
 		]
 	},
 	"dependencies": {
-		"firebase": "^13.0.0",
-		"i18next": "^26.5.2",
+		"firebase": "^13.1.0",
+		"i18next": "^26.5.11",
 		"react": "^19.3.1",
 		"react-dom": "^19.3.1",
-		"react-i18next": "^17.1.0",
+		"react-i18next": "^17.1.9",
 		"react-router-dom": "^7.18.4"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.15",
+		"@biomejs/biome": "2.6.3",
 		"@playwright/test": "^1.64.1",
 		"@testing-library/dom": "^10.4.2",
 		"@testing-library/jest-dom": "^7.0.1",
@@ -48,12 +48,12 @@
 		"@types/react-dom": "^19.3.0",
 		"@vitejs/plugin-react": "^6.1.2",
 		"dotenv-cli": "^11.0.0",
-		"firebase-tools": "^15.34.0",
-		"happy-dom": "^21.0.3",
+		"firebase-tools": "^15.34.1",
+		"happy-dom": "^21.0.4",
 		"husky": "^9.1.7",
 		"lint-staged": "^17.6.0",
 		"typescript": "~7.0.2",
-		"vite": "^8.3.4",
+		"vite": "^8.3.5",
 		"vitest": "5.0.5"
 	}
 }
